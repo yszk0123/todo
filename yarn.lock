@@ -6,3 +6,8 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.0.1.tgz#ae67f3485c7c843c7de34926bd3e85379ee2e511"
   integrity sha512-AXSvuXzmI8CfTk3MOgiDMAFCqw+r2QKV64WHJ2B6Z0Mpb+PihsdD6BCteWDu2GlGwNNluNDYKlfLkXxgvzH2mw==
+
+prettier@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
+  integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
