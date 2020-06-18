@@ -9,3 +9,21 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  name String
+  role Role @default(USER)
+}
+
+model Todo {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  text String
+}
+
+enum Role {
+  USER
+  ADMIN
+}

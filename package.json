@@ -7,7 +7,10 @@
   "repository": "https://github.com/yszk0123/todo",
   "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
   "devDependencies": {
-    "@prisma/cli": "^2.0.1",
+    "@prisma/cli": "2.0.1",
     "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "@prisma/client": "2.0.1"
   }
 }
