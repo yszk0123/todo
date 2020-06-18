@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "todo",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/yszk0123/todo",
+  "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
+  "devDependencies": {
+    "@prisma/cli": "^2.0.1"
+  }
+}
