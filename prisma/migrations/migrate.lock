@@ -1,3 +1,5 @@
 # Prisma Migrate lockfile v1
 
 20200619005136-create-user-and-todo
+20200620040844
+20200620040904-add-user-email
