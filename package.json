@@ -7,6 +7,7 @@
   "repository": "https://github.com/yszk0123/todo",
   "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
   "scripts": {
+    "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
     "dev": "next",
     "build": "next build",
     "start": "next start"
@@ -21,9 +22,13 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "@nexus/schema": "^0.14.0",
     "@prisma/client": "2.0.1",
+    "graphql-request": "^2.0.0",
     "next": "^9.4.4",
-    "next-auth": "^1.12.1",
+    "next-auth": "^2.0.0-beta.78",
+    "nexus": "^0.24.2",
+    "nexus-plugin-prisma": "^0.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
