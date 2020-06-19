@@ -7,6 +7,8 @@
   "repository": "https://github.com/yszk0123/todo",
   "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
   "scripts": {
+    "prisma:migrate:save": "prisma migrate save --experimental",
+    "prisma:migrate:up": "prisma migrate up --experimental",
     "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
     "dev": "next",
     "build": "next build",
