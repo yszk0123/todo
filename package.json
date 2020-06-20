@@ -7,23 +7,41 @@
   "repository": "https://github.com/yszk0123/todo",
   "author": "Yuji Suzuki <y0suzuki0123@gmail.com>",
   "scripts": {
+    "codegen:generate": "graphql-codegen",
+    "prisma:migrate:save": "prisma migrate save --experimental",
+    "prisma:migrate:up": "prisma migrate up --experimental",
+    "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
+    "nexus:build": "nexus build --entrypoint pages/api/graphql.ts",
+    "nexus:reflection:prod": "nexus build --entrypoint pages/api/graphql.ts",
+    "next:build": "next build",
     "dev": "next",
-    "build": "next build",
+    "build": "yarn nexus:reflection:prod && yarn next:build",
     "start": "next start"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.15.4",
+    "@graphql-codegen/typescript": "^1.15.4",
+    "@graphql-codegen/typescript-graphql-request": "^1.15.4",
+    "@graphql-codegen/typescript-operations": "^1.15.4",
     "@prisma/cli": "2.0.1",
     "@types/node": "^14.0.13",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
+    "@types/recoil": "^0.0.1",
     "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "@nexus/schema": "^0.14.0",
     "@prisma/client": "2.0.1",
+    "graphql-request": "^2.0.0",
     "next": "^9.4.4",
+    "next-auth": "^2.0.0-beta.78",
+    "nexus": "^0.24.2",
+    "nexus-plugin-prisma": "^0.10.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "recoil": "^0.0.10"
   }
 }

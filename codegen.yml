@@ -1,0 +1,10 @@
+schema: api.graphql
+documents: ./lib/graphql/**/*.graphql
+generates:
+  ./lib/graphql/sdk.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+config:
+  documentMode: documentNode
