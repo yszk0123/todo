@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "env": {
+    "NODE_ENV": "production",
+    "DATABASE_URL": "@database_url",
+    "GOOGLE_CLIENT_SECRET": "@google_client_secret",
+    "GOOGLE_CLIENT_ID": "@google_client_id",
+    "JWT_SECRET": "@jwt_secret",
+    "SECRET": "@secret",
+    "SITE": "@site"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production",
+      "DATABASE_URL": "@database_url",
+      "GOOGLE_CLIENT_SECRET": "@google_client_secret",
+      "GOOGLE_CLIENT_ID": "@google_client_id",
+      "JWT_SECRET": "@jwt_secret",
+      "SECRET": "@secret",
+      "SITE": "@site"
+    }
+  }
+}
