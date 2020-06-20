@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSession } from 'next-auth/client';
-import Hoge from './Hoge';
+import Hoge from './GraphQLRequestExample';
 
 const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, _loading] = useSession();

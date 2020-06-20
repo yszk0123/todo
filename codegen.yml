@@ -1,0 +1,17 @@
+schema: api.graphql
+documents: ./pages/_graphql/**/*.graphql
+generates:
+  ./pages/_graphql/request.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+  ./pages/_graphql/urql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-urql
+config:
+  documentMode: documentNode
+  withComponent: false
+  withHooks: true

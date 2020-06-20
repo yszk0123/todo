@@ -1,0 +1,6 @@
+query example {
+  me {
+    name
+    email
+  }
+}
