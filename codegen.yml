@@ -1,7 +1,7 @@
 schema: api.graphql
-documents: ./pages/_lib/graphql/**/*.graphql
+documents: ./lib/graphql/**/*.graphql
 generates:
-  ./pages/_lib/graphql/sdk.ts:
+  ./lib/graphql/sdk.ts:
     plugins:
       - typescript
       - typescript-operations

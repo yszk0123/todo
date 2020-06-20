@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSession } from 'next-auth/client';
-import { RecoilExample } from './RecoilExample';
+import { RecoilExample } from '../lib/components/RecoilExample';
 
 const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, _loading] = useSession();

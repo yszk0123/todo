@@ -1,6 +1,6 @@
 import React from 'react';
-import { useRecoilValueOr } from './_lib/hooks/useRecoilValueOr';
-import { userQuery } from './_lib/values/userQuery';
+import { useRecoilValueOr } from '../hooks/useRecoilValueOr';
+import { userQuery } from '../values/userQuery';
 
 export const RecoilExample: React.FunctionComponent<{}> = () => {
   const user = useRecoilValueOr(userQuery);
