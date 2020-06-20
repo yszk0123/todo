@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSession } from 'next-auth/client';
-import Hoge from './GraphQLRequestExample';
+import { RecoilExample } from './RecoilExample';
 
 const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, _loading] = useSession();
@@ -13,15 +13,13 @@ const Gate: React.FunctionComponent<{}> = ({ children }) => {
       </p>
     );
   }
-  console.log('SESSION', session);
 
   return (
-    <p>
+    <div>
       Signed in as {session.user.email} <br />
       <a href="/api/auth/signout">Sign out</a>
       {children}
-      <Hoge />
-    </p>
+    </div>
   );
 };
 
@@ -29,6 +27,7 @@ const HomePage: React.FunctionComponent<{}> = () => {
   return (
     <Gate>
       <div>Hello, world!</div>
+      <RecoilExample />
     </Gate>
   );
 };
