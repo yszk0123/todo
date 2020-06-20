@@ -12,11 +12,25 @@ scalar Json
 
 type Query {
   me: User
+  todos: [Todo!]
   users: [User!]
+}
+
+type Todo {
+  author: User!
+  authorId: Int!
+  createdAt: DateTime!
+  id: Int!
+  text: String!
+}
+
+input TodoWhereUniqueInput {
+  id: Int
 }
 
 type User {
   email: String!
   id: Int!
   name: String!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }

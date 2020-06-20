@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { RecoilExample } from '../lib/components/RecoilExample';
 
 const HomePage: React.FunctionComponent<{}> = () => {
@@ -6,6 +7,9 @@ const HomePage: React.FunctionComponent<{}> = () => {
     <div>
       <div>Hello, world!</div>
       <RecoilExample />
+      <Link href="/todos">
+        <a>Todos</a>
+      </Link>
     </div>
   );
 };

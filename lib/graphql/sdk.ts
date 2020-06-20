@@ -21,7 +21,21 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
+  todos?: Maybe<Array<Todo>>;
   users?: Maybe<Array<User>>;
+};
+
+export type Todo = {
+  __typename?: 'Todo';
+  author: User;
+  authorId: Scalars['Int'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  text: Scalars['String'];
+};
+
+export type TodoWhereUniqueInput = {
+  id?: Maybe<Scalars['Int']>;
 };
 
 export type User = {
@@ -29,6 +43,15 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
+  todos: Array<Todo>;
+};
+
+
+export type UserTodosArgs = {
+  after?: Maybe<TodoWhereUniqueInput>;
+  before?: Maybe<TodoWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 export type ExampleQueryVariables = Exact<{ [key: string]: never; }>;
@@ -42,8 +65,20 @@ export type ExampleQuery = (
   )> }
 );
 
+export type TodosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TodosQuery = (
+  { __typename?: 'Query' }
+  & { todos?: Maybe<Array<(
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'text' | 'createdAt'>
+  )>> }
+);
+
 
 export const ExampleDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"example"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
+export const TodosDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"todos"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todos"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"text"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"createdAt"},"arguments":[],"directives":[]}]}}]}}]};
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -53,6 +88,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     example(variables?: ExampleQueryVariables): Promise<ExampleQuery> {
       return withWrapper(() => client.request<ExampleQuery>(print(ExampleDocument), variables));
+    },
+    todos(variables?: TodosQueryVariables): Promise<TodosQuery> {
+      return withWrapper(() => client.request<TodosQuery>(print(TodosDocument), variables));
     }
   };
 }

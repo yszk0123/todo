@@ -1,0 +1,7 @@
+query todos {
+  todos {
+    id
+    text
+    createdAt
+  }
+}
