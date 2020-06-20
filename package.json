@@ -12,8 +12,10 @@
     "prisma:migrate:up": "prisma migrate up --experimental",
     "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
     "nexus:build": "nexus build --entrypoint pages/api/graphql.ts",
+    "nexus:reflection:prod": "nexus build --entrypoint pages/api/graphql.ts",
+    "next:build": "next build",
     "dev": "next",
-    "build": "next build",
+    "build": "yarn nexus:reflection:prod && yarn next:build",
     "start": "next start"
   },
   "devDependencies": {
