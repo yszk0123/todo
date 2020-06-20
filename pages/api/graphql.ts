@@ -1,3 +1,3 @@
-import { handlers } from './_lib/_handlers';
+import { handlers } from './_lib/handlers';
 
 export default handlers.graphql;
