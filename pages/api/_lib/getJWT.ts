@@ -1,3 +1,5 @@
+// FIXME: Nexus.js ignores types.d.ts...
+// @ts-ignore
 import jwt from 'next-auth/jwt';
 
 const secret = process.env.JWT_SECRET ?? '__NULL__';

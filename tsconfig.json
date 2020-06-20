@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    // For Nexus.js
+    "plugins": [{ "name": "nexus/typescript-language-service" }],
+    "typeRoots": ["node_modules/@types", "types"],
+    "rootDir": ".",
+
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
@@ -51,5 +56,12 @@
     "isolatedModules": true
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+
+    // For Nexus.js
+    "types.d.ts",
+    "."
+  ]
 }

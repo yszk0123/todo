@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "plugins": [{ "name": "nexus/typescript-language-service" }],
+    "typeRoots": ["node_modules/@types", "types"],
+    "rootDir": "."
+  },
+  "include": ["types.d.ts", "."]
+}
