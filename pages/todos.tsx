@@ -16,8 +16,17 @@ import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
+  Todo,
 } from '../lib/graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../lib/components/layout/ContentWrapper';
+
+function preventDefault(event: React.SyntheticEvent) {
+  event.preventDefault();
+}
+
+function stopPropagation(event: React.SyntheticEvent) {
+  event.stopPropagation();
+}
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -61,6 +70,20 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
+  const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
+
+  const handleSelectTodo = React.useCallback(
+    (todo: Pick<Todo, 'id' | 'text'>) => {
+      setCurrentTodoId(todo.id);
+      setText(todo.text);
+    },
+    []
+  );
+
+  const handleDeselectTodo = React.useCallback(() => {
+    setCurrentTodoId(null);
+    setText('');
+  }, []);
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
@@ -105,21 +128,32 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const todos = data.todos ?? [];
 
   return (
-    <ContentWrapper>
+    <ContentWrapper onClick={handleDeselectTodo}>
       <p>{todos.length} todos</p>
-      <Box>
+      <Box onClick={stopPropagation}>
         {todos.map((todo) => {
           return (
-            <Flex key={todo.id} alignItems="center">
-              <Box>
+            <Flex
+              key={todo.id}
+              alignItems="center"
+              bg={todo.id === currentTodoId ? 'muted' : undefined}
+            >
+              <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
                 <Text>{todo.text}</Text>
               </Box>
-              <Box mx="auto" />
               <Box py={1}>
-                <Button mx={1} onClick={() => handleDeleteTodo(todo.id)}>
+                <Button
+                  variant="secondary"
+                  mx={1}
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
                   X
                 </Button>
-                <Button mx={1} onClick={() => handleUpdateTodo(todo.id)}>
+                <Button
+                  variant="secondary"
+                  mx={1}
+                  onClick={() => handleUpdateTodo(todo.id)}
+                >
                   Update
                 </Button>
               </Box>
@@ -127,12 +161,14 @@ const TodosPage: React.FunctionComponent<{}> = () => {
           );
         })}
       </Box>
-      <Flex alignItems="center" my={3}>
-        <Input value={text} onChange={handleChangeText} />
-        <Button mx={1} onClick={handleCreateOneTodo}>
-          Create
-        </Button>
-      </Flex>
+      <Box as="form" onSubmit={preventDefault}>
+        <Flex alignItems="center" my={3}>
+          <Input value={text} onChange={handleChangeText} />
+          <Button variant="primary" mx={1} onClick={handleCreateOneTodo}>
+            Create
+          </Button>
+        </Flex>
+      </Box>
     </ContentWrapper>
   );
 };
