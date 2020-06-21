@@ -129,12 +129,12 @@ const TodosPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <Box my={1}>
+      <Box>
         <Text textAlign="right" color="gray">
           {todos.length} todos
         </Text>
       </Box>
-      <Box onClick={stopPropagation}>
+      <Box mt={1} onClick={stopPropagation}>
         {todos.map((todo) => {
           return (
             <Flex
@@ -142,20 +142,24 @@ const TodosPage: React.FunctionComponent<{}> = () => {
               alignItems="center"
               bg={todo.id === currentTodoId ? 'muted' : undefined}
             >
-              <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
+              <Box
+                px={1}
+                flex="1 1 auto"
+                onClick={() => handleSelectTodo(todo)}
+              >
                 <Text>{todo.text}</Text>
               </Box>
               <Box py={1}>
                 <Button
                   variant="secondary"
-                  mx={1}
+                  ml={1}
                   onClick={() => handleDeleteTodo(todo.id)}
                 >
                   X
                 </Button>
                 <Button
                   variant="secondary"
-                  mx={1}
+                  ml={1}
                   onClick={() => handleUpdateTodo(todo.id)}
                 >
                   Update
@@ -165,10 +169,15 @@ const TodosPage: React.FunctionComponent<{}> = () => {
           );
         })}
       </Box>
-      <Box as="form" onSubmit={preventDefault}>
-        <Flex alignItems="center" my={3}>
+      <Box as="form" my={4} onSubmit={preventDefault}>
+        <Flex alignItems="center">
           <Input value={text} onChange={handleChangeText} />
-          <Button variant="primary" mx={1} onClick={handleCreateOneTodo}>
+          <Button
+            ml={1}
+            minWidth={120}
+            variant="primary"
+            onClick={handleCreateOneTodo}
+          >
             Create
           </Button>
         </Flex>
