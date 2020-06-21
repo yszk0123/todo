@@ -16,7 +16,6 @@ scalar Json
 
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
-  deleteOneTodo(where: TodoWhereUniqueInput!): Todo
   deleteTodo(data: DeleteTodoInput!): Todo
 }
 

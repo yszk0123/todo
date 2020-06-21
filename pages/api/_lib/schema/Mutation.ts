@@ -20,7 +20,6 @@ schema.mutationType({
         return originResolve(root, args, ctx, info);
       },
     });
-    t.crud.deleteOneTodo();
 
     t.field('deleteTodo', {
       type: 'Todo',

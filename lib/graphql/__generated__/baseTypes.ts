@@ -22,18 +22,12 @@ export type DeleteTodoInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOneTodo: Todo;
-  deleteOneTodo?: Maybe<Todo>;
   deleteTodo?: Maybe<Todo>;
 };
 
 
 export type MutationCreateOneTodoArgs = {
   data: TodoCreateInput;
-};
-
-
-export type MutationDeleteOneTodoArgs = {
-  where: TodoWhereUniqueInput;
 };
 
 
