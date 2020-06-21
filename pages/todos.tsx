@@ -1,6 +1,7 @@
 import React from 'react';
 import produce from 'immer';
-import Link from 'next/link';
+import { Button, Flex, Text, Box } from 'rebass';
+import { Input } from '@rebass/forms';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
@@ -15,7 +16,17 @@ import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
+  Todo,
 } from '../lib/graphql/__generated__/baseTypes';
+import { ContentWrapper } from '../lib/components/layout/ContentWrapper';
+
+function preventDefault(event: React.SyntheticEvent) {
+  event.preventDefault();
+}
+
+function stopPropagation(event: React.SyntheticEvent) {
+  event.stopPropagation();
+}
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -59,6 +70,20 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
+  const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
+
+  const handleSelectTodo = React.useCallback(
+    (todo: Pick<Todo, 'id' | 'text'>) => {
+      setCurrentTodoId(todo.id);
+      setText(todo.text);
+    },
+    []
+  );
+
+  const handleDeselectTodo = React.useCallback(() => {
+    setCurrentTodoId(null);
+    setText('');
+  }, []);
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
@@ -67,11 +92,13 @@ const TodosPage: React.FunctionComponent<{}> = () => {
         text,
       };
       createOneTodo({ variables: { input } });
+      setText('');
     }
   }, [data, text, createOneTodo]);
 
   const handleDeleteTodo = React.useCallback(
     (todoId: number) => {
+      if (!confirm('Delete?')) return;
       const input: DeleteTodoInput = { id: todoId };
       deleteTodo({ variables: { input } });
     },
@@ -82,6 +109,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     (todoId: number) => {
       const input: UpdateTodoInput = { id: todoId, text };
       updateTodo({ variables: { input } });
+      setText('');
     },
     [data, text, createOneTodo]
   );
@@ -100,25 +128,52 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const todos = data.todos ?? [];
 
   return (
-    <div>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <p>{todos.length} todos</p>
-      <ul>
+    <ContentWrapper onClick={handleDeselectTodo}>
+      <Box my={1}>
+        <Text textAlign="right" color="gray">
+          {todos.length} todos
+        </Text>
+      </Box>
+      <Box onClick={stopPropagation}>
         {todos.map((todo) => {
           return (
-            <li key={todo.id}>
-              <span>{todo.text}</span>
-              <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
-              <button onClick={() => handleUpdateTodo(todo.id)}>Update</button>
-            </li>
+            <Flex
+              key={todo.id}
+              alignItems="center"
+              bg={todo.id === currentTodoId ? 'muted' : undefined}
+            >
+              <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
+                <Text>{todo.text}</Text>
+              </Box>
+              <Box py={1}>
+                <Button
+                  variant="secondary"
+                  mx={1}
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
+                  X
+                </Button>
+                <Button
+                  variant="secondary"
+                  mx={1}
+                  onClick={() => handleUpdateTodo(todo.id)}
+                >
+                  Update
+                </Button>
+              </Box>
+            </Flex>
           );
         })}
-      </ul>
-      <input value={text} onChange={handleChangeText} />
-      <button onClick={handleCreateOneTodo}>Create</button>
-    </div>
+      </Box>
+      <Box as="form" onSubmit={preventDefault}>
+        <Flex alignItems="center" my={3}>
+          <Input value={text} onChange={handleChangeText} />
+          <Button variant="primary" mx={1} onClick={handleCreateOneTodo}>
+            Create
+          </Button>
+        </Flex>
+      </Box>
+    </ContentWrapper>
   );
 };
 
