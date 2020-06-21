@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRecoilValueOr } from '../lib/hooks/useRecoilValueOr';
-import { userQuery } from '../lib/values/userQuery';
+import { useIndexPageQuery } from '../lib/graphql/__generated__/IndexPage.graphql';
 
 const Hello: React.FunctionComponent<{}> = () => {
-  const user = useRecoilValueOr(userQuery);
-  if (!user) {
+  const { loading, data } = useIndexPageQuery();
+  if (loading || !data?.me) {
     return null;
   }
+
+  const user = data.me;
 
   return (
     <div>

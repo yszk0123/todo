@@ -1,7 +1,6 @@
-query user {
+query User {
   me {
     id
-    name
     email
   }
 }

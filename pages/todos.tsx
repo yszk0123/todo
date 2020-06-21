@@ -1,48 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRecoilState, useResetRecoilState, useRecoilCallback } from 'recoil';
-import { todosQuery } from '../lib/values/todosQuery';
-import { todoInputState } from '../lib/values/todoInputState';
-import { TodoUsecase } from '../lib/values/createOneTodoMutation';
-import { useRecoilValueOrPrevious } from '../lib/hooks/useRecoilValueOrPrevious';
-import { createSDK } from '../lib/values/SDK';
-import { useRecoilValueOr } from '../lib/hooks/useRecoilValueOr';
-import { userQuery } from '../lib/values/userQuery';
-import { useUsecase } from '../lib/hooks/useUsecase';
-
-function createUsecase() {
-  const sdk = createSDK();
-  const todoUsecase = new TodoUsecase(sdk);
-  return { todoUsecase };
-}
+import {
+  useTodosPageQuery,
+  useCreateOneTodoMutation,
+} from '../lib/graphql/__generated__/TodosPage.graphql';
 
 const TodosPage: React.FunctionComponent<{}> = () => {
-  const { todoUsecase } = useUsecase(createUsecase);
-  const user = useRecoilValueOr(userQuery);
-  const todos = useRecoilValueOrPrevious(todosQuery, []);
-  const [todoInput, setTodoInput] = useRecoilState(todoInputState);
-  const reset = useResetRecoilState(todosQuery);
+  const { loading, data } = useTodosPageQuery();
+  const [createOneTodo] = useCreateOneTodoMutation();
+  const [text, setText] = React.useState('');
 
-  const handleCreateOneTodo = useRecoilCallback(
-    ({ reset }) => async () => {
-      if (!user) return;
-      await todoUsecase.createOneTodo({ user, todoInput });
-      reset(todosQuery);
-    },
-    [user, todosQuery]
-  );
+  const handleCreateOneTodo = React.useCallback(() => {
+    if (data?.me) {
+      createOneTodo({
+        variables: {
+          input: {
+            author: { connect: { id: data.me.id } },
+            text,
+          },
+        },
+        // update(cache, mutationResult) {
+        // }
+      });
+    }
+  }, [data, createOneTodo]);
 
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const text = event.currentTarget.value;
-      setTodoInput({ text });
+      setText(text);
     },
     []
   );
 
-  const handleCreate = React.useCallback(() => {
-    handleCreateOneTodo();
-  }, []);
+  if (loading || !data) {
+    return null;
+  }
+  const todos = data.todos ?? [];
 
   return (
     <div>
@@ -51,13 +45,12 @@ const TodosPage: React.FunctionComponent<{}> = () => {
       </Link>
       <p>{todos.length} todos</p>
       <ul>
-        {(todos || []).map((todo) => {
+        {todos.map((todo) => {
           return <li key={todo.id}>{todo.text}</li>;
         })}
       </ul>
-      <input value={todoInput.text} onChange={handleChangeText} />
-      <button onClick={handleCreate}>Create</button>
-      <button onClick={reset}>Reset</button>
+      <input value={text} onChange={handleChangeText} />
+      <button onClick={handleCreateOneTodo}>Create</button>
     </div>
   );
 };
