@@ -3,67 +3,75 @@ import Link from 'next/link';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
-  CreateOneTodoMutationHookResult,
   TodosPageDocument,
   TodosPageQuery,
   useDeleteTodoMutation,
+  CreateOneTodoMutationOptions,
+  DeleteTodoMutationOptions,
 } from '../lib/graphql/__generated__/TodosPage.graphql';
+import {
+  TodoCreateInput,
+  DeleteTodoInput,
+} from '../lib/graphql/__generated__/baseTypes';
+
+const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
+  update(cache, result) {
+    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+
+    const todo = result.data?.createOneTodo;
+    if (!todo) return;
+    const newData: TodosPageQuery = {
+      ...data,
+      todos: [...(data?.todos ?? []), todo],
+    };
+
+    cache.writeQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      data: newData,
+    });
+  },
+};
+
+const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
+  update(cache, result) {
+    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+
+    const todoId = result.data?.deleteTodo?.id;
+    if (!todoId) return;
+    const newData: TodosPageQuery = {
+      ...data,
+      todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
+    };
+
+    cache.writeQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      data: newData,
+    });
+  },
+};
 
 const TodosPage: React.FunctionComponent<{}> = () => {
   const { loading, data } = useTodosPageQuery();
-  const [createOneTodo] = useCreateOneTodoMutation();
-  const [deleteTodo] = useDeleteTodoMutation();
+  const [createOneTodo] = useCreateOneTodoMutation(
+    createOneTodoMutationOptions
+  );
+  const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
   const [text, setText] = React.useState('');
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
-      createOneTodo({
-        variables: {
-          input: {
-            author: { connect: { id: data.me.id } },
-            text,
-          },
-        },
-        update(cache, result) {
-          const todo = result.data?.createOneTodo;
-          if (!todo) return;
-
-          const data = cache.readQuery<TodosPageQuery>({
-            query: TodosPageDocument,
-          });
-          cache.writeQuery<TodosPageQuery>({
-            query: TodosPageDocument,
-            data: {
-              ...data,
-              todos: [...(data?.todos ?? []), todo],
-            },
-          });
-        },
-      });
+      const input: TodoCreateInput = {
+        author: { connect: { id: data.me.id } },
+        text,
+      };
+      createOneTodo({ variables: { input } });
     }
   }, [data, text, createOneTodo]);
 
   const handleDeleteTodo = React.useCallback(
     (todoId: number) => {
-      if (data?.me) {
-        deleteTodo({
-          variables: {
-            input: { id: todoId },
-          },
-          update(cache, result) {
-            const data = cache.readQuery<TodosPageQuery>({
-              query: TodosPageDocument,
-            });
-            cache.writeQuery<TodosPageQuery>({
-              query: TodosPageDocument,
-              data: {
-                ...data,
-                todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
-              },
-            });
-          },
-        });
-      }
+      const input: DeleteTodoInput = { id: todoId };
+      deleteTodo({ variables: { input } });
     },
     [data, text, createOneTodo]
   );
