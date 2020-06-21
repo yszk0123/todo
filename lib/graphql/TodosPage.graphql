@@ -20,3 +20,10 @@ mutation DeleteTodo($input: DeleteTodoInput!) {
     id
   }
 }
+
+mutation UpdateTodo($input: UpdateTodoInput!) {
+  updateTodo(data: $input) {
+    id
+    text
+  }
+}

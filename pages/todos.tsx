@@ -1,69 +1,87 @@
 import React from 'react';
+import produce from 'immer';
 import Link from 'next/link';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
-  CreateOneTodoMutationHookResult,
   TodosPageDocument,
   TodosPageQuery,
   useDeleteTodoMutation,
+  CreateOneTodoMutationOptions,
+  DeleteTodoMutationOptions,
+  useUpdateTodoMutation,
 } from '../lib/graphql/__generated__/TodosPage.graphql';
+import {
+  TodoCreateInput,
+  DeleteTodoInput,
+  UpdateTodoInput,
+} from '../lib/graphql/__generated__/baseTypes';
+
+const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
+  update(cache, result) {
+    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+
+    const todo = result.data?.createOneTodo;
+    if (!data || !todo) return;
+    const newData = produce(data, (d) => {
+      d.todos = [...(d.todos ?? []), todo];
+    });
+
+    cache.writeQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      data: newData,
+    });
+  },
+};
+
+const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
+  update(cache, result) {
+    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+
+    const todoId = result.data?.deleteTodo?.id;
+    if (!data || !todoId) return;
+    const newData = produce(data, (d) => {
+      d.todos = (d.todos ?? []).filter((todo) => todo.id !== todoId);
+    });
+
+    cache.writeQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      data: newData,
+    });
+  },
+};
 
 const TodosPage: React.FunctionComponent<{}> = () => {
   const { loading, data } = useTodosPageQuery();
-  const [createOneTodo] = useCreateOneTodoMutation();
-  const [deleteTodo] = useDeleteTodoMutation();
+  const [createOneTodo] = useCreateOneTodoMutation(
+    createOneTodoMutationOptions
+  );
+  const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
+  const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
-      createOneTodo({
-        variables: {
-          input: {
-            author: { connect: { id: data.me.id } },
-            text,
-          },
-        },
-        update(cache, result) {
-          const todo = result.data?.createOneTodo;
-          if (!todo) return;
-
-          const data = cache.readQuery<TodosPageQuery>({
-            query: TodosPageDocument,
-          });
-          cache.writeQuery<TodosPageQuery>({
-            query: TodosPageDocument,
-            data: {
-              ...data,
-              todos: [...(data?.todos ?? []), todo],
-            },
-          });
-        },
-      });
+      const input: TodoCreateInput = {
+        author: { connect: { id: data.me.id } },
+        text,
+      };
+      createOneTodo({ variables: { input } });
     }
   }, [data, text, createOneTodo]);
 
   const handleDeleteTodo = React.useCallback(
     (todoId: number) => {
-      if (data?.me) {
-        deleteTodo({
-          variables: {
-            input: { id: todoId },
-          },
-          update(cache, result) {
-            const data = cache.readQuery<TodosPageQuery>({
-              query: TodosPageDocument,
-            });
-            cache.writeQuery<TodosPageQuery>({
-              query: TodosPageDocument,
-              data: {
-                ...data,
-                todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
-              },
-            });
-          },
-        });
-      }
+      const input: DeleteTodoInput = { id: todoId };
+      deleteTodo({ variables: { input } });
+    },
+    [data, text, createOneTodo]
+  );
+
+  const handleUpdateTodo = React.useCallback(
+    (todoId: number) => {
+      const input: UpdateTodoInput = { id: todoId, text };
+      updateTodo({ variables: { input } });
     },
     [data, text, createOneTodo]
   );
@@ -93,6 +111,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             <li key={todo.id}>
               <span>{todo.text}</span>
               <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
+              <button onClick={() => handleUpdateTodo(todo.id)}>Update</button>
             </li>
           );
         })}

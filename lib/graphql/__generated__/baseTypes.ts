@@ -23,6 +23,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createOneTodo: Todo;
   deleteTodo?: Maybe<Todo>;
+  updateTodo?: Maybe<Todo>;
 };
 
 
@@ -33,6 +34,11 @@ export type MutationCreateOneTodoArgs = {
 
 export type MutationDeleteTodoArgs = {
   data: DeleteTodoInput;
+};
+
+
+export type MutationUpdateTodoArgs = {
+  data: UpdateTodoInput;
 };
 
 export type Query = {
@@ -64,6 +70,11 @@ export type TodoCreateInput = {
 
 export type TodoWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
+};
+
+export type UpdateTodoInput = {
+  id: Scalars['Int'];
+  text?: Maybe<Scalars['String']>;
 };
 
 export type User = {

@@ -1,9 +1,17 @@
-import { schema, log } from 'nexus';
+import { schema } from 'nexus';
 
 schema.inputObjectType({
   name: 'DeleteTodoInput',
   definition(t) {
     t.int('id', { required: true });
+  },
+});
+
+schema.inputObjectType({
+  name: 'UpdateTodoInput',
+  definition(t) {
+    t.int('id', { required: true });
+    t.string('text', {});
   },
 });
 
@@ -37,6 +45,29 @@ schema.mutationType({
         }
         const deletedTodo = await ctx.db.todo.delete({ where: { id: todoId } });
         return deletedTodo;
+      },
+    });
+
+    t.field('updateTodo', {
+      type: 'Todo',
+      args: {
+        data: schema.arg({ type: 'UpdateTodoInput', required: true }),
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoId = args.data.id;
+        const text = args.data.text ?? undefined;
+        const userId = ctx.user?.id;
+        const todo = await ctx.db.todo.findOne({ where: { id: todoId } });
+        const authorId = todo?.authorId;
+        const authorized = !!userId && !!authorId && userId === authorId;
+        if (!authorized) {
+          throw new Error('Unauthorized');
+        }
+        const updatedTodo = await ctx.db.todo.update({
+          data: { text },
+          where: { id: todoId },
+        });
+        return updatedTodo;
       },
     });
   },
