@@ -3,10 +3,15 @@ import Link from 'next/link';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
+  CreateOneTodoMutationHookResult,
+  TodosPageDocument,
+  TodosPageQuery,
 } from '../lib/graphql/__generated__/TodosPage.graphql';
 
 const TodosPage: React.FunctionComponent<{}> = () => {
   const { loading, data } = useTodosPageQuery();
+  const a: CreateOneTodoMutationHookResult[0] = {} as any;
+
   const [createOneTodo] = useCreateOneTodoMutation();
   const [text, setText] = React.useState('');
 
@@ -19,11 +24,24 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             text,
           },
         },
-        // update(cache, mutationResult) {
-        // }
+        update(cache, result) {
+          const todo = result.data?.createOneTodo;
+          if (!todo) return;
+
+          const data = cache.readQuery<TodosPageQuery>({
+            query: TodosPageDocument,
+          });
+          cache.writeQuery<TodosPageQuery>({
+            query: TodosPageDocument,
+            data: {
+              ...data,
+              todos: [...(data?.todos ?? []), todo],
+            },
+          });
+        },
       });
     }
-  }, [data, createOneTodo]);
+  }, [data, text, createOneTodo]);
 
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
