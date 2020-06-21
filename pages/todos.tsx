@@ -1,18 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRecoilValueOr } from '../lib/hooks/useRecoilValueOr';
+import { useRecoilState, useResetRecoilState, useRecoilCallback } from 'recoil';
 import { todosQuery } from '../lib/values/todosQuery';
-import { useRecoilState } from 'recoil';
 import { todoInputState } from '../lib/values/todoInputState';
-import { useSetRecoilState } from 'recoil';
 import { createOneTodoMutation } from '../lib/values/createOneTodoMutation';
-import { useResetRecoilState } from 'recoil';
+import { useRecoilValueOrPrevious } from '../lib/hooks/useRecoilValueOrPrevious';
 
 const TodosPage: React.FunctionComponent<{}> = () => {
-  const todos = useRecoilValueOr(todosQuery) ?? [];
+  const todos = useRecoilValueOrPrevious(todosQuery, []);
   const [todoInput, setTodoInput] = useRecoilState(todoInputState);
-  const createOneTodo = useSetRecoilState(createOneTodoMutation);
   const reset = useResetRecoilState(todosQuery);
+
+  const createOneTodo = useRecoilCallback(
+    ({ reset }) => async () => {
+      await reset(todosQuery);
+    },
+    []
+  );
 
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

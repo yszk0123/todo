@@ -1,6 +1,10 @@
 import { atom } from 'recoil';
 
-export const todoInputState = atom({
+export type TodoInput = {
+  text: string;
+};
+
+export const todoInputState = atom<TodoInput>({
   key: 'todoInputState',
   default: { text: '' },
 });

@@ -1,16 +1,19 @@
-import { selector } from 'recoil';
+import { selector, CallbackInterface } from 'recoil';
 import { sdkDependency } from './sdkDependency';
 import { userQuery } from './userQuery';
 import { todosQuery } from './todosQuery';
 import { todoInputState } from './todoInputState';
 
-export const createOneTodoMutation = selector({
-  key: 'createOneTodoMutation',
-  get() {},
-  async set({ get, reset }) {
-    const sdk = get(sdkDependency);
-    const user = get(userQuery);
-    const todoInput = get(todoInputState);
+export async function createOneTodoMutation({
+  snapshot,
+  reset,
+}: CallbackInterface) {
+  return async () => {
+    const [sdk, user, todoInput] = await Promise.all([
+      snapshot.getPromise(sdkDependency),
+      snapshot.getPromise(userQuery),
+      snapshot.getPromise(todoInputState),
+    ]);
     if (!user) {
       return;
     }
@@ -23,5 +26,5 @@ export const createOneTodoMutation = selector({
     });
 
     reset(todosQuery);
-  },
-});
+  };
+}

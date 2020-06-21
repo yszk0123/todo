@@ -1,7 +1,9 @@
 import { selector } from 'recoil';
 import { sdkDependency } from './sdkDependency';
 
-export const userQuery = selector<{ id: number; name: string } | null>({
+export type User = { id: number; name: string };
+
+export const userQuery = selector<User | null>({
   key: 'userQuery',
   async get({ get }) {
     const sdk = get(sdkDependency);
