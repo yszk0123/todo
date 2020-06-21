@@ -1,4 +1,5 @@
 import React from 'react';
+import produce from 'immer';
 import Link from 'next/link';
 import {
   useTodosPageQuery,
@@ -19,11 +20,10 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
     const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
 
     const todo = result.data?.createOneTodo;
-    if (!todo) return;
-    const newData: TodosPageQuery = {
-      ...data,
-      todos: [...(data?.todos ?? []), todo],
-    };
+    if (!data || !todo) return;
+    const newData = produce(data, (d) => {
+      d.todos = [...(d.todos ?? []), todo];
+    });
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
@@ -37,11 +37,10 @@ const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
     const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
 
     const todoId = result.data?.deleteTodo?.id;
-    if (!todoId) return;
-    const newData: TodosPageQuery = {
-      ...data,
-      todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
-    };
+    if (!data || !todoId) return;
+    const newData = produce(data, (d) => {
+      d.todos = (d.todos ?? []).filter((todo) => todo.id !== todoId);
+    });
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
