@@ -9,10 +9,12 @@ import {
   useDeleteTodoMutation,
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
+  useUpdateTodoMutation,
 } from '../lib/graphql/__generated__/TodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
+  UpdateTodoInput,
 } from '../lib/graphql/__generated__/baseTypes';
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
@@ -55,6 +57,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     createOneTodoMutationOptions
   );
   const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
+  const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
 
   const handleCreateOneTodo = React.useCallback(() => {
@@ -71,6 +74,14 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     (todoId: number) => {
       const input: DeleteTodoInput = { id: todoId };
       deleteTodo({ variables: { input } });
+    },
+    [data, text, createOneTodo]
+  );
+
+  const handleUpdateTodo = React.useCallback(
+    (todoId: number) => {
+      const input: UpdateTodoInput = { id: todoId, text };
+      updateTodo({ variables: { input } });
     },
     [data, text, createOneTodo]
   );
@@ -100,6 +111,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             <li key={todo.id}>
               <span>{todo.text}</span>
               <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
+              <button onClick={() => handleUpdateTodo(todo.id)}>Update</button>
             </li>
           );
         })}

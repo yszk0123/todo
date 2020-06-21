@@ -17,6 +17,7 @@ scalar Json
 type Mutation {
   createOneTodo(data: TodoCreateInput!): Todo!
   deleteTodo(data: DeleteTodoInput!): Todo
+  updateTodo(data: UpdateTodoInput!): Todo
 }
 
 type Query {
@@ -46,6 +47,11 @@ input TodoCreateInput {
 
 input TodoWhereUniqueInput {
   id: Int
+}
+
+input UpdateTodoInput {
+  id: Int!
+  text: String
 }
 
 type User {
