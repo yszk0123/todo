@@ -1,6 +1,11 @@
 schema: api.graphql
 documents: ./lib/graphql/**/*.graphql
 generates:
+  lib/graphql/__generated__/introspectionResult.ts:
+    plugins:
+      - fragment-matcher
+    config:
+      useExplicitTyping: true
   lib/graphql/__generated__/baseTypes.ts:
     - typescript
   lib/graphql/:

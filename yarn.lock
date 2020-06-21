@@ -1212,6 +1212,14 @@
     "@graphql-tools/utils" "^6.0.0"
     tslib "~2.0.0"
 
+"@graphql-codegen/fragment-matcher@^1.15.4":
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/fragment-matcher/-/fragment-matcher-1.15.4.tgz#11b04b5cdb8686977141422ae02115da17ad786f"
+  integrity sha512-6yz270ef+lX5zeLnjN1UUUv5R5EGjC6l0S3c7zsN2xgJMruRhVCMoVdBEQihtVVD/1fMISj7pqRTaeKtRBYaTg==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "1.15.4"
+    tslib "~2.0.0"
+
 "@graphql-codegen/near-operation-file-preset@^1.15.4":
   version "1.15.4"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/near-operation-file-preset/-/near-operation-file-preset-1.15.4.tgz#b8e307ac98b3bd3f9d9fd2ae1c0b46249a17596a"
