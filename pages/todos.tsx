@@ -75,6 +75,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
 
   const handleDeleteTodo = React.useCallback(
     (todoId: number) => {
+      if (!confirm('Delete?')) return;
       const input: DeleteTodoInput = { id: todoId };
       deleteTodo({ variables: { input } });
     },
@@ -116,7 +117,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
               <Box mx="auto" />
               <Box py={1}>
                 <Button mx={1} onClick={() => handleDeleteTodo(todo.id)}>
-                  [x]
+                  X
                 </Button>
                 <Button mx={1} onClick={() => handleUpdateTodo(todo.id)}>
                   Update
