@@ -15,6 +15,7 @@ export const ContentWrapper: React.FunctionComponent<Props> = ({
       sx={{
         maxWidth: 1024,
         mx: 'auto',
+        mt: 2,
         px: 2,
       }}
     >

@@ -129,7 +129,11 @@ const TodosPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <p>{todos.length} todos</p>
+      <Box my={1}>
+        <Text textAlign="right" color="gray">
+          {todos.length} todos
+        </Text>
+      </Box>
       <Box onClick={stopPropagation}>
         {todos.map((todo) => {
           return (
