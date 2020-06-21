@@ -69,6 +69,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
         text,
       };
       createOneTodo({ variables: { input } });
+      setText('');
     }
   }, [data, text, createOneTodo]);
 
@@ -84,6 +85,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     (todoId: number) => {
       const input: UpdateTodoInput = { id: todoId, text };
       updateTodo({ variables: { input } });
+      setText('');
     },
     [data, text, createOneTodo]
   );
