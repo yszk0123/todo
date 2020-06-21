@@ -18,6 +18,16 @@ export type Scalars = {
 
 
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createOneTodo: Todo;
+};
+
+
+export type MutationCreateOneTodoArgs = {
+  data: TodoCreateInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
@@ -25,12 +35,23 @@ export type Query = {
   users?: Maybe<Array<User>>;
 };
 
+export enum Role {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
 export type Todo = {
   __typename?: 'Todo';
   author: User;
   authorId: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   id: Scalars['Int'];
+  text: Scalars['String'];
+};
+
+export type TodoCreateInput = {
+  author: UserCreateOneWithoutTodosInput;
+  createdAt?: Maybe<Scalars['DateTime']>;
   text: Scalars['String'];
 };
 
@@ -54,16 +75,22 @@ export type UserTodosArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type ExampleQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserCreateOneWithoutTodosInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutTodosInput>;
+};
 
+export type UserCreateWithoutTodosInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  name: Scalars['String'];
+  role?: Maybe<Role>;
+};
 
-export type ExampleQuery = (
-  { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'name' | 'email'>
-  )> }
-);
+export type UserWhereUniqueInput = {
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+};
 
 export type TodosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -76,9 +103,34 @@ export type TodosQuery = (
   )>> }
 );
 
+export type CreateOneTodoMutationVariables = Exact<{
+  input: TodoCreateInput;
+}>;
 
-export const ExampleDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"example"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
+
+export type CreateOneTodoMutation = (
+  { __typename?: 'Mutation' }
+  & { createOneTodo: (
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'text' | 'createdAt'>
+  ) }
+);
+
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'email'>
+  )> }
+);
+
+
 export const TodosDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"todos"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todos"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"text"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"createdAt"},"arguments":[],"directives":[]}]}}]}}]};
+export const CreateOneTodoDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createOneTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TodoCreateInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOneTodo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"text"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"createdAt"},"arguments":[],"directives":[]}]}}]}}]};
+export const UserDocument: DocumentNode = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"user"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -86,11 +138,14 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    example(variables?: ExampleQueryVariables): Promise<ExampleQuery> {
-      return withWrapper(() => client.request<ExampleQuery>(print(ExampleDocument), variables));
-    },
     todos(variables?: TodosQueryVariables): Promise<TodosQuery> {
       return withWrapper(() => client.request<TodosQuery>(print(TodosDocument), variables));
+    },
+    createOneTodo(variables: CreateOneTodoMutationVariables): Promise<CreateOneTodoMutation> {
+      return withWrapper(() => client.request<CreateOneTodoMutation>(print(CreateOneTodoDocument), variables));
+    },
+    user(variables?: UserQueryVariables): Promise<UserQuery> {
+      return withWrapper(() => client.request<UserQuery>(print(UserDocument), variables));
     }
   };
 }
