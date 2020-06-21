@@ -6,13 +6,13 @@ import {
   CreateOneTodoMutationHookResult,
   TodosPageDocument,
   TodosPageQuery,
+  useDeleteTodoMutation,
 } from '../lib/graphql/__generated__/TodosPage.graphql';
 
 const TodosPage: React.FunctionComponent<{}> = () => {
   const { loading, data } = useTodosPageQuery();
-  const a: CreateOneTodoMutationHookResult[0] = {} as any;
-
   const [createOneTodo] = useCreateOneTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
   const [text, setText] = React.useState('');
 
   const handleCreateOneTodo = React.useCallback(() => {
@@ -43,6 +43,31 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     }
   }, [data, text, createOneTodo]);
 
+  const handleDeleteTodo = React.useCallback(
+    (todoId: number) => {
+      if (data?.me) {
+        deleteTodo({
+          variables: {
+            input: { id: todoId },
+          },
+          update(cache, result) {
+            const data = cache.readQuery<TodosPageQuery>({
+              query: TodosPageDocument,
+            });
+            cache.writeQuery<TodosPageQuery>({
+              query: TodosPageDocument,
+              data: {
+                ...data,
+                todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
+              },
+            });
+          },
+        });
+      }
+    },
+    [data, text, createOneTodo]
+  );
+
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const text = event.currentTarget.value;
@@ -64,7 +89,12 @@ const TodosPage: React.FunctionComponent<{}> = () => {
       <p>{todos.length} todos</p>
       <ul>
         {todos.map((todo) => {
-          return <li key={todo.id}>{todo.text}</li>;
+          return (
+            <li key={todo.id}>
+              <span>{todo.text}</span>
+              <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
+            </li>
+          );
         })}
       </ul>
       <input value={text} onChange={handleChangeText} />

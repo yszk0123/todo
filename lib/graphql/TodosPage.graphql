@@ -14,3 +14,9 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
     text
   }
 }
+
+mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(data: $input) {
+    id
+  }
+}

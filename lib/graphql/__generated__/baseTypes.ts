@@ -14,15 +14,31 @@ export type Scalars = {
 };
 
 
+export type DeleteTodoInput = {
+  id: Scalars['Int'];
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
   createOneTodo: Todo;
+  deleteOneTodo?: Maybe<Todo>;
+  deleteTodo?: Maybe<Todo>;
 };
 
 
 export type MutationCreateOneTodoArgs = {
   data: TodoCreateInput;
+};
+
+
+export type MutationDeleteOneTodoArgs = {
+  where: TodoWhereUniqueInput;
+};
+
+
+export type MutationDeleteTodoArgs = {
+  data: DeleteTodoInput;
 };
 
 export type Query = {

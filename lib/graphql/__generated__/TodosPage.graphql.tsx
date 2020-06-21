@@ -31,6 +31,19 @@ export type CreateOneTodoMutation = (
   ) }
 );
 
+export type DeleteTodoMutationVariables = Types.Exact<{
+  input: Types.DeleteTodoInput;
+}>;
+
+
+export type DeleteTodoMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteTodo?: Types.Maybe<(
+    { __typename?: 'Todo' }
+    & Pick<Types.Todo, 'id'>
+  )> }
+);
+
 
 export const TodosPageDocument = gql`
     query TodosPage {
@@ -104,3 +117,35 @@ export function useCreateOneTodoMutation(baseOptions?: ApolloReactHooks.Mutation
 export type CreateOneTodoMutationHookResult = ReturnType<typeof useCreateOneTodoMutation>;
 export type CreateOneTodoMutationResult = ApolloReactCommon.MutationResult<CreateOneTodoMutation>;
 export type CreateOneTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOneTodoMutation, CreateOneTodoMutationVariables>;
+export const DeleteTodoDocument = gql`
+    mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(data: $input) {
+    id
+  }
+}
+    `;
+export type DeleteTodoMutationFn = ApolloReactCommon.MutationFunction<DeleteTodoMutation, DeleteTodoMutationVariables>;
+
+/**
+ * __useDeleteTodoMutation__
+ *
+ * To run a mutation, you first call `useDeleteTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTodoMutation, { data, loading, error }] = useDeleteTodoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteTodoMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteTodoMutation, DeleteTodoMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument, baseOptions);
+      }
+export type DeleteTodoMutationHookResult = ReturnType<typeof useDeleteTodoMutation>;
+export type DeleteTodoMutationResult = ApolloReactCommon.MutationResult<DeleteTodoMutation>;
+export type DeleteTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteTodoMutation, DeleteTodoMutationVariables>;
