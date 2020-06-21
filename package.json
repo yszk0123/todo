@@ -18,7 +18,7 @@
     "next:build": "next build",
     "next:dev": "next",
     "dev": "npm-run-all -p nexus:reflection codegen:generate:watch next:dev",
-    "build": "npm-run-all -s nexus:prod next:build",
+    "build": "npm-run-all -s nexus:build next:build",
     "start": "next start"
   },
   "devDependencies": {
