@@ -1,6 +1,7 @@
 import React from 'react';
 import produce from 'immer';
-import Link from 'next/link';
+import { Button, Flex, Text, Box } from 'rebass';
+import { Input } from '@rebass/forms';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
@@ -16,6 +17,7 @@ import {
   DeleteTodoInput,
   UpdateTodoInput,
 } from '../lib/graphql/__generated__/baseTypes';
+import { ContentWrapper } from '../lib/components/layout/ContentWrapper';
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -100,25 +102,35 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const todos = data.todos ?? [];
 
   return (
-    <div>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
+    <ContentWrapper>
       <p>{todos.length} todos</p>
-      <ul>
+      <Box>
         {todos.map((todo) => {
           return (
-            <li key={todo.id}>
-              <span>{todo.text}</span>
-              <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
-              <button onClick={() => handleUpdateTodo(todo.id)}>Update</button>
-            </li>
+            <Flex key={todo.id} alignItems="center">
+              <Box>
+                <Text>{todo.text}</Text>
+              </Box>
+              <Box mx="auto" />
+              <Box py={1}>
+                <Button mx={1} onClick={() => handleDeleteTodo(todo.id)}>
+                  [x]
+                </Button>
+                <Button mx={1} onClick={() => handleUpdateTodo(todo.id)}>
+                  Update
+                </Button>
+              </Box>
+            </Flex>
           );
         })}
-      </ul>
-      <input value={text} onChange={handleChangeText} />
-      <button onClick={handleCreateOneTodo}>Create</button>
-    </div>
+      </Box>
+      <Flex alignItems="center" my={3}>
+        <Input value={text} onChange={handleChangeText} />
+        <Button mx={1} onClick={handleCreateOneTodo}>
+          Create
+        </Button>
+      </Flex>
+    </ContentWrapper>
   );
 };
 
