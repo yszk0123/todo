@@ -1,10 +1,25 @@
 schema: api.graphql
 documents: ./lib/graphql/**/*.graphql
 generates:
-  ./lib/graphql/sdk.ts:
+  lib/graphql/__generated__/introspectionResult.ts:
     plugins:
-      - typescript
+      - fragment-matcher
+    config:
+      useExplicitTyping: true
+  lib/graphql/__generated__/baseTypes.ts:
+    - typescript
+  lib/graphql/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .graphql.tsx
+      baseTypesPath: __generated__/baseTypes.ts
+      folder: __generated__
+    plugins:
       - typescript-operations
-      - typescript-graphql-request
+      - typescript-react-apollo
 config:
-  documentMode: documentNode
+  withComponent: false
+  withHOC: false
+  withHooks: true
+  withRefetchFn: true
+  reactApolloVersion: 3

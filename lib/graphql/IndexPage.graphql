@@ -1,0 +1,6 @@
+query IndexPage {
+  me {
+    id
+    name
+  }
+}

@@ -1,0 +1,22 @@
+query TodosPage {
+  me {
+    id
+  }
+  todos {
+    id
+    text
+  }
+}
+
+mutation CreateOneTodo($input: TodoCreateInput!) {
+  createOneTodo(data: $input) {
+    id
+    text
+  }
+}
+
+mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(data: $input) {
+    id
+  }
+}

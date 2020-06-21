@@ -1,0 +1,106 @@
+import React from 'react';
+import Link from 'next/link';
+import {
+  useTodosPageQuery,
+  useCreateOneTodoMutation,
+  CreateOneTodoMutationHookResult,
+  TodosPageDocument,
+  TodosPageQuery,
+  useDeleteTodoMutation,
+} from '../lib/graphql/__generated__/TodosPage.graphql';
+
+const TodosPage: React.FunctionComponent<{}> = () => {
+  const { loading, data } = useTodosPageQuery();
+  const [createOneTodo] = useCreateOneTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [text, setText] = React.useState('');
+
+  const handleCreateOneTodo = React.useCallback(() => {
+    if (data?.me) {
+      createOneTodo({
+        variables: {
+          input: {
+            author: { connect: { id: data.me.id } },
+            text,
+          },
+        },
+        update(cache, result) {
+          const todo = result.data?.createOneTodo;
+          if (!todo) return;
+
+          const data = cache.readQuery<TodosPageQuery>({
+            query: TodosPageDocument,
+          });
+          cache.writeQuery<TodosPageQuery>({
+            query: TodosPageDocument,
+            data: {
+              ...data,
+              todos: [...(data?.todos ?? []), todo],
+            },
+          });
+        },
+      });
+    }
+  }, [data, text, createOneTodo]);
+
+  const handleDeleteTodo = React.useCallback(
+    (todoId: number) => {
+      if (data?.me) {
+        deleteTodo({
+          variables: {
+            input: { id: todoId },
+          },
+          update(cache, result) {
+            const data = cache.readQuery<TodosPageQuery>({
+              query: TodosPageDocument,
+            });
+            cache.writeQuery<TodosPageQuery>({
+              query: TodosPageDocument,
+              data: {
+                ...data,
+                todos: (data?.todos ?? []).filter((todo) => todo.id !== todoId),
+              },
+            });
+          },
+        });
+      }
+    },
+    [data, text, createOneTodo]
+  );
+
+  const handleChangeText = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const text = event.currentTarget.value;
+      setText(text);
+    },
+    []
+  );
+
+  if (loading || !data) {
+    return null;
+  }
+  const todos = data.todos ?? [];
+
+  return (
+    <div>
+      <Link href="/">
+        <a>Home</a>
+      </Link>
+      <p>{todos.length} todos</p>
+      <ul>
+        {todos.map((todo) => {
+          return (
+            <li key={todo.id}>
+              <span>{todo.text}</span>
+              <button onClick={() => handleDeleteTodo(todo.id)}>[x]</button>
+            </li>
+          );
+        })}
+      </ul>
+      <input value={text} onChange={handleChangeText} />
+      <button onClick={handleCreateOneTodo}>Create</button>
+    </div>
+  );
+};
+
+export default TodosPage;
