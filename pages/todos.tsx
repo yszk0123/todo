@@ -1,4 +1,6 @@
 import React from 'react';
+// @ts-ignore
+import Linkify from 'react-linkify';
 import produce from 'immer';
 import { Button, Flex, Text, Box } from 'rebass';
 import { Input, Checkbox } from '@rebass/forms';
@@ -19,6 +21,18 @@ import {
   Todo,
 } from '../client/graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../client/components/layout/ContentWrapper';
+
+function linkifyComponentDecorator(
+  decoratedHref: string,
+  decoratedText: string,
+  key: number
+): React.ReactNode {
+  return (
+    <a href={decoratedHref} rel="noopener" target="_blank" key={key}>
+      {decoratedText}
+    </a>
+  );
+}
 
 function preventDefault(event: React.SyntheticEvent) {
   event.preventDefault();
@@ -150,7 +164,11 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             >
               <Checkbox />
               <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
-                <Text>{todo.text}</Text>
+                <Text>
+                  <Linkify componentDecorator={linkifyComponentDecorator}>
+                    {todo.text}
+                  </Linkify>
+                </Text>
               </Box>
             </Flex>
           );
