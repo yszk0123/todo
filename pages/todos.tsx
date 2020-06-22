@@ -71,19 +71,28 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
+  const isSelected = !!currentTodoId;
 
-  const handleSelectTodo = React.useCallback(
-    (todo: Pick<Todo, 'id' | 'text'>) => {
-      setCurrentTodoId(todo.id);
-      setText(todo.text);
-    },
-    []
-  );
-
-  const handleDeselectTodo = React.useCallback(() => {
+  const deselect = React.useCallback(() => {
     setCurrentTodoId(null);
     setText('');
   }, []);
+
+  const handleSelectTodo = React.useCallback(
+    (todo: Pick<Todo, 'id' | 'text'>) => {
+      if (todo.id !== currentTodoId) {
+        setCurrentTodoId(todo.id);
+        setText(todo.text);
+      } else {
+        deselect();
+      }
+    },
+    [currentTodoId, deselect]
+  );
+
+  const handleDeselectTodo = React.useCallback(() => {
+    deselect();
+  }, [deselect]);
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
@@ -92,27 +101,23 @@ const TodosPage: React.FunctionComponent<{}> = () => {
         text,
       };
       createOneTodo({ variables: { input } });
-      setText('');
+      deselect();
     }
-  }, [data, text, createOneTodo]);
+  }, [data, text, deselect, createOneTodo]);
 
-  const handleDeleteTodo = React.useCallback(
-    (todoId: number) => {
-      if (!confirm('Delete?')) return;
-      const input: DeleteTodoInput = { id: todoId };
-      deleteTodo({ variables: { input } });
-    },
-    [data, text, createOneTodo]
-  );
+  const handleDeleteTodo = React.useCallback(() => {
+    if (!currentTodoId) return;
+    if (!confirm('Delete?')) return;
+    const input: DeleteTodoInput = { id: currentTodoId };
+    deleteTodo({ variables: { input } });
+    deselect();
+  }, [data, text, deselect, createOneTodo, currentTodoId]);
 
-  const handleUpdateTodo = React.useCallback(
-    (todoId: number) => {
-      const input: UpdateTodoInput = { id: todoId, text };
-      updateTodo({ variables: { input } });
-      setText('');
-    },
-    [data, text, createOneTodo]
-  );
+  const handleUpdateTodo = React.useCallback(() => {
+    if (!currentTodoId) return;
+    const input: UpdateTodoInput = { id: currentTodoId, text };
+    updateTodo({ variables: { input } });
+  }, [data, text, createOneTodo, currentTodoId]);
 
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,40 +146,43 @@ const TodosPage: React.FunctionComponent<{}> = () => {
               key={todo.id}
               alignItems="center"
               bg={todo.id === currentTodoId ? 'muted' : undefined}
+              p={2}
             >
-              <Box
-                px={1}
-                flex="1 1 auto"
-                onClick={() => handleSelectTodo(todo)}
-              >
+              <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
                 <Text>{todo.text}</Text>
               </Box>
-              <Box py={1}>
-                <Button
-                  variant="secondary"
-                  ml={1}
-                  onClick={() => handleDeleteTodo(todo.id)}
-                >
-                  X
-                </Button>
-                <Button
-                  variant="secondary"
-                  ml={1}
-                  onClick={() => handleUpdateTodo(todo.id)}
-                >
-                  Update
-                </Button>
-              </Box>
+              <Box>[ ]</Box>
             </Flex>
           );
         })}
       </Box>
-      <Box as="form" my={4} onSubmit={preventDefault}>
+      <Box as="form" my={3} onSubmit={preventDefault} onClick={stopPropagation}>
         <Flex alignItems="center">
           <Input value={text} onChange={handleChangeText} />
+        </Flex>
+        <Flex mt={2} alignItems="center" justifyContent="space-between">
           <Button
+            type="button"
+            width={1}
+            variant="outline"
+            onClick={handleDeleteTodo}
+          >
+            Delete
+          </Button>
+          <Button
+            type="button"
+            width={1}
+            variant="outline"
             ml={1}
-            minWidth={120}
+            disabled={!isSelected}
+            onClick={handleUpdateTodo}
+          >
+            Update
+          </Button>
+          <Button
+            type="submit"
+            width={1}
+            ml={1}
             variant="primary"
             onClick={handleCreateOneTodo}
           >
