@@ -1,4 +1,4 @@
-import { handlers } from './_lib/handlers';
+import { handlers } from '../../server/handlers';
 
 export default process.env.NODE_ENV !== 'production'
   ? handlers.playground
