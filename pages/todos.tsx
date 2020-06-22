@@ -1,7 +1,7 @@
 import React from 'react';
 import produce from 'immer';
 import { Button, Flex, Text, Box } from 'rebass';
-import { Input } from '@rebass/forms';
+import { Input, Checkbox } from '@rebass/forms';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
@@ -148,10 +148,10 @@ const TodosPage: React.FunctionComponent<{}> = () => {
               bg={todo.id === currentTodoId ? 'highlight' : undefined}
               p={2}
             >
+              <Checkbox />
               <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
                 <Text>{todo.text}</Text>
               </Box>
-              <Box>[ ]</Box>
             </Flex>
           );
         })}
