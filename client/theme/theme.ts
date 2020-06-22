@@ -6,10 +6,11 @@ export const theme = {
   colors: {
     text: '#000',
     background: '#fff',
-    primary: '#6200ee',
-    secondary: '#03dac6',
-    muted: '#f6f6f6',
+    primary: '#07c',
+    secondary: '#30c',
+    muted: '#f6f6f9',
     gray: '#555',
+    highlight: 'hsla(205, 100%, 40%, 0.125)',
   },
   fonts: {
     body: 'Roboto, sans-serif',

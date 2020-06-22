@@ -145,7 +145,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             <Flex
               key={todo.id}
               alignItems="center"
-              bg={todo.id === currentTodoId ? 'muted' : undefined}
+              bg={todo.id === currentTodoId ? 'highlight' : undefined}
               p={2}
             >
               <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
