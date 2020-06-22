@@ -11,14 +11,14 @@ import {
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../lib/graphql/__generated__/TodosPage.graphql';
+} from '../client/graphql/__generated__/TodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
   Todo,
-} from '../lib/graphql/__generated__/baseTypes';
-import { ContentWrapper } from '../lib/components/layout/ContentWrapper';
+} from '../client/graphql/__generated__/baseTypes';
+import { ContentWrapper } from '../client/components/layout/ContentWrapper';
 
 function preventDefault(event: React.SyntheticEvent) {
   event.preventDefault();
