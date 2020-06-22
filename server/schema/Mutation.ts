@@ -21,10 +21,12 @@ schema.mutationType({
       resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
         const authorId = args.data.author.connect?.id;
+
         const authorized = !!userId && !!authorId && userId === authorId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
+
         return originResolve(root, args, ctx, info);
       },
     });
@@ -37,12 +39,17 @@ schema.mutationType({
       async resolve(_root, args, ctx, _info) {
         const todoId = args.data.id;
         const userId = ctx.user?.id;
-        const todo = await ctx.db.todo.findOne({ where: { id: todoId } });
+
+        const todo = await ctx.db.todo.findOne({
+          where: { id: todoId },
+          select: { authorId: true },
+        });
         const authorId = todo?.authorId;
         const authorized = !!userId && !!authorId && userId === authorId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
+
         const deletedTodo = await ctx.db.todo.delete({ where: { id: todoId } });
         return deletedTodo;
       },
@@ -57,12 +64,17 @@ schema.mutationType({
         const todoId = args.data.id;
         const text = args.data.text ?? undefined;
         const userId = ctx.user?.id;
-        const todo = await ctx.db.todo.findOne({ where: { id: todoId } });
+
+        const todo = await ctx.db.todo.findOne({
+          where: { id: todoId },
+          select: { authorId: true },
+        });
         const authorId = todo?.authorId;
         const authorized = !!userId && !!authorId && userId === authorId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
+
         const updatedTodo = await ctx.db.todo.update({
           data: { text },
           where: { id: todoId },
