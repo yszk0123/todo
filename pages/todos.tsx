@@ -156,7 +156,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
           );
         })}
       </Box>
-      <Box as="form" my={3} onSubmit={preventDefault} onClick={stopPropagation}>
+      <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
         <Flex alignItems="center">
           <Input value={text} onChange={handleChangeText} />
         </Flex>
@@ -173,7 +173,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
             type="button"
             width={1}
             variant="outline"
-            ml={1}
+            ml={2}
             disabled={!isSelected}
             onClick={handleUpdateTodo}
           >
@@ -182,7 +182,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
           <Button
             type="submit"
             width={1}
-            ml={1}
+            ml={2}
             variant="primary"
             onClick={handleCreateOneTodo}
           >
