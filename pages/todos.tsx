@@ -135,7 +135,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
       <Box>
-        <Text textAlign="right" color="gray">
+        <Text textAlign="right" fontSize={2} color="gray">
           {todos.length} todos
         </Text>
       </Box>
