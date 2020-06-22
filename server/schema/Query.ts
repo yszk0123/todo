@@ -9,13 +9,6 @@ schema.queryType({
       },
     });
 
-    t.list.field('users', {
-      type: 'User',
-      resolve(_root, _args, ctx) {
-        return ctx.db.user.findMany();
-      },
-    });
-
     t.list.field('todos', {
       type: 'Todo',
       resolve(_root, _args, ctx) {
