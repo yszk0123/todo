@@ -20,39 +20,31 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   return (
     <div>
       <Flex px={2} color="white" bg="black" alignItems="center">
-        <NextLink href="/">
-          <Link variant="nav" href="/">
+        <NextLink href="/" passHref>
+          <Link variant="nav">
             <Text p={2} fontWeight="bold">
               Todo
             </Text>
           </Link>
         </NextLink>
         <Box>
-          <NextLink href="/">
-            <Link variant="nav" href="/">
-              Home
-            </Link>
+          <NextLink href="/" passHref>
+            <Link variant="nav">Home</Link>
           </NextLink>
-          <NextLink href="/todos">
-            <Link variant="nav" href="/todos">
-              Todos
-            </Link>
+          <NextLink href="/todos" passHref>
+            <Link variant="nav">Todos</Link>
           </NextLink>
         </Box>
         <Box mx="auto" />
         {username && <Text p={2}>{username}</Text>}
         <Box p={2}>
           {hasSession ? (
-            <NextLink href="/api/auth/signout">
-              <Link variant="nav" href="/api/auth/signout">
-                Sign out
-              </Link>
+            <NextLink href="/api/auth/signout" passHref>
+              <Link variant="nav">Sign out</Link>
             </NextLink>
           ) : (
-            <NextLink href="/api/auth/signin">
-              <Link variant="nav" href="/api/auth/signin">
-                Sign in
-              </Link>
+            <NextLink href="/api/auth/signin" passHref>
+              <Link variant="nav">Sign in</Link>
             </NextLink>
           )}
         </Box>
