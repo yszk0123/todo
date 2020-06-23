@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/client';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
 import { useIndexPageQuery } from '../graphql/__generated__/IndexPage.graphql';
-import { Loading } from './Lodaing';
+import { LoadingIndicator } from './LodaingIndicator';
 
 export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, isSessionLoading] = useSession();
@@ -12,7 +12,7 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const isLoading = isSessionLoading || isQueryLoading;
 
   if (isLoading || isSessionLoading) {
-    return <Loading />;
+    return <LoadingIndicator />;
   }
 
   const username = data?.me?.name ?? null;
