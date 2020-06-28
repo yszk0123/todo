@@ -1,8 +1,6 @@
 import React from 'react';
-import { ContentWrapper } from '../client/components/layout/ContentWrapper';
+import { IndexPage } from '../client/components/pages/IndexPage';
 
-const HomePage: React.FunctionComponent<{}> = () => {
-  return <ContentWrapper>Home</ContentWrapper>;
+export default () => {
+  return <IndexPage />;
 };
-
-export default HomePage;

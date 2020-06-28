@@ -1,0 +1,28 @@
+query TagsPage {
+  me {
+    id
+  }
+  tags {
+    id
+    name
+  }
+}
+
+mutation CreateOneTag($data: TagCreateInput!) {
+  createOneTag(data: $data) {
+    id
+    name
+  }
+}
+
+mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
+  updateOneTag(data: $data, where: $where) {
+    id
+  }
+}
+
+mutation DeleteOneTag($where: TagWhereUniqueInput!) {
+  deleteOneTag(where: $where) {
+    id
+  }
+}

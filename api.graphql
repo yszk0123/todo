@@ -228,10 +228,13 @@ scalar Json
 
 type Mutation {
   createOneCategory(data: CategoryCreateInput!): Category!
+  createOneTag(data: TagCreateInput!): Tag!
   createOneTodo(data: TodoCreateInput!): Todo!
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
+  deleteOneTag(where: TagWhereUniqueInput!): Tag
   deleteTodo(data: DeleteTodoInput!): Todo
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateTodo(data: UpdateTodoInput!): Todo
 }
 
@@ -239,6 +242,7 @@ type Query {
   categories: [Category!]
   category(id: Int!): Category
   me: User
+  tag(id: Int!): Tag
   tags: [Tag!]
   todos: [Todo!]
 }
@@ -269,6 +273,14 @@ type Tag {
   name: String!
   owner: User!
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+
+input TagCreateInput {
+  categories: CategoryCreateManyWithoutTagsInput
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  todos: TodoCreateManyWithoutTagsInput
 }
 
 input TagCreateManyWithoutCategoriesInput {
@@ -323,6 +335,15 @@ input TagScalarWhereInput {
   OR: [TagScalarWhereInput!]
   ownerId: IntFilter
   todos: TodoFilter
+}
+
+input TagUpdateInput {
+  categories: CategoryUpdateManyWithoutTagsInput
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  todos: TodoUpdateManyWithoutTagsInput
 }
 
 input TagUpdateManyDataInput {

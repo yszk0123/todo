@@ -2,8 +2,8 @@ import React from 'react';
 import { useSession } from 'next-auth/client';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
-import { useIndexPageQuery } from '../graphql/__generated__/IndexPage.graphql';
-import { LoadingIndicator } from './LodaingIndicator';
+import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
+import { LoadingIndicator } from '../atoms/LoadingIndicator';
 
 export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, isSessionLoading] = useSession();
@@ -30,6 +30,9 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
         <Box>
           <NextLink href="/categories" passHref>
             <Link variant="nav">Categories</Link>
+          </NextLink>
+          <NextLink href="/tags" passHref>
+            <Link variant="nav">Tags</Link>
           </NextLink>
         </Box>
         <Box mx="auto" />
