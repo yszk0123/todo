@@ -20,6 +20,7 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
     id
     text
+    categoryId
     tags {
       id
       name
@@ -30,6 +31,7 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
 mutation DeleteTodo($input: DeleteTodoInput!) {
   deleteTodo(data: $input) {
     id
+    categoryId
   }
 }
 

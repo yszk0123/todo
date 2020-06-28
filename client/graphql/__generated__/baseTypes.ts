@@ -39,6 +39,14 @@ export type CategoryTodosArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
+export type CategoryCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  owner: UserCreateOneWithoutCategoriesInput;
+  tags?: Maybe<TagCreateManyWithoutCategoriesInput>;
+  todos?: Maybe<TodoCreateManyWithoutCategoryInput>;
+};
+
 export type CategoryCreateManyWithoutOwnerInput = {
   connect?: Maybe<Array<CategoryWhereUniqueInput>>;
   create?: Maybe<Array<CategoryCreateWithoutOwnerInput>>;
@@ -75,21 +83,184 @@ export type CategoryCreateWithoutTodosInput = {
   tags?: Maybe<TagCreateManyWithoutCategoriesInput>;
 };
 
+export type CategoryFilter = {
+  every?: Maybe<CategoryWhereInput>;
+  none?: Maybe<CategoryWhereInput>;
+  some?: Maybe<CategoryWhereInput>;
+};
+
+export type CategoryScalarWhereInput = {
+  AND?: Maybe<Array<CategoryScalarWhereInput>>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  name?: Maybe<StringFilter>;
+  NOT?: Maybe<Array<CategoryScalarWhereInput>>;
+  OR?: Maybe<Array<CategoryScalarWhereInput>>;
+  ownerId?: Maybe<IntFilter>;
+  tags?: Maybe<TagFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
+export type CategoryUpdateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCategoriesInput>;
+  tags?: Maybe<TagUpdateManyWithoutCategoriesInput>;
+  todos?: Maybe<TodoUpdateManyWithoutCategoryInput>;
+};
+
+export type CategoryUpdateManyDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type CategoryUpdateManyWithoutOwnerInput = {
+  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
+  create?: Maybe<Array<CategoryCreateWithoutOwnerInput>>;
+  delete?: Maybe<Array<CategoryWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<CategoryScalarWhereInput>>;
+  disconnect?: Maybe<Array<CategoryWhereUniqueInput>>;
+  set?: Maybe<Array<CategoryWhereUniqueInput>>;
+  update?: Maybe<Array<CategoryUpdateWithWhereUniqueWithoutOwnerInput>>;
+  updateMany?: Maybe<Array<CategoryUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<CategoryUpsertWithWhereUniqueWithoutOwnerInput>>;
+};
+
+export type CategoryUpdateManyWithoutTagsInput = {
+  connect?: Maybe<Array<CategoryWhereUniqueInput>>;
+  create?: Maybe<Array<CategoryCreateWithoutTagsInput>>;
+  delete?: Maybe<Array<CategoryWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<CategoryScalarWhereInput>>;
+  disconnect?: Maybe<Array<CategoryWhereUniqueInput>>;
+  set?: Maybe<Array<CategoryWhereUniqueInput>>;
+  update?: Maybe<Array<CategoryUpdateWithWhereUniqueWithoutTagsInput>>;
+  updateMany?: Maybe<Array<CategoryUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<CategoryUpsertWithWhereUniqueWithoutTagsInput>>;
+};
+
+export type CategoryUpdateManyWithWhereNestedInput = {
+  data: CategoryUpdateManyDataInput;
+  where: CategoryScalarWhereInput;
+};
+
+export type CategoryUpdateOneRequiredWithoutTodosInput = {
+  connect?: Maybe<CategoryWhereUniqueInput>;
+  create?: Maybe<CategoryCreateWithoutTodosInput>;
+  update?: Maybe<CategoryUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<CategoryUpsertWithoutTodosInput>;
+};
+
+export type CategoryUpdateWithoutOwnerDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  tags?: Maybe<TagUpdateManyWithoutCategoriesInput>;
+  todos?: Maybe<TodoUpdateManyWithoutCategoryInput>;
+};
+
+export type CategoryUpdateWithoutTagsDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCategoriesInput>;
+  todos?: Maybe<TodoUpdateManyWithoutCategoryInput>;
+};
+
+export type CategoryUpdateWithoutTodosDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCategoriesInput>;
+  tags?: Maybe<TagUpdateManyWithoutCategoriesInput>;
+};
+
+export type CategoryUpdateWithWhereUniqueWithoutOwnerInput = {
+  data: CategoryUpdateWithoutOwnerDataInput;
+  where: CategoryWhereUniqueInput;
+};
+
+export type CategoryUpdateWithWhereUniqueWithoutTagsInput = {
+  data: CategoryUpdateWithoutTagsDataInput;
+  where: CategoryWhereUniqueInput;
+};
+
+export type CategoryUpsertWithoutTodosInput = {
+  create: CategoryCreateWithoutTodosInput;
+  update: CategoryUpdateWithoutTodosDataInput;
+};
+
+export type CategoryUpsertWithWhereUniqueWithoutOwnerInput = {
+  create: CategoryCreateWithoutOwnerInput;
+  update: CategoryUpdateWithoutOwnerDataInput;
+  where: CategoryWhereUniqueInput;
+};
+
+export type CategoryUpsertWithWhereUniqueWithoutTagsInput = {
+  create: CategoryCreateWithoutTagsInput;
+  update: CategoryUpdateWithoutTagsDataInput;
+  where: CategoryWhereUniqueInput;
+};
+
+export type CategoryWhereInput = {
+  AND?: Maybe<Array<CategoryWhereInput>>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  name?: Maybe<StringFilter>;
+  NOT?: Maybe<Array<CategoryWhereInput>>;
+  OR?: Maybe<Array<CategoryWhereInput>>;
+  owner?: Maybe<UserWhereInput>;
+  ownerId?: Maybe<IntFilter>;
+  tags?: Maybe<TagFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
 export type CategoryWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
 };
 
 
+export type DateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<Scalars['DateTime']>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
 export type DeleteTodoInput = {
   id: Scalars['Int'];
+};
+
+export type IntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  not?: Maybe<Scalars['Int']>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
 };
 
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createOneCategory: Category;
   createOneTodo: Todo;
+  deleteOneCategory?: Maybe<Category>;
   deleteTodo?: Maybe<Todo>;
+  updateOneCategory?: Maybe<Category>;
   updateTodo?: Maybe<Todo>;
+};
+
+
+export type MutationCreateOneCategoryArgs = {
+  data: CategoryCreateInput;
 };
 
 
@@ -98,8 +269,19 @@ export type MutationCreateOneTodoArgs = {
 };
 
 
+export type MutationDeleteOneCategoryArgs = {
+  where: CategoryWhereUniqueInput;
+};
+
+
 export type MutationDeleteTodoArgs = {
   data: DeleteTodoInput;
+};
+
+
+export type MutationUpdateOneCategoryArgs = {
+  data: CategoryUpdateInput;
+  where: CategoryWhereUniqueInput;
 };
 
 
@@ -125,6 +307,20 @@ export enum Role {
   Admin = 'ADMIN',
   User = 'USER'
 }
+
+export type StringFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  not?: Maybe<Scalars['String']>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
 
 export type Tag = {
   __typename?: 'Tag';
@@ -188,6 +384,141 @@ export type TagCreateWithoutTodosInput = {
   owner: UserCreateOneWithoutTagsInput;
 };
 
+export type TagFilter = {
+  every?: Maybe<TagWhereInput>;
+  none?: Maybe<TagWhereInput>;
+  some?: Maybe<TagWhereInput>;
+};
+
+export type TagScalarWhereInput = {
+  AND?: Maybe<Array<TagScalarWhereInput>>;
+  categories?: Maybe<CategoryFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  name?: Maybe<StringFilter>;
+  NOT?: Maybe<Array<TagScalarWhereInput>>;
+  OR?: Maybe<Array<TagScalarWhereInput>>;
+  ownerId?: Maybe<IntFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
+export type TagUpdateManyDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type TagUpdateManyWithoutCategoriesInput = {
+  connect?: Maybe<Array<TagWhereUniqueInput>>;
+  create?: Maybe<Array<TagCreateWithoutCategoriesInput>>;
+  delete?: Maybe<Array<TagWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TagScalarWhereInput>>;
+  disconnect?: Maybe<Array<TagWhereUniqueInput>>;
+  set?: Maybe<Array<TagWhereUniqueInput>>;
+  update?: Maybe<Array<TagUpdateWithWhereUniqueWithoutCategoriesInput>>;
+  updateMany?: Maybe<Array<TagUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TagUpsertWithWhereUniqueWithoutCategoriesInput>>;
+};
+
+export type TagUpdateManyWithoutOwnerInput = {
+  connect?: Maybe<Array<TagWhereUniqueInput>>;
+  create?: Maybe<Array<TagCreateWithoutOwnerInput>>;
+  delete?: Maybe<Array<TagWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TagScalarWhereInput>>;
+  disconnect?: Maybe<Array<TagWhereUniqueInput>>;
+  set?: Maybe<Array<TagWhereUniqueInput>>;
+  update?: Maybe<Array<TagUpdateWithWhereUniqueWithoutOwnerInput>>;
+  updateMany?: Maybe<Array<TagUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TagUpsertWithWhereUniqueWithoutOwnerInput>>;
+};
+
+export type TagUpdateManyWithoutTodosInput = {
+  connect?: Maybe<Array<TagWhereUniqueInput>>;
+  create?: Maybe<Array<TagCreateWithoutTodosInput>>;
+  delete?: Maybe<Array<TagWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TagScalarWhereInput>>;
+  disconnect?: Maybe<Array<TagWhereUniqueInput>>;
+  set?: Maybe<Array<TagWhereUniqueInput>>;
+  update?: Maybe<Array<TagUpdateWithWhereUniqueWithoutTodosInput>>;
+  updateMany?: Maybe<Array<TagUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TagUpsertWithWhereUniqueWithoutTodosInput>>;
+};
+
+export type TagUpdateManyWithWhereNestedInput = {
+  data: TagUpdateManyDataInput;
+  where: TagScalarWhereInput;
+};
+
+export type TagUpdateWithoutCategoriesDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
+};
+
+export type TagUpdateWithoutOwnerDataInput = {
+  categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
+};
+
+export type TagUpdateWithoutTodosDataInput = {
+  categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+};
+
+export type TagUpdateWithWhereUniqueWithoutCategoriesInput = {
+  data: TagUpdateWithoutCategoriesDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpdateWithWhereUniqueWithoutOwnerInput = {
+  data: TagUpdateWithoutOwnerDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpdateWithWhereUniqueWithoutTodosInput = {
+  data: TagUpdateWithoutTodosDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpsertWithWhereUniqueWithoutCategoriesInput = {
+  create: TagCreateWithoutCategoriesInput;
+  update: TagUpdateWithoutCategoriesDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpsertWithWhereUniqueWithoutOwnerInput = {
+  create: TagCreateWithoutOwnerInput;
+  update: TagUpdateWithoutOwnerDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpsertWithWhereUniqueWithoutTodosInput = {
+  create: TagCreateWithoutTodosInput;
+  update: TagUpdateWithoutTodosDataInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagWhereInput = {
+  AND?: Maybe<Array<TagWhereInput>>;
+  categories?: Maybe<CategoryFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  name?: Maybe<StringFilter>;
+  NOT?: Maybe<Array<TagWhereInput>>;
+  OR?: Maybe<Array<TagWhereInput>>;
+  owner?: Maybe<UserWhereInput>;
+  ownerId?: Maybe<IntFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
 export type TagWhereUniqueInput = {
   id?: Maybe<Scalars['Int']>;
 };
@@ -197,6 +528,7 @@ export type Todo = {
   author: User;
   authorId: Scalars['Int'];
   category: Category;
+  categoryId: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   id: Scalars['Int'];
   tags: Array<Tag>;
@@ -253,6 +585,142 @@ export type TodoCreateWithoutTagsInput = {
   category: CategoryCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
   text: Scalars['String'];
+};
+
+export type TodoFilter = {
+  every?: Maybe<TodoWhereInput>;
+  none?: Maybe<TodoWhereInput>;
+  some?: Maybe<TodoWhereInput>;
+};
+
+export type TodoScalarWhereInput = {
+  AND?: Maybe<Array<TodoScalarWhereInput>>;
+  authorId?: Maybe<IntFilter>;
+  categoryId?: Maybe<IntFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  NOT?: Maybe<Array<TodoScalarWhereInput>>;
+  OR?: Maybe<Array<TodoScalarWhereInput>>;
+  tags?: Maybe<TagFilter>;
+  text?: Maybe<StringFilter>;
+};
+
+export type TodoUpdateManyDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodoUpdateManyWithoutAuthorInput = {
+  connect?: Maybe<Array<TodoWhereUniqueInput>>;
+  create?: Maybe<Array<TodoCreateWithoutAuthorInput>>;
+  delete?: Maybe<Array<TodoWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TodoScalarWhereInput>>;
+  disconnect?: Maybe<Array<TodoWhereUniqueInput>>;
+  set?: Maybe<Array<TodoWhereUniqueInput>>;
+  update?: Maybe<Array<TodoUpdateWithWhereUniqueWithoutAuthorInput>>;
+  updateMany?: Maybe<Array<TodoUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TodoUpsertWithWhereUniqueWithoutAuthorInput>>;
+};
+
+export type TodoUpdateManyWithoutCategoryInput = {
+  connect?: Maybe<Array<TodoWhereUniqueInput>>;
+  create?: Maybe<Array<TodoCreateWithoutCategoryInput>>;
+  delete?: Maybe<Array<TodoWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TodoScalarWhereInput>>;
+  disconnect?: Maybe<Array<TodoWhereUniqueInput>>;
+  set?: Maybe<Array<TodoWhereUniqueInput>>;
+  update?: Maybe<Array<TodoUpdateWithWhereUniqueWithoutCategoryInput>>;
+  updateMany?: Maybe<Array<TodoUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TodoUpsertWithWhereUniqueWithoutCategoryInput>>;
+};
+
+export type TodoUpdateManyWithoutTagsInput = {
+  connect?: Maybe<Array<TodoWhereUniqueInput>>;
+  create?: Maybe<Array<TodoCreateWithoutTagsInput>>;
+  delete?: Maybe<Array<TodoWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TodoScalarWhereInput>>;
+  disconnect?: Maybe<Array<TodoWhereUniqueInput>>;
+  set?: Maybe<Array<TodoWhereUniqueInput>>;
+  update?: Maybe<Array<TodoUpdateWithWhereUniqueWithoutTagsInput>>;
+  updateMany?: Maybe<Array<TodoUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TodoUpsertWithWhereUniqueWithoutTagsInput>>;
+};
+
+export type TodoUpdateManyWithWhereNestedInput = {
+  data: TodoUpdateManyDataInput;
+  where: TodoScalarWhereInput;
+};
+
+export type TodoUpdateWithoutAuthorDataInput = {
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  tags?: Maybe<TagUpdateManyWithoutTodosInput>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodoUpdateWithoutCategoryDataInput = {
+  author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  tags?: Maybe<TagUpdateManyWithoutTodosInput>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodoUpdateWithoutTagsDataInput = {
+  author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodoUpdateWithWhereUniqueWithoutAuthorInput = {
+  data: TodoUpdateWithoutAuthorDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpdateWithWhereUniqueWithoutCategoryInput = {
+  data: TodoUpdateWithoutCategoryDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpdateWithWhereUniqueWithoutTagsInput = {
+  data: TodoUpdateWithoutTagsDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpsertWithWhereUniqueWithoutAuthorInput = {
+  create: TodoCreateWithoutAuthorInput;
+  update: TodoUpdateWithoutAuthorDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpsertWithWhereUniqueWithoutCategoryInput = {
+  create: TodoCreateWithoutCategoryInput;
+  update: TodoUpdateWithoutCategoryDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpsertWithWhereUniqueWithoutTagsInput = {
+  create: TodoCreateWithoutTagsInput;
+  update: TodoUpdateWithoutTagsDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoWhereInput = {
+  AND?: Maybe<Array<TodoWhereInput>>;
+  author?: Maybe<UserWhereInput>;
+  authorId?: Maybe<IntFilter>;
+  category?: Maybe<CategoryWhereInput>;
+  categoryId?: Maybe<IntFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<IntFilter>;
+  NOT?: Maybe<Array<TodoWhereInput>>;
+  OR?: Maybe<Array<TodoWhereInput>>;
+  tags?: Maybe<TagFilter>;
+  text?: Maybe<StringFilter>;
 };
 
 export type TodoWhereUniqueInput = {
@@ -320,6 +788,86 @@ export type UserCreateWithoutTodosInput = {
   name: Scalars['String'];
   role?: Maybe<Role>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
+};
+
+export type UserUpdateOneRequiredWithoutCategoriesInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutCategoriesInput>;
+  update?: Maybe<UserUpdateWithoutCategoriesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCategoriesInput>;
+};
+
+export type UserUpdateOneRequiredWithoutTagsInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutTagsInput>;
+  update?: Maybe<UserUpdateWithoutTagsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTagsInput>;
+};
+
+export type UserUpdateOneRequiredWithoutTodosInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutTodosInput>;
+  update?: Maybe<UserUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTodosInput>;
+};
+
+export type UserUpdateWithoutCategoriesDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  role?: Maybe<Role>;
+  tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
+  todos?: Maybe<TodoUpdateManyWithoutAuthorInput>;
+};
+
+export type UserUpdateWithoutTagsDataInput = {
+  categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  role?: Maybe<Role>;
+  todos?: Maybe<TodoUpdateManyWithoutAuthorInput>;
+};
+
+export type UserUpdateWithoutTodosDataInput = {
+  categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  role?: Maybe<Role>;
+  tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
+};
+
+export type UserUpsertWithoutCategoriesInput = {
+  create: UserCreateWithoutCategoriesInput;
+  update: UserUpdateWithoutCategoriesDataInput;
+};
+
+export type UserUpsertWithoutTagsInput = {
+  create: UserCreateWithoutTagsInput;
+  update: UserUpdateWithoutTagsDataInput;
+};
+
+export type UserUpsertWithoutTodosInput = {
+  create: UserCreateWithoutTodosInput;
+  update: UserUpdateWithoutTodosDataInput;
+};
+
+export type UserWhereInput = {
+  AND?: Maybe<Array<UserWhereInput>>;
+  categories?: Maybe<CategoryFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  email?: Maybe<StringFilter>;
+  id?: Maybe<IntFilter>;
+  name?: Maybe<StringFilter>;
+  NOT?: Maybe<Array<UserWhereInput>>;
+  OR?: Maybe<Array<UserWhereInput>>;
+  role?: Maybe<Role>;
+  tags?: Maybe<TagFilter>;
+  todos?: Maybe<TodoFilter>;
 };
 
 export type UserWhereUniqueInput = {

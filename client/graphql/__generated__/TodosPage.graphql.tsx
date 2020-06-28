@@ -37,7 +37,7 @@ export type CreateOneTodoMutation = (
   { __typename?: 'Mutation' }
   & { createOneTodo: (
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text'>
+    & Pick<Types.Todo, 'id' | 'text' | 'categoryId'>
     & { tags: Array<(
       { __typename?: 'Tag' }
       & Pick<Types.Tag, 'id' | 'name'>
@@ -54,7 +54,7 @@ export type DeleteTodoMutation = (
   { __typename?: 'Mutation' }
   & { deleteTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id'>
+    & Pick<Types.Todo, 'id' | 'categoryId'>
   )> }
 );
 
@@ -125,6 +125,7 @@ export const CreateOneTodoDocument = gql`
   createOneTodo(data: $input) {
     id
     text
+    categoryId
     tags {
       id
       name
@@ -161,6 +162,7 @@ export const DeleteTodoDocument = gql`
     mutation DeleteTodo($input: DeleteTodoInput!) {
   deleteTodo(data: $input) {
     id
+    categoryId
   }
 }
     `;
