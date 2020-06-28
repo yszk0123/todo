@@ -36,6 +36,7 @@ export const TodoListItem: React.FunctionComponent<{
       <Checkbox />
       <Box
         flex="1 1 auto"
+        p={1}
         bg={isActive ? 'highlight' : undefined}
         onClick={handleClick}
       >

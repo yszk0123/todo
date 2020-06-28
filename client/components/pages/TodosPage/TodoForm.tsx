@@ -15,9 +15,10 @@ function createLookupTable(tags: TagVM[]): Record<string, true | undefined> {
 
 const Item: React.FunctionComponent<{
   tag: TagVM;
+  isFirst: boolean;
   isChecked: boolean;
   onClick: (tag: TagVM) => void;
-}> = ({ tag, isChecked, onClick }) => {
+}> = ({ tag, isFirst, isChecked, onClick }) => {
   const handleClick = React.useCallback(
     (event: React.SyntheticEvent) => {
       onClick(tag);
@@ -27,10 +28,15 @@ const Item: React.FunctionComponent<{
   );
 
   return (
-    <Box key={tag.id} onClick={handleClick}>
+    <Flex
+      ml={isFirst ? undefined : 3}
+      alignItems="center"
+      key={tag.id}
+      onClick={handleClick}
+    >
       <Checkbox readOnly checked={isChecked} onClick={preventDefault} />
       <Text>{tag.name}</Text>
-    </Box>
+    </Flex>
   );
 };
 
@@ -58,7 +64,22 @@ export const TodoForm: React.FunctionComponent<{
   const lookupTable = React.useMemo(() => createLookupTable(tags), [tags]);
 
   return (
-    <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
+    <Box as="form" my={4} onSubmit={preventDefault} onClick={stopPropagation}>
+      <Flex mt={2} alignItems="center">
+        {categoryTags.map((categoryTag, i) => {
+          const isChecked = lookupTable[categoryTag.id] === true;
+
+          return (
+            <Item
+              key={categoryTag.id}
+              isFirst={i === 0}
+              tag={categoryTag}
+              isChecked={isChecked}
+              onClick={onToggleTag}
+            />
+          );
+        })}
+      </Flex>
       <Flex alignItems="center">
         <Input value={name} onChange={onChangeName} />
       </Flex>
@@ -93,20 +114,6 @@ export const TodoForm: React.FunctionComponent<{
           </Button>
         )}
       </Flex>
-      <Box>
-        {categoryTags.map((categoryTag) => {
-          const isChecked = lookupTable[categoryTag.id] === true;
-
-          return (
-            <Item
-              key={categoryTag.id}
-              tag={categoryTag}
-              isChecked={isChecked}
-              onClick={onToggleTag}
-            />
-          );
-        })}
-      </Box>
     </Box>
   );
 };
