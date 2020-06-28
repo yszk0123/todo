@@ -4,6 +4,7 @@ import Linkify from 'react-linkify';
 import produce from 'immer';
 import { Button, Flex, Text, Box } from 'rebass';
 import { Input, Checkbox } from '@rebass/forms';
+import { useRouter } from 'next/router';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
@@ -38,7 +39,14 @@ function linkifyComponentDecorator(
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
-    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+    const categoryId = result.data?.createOneTodo.categoryId;
+    if (categoryId == null) {
+      return;
+    }
+    const data = cache.readQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      variables: { categoryId },
+    });
 
     const todo = result.data?.createOneTodo;
     if (!data || !todo) return;
@@ -50,6 +58,7 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
+      variables: { categoryId },
       data: newData,
     });
   },
@@ -57,7 +66,15 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
 
 const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
   update(cache, result) {
-    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+    const categoryId = result.data?.deleteTodo?.categoryId;
+    if (categoryId == null) {
+      return;
+    }
+
+    const data = cache.readQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      variables: { categoryId },
+    });
 
     const todoId = result.data?.deleteTodo?.id;
     if (!data || !todoId) return;
@@ -71,6 +88,7 @@ const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
+      variables: { categoryId },
       data: newData,
     });
   },
@@ -217,4 +235,9 @@ const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   );
 };
 
-export default TodosPage;
+export default () => {
+  const router = useRouter();
+  const categoryId = Number(router.query.categoryId);
+
+  return <TodosPage categoryId={categoryId} />;
+};
