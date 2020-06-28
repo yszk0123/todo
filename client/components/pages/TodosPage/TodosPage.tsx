@@ -1,6 +1,5 @@
 import React from 'react';
 import produce from 'immer';
-import { useRouter } from 'next/router';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
