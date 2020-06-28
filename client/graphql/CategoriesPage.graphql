@@ -1,0 +1,9 @@
+query CategoriesPage {
+  me {
+    id
+  }
+  categories {
+    id
+    name
+  }
+}
