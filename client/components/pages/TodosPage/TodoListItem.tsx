@@ -5,6 +5,7 @@ import { Flex, Text, Box } from 'rebass';
 import { Checkbox } from '@rebass/forms';
 import { TodoVM } from '../../../viewModels/TodoVM';
 import { Badge } from './Badge';
+import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -18,6 +19,19 @@ function linkifyComponentDecorator(
   );
 }
 
+function printStatus(todo: TodoVM) {
+  switch (todo.status) {
+    case TodoStatus.Todo:
+      return '[ ]';
+    case TodoStatus.InProgress:
+      return '[-]';
+    case TodoStatus.Waiting:
+      return '[>]';
+    case TodoStatus.Done:
+      return '[x]';
+  }
+}
+
 export const TodoListItem: React.FunctionComponent<{
   isActive: boolean;
   todo: TodoVM;
@@ -29,7 +43,7 @@ export const TodoListItem: React.FunctionComponent<{
 
   return (
     <Flex alignItems="center">
-      <Checkbox />
+      {printStatus(todo)}
       <Flex
         flex="1 1 auto"
         alignItems="center"
@@ -45,7 +59,7 @@ export const TodoListItem: React.FunctionComponent<{
         {todo.tags.length > 0 && (
           <Box ml={2}>
             {todo.tags.map((tag) => (
-              <Box display="inline-block" ml={1}>
+              <Box key={tag.id} display="inline-block" ml={1}>
                 <Badge key={tag.id} text={tag.name} />
               </Box>
             ))}

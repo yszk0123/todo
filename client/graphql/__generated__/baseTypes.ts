@@ -810,7 +810,9 @@ export type TodoWhereUniqueInput = {
 };
 
 export type UpdateTodoInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['Int'];
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['Int']>>;
   text?: Maybe<Scalars['String']>;
 };

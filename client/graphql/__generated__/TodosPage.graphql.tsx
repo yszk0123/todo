@@ -19,7 +19,7 @@ export type TodosPageQuery = (
     & Pick<Types.Category, 'id' | 'name'>
     & { todos: Array<(
       { __typename?: 'Todo' }
-      & Pick<Types.Todo, 'id' | 'text'>
+      & Pick<Types.Todo, 'id' | 'text' | 'status' | 'archivedAt'>
       & { tags: Array<(
         { __typename?: 'Tag' }
         & Pick<Types.Tag, 'id' | 'name'>
@@ -40,7 +40,7 @@ export type CreateOneTodoMutation = (
   { __typename?: 'Mutation' }
   & { createOneTodo: (
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text' | 'categoryId'>
+    & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
     & { tags: Array<(
       { __typename?: 'Tag' }
       & Pick<Types.Tag, 'id' | 'name'>
@@ -70,7 +70,7 @@ export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
   & { updateTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text' | 'categoryId'>
+    & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
     & { tags: Array<(
       { __typename?: 'Tag' }
       & Pick<Types.Tag, 'id' | 'name'>
@@ -94,6 +94,8 @@ export const TodosPageDocument = gql`
         id
         name
       }
+      status
+      archivedAt
     }
   }
   tags {
@@ -141,6 +143,8 @@ export const CreateOneTodoDocument = gql`
       id
       name
     }
+    status
+    archivedAt
   }
 }
     `;
@@ -212,6 +216,8 @@ export const UpdateTodoDocument = gql`
       id
       name
     }
+    status
+    archivedAt
   }
 }
     `;

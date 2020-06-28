@@ -18,6 +18,8 @@ schema.inputObjectType({
     t.int('id', { required: true });
     t.string('text', {});
     t.list.int('tags', {});
+    t.field('status', { type: 'TodoStatus' });
+    t.date('archivedAt', {});
   },
 });
 

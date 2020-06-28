@@ -12,6 +12,8 @@ query TodosPage($categoryId: Int!) {
         id
         name
       }
+      status
+      archivedAt
     }
   }
   # FIXME: Use category.tags
@@ -30,6 +32,8 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
       id
       name
     }
+    status
+    archivedAt
   }
 }
 
@@ -49,5 +53,7 @@ mutation UpdateTodo($input: UpdateTodoInput!) {
       id
       name
     }
+    status
+    archivedAt
   }
 }

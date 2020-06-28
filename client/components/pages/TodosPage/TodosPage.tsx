@@ -14,6 +14,7 @@ import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
+  TodoStatus,
 } from '../../../graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import { TodoVM } from '../../../viewModels/TodoVM';
@@ -96,12 +97,14 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
   const [tags, setTags] = React.useState<TagVM[]>([]);
+  const [status, setStatus] = React.useState(TodoStatus.Todo);
   const isSelected = !!currentTodoId;
 
   const deselect = React.useCallback(() => {
     setCurrentTodoId(null);
     setText('');
     setTags([]);
+    setStatus(TodoStatus.Todo);
   }, []);
 
   const handleSelectTodo = React.useCallback(
@@ -110,6 +113,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         setCurrentTodoId(todo.id);
         setText(todo.text);
         setTags(todo.tags);
+        setStatus(todo.status);
       } else {
         deselect();
       }
@@ -129,11 +133,12 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         category: { connect: { id: categoryId } },
         tags: { connect: newTags },
         text,
+        status,
       };
       createOneTodo({ variables: { input } });
       deselect();
     }
-  }, [data, text, tags, deselect, createOneTodo, categoryId]);
+  }, [data, text, tags, status, deselect, createOneTodo, categoryId]);
 
   const handleDeleteTodo = React.useCallback(() => {
     if (!currentTodoId) return;
@@ -146,9 +151,14 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const handleUpdateTodo = React.useCallback(() => {
     if (!currentTodoId) return;
     const tagIds = tags?.map((tag) => tag.id);
-    const input: UpdateTodoInput = { id: currentTodoId, text, tags: tagIds };
+    const input: UpdateTodoInput = {
+      id: currentTodoId,
+      text,
+      tags: tagIds,
+      status,
+    };
     updateTodo({ variables: { input } });
-  }, [data, text, createOneTodo, currentTodoId, tags]);
+  }, [data, text, status, createOneTodo, currentTodoId, tags]);
 
   const handleToggleTag = React.useCallback(
     (tag: TagVM) => {
@@ -168,6 +178,10 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     },
     []
   );
+
+  const handleSelectStatus = React.useCallback((status: TodoStatus) => {
+    setStatus(status);
+  }, []);
 
   if (loading || !data) {
     return null;
@@ -193,6 +207,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       <TodoForm
         name={text}
         tags={tags}
+        status={status}
         categoryTags={categoryTags}
         isSelected={isSelected}
         onChangeName={handleChangeText}
@@ -200,6 +215,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         onUpdateOneTodo={handleUpdateTodo}
         onDeleteOneTodo={handleDeleteTodo}
         onToggleTag={handleToggleTag}
+        onSelectStatus={handleSelectStatus}
       />
       <TodoOutput todos={todos} />
     </ContentWrapper>

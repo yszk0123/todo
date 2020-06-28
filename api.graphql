@@ -703,7 +703,9 @@ input TodoWhereUniqueInput {
 }
 
 input UpdateTodoInput {
+  archivedAt: DateTime
   id: Int!
+  status: TodoStatus
   tags: [Int!]
   text: String
 }
