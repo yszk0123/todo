@@ -18,6 +18,7 @@ mutation CreateOneTag($data: TagCreateInput!) {
 mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
     id
+    name
   }
 }
 

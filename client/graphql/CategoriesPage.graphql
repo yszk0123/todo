@@ -21,6 +21,7 @@ mutation UpdateOneCategory(
 ) {
   updateOneCategory(data: $data, where: $where) {
     id
+    name
   }
 }
 

@@ -41,7 +41,7 @@ export type UpdateOneTagMutation = (
   { __typename?: 'Mutation' }
   & { updateOneTag?: Types.Maybe<(
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id'>
+    & Pick<Types.Tag, 'id' | 'name'>
   )> }
 );
 
@@ -135,6 +135,7 @@ export const UpdateOneTagDocument = gql`
     mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
     id
+    name
   }
 }
     `;

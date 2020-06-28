@@ -41,7 +41,7 @@ export type UpdateOneCategoryMutation = (
   { __typename?: 'Mutation' }
   & { updateOneCategory?: Types.Maybe<(
     { __typename?: 'Category' }
-    & Pick<Types.Category, 'id'>
+    & Pick<Types.Category, 'id' | 'name'>
   )> }
 );
 
@@ -135,6 +135,7 @@ export const UpdateOneCategoryDocument = gql`
     mutation UpdateOneCategory($data: CategoryUpdateInput!, $where: CategoryWhereUniqueInput!) {
   updateOneCategory(data: $data, where: $where) {
     id
+    name
   }
 }
     `;

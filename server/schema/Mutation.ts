@@ -1,5 +1,10 @@
 import { schema } from 'nexus';
 
+// FIXME: Workaround
+function castOriginResolve(input: unknown): any {
+  return input as any;
+}
+
 schema.inputObjectType({
   name: 'DeleteTodoInput',
   definition(t) {
@@ -32,30 +37,46 @@ schema.mutationType({
     });
 
     t.crud.updateOneCategory({
-      resolve(root, args, ctx, info, originResolve) {
+      async resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
-        const ownerId = args.where.id;
+        const categoryId = args.where.id;
+        if (categoryId == null) {
+          throw new Error('Invalid input');
+        }
 
+        const category = await ctx.db.category.findOne({
+          where: { id: categoryId },
+          select: { ownerId: true },
+        });
+        const ownerId = category?.ownerId;
         const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
 
-        return originResolve(root, args, ctx, info);
+        return castOriginResolve(originResolve(root, args, ctx, info));
       },
     });
 
     t.crud.deleteOneCategory({
-      resolve(root, args, ctx, info, originResolve) {
+      async resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
-        const ownerId = args.where.id;
+        const categoryId = args.where.id;
+        if (categoryId == null) {
+          throw new Error('Invalid input');
+        }
 
+        const category = await ctx.db.category.findOne({
+          where: { id: categoryId },
+          select: { ownerId: true },
+        });
+        const ownerId = category?.ownerId;
         const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
 
-        return originResolve(root, args, ctx, info);
+        return castOriginResolve(originResolve(root, args, ctx, info));
       },
     });
 
@@ -140,30 +161,46 @@ schema.mutationType({
     });
 
     t.crud.updateOneTag({
-      resolve(root, args, ctx, info, originResolve) {
+      async resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
-        const ownerId = args.where.id;
+        const tagId = args.where.id;
+        if (tagId == null) {
+          throw new Error('Invalid input');
+        }
 
+        const tag = await ctx.db.tag.findOne({
+          where: { id: tagId },
+          select: { ownerId: true },
+        });
+        const ownerId = tag?.ownerId;
         const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
 
-        return originResolve(root, args, ctx, info);
+        return castOriginResolve(originResolve(root, args, ctx, info));
       },
     });
 
     t.crud.deleteOneTag({
-      resolve(root, args, ctx, info, originResolve) {
+      async resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
-        const ownerId = args.where.id;
+        const tagId = args.where.id;
+        if (tagId == null) {
+          throw new Error('Invalid input');
+        }
 
+        const tag = await ctx.db.tag.findOne({
+          where: { id: tagId },
+          select: { ownerId: true },
+        });
+        const ownerId = tag?.ownerId;
         const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
 
-        return originResolve(root, args, ctx, info);
+        return castOriginResolve(originResolve(root, args, ctx, info));
       },
     });
   },
