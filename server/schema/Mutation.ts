@@ -19,7 +19,7 @@ schema.inputObjectType({
     t.string('text', {});
     t.list.int('tags', {});
     t.field('status', { type: 'TodoStatus' });
-    t.date('archivedAt', {});
+    t.field('archivedAt', { type: 'DateTime' });
   },
 });
 
@@ -131,6 +131,8 @@ schema.mutationType({
         const text = args.data.text ?? undefined;
         const userId = ctx.user?.id;
         const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const status = args.data.status ?? undefined;
+        const archivedAt = args.data.archivedAt ?? undefined;
 
         const todo = await ctx.db.todo.findOne({
           where: { id: todoId },
@@ -143,7 +145,7 @@ schema.mutationType({
         }
 
         const updatedTodo = await ctx.db.todo.update({
-          data: { text, tags: { set: tags } },
+          data: { text, tags: { set: tags }, status, archivedAt },
           where: { id: todoId },
         });
         return updatedTodo;

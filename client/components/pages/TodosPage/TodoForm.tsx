@@ -79,6 +79,7 @@ const StatusSelect: React.FunctionComponent<{
           name="status"
           value="Todo"
           checked={status === TodoStatus.Todo}
+          readOnly
         />
         Todo
       </Label>
@@ -87,6 +88,7 @@ const StatusSelect: React.FunctionComponent<{
           name="status"
           value="InProgress"
           checked={status === TodoStatus.InProgress}
+          readOnly
         />
         InProgress
       </Label>
@@ -95,6 +97,7 @@ const StatusSelect: React.FunctionComponent<{
           name="status"
           value="Waiting"
           checked={status === TodoStatus.Waiting}
+          readOnly
         />
         Waiting
       </Label>
@@ -103,6 +106,7 @@ const StatusSelect: React.FunctionComponent<{
           name="status"
           value="Done"
           checked={status === TodoStatus.Done}
+          readOnly
         />
         Done
       </Label>
