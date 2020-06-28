@@ -11,7 +11,7 @@ import {
   useDeleteOneTagMutation,
   useUpdateOneTagMutation,
 } from '../../../graphql/__generated__/TagsPage.graphql';
-import { LoadingIndicator } from '../../LodaingIndicator';
+import { LoadingIndicator } from '../../atoms/LoadingIndicator';
 import {
   TagCreateInput,
   TagWhereUniqueInput,

@@ -11,7 +11,7 @@ import {
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
 } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { LoadingIndicator } from '../../LodaingIndicator';
+import { LoadingIndicator } from '../../atoms/LoadingIndicator';
 import {
   CategoryCreateInput,
   CategoryWhereUniqueInput,
