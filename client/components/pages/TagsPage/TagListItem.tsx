@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Text, Box } from 'rebass';
-import { TagVM } from '../../viewModels/TagVM';
+import { TagVM } from '../../../viewModels/TagVM';
 
 export const TagListItem: React.FunctionComponent<{
   isActive: boolean;

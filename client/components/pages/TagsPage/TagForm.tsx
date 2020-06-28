@@ -1,23 +1,23 @@
 import React from 'react';
 import { Button, Flex, Box } from 'rebass';
 import { Input } from '@rebass/forms';
-import { stopPropagation } from '../../handlers/stopPropagation';
-import { preventDefault } from '../../handlers/preventDefault';
+import { stopPropagation } from '../../../handlers/stopPropagation';
+import { preventDefault } from '../../../handlers/preventDefault';
 
-export const CategoryForm: React.FunctionComponent<{
+export const TagForm: React.FunctionComponent<{
   name: string;
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onCreateOneCategory: () => void;
-  onUpdateOneCategory: () => void;
-  onDeleteOneCategory: () => void;
+  onCreateOneTag: () => void;
+  onUpdateOneTag: () => void;
+  onDeleteOneTag: () => void;
 }> = ({
   name,
   isSelected,
   onChangeName,
-  onCreateOneCategory,
-  onUpdateOneCategory,
-  onDeleteOneCategory,
+  onCreateOneTag,
+  onUpdateOneTag,
+  onDeleteOneTag,
 }) => {
   return (
     <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
@@ -29,7 +29,7 @@ export const CategoryForm: React.FunctionComponent<{
           type="button"
           width={1}
           variant="outline"
-          onClick={onDeleteOneCategory}
+          onClick={onDeleteOneTag}
         >
           Delete
         </Button>
@@ -39,7 +39,7 @@ export const CategoryForm: React.FunctionComponent<{
           variant="outline"
           ml={2}
           disabled={!isSelected}
-          onClick={onUpdateOneCategory}
+          onClick={onUpdateOneTag}
         >
           Update
         </Button>
@@ -48,7 +48,7 @@ export const CategoryForm: React.FunctionComponent<{
           width={1}
           ml={2}
           variant="primary"
-          onClick={onCreateOneCategory}
+          onClick={onCreateOneTag}
         >
           Create
         </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import produce from 'immer';
-import { ContentWrapper } from '../layout/ContentWrapper';
+import { ContentWrapper } from '../../layout/ContentWrapper';
 import {
   useTagsPageQuery,
   CreateOneTagMutationOptions,
@@ -10,14 +10,14 @@ import {
   useCreateOneTagMutation,
   useDeleteOneTagMutation,
   useUpdateOneTagMutation,
-} from '../../graphql/__generated__/TagsPage.graphql';
-import { LoadingIndicator } from '../LodaingIndicator';
+} from '../../../graphql/__generated__/TagsPage.graphql';
+import { LoadingIndicator } from '../../LodaingIndicator';
 import {
   TagCreateInput,
   TagWhereUniqueInput,
   TagUpdateInput,
-} from '../../graphql/__generated__/baseTypes';
-import { TagVM } from '../../viewModels/TagVM';
+} from '../../../graphql/__generated__/baseTypes';
+import { TagVM } from '../../../viewModels/TagVM';
 import { TagForm } from './TagForm';
 import { TagList } from './TagList';
 import { TagCount } from './TagCount';

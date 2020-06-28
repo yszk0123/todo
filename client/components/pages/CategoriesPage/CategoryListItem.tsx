@@ -1,7 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
-import { CategoryVM } from '../../viewModels/CategoryVM';
+import { CategoryVM } from '../../../viewModels/CategoryVM';
 
 const CategoryGoToTodoLink: React.FunctionComponent<{
   categoryId: number;

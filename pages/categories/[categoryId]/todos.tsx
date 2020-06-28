@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { TodosPage } from '../../../client/components/TodosPage';
+import { TodosPage } from '../../../client/components/pages/TodosPage';
 
 export default () => {
   const router = useRouter();
