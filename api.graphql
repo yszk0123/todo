@@ -2,6 +2,55 @@
 ### Do not make changes to this file directly
 
 
+type Category {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  owner: User!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+
+input CategoryCreateManyWithoutOwnerInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutOwnerInput!]
+}
+
+input CategoryCreateManyWithoutTagsInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutTagsInput!]
+}
+
+input CategoryCreateOneWithoutTodosInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutTodosInput
+}
+
+input CategoryCreateWithoutOwnerInput {
+  createdAt: DateTime
+  name: String!
+  tags: TagCreateManyWithoutCategoriesInput
+  todos: TodoCreateManyWithoutCategoryInput
+}
+
+input CategoryCreateWithoutTagsInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  todos: TodoCreateManyWithoutCategoryInput
+}
+
+input CategoryCreateWithoutTodosInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  tags: TagCreateManyWithoutCategoriesInput
+}
+
+input CategoryWhereUniqueInput {
+  id: Int
+}
+
 """Use JavaScript Date object for date/time fields."""
 scalar DateTime
 
@@ -21,7 +70,10 @@ type Mutation {
 }
 
 type Query {
+  categories: [Category!]
+  category(id: Int!): Category
   me: User
+  tags: [Tag!]
   todos: [Todo!]
 }
 
@@ -30,16 +82,105 @@ enum Role {
   USER
 }
 
+type Tag {
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  owner: User!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+
+input TagCreateManyWithoutCategoriesInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutCategoriesInput!]
+}
+
+input TagCreateManyWithoutOwnerInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutOwnerInput!]
+}
+
+input TagCreateManyWithoutTodosInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutTodosInput!]
+}
+
+input TagCreateWithoutCategoriesInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  todos: TodoCreateManyWithoutTagsInput
+}
+
+input TagCreateWithoutOwnerInput {
+  categories: CategoryCreateManyWithoutTagsInput
+  createdAt: DateTime
+  name: String!
+  todos: TodoCreateManyWithoutTagsInput
+}
+
+input TagCreateWithoutTodosInput {
+  categories: CategoryCreateManyWithoutTagsInput
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+}
+
+input TagWhereUniqueInput {
+  id: Int
+}
+
 type Todo {
   author: User!
   authorId: Int!
+  category: Category!
   createdAt: DateTime!
   id: Int!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
   text: String!
 }
 
 input TodoCreateInput {
   author: UserCreateOneWithoutTodosInput!
+  category: CategoryCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateManyWithoutAuthorInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutAuthorInput!]
+}
+
+input TodoCreateManyWithoutCategoryInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCategoryInput!]
+}
+
+input TodoCreateManyWithoutTagsInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutTagsInput!]
+}
+
+input TodoCreateWithoutAuthorInput {
+  category: CategoryCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutCategoryInput {
+  author: UserCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutTagsInput {
+  author: UserCreateOneWithoutTodosInput!
+  category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
   text: String!
 }
@@ -60,16 +201,46 @@ type User {
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
 
+input UserCreateOneWithoutCategoriesInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCategoriesInput
+}
+
+input UserCreateOneWithoutTagsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTagsInput
+}
+
 input UserCreateOneWithoutTodosInput {
   connect: UserWhereUniqueInput
   create: UserCreateWithoutTodosInput
 }
 
-input UserCreateWithoutTodosInput {
+input UserCreateWithoutCategoriesInput {
   createdAt: DateTime
   email: String!
   name: String!
   role: Role
+  tags: TagCreateManyWithoutOwnerInput
+  todos: TodoCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTagsInput {
+  categories: CategoryCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  name: String!
+  role: Role
+  todos: TodoCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTodosInput {
+  categories: CategoryCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  name: String!
+  role: Role
+  tags: TagCreateManyWithoutOwnerInput
 }
 
 input UserWhereUniqueInput {
