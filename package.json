@@ -9,6 +9,7 @@
   "scripts": {
     "codegen:generate:once": "graphql-codegen",
     "codegen:generate:watch": "graphql-codegen --watch",
+    "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio --experimental",
     "prisma:migrate:save": "prisma migrate save --experimental",
     "prisma:migrate:up": "prisma migrate up --experimental",
