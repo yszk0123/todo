@@ -21,6 +21,8 @@ import {
   Todo,
 } from '../../../client/graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../../client/components/layout/ContentWrapper';
+import { preventDefault } from '../../../client/handlers/preventDefault';
+import { stopPropagation } from '../../../client/handlers/stopPropagation';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -32,14 +34,6 @@ function linkifyComponentDecorator(
       {decoratedText}
     </a>
   );
-}
-
-function preventDefault(event: React.SyntheticEvent) {
-  event.preventDefault();
-}
-
-function stopPropagation(event: React.SyntheticEvent) {
-  event.stopPropagation();
 }
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
