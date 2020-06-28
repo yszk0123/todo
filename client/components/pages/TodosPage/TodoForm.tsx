@@ -73,7 +73,7 @@ export const TodoForm: React.FunctionComponent<{
         </Button>
         {isSelected ? (
           <Button
-            type="button"
+            type="submit"
             width={1}
             variant="primary"
             ml={2}

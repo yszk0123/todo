@@ -35,7 +35,7 @@ export const CategoryForm: React.FunctionComponent<{
         </Button>
         {isSelected ? (
           <Button
-            type="button"
+            type="submit"
             width={1}
             variant="outline"
             ml={2}
