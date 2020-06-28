@@ -2,7 +2,7 @@ import { Provider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from '../client/theme/theme';
-import { Gate } from '../client/components/Gate';
+import { Gate } from '../client/components/navigation/Gate';
 import { createApolloClient } from '../client/apollo/createApolloClient';
 
 import 'normalize.css';
