@@ -4,6 +4,7 @@ import Linkify from 'react-linkify';
 import { Flex, Text, Box } from 'rebass';
 import { Checkbox } from '@rebass/forms';
 import { TodoVM } from '../../../viewModels/TodoVM';
+import { Badge } from './Badge';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -26,16 +27,12 @@ export const TodoListItem: React.FunctionComponent<{
     onClick(todo);
   }, [todo, onClick]);
 
-  const tags = React.useMemo(
-    () => todo.tags.map((t) => `#${t.name}`).join(', '),
-    [todo.tags]
-  );
-
   return (
     <Flex alignItems="center">
       <Checkbox />
-      <Box
+      <Flex
         flex="1 1 auto"
+        alignItems="center"
         p={2}
         bg={isActive ? 'highlight' : undefined}
         onClick={handleClick}
@@ -45,8 +42,16 @@ export const TodoListItem: React.FunctionComponent<{
             {todo.text}
           </Linkify>
         </Text>
-        {tags && <Text color="gray">{` ${tags}`}</Text>}
-      </Box>
+        {todo.tags.length > 0 && (
+          <Box ml={2}>
+            {todo.tags.map((tag) => (
+              <Box display="inline-block" ml={1}>
+                <Badge key={tag.id} text={tag.name} />
+              </Box>
+            ))}
+          </Box>
+        )}
+      </Flex>
     </Flex>
   );
 };

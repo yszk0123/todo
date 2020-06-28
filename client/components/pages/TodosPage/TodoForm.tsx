@@ -82,16 +82,11 @@ export const TodoForm: React.FunctionComponent<{
           );
         })}
       </Flex>
-      <Flex alignItems="center">
+      <Flex mt={2} alignItems="center">
         <Textarea value={name} onChange={onChangeName} />
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
-        <Button
-          type="button"
-          width={1}
-          variant="outline"
-          onClick={onDeleteOneTodo}
-        >
+        <Button type="button" variant="outline" onClick={onDeleteOneTodo}>
           Delete
         </Button>
         {isSelected ? (
