@@ -24,7 +24,7 @@ export const TodoListItem: React.FunctionComponent<{
 }> = ({ isActive, todo, onClick }) => {
   const handleClick = React.useCallback(() => {
     onClick(todo);
-  }, [todo]);
+  }, [todo, onClick]);
 
   return (
     <Flex alignItems="center" p={2}>
