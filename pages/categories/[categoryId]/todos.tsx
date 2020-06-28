@@ -4,6 +4,7 @@ import Linkify from 'react-linkify';
 import produce from 'immer';
 import { Button, Flex, Text, Box } from 'rebass';
 import { Input, Checkbox } from '@rebass/forms';
+import { useRouter } from 'next/router';
 import {
   useTodosPageQuery,
   useCreateOneTodoMutation,
@@ -13,14 +14,16 @@ import {
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../client/graphql/__generated__/TodosPage.graphql';
+} from '../../../client/graphql/__generated__/TodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
   Todo,
-} from '../client/graphql/__generated__/baseTypes';
-import { ContentWrapper } from '../client/components/layout/ContentWrapper';
+} from '../../../client/graphql/__generated__/baseTypes';
+import { ContentWrapper } from '../../../client/components/layout/ContentWrapper';
+import { preventDefault } from '../../../client/handlers/preventDefault';
+import { stopPropagation } from '../../../client/handlers/stopPropagation';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -34,26 +37,28 @@ function linkifyComponentDecorator(
   );
 }
 
-function preventDefault(event: React.SyntheticEvent) {
-  event.preventDefault();
-}
-
-function stopPropagation(event: React.SyntheticEvent) {
-  event.stopPropagation();
-}
-
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
-    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+    const categoryId = result.data?.createOneTodo.categoryId;
+    if (categoryId == null) {
+      return;
+    }
+    const data = cache.readQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      variables: { categoryId },
+    });
 
     const todo = result.data?.createOneTodo;
     if (!data || !todo) return;
     const newData = produce(data, (d) => {
-      d.todos = [...(d.todos ?? []), todo];
+      if (d.category) {
+        d.category.todos = [...(d.category.todos ?? []), todo];
+      }
     });
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
+      variables: { categoryId },
       data: newData,
     });
   },
@@ -61,23 +66,40 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
 
 const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
   update(cache, result) {
-    const data = cache.readQuery<TodosPageQuery>({ query: TodosPageDocument });
+    const categoryId = result.data?.deleteTodo?.categoryId;
+    if (categoryId == null) {
+      return;
+    }
+
+    const data = cache.readQuery<TodosPageQuery>({
+      query: TodosPageDocument,
+      variables: { categoryId },
+    });
 
     const todoId = result.data?.deleteTodo?.id;
     if (!data || !todoId) return;
     const newData = produce(data, (d) => {
-      d.todos = (d.todos ?? []).filter((todo) => todo.id !== todoId);
+      if (d.category) {
+        d.category.todos = (d.category.todos ?? []).filter(
+          (todo) => todo.id !== todoId
+        );
+      }
     });
 
     cache.writeQuery<TodosPageQuery>({
       query: TodosPageDocument,
+      variables: { categoryId },
       data: newData,
     });
   },
 };
 
-const TodosPage: React.FunctionComponent<{}> = () => {
-  const { loading, data } = useTodosPageQuery();
+type Props = {
+  categoryId: number;
+};
+
+const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
+  const { loading, data } = useTodosPageQuery({ variables: { categoryId } });
   const [createOneTodo] = useCreateOneTodoMutation(
     createOneTodoMutationOptions
   );
@@ -112,12 +134,13 @@ const TodosPage: React.FunctionComponent<{}> = () => {
     if (data?.me) {
       const input: TodoCreateInput = {
         author: { connect: { id: data.me.id } },
+        category: { connect: { id: categoryId } },
         text,
       };
       createOneTodo({ variables: { input } });
       deselect();
     }
-  }, [data, text, deselect, createOneTodo]);
+  }, [data, text, deselect, createOneTodo, categoryId]);
 
   const handleDeleteTodo = React.useCallback(() => {
     if (!currentTodoId) return;
@@ -144,7 +167,7 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   if (loading || !data) {
     return null;
   }
-  const todos = data.todos ?? [];
+  const todos = data.category?.todos ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
@@ -212,4 +235,9 @@ const TodosPage: React.FunctionComponent<{}> = () => {
   );
 };
 
-export default TodosPage;
+export default () => {
+  const router = useRouter();
+  const categoryId = Number(router.query.categoryId);
+
+  return <TodosPage categoryId={categoryId} />;
+};

@@ -28,8 +28,8 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
           </Link>
         </NextLink>
         <Box>
-          <NextLink href="/todos" passHref>
-            <Link variant="nav">Todos</Link>
+          <NextLink href="/categories" passHref>
+            <Link variant="nav">Categories</Link>
           </NextLink>
         </Box>
         <Box mx="auto" />

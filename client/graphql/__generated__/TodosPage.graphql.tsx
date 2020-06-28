@@ -4,7 +4,9 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
-export type TodosPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TodosPageQueryVariables = Types.Exact<{
+  categoryId: Types.Scalars['Int'];
+}>;
 
 
 export type TodosPageQuery = (
@@ -12,10 +14,18 @@ export type TodosPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
-  )>, todos?: Types.Maybe<Array<(
-    { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text'>
-  )>> }
+  )>, category?: Types.Maybe<(
+    { __typename?: 'Category' }
+    & Pick<Types.Category, 'id' | 'name'>
+    & { todos: Array<(
+      { __typename?: 'Todo' }
+      & Pick<Types.Todo, 'id' | 'text'>
+      & { tags: Array<(
+        { __typename?: 'Tag' }
+        & Pick<Types.Tag, 'id' | 'name'>
+      )> }
+    )> }
+  )> }
 );
 
 export type CreateOneTodoMutationVariables = Types.Exact<{
@@ -27,7 +37,11 @@ export type CreateOneTodoMutation = (
   { __typename?: 'Mutation' }
   & { createOneTodo: (
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text'>
+    & Pick<Types.Todo, 'id' | 'text' | 'categoryId'>
+    & { tags: Array<(
+      { __typename?: 'Tag' }
+      & Pick<Types.Tag, 'id' | 'name'>
+    )> }
   ) }
 );
 
@@ -40,7 +54,7 @@ export type DeleteTodoMutation = (
   { __typename?: 'Mutation' }
   & { deleteTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id'>
+    & Pick<Types.Todo, 'id' | 'categoryId'>
   )> }
 );
 
@@ -59,13 +73,21 @@ export type UpdateTodoMutation = (
 
 
 export const TodosPageDocument = gql`
-    query TodosPage {
+    query TodosPage($categoryId: Int!) {
   me {
     id
   }
-  todos {
+  category(id: $categoryId) {
     id
-    text
+    name
+    todos {
+      id
+      text
+      tags {
+        id
+        name
+      }
+    }
   }
 }
     `;
@@ -82,6 +104,7 @@ export const TodosPageDocument = gql`
  * @example
  * const { data, loading, error } = useTodosPageQuery({
  *   variables: {
+ *      categoryId: // value for 'categoryId'
  *   },
  * });
  */
@@ -102,6 +125,11 @@ export const CreateOneTodoDocument = gql`
   createOneTodo(data: $input) {
     id
     text
+    categoryId
+    tags {
+      id
+      name
+    }
   }
 }
     `;
@@ -134,6 +162,7 @@ export const DeleteTodoDocument = gql`
     mutation DeleteTodo($input: DeleteTodoInput!) {
   deleteTodo(data: $input) {
     id
+    categoryId
   }
 }
     `;

@@ -1,15 +1,13 @@
 import { schema } from 'nexus';
 
 schema.objectType({
-  name: 'Todo',
+  name: 'Category',
   definition(t) {
     t.model.id();
     t.model.createdAt();
-    t.model.text();
-    t.model.author();
-    t.model.authorId();
-    t.model.category();
-    t.model.categoryId();
+    t.model.name();
+    t.model.owner();
+    t.model.todos();
     t.model.tags();
   },
 });

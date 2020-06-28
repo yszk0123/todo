@@ -2,11 +2,223 @@
 ### Do not make changes to this file directly
 
 
+type Category {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  owner: User!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+
+input CategoryCreateInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  tags: TagCreateManyWithoutCategoriesInput
+  todos: TodoCreateManyWithoutCategoryInput
+}
+
+input CategoryCreateManyWithoutOwnerInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutOwnerInput!]
+}
+
+input CategoryCreateManyWithoutTagsInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutTagsInput!]
+}
+
+input CategoryCreateOneWithoutTodosInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutTodosInput
+}
+
+input CategoryCreateWithoutOwnerInput {
+  createdAt: DateTime
+  name: String!
+  tags: TagCreateManyWithoutCategoriesInput
+  todos: TodoCreateManyWithoutCategoryInput
+}
+
+input CategoryCreateWithoutTagsInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  todos: TodoCreateManyWithoutCategoryInput
+}
+
+input CategoryCreateWithoutTodosInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  tags: TagCreateManyWithoutCategoriesInput
+}
+
+input CategoryFilter {
+  every: CategoryWhereInput
+  none: CategoryWhereInput
+  some: CategoryWhereInput
+}
+
+input CategoryScalarWhereInput {
+  AND: [CategoryScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  name: StringFilter
+  NOT: [CategoryScalarWhereInput!]
+  OR: [CategoryScalarWhereInput!]
+  ownerId: IntFilter
+  tags: TagFilter
+  todos: TodoFilter
+}
+
+input CategoryUpdateInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  tags: TagUpdateManyWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+
+input CategoryUpdateManyDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+}
+
+input CategoryUpdateManyWithoutOwnerInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutOwnerInput!]
+  delete: [CategoryWhereUniqueInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+
+input CategoryUpdateManyWithoutTagsInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutTagsInput!]
+  delete: [CategoryWhereUniqueInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutTagsInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutTagsInput!]
+}
+
+input CategoryUpdateManyWithWhereNestedInput {
+  data: CategoryUpdateManyDataInput!
+  where: CategoryScalarWhereInput!
+}
+
+input CategoryUpdateOneRequiredWithoutTodosInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutTodosInput
+  update: CategoryUpdateWithoutTodosDataInput
+  upsert: CategoryUpsertWithoutTodosInput
+}
+
+input CategoryUpdateWithoutOwnerDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+  tags: TagUpdateManyWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+
+input CategoryUpdateWithoutTagsDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+
+input CategoryUpdateWithoutTodosDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  tags: TagUpdateManyWithoutCategoriesInput
+}
+
+input CategoryUpdateWithWhereUniqueWithoutOwnerInput {
+  data: CategoryUpdateWithoutOwnerDataInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryUpdateWithWhereUniqueWithoutTagsInput {
+  data: CategoryUpdateWithoutTagsDataInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryUpsertWithoutTodosInput {
+  create: CategoryCreateWithoutTodosInput!
+  update: CategoryUpdateWithoutTodosDataInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutOwnerInput {
+  create: CategoryCreateWithoutOwnerInput!
+  update: CategoryUpdateWithoutOwnerDataInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutTagsInput {
+  create: CategoryCreateWithoutTagsInput!
+  update: CategoryUpdateWithoutTagsDataInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  name: StringFilter
+  NOT: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  owner: UserWhereInput
+  ownerId: IntFilter
+  tags: TagFilter
+  todos: TodoFilter
+}
+
+input CategoryWhereUniqueInput {
+  id: Int
+}
+
 """Use JavaScript Date object for date/time fields."""
 scalar DateTime
 
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
 input DeleteTodoInput {
   id: Int!
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
 }
 
 """
@@ -15,13 +227,19 @@ The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http:/
 scalar Json
 
 type Mutation {
+  createOneCategory(data: CategoryCreateInput!): Category!
   createOneTodo(data: TodoCreateInput!): Todo!
+  deleteOneCategory(where: CategoryWhereUniqueInput!): Category
   deleteTodo(data: DeleteTodoInput!): Todo
+  updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateTodo(data: UpdateTodoInput!): Todo
 }
 
 type Query {
+  categories: [Category!]
+  category(id: Int!): Category
   me: User
+  tags: [Tag!]
   todos: [Todo!]
 }
 
@@ -30,18 +248,393 @@ enum Role {
   USER
 }
 
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type Tag {
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  owner: User!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+
+input TagCreateManyWithoutCategoriesInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutCategoriesInput!]
+}
+
+input TagCreateManyWithoutOwnerInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutOwnerInput!]
+}
+
+input TagCreateManyWithoutTodosInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutTodosInput!]
+}
+
+input TagCreateWithoutCategoriesInput {
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  todos: TodoCreateManyWithoutTagsInput
+}
+
+input TagCreateWithoutOwnerInput {
+  categories: CategoryCreateManyWithoutTagsInput
+  createdAt: DateTime
+  name: String!
+  todos: TodoCreateManyWithoutTagsInput
+}
+
+input TagCreateWithoutTodosInput {
+  categories: CategoryCreateManyWithoutTagsInput
+  createdAt: DateTime
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+}
+
+input TagFilter {
+  every: TagWhereInput
+  none: TagWhereInput
+  some: TagWhereInput
+}
+
+input TagScalarWhereInput {
+  AND: [TagScalarWhereInput!]
+  categories: CategoryFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  name: StringFilter
+  NOT: [TagScalarWhereInput!]
+  OR: [TagScalarWhereInput!]
+  ownerId: IntFilter
+  todos: TodoFilter
+}
+
+input TagUpdateManyDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+}
+
+input TagUpdateManyWithoutCategoriesInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutCategoriesInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutCategoriesInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutCategoriesInput!]
+}
+
+input TagUpdateManyWithoutOwnerInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutOwnerInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+
+input TagUpdateManyWithoutTodosInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutTodosInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutTodosInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutTodosInput!]
+}
+
+input TagUpdateManyWithWhereNestedInput {
+  data: TagUpdateManyDataInput!
+  where: TagScalarWhereInput!
+}
+
+input TagUpdateWithoutCategoriesDataInput {
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  todos: TodoUpdateManyWithoutTagsInput
+}
+
+input TagUpdateWithoutOwnerDataInput {
+  categories: CategoryUpdateManyWithoutTagsInput
+  createdAt: DateTime
+  id: Int
+  name: String
+  todos: TodoUpdateManyWithoutTagsInput
+}
+
+input TagUpdateWithoutTodosDataInput {
+  categories: CategoryUpdateManyWithoutTagsInput
+  createdAt: DateTime
+  id: Int
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+}
+
+input TagUpdateWithWhereUniqueWithoutCategoriesInput {
+  data: TagUpdateWithoutCategoriesDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpdateWithWhereUniqueWithoutOwnerInput {
+  data: TagUpdateWithoutOwnerDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpdateWithWhereUniqueWithoutTodosInput {
+  data: TagUpdateWithoutTodosDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutCategoriesInput {
+  create: TagCreateWithoutCategoriesInput!
+  update: TagUpdateWithoutCategoriesDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutOwnerInput {
+  create: TagCreateWithoutOwnerInput!
+  update: TagUpdateWithoutOwnerDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutTodosInput {
+  create: TagCreateWithoutTodosInput!
+  update: TagUpdateWithoutTodosDataInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  categories: CategoryFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  name: StringFilter
+  NOT: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  owner: UserWhereInput
+  ownerId: IntFilter
+  todos: TodoFilter
+}
+
+input TagWhereUniqueInput {
+  id: Int
+}
+
 type Todo {
   author: User!
   authorId: Int!
+  category: Category!
+  categoryId: Int!
   createdAt: DateTime!
   id: Int!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
   text: String!
 }
 
 input TodoCreateInput {
   author: UserCreateOneWithoutTodosInput!
+  category: CategoryCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateManyWithoutAuthorInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutAuthorInput!]
+}
+
+input TodoCreateManyWithoutCategoryInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCategoryInput!]
+}
+
+input TodoCreateManyWithoutTagsInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutTagsInput!]
+}
+
+input TodoCreateWithoutAuthorInput {
+  category: CategoryCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutCategoryInput {
+  author: UserCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutTagsInput {
+  author: UserCreateOneWithoutTodosInput!
+  category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
   text: String!
+}
+
+input TodoFilter {
+  every: TodoWhereInput
+  none: TodoWhereInput
+  some: TodoWhereInput
+}
+
+input TodoScalarWhereInput {
+  AND: [TodoScalarWhereInput!]
+  authorId: IntFilter
+  categoryId: IntFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  NOT: [TodoScalarWhereInput!]
+  OR: [TodoScalarWhereInput!]
+  tags: TagFilter
+  text: StringFilter
+}
+
+input TodoUpdateManyDataInput {
+  createdAt: DateTime
+  id: Int
+  text: String
+}
+
+input TodoUpdateManyWithoutAuthorInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutAuthorInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input TodoUpdateManyWithoutCategoryInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCategoryInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutCategoryInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutCategoryInput!]
+}
+
+input TodoUpdateManyWithoutTagsInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutTagsInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutTagsInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutTagsInput!]
+}
+
+input TodoUpdateManyWithWhereNestedInput {
+  data: TodoUpdateManyDataInput!
+  where: TodoScalarWhereInput!
+}
+
+input TodoUpdateWithoutAuthorDataInput {
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  createdAt: DateTime
+  id: Int
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+
+input TodoUpdateWithoutCategoryDataInput {
+  author: UserUpdateOneRequiredWithoutTodosInput
+  createdAt: DateTime
+  id: Int
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+
+input TodoUpdateWithoutTagsDataInput {
+  author: UserUpdateOneRequiredWithoutTodosInput
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  createdAt: DateTime
+  id: Int
+  text: String
+}
+
+input TodoUpdateWithWhereUniqueWithoutAuthorInput {
+  data: TodoUpdateWithoutAuthorDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpdateWithWhereUniqueWithoutCategoryInput {
+  data: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpdateWithWhereUniqueWithoutTagsInput {
+  data: TodoUpdateWithoutTagsDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutAuthorInput {
+  create: TodoCreateWithoutAuthorInput!
+  update: TodoUpdateWithoutAuthorDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutCategoryInput {
+  create: TodoCreateWithoutCategoryInput!
+  update: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutTagsInput {
+  create: TodoCreateWithoutTagsInput!
+  update: TodoUpdateWithoutTagsDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoWhereInput {
+  AND: [TodoWhereInput!]
+  author: UserWhereInput
+  authorId: IntFilter
+  category: CategoryWhereInput
+  categoryId: IntFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  NOT: [TodoWhereInput!]
+  OR: [TodoWhereInput!]
+  tags: TagFilter
+  text: StringFilter
 }
 
 input TodoWhereUniqueInput {
@@ -60,16 +653,126 @@ type User {
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
 
+input UserCreateOneWithoutCategoriesInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCategoriesInput
+}
+
+input UserCreateOneWithoutTagsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTagsInput
+}
+
 input UserCreateOneWithoutTodosInput {
   connect: UserWhereUniqueInput
   create: UserCreateWithoutTodosInput
 }
 
-input UserCreateWithoutTodosInput {
+input UserCreateWithoutCategoriesInput {
   createdAt: DateTime
   email: String!
   name: String!
   role: Role
+  tags: TagCreateManyWithoutOwnerInput
+  todos: TodoCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTagsInput {
+  categories: CategoryCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  name: String!
+  role: Role
+  todos: TodoCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutTodosInput {
+  categories: CategoryCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  name: String!
+  role: Role
+  tags: TagCreateManyWithoutOwnerInput
+}
+
+input UserUpdateOneRequiredWithoutCategoriesInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCategoriesInput
+  update: UserUpdateWithoutCategoriesDataInput
+  upsert: UserUpsertWithoutCategoriesInput
+}
+
+input UserUpdateOneRequiredWithoutTagsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTagsInput
+  update: UserUpdateWithoutTagsDataInput
+  upsert: UserUpsertWithoutTagsInput
+}
+
+input UserUpdateOneRequiredWithoutTodosInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTodosInput
+  update: UserUpdateWithoutTodosDataInput
+  upsert: UserUpsertWithoutTodosInput
+}
+
+input UserUpdateWithoutCategoriesDataInput {
+  createdAt: DateTime
+  email: String
+  id: Int
+  name: String
+  role: Role
+  tags: TagUpdateManyWithoutOwnerInput
+  todos: TodoUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutTagsDataInput {
+  categories: CategoryUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: Int
+  name: String
+  role: Role
+  todos: TodoUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutTodosDataInput {
+  categories: CategoryUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: Int
+  name: String
+  role: Role
+  tags: TagUpdateManyWithoutOwnerInput
+}
+
+input UserUpsertWithoutCategoriesInput {
+  create: UserCreateWithoutCategoriesInput!
+  update: UserUpdateWithoutCategoriesDataInput!
+}
+
+input UserUpsertWithoutTagsInput {
+  create: UserCreateWithoutTagsInput!
+  update: UserUpdateWithoutTagsDataInput!
+}
+
+input UserUpsertWithoutTodosInput {
+  create: UserCreateWithoutTodosInput!
+  update: UserUpdateWithoutTodosDataInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  categories: CategoryFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  id: IntFilter
+  name: StringFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  role: Role
+  tags: TagFilter
+  todos: TodoFilter
 }
 
 input UserWhereUniqueInput {

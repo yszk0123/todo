@@ -43,6 +43,21 @@ schema.middleware(
       return next(source, args, ctx, info);
     }
 
+    if (process.env.NODE_ENV !== 'production') {
+      const email = 'test@example.com';
+      let user = await ctx.db.user.findOne({ where: { email } });
+      if (!user) {
+        user = await ctx.db.user.create({
+          data: {
+            name: 'test',
+            email,
+          },
+        });
+      }
+      ctx.user = user ?? undefined;
+      return next(source, args, ctx, info);
+    }
+
     return next(source, args, ctx, info);
   }
 );

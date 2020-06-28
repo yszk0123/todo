@@ -1,10 +1,18 @@
-query TodosPage {
+query TodosPage($categoryId: Int!) {
   me {
     id
   }
-  todos {
+  category(id: $categoryId) {
     id
-    text
+    name
+    todos {
+      id
+      text
+      tags {
+        id
+        name
+      }
+    }
   }
 }
 
@@ -12,12 +20,18 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
     id
     text
+    categoryId
+    tags {
+      id
+      name
+    }
   }
 }
 
 mutation DeleteTodo($input: DeleteTodoInput!) {
   deleteTodo(data: $input) {
     id
+    categoryId
   }
 }
 

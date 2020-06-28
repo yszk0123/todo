@@ -17,6 +17,48 @@ schema.inputObjectType({
 
 schema.mutationType({
   definition(t) {
+    t.crud.createOneCategory({
+      resolve(root, args, ctx, info, originResolve) {
+        const userId = ctx.user?.id;
+        const ownerId = args.data.owner.connect?.id;
+
+        const authorized = !!userId && !!ownerId && userId === ownerId;
+        if (!authorized) {
+          throw new Error('Unauthorized');
+        }
+
+        return originResolve(root, args, ctx, info);
+      },
+    });
+
+    t.crud.updateOneCategory({
+      resolve(root, args, ctx, info, originResolve) {
+        const userId = ctx.user?.id;
+        const ownerId = args.where.id;
+
+        const authorized = !!userId && !!ownerId && userId === ownerId;
+        if (!authorized) {
+          throw new Error('Unauthorized');
+        }
+
+        return originResolve(root, args, ctx, info);
+      },
+    });
+
+    t.crud.deleteOneCategory({
+      resolve(root, args, ctx, info, originResolve) {
+        const userId = ctx.user?.id;
+        const ownerId = args.where.id;
+
+        const authorized = !!userId && !!ownerId && userId === ownerId;
+        if (!authorized) {
+          throw new Error('Unauthorized');
+        }
+
+        return originResolve(root, args, ctx, info);
+      },
+    });
+
     t.crud.createOneTodo({
       resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
