@@ -9,6 +9,7 @@ schema.objectType({
     t.model.author();
     t.model.authorId();
     t.model.category();
+    t.model.categoryId();
     t.model.tags();
   },
 });
