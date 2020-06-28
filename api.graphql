@@ -238,6 +238,17 @@ type Mutation {
   updateTodo(data: UpdateTodoInput!): Todo
 }
 
+input NullableDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
 type Query {
   categories: [Category!]
   category(id: Int!): Category
@@ -468,20 +479,24 @@ input TagWhereUniqueInput {
 }
 
 type Todo {
+  archivedAt: DateTime
   author: User!
   authorId: Int!
   category: Category!
   categoryId: Int!
   createdAt: DateTime!
   id: Int!
+  status: TodoStatus!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
   text: String!
 }
 
 input TodoCreateInput {
+  archivedAt: DateTime
   author: UserCreateOneWithoutTodosInput!
   category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
 }
@@ -502,23 +517,29 @@ input TodoCreateManyWithoutTagsInput {
 }
 
 input TodoCreateWithoutAuthorInput {
+  archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
 }
 
 input TodoCreateWithoutCategoryInput {
+  archivedAt: DateTime
   author: UserCreateOneWithoutTodosInput!
   createdAt: DateTime
+  status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
 }
 
 input TodoCreateWithoutTagsInput {
+  archivedAt: DateTime
   author: UserCreateOneWithoutTodosInput!
   category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  status: TodoStatus
   text: String!
 }
 
@@ -530,19 +551,30 @@ input TodoFilter {
 
 input TodoScalarWhereInput {
   AND: [TodoScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
   authorId: IntFilter
   categoryId: IntFilter
   createdAt: DateTimeFilter
   id: IntFilter
   NOT: [TodoScalarWhereInput!]
   OR: [TodoScalarWhereInput!]
+  status: TodoStatus
   tags: TagFilter
   text: StringFilter
 }
 
+enum TodoStatus {
+  DONE
+  IN_PROGRESS
+  TODO
+  WAITING
+}
+
 input TodoUpdateManyDataInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: Int
+  status: TodoStatus
   text: String
 }
 
@@ -588,26 +620,32 @@ input TodoUpdateManyWithWhereNestedInput {
 }
 
 input TodoUpdateWithoutAuthorDataInput {
+  archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
   id: Int
+  status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
 }
 
 input TodoUpdateWithoutCategoryDataInput {
+  archivedAt: DateTime
   author: UserUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
   id: Int
+  status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
 }
 
 input TodoUpdateWithoutTagsDataInput {
+  archivedAt: DateTime
   author: UserUpdateOneRequiredWithoutTodosInput
   category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
   id: Int
+  status: TodoStatus
   text: String
 }
 
@@ -646,6 +684,7 @@ input TodoUpsertWithWhereUniqueWithoutTagsInput {
 
 input TodoWhereInput {
   AND: [TodoWhereInput!]
+  archivedAt: NullableDateTimeFilter
   author: UserWhereInput
   authorId: IntFilter
   category: CategoryWhereInput
@@ -654,6 +693,7 @@ input TodoWhereInput {
   id: IntFilter
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
+  status: TodoStatus
   tags: TagFilter
   text: StringFilter
 }

@@ -11,5 +11,7 @@ schema.objectType({
     t.model.category();
     t.model.categoryId();
     t.model.tags();
+    t.model.status();
+    t.model.archivedAt();
   },
 });

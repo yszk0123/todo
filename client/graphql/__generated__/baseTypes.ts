@@ -308,6 +308,17 @@ export type MutationUpdateTodoArgs = {
   data: UpdateTodoInput;
 };
 
+export type NullableDateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<Scalars['DateTime']>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   categories?: Maybe<Array<Category>>;
@@ -567,12 +578,14 @@ export type TagWhereUniqueInput = {
 
 export type Todo = {
   __typename?: 'Todo';
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author: User;
   authorId: Scalars['Int'];
   category: Category;
   categoryId: Scalars['Int'];
   createdAt: Scalars['DateTime'];
   id: Scalars['Int'];
+  status: TodoStatus;
   tags: Array<Tag>;
   text: Scalars['String'];
 };
@@ -586,9 +599,11 @@ export type TodoTagsArgs = {
 };
 
 export type TodoCreateInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author: UserCreateOneWithoutTodosInput;
   category: CategoryCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagCreateManyWithoutTodosInput>;
   text: Scalars['String'];
 };
@@ -609,23 +624,29 @@ export type TodoCreateManyWithoutTagsInput = {
 };
 
 export type TodoCreateWithoutAuthorInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   category: CategoryCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagCreateManyWithoutTodosInput>;
   text: Scalars['String'];
 };
 
 export type TodoCreateWithoutCategoryInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author: UserCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagCreateManyWithoutTodosInput>;
   text: Scalars['String'];
 };
 
 export type TodoCreateWithoutTagsInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author: UserCreateOneWithoutTodosInput;
   category: CategoryCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
+  status?: Maybe<TodoStatus>;
   text: Scalars['String'];
 };
 
@@ -637,19 +658,30 @@ export type TodoFilter = {
 
 export type TodoScalarWhereInput = {
   AND?: Maybe<Array<TodoScalarWhereInput>>;
+  archivedAt?: Maybe<NullableDateTimeFilter>;
   authorId?: Maybe<IntFilter>;
   categoryId?: Maybe<IntFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<IntFilter>;
   NOT?: Maybe<Array<TodoScalarWhereInput>>;
   OR?: Maybe<Array<TodoScalarWhereInput>>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagFilter>;
   text?: Maybe<StringFilter>;
 };
 
+export enum TodoStatus {
+  Done = 'DONE',
+  InProgress = 'IN_PROGRESS',
+  Todo = 'TODO',
+  Waiting = 'WAITING'
+}
+
 export type TodoUpdateManyDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  status?: Maybe<TodoStatus>;
   text?: Maybe<Scalars['String']>;
 };
 
@@ -695,26 +727,32 @@ export type TodoUpdateManyWithWhereNestedInput = {
 };
 
 export type TodoUpdateWithoutAuthorDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagUpdateManyWithoutTodosInput>;
   text?: Maybe<Scalars['String']>;
 };
 
 export type TodoUpdateWithoutCategoryDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagUpdateManyWithoutTodosInput>;
   text?: Maybe<Scalars['String']>;
 };
 
 export type TodoUpdateWithoutTagsDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
   author?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
   category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  status?: Maybe<TodoStatus>;
   text?: Maybe<Scalars['String']>;
 };
 
@@ -753,6 +791,7 @@ export type TodoUpsertWithWhereUniqueWithoutTagsInput = {
 
 export type TodoWhereInput = {
   AND?: Maybe<Array<TodoWhereInput>>;
+  archivedAt?: Maybe<NullableDateTimeFilter>;
   author?: Maybe<UserWhereInput>;
   authorId?: Maybe<IntFilter>;
   category?: Maybe<CategoryWhereInput>;
@@ -761,6 +800,7 @@ export type TodoWhereInput = {
   id?: Maybe<IntFilter>;
   NOT?: Maybe<Array<TodoWhereInput>>;
   OR?: Maybe<Array<TodoWhereInput>>;
+  status?: Maybe<TodoStatus>;
   tags?: Maybe<TagFilter>;
   text?: Maybe<StringFilter>;
 };
