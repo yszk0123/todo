@@ -1,8 +1,8 @@
 module.exports = {
   client: {
     name: 'client',
-    includes: ['lib/**/*.tsx', 'lib/graphql/*.graphql', 'pages/**/*.tsx'],
-    excludes: ['lib/**/graphql/__generated__/*.*'],
+    includes: ['client/**/*.tsx', 'client/graphql/*.graphql', 'pages/**/*.tsx'],
+    excludes: ['client/**/graphql/__generated__/*.*'],
     tagName: 'gql',
     target: 'typescript',
     addTypename: true,
