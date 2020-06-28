@@ -1,0 +1,47 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateEnum",
+      "enum": "TodoStatus",
+      "values": [
+        "TODO",
+        "IN_PROGRESS",
+        "WAITING",
+        "DONE"
+      ]
+    },
+    {
+      "tag": "CreateField",
+      "model": "Todo",
+      "field": "status",
+      "type": "TodoStatus",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Todo",
+          "field": "status"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Todo",
+          "field": "status"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "TODO"
+    }
+  ]
+}
