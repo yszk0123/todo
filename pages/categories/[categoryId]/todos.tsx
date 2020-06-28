@@ -19,11 +19,11 @@ import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
-  Todo,
 } from '../../../client/graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../../client/components/layout/ContentWrapper';
 import { preventDefault } from '../../../client/handlers/preventDefault';
 import { stopPropagation } from '../../../client/handlers/stopPropagation';
+import { TodoVM } from '../../../client/viewModels/TodoVM';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -94,6 +94,104 @@ const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
   },
 };
 
+const TodoCount: React.FunctionComponent<{ count: number }> = ({ count }) => {
+  return (
+    <Box>
+      <Text textAlign="right" fontSize={2} color="gray">
+        {count} todos
+      </Text>
+    </Box>
+  );
+};
+
+const TodoList: React.FunctionComponent<{}> = ({ children }) => {
+  return (
+    <Box mt={1} onClick={stopPropagation}>
+      {children}
+    </Box>
+  );
+};
+
+const TodoListItem: React.FunctionComponent<{
+  isActive: boolean;
+  todo: TodoVM;
+  onClick: (todo: TodoVM) => void;
+}> = ({ isActive, todo, onClick }) => {
+  const handleClick = React.useCallback(() => {
+    onClick(todo);
+  }, [todo]);
+
+  return (
+    <Flex alignItems="center" p={2}>
+      <Checkbox />
+      <Box
+        flex="1 1 auto"
+        bg={isActive ? 'highlight' : undefined}
+        onClick={handleClick}
+      >
+        <Text>
+          <Linkify componentDecorator={linkifyComponentDecorator}>
+            {todo.text}
+          </Linkify>
+        </Text>
+      </Box>
+    </Flex>
+  );
+};
+
+const TodoForm: React.FunctionComponent<{
+  name: string;
+  isSelected: boolean;
+  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onCreateOneTodo: () => void;
+  onUpdateOneTodo: () => void;
+  onDeleteOneTodo: () => void;
+}> = ({
+  name,
+  isSelected,
+  onChangeName,
+  onCreateOneTodo,
+  onUpdateOneTodo,
+  onDeleteOneTodo,
+}) => {
+  return (
+    <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
+      <Flex alignItems="center">
+        <Input value={name} onChange={onChangeName} />
+      </Flex>
+      <Flex mt={2} alignItems="center" justifyContent="space-between">
+        <Button
+          type="button"
+          width={1}
+          variant="outline"
+          onClick={onDeleteOneTodo}
+        >
+          Delete
+        </Button>
+        <Button
+          type="button"
+          width={1}
+          variant="outline"
+          ml={2}
+          disabled={!isSelected}
+          onClick={onUpdateOneTodo}
+        >
+          Update
+        </Button>
+        <Button
+          type="submit"
+          width={1}
+          ml={2}
+          variant="primary"
+          onClick={onCreateOneTodo}
+        >
+          Create
+        </Button>
+      </Flex>
+    </Box>
+  );
+};
+
 type Props = {
   categoryId: number;
 };
@@ -115,7 +213,7 @@ const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   }, []);
 
   const handleSelectTodo = React.useCallback(
-    (todo: Pick<Todo, 'id' | 'text'>) => {
+    (todo: TodoVM) => {
       if (todo.id !== currentTodoId) {
         setCurrentTodoId(todo.id);
         setText(todo.text);
@@ -171,66 +269,27 @@ const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <Box>
-        <Text textAlign="right" fontSize={2} color="gray">
-          {todos.length} todos
-        </Text>
-      </Box>
-      <Box mt={1} onClick={stopPropagation}>
+      <TodoCount count={todos.length} />
+      <TodoList>
         {todos.map((todo) => {
           return (
-            <Flex
+            <TodoListItem
               key={todo.id}
-              alignItems="center"
-              bg={todo.id === currentTodoId ? 'highlight' : undefined}
-              p={2}
-            >
-              <Checkbox />
-              <Box flex="1 1 auto" onClick={() => handleSelectTodo(todo)}>
-                <Text>
-                  <Linkify componentDecorator={linkifyComponentDecorator}>
-                    {todo.text}
-                  </Linkify>
-                </Text>
-              </Box>
-            </Flex>
+              todo={todo}
+              isActive={todo.id === currentTodoId}
+              onClick={handleSelectTodo}
+            />
           );
         })}
-      </Box>
-      <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
-        <Flex alignItems="center">
-          <Input value={text} onChange={handleChangeText} />
-        </Flex>
-        <Flex mt={2} alignItems="center" justifyContent="space-between">
-          <Button
-            type="button"
-            width={1}
-            variant="outline"
-            onClick={handleDeleteTodo}
-          >
-            Delete
-          </Button>
-          <Button
-            type="button"
-            width={1}
-            variant="outline"
-            ml={2}
-            disabled={!isSelected}
-            onClick={handleUpdateTodo}
-          >
-            Update
-          </Button>
-          <Button
-            type="submit"
-            width={1}
-            ml={2}
-            variant="primary"
-            onClick={handleCreateOneTodo}
-          >
-            Create
-          </Button>
-        </Flex>
-      </Box>
+      </TodoList>
+      <TodoForm
+        name={name}
+        isSelected={isSelected}
+        onChangeName={handleChangeText}
+        onCreateOneTodo={handleCreateOneTodo}
+        onUpdateOneTodo={handleUpdateTodo}
+        onDeleteOneTodo={handleDeleteTodo}
+      />
     </ContentWrapper>
   );
 };
