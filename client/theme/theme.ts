@@ -61,6 +61,11 @@ export const theme = {
       textTransform: 'uppercase',
       letterSpacing: '0.1em',
     },
+    monospace: {
+      fontFamily: 'body',
+      lineHeight: 'body',
+      fontWeight: 'body',
+    },
   },
   variants: {
     avatar: {

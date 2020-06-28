@@ -43,7 +43,6 @@ export const TodoListItem: React.FunctionComponent<{
 
   return (
     <Flex alignItems="center">
-      {printStatus(todo)}
       <Flex
         flex="1 1 auto"
         alignItems="center"
@@ -51,7 +50,8 @@ export const TodoListItem: React.FunctionComponent<{
         bg={isActive ? 'highlight' : undefined}
         onClick={handleClick}
       >
-        <Text>
+        <Text width={16}>{printStatus(todo)}</Text>
+        <Text ml={2}>
           <Linkify componentDecorator={linkifyComponentDecorator}>
             {todo.text}
           </Linkify>
