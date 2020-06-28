@@ -45,7 +45,6 @@ export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
   todos?: Maybe<Array<Todo>>;
-  users?: Maybe<Array<User>>;
 };
 
 export enum Role {

@@ -23,7 +23,6 @@ type Mutation {
 type Query {
   me: User
   todos: [Todo!]
-  users: [User!]
 }
 
 enum Role {
