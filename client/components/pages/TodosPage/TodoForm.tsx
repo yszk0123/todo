@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Flex, Box, Text } from 'rebass';
-import { Input, Checkbox } from '@rebass/forms';
+import { Input, Checkbox, Textarea } from '@rebass/forms';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { TagVM } from '../../../viewModels/TagVM';
@@ -45,7 +45,9 @@ export const TodoForm: React.FunctionComponent<{
   tags: TagVM[];
   categoryTags: TagVM[];
   isSelected: boolean;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeName: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  >;
   onCreateOneTodo: () => void;
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
@@ -81,7 +83,7 @@ export const TodoForm: React.FunctionComponent<{
         })}
       </Flex>
       <Flex alignItems="center">
-        <Input value={name} onChange={onChangeName} />
+        <Textarea value={name} onChange={onChangeName} />
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
         <Button

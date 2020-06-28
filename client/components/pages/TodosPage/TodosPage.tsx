@@ -162,7 +162,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   );
 
   const handleChangeText = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const text = event.currentTarget.value;
       setText(text);
     },
