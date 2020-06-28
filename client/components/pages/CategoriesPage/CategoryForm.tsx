@@ -25,12 +25,7 @@ export const CategoryForm: React.FunctionComponent<{
         <Input value={name} onChange={onChangeName} />
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
-        <Button
-          type="button"
-          width={1}
-          variant="outline"
-          onClick={onDeleteOneCategory}
-        >
+        <Button type="button" variant="outline" onClick={onDeleteOneCategory}>
           Delete
         </Button>
         {isSelected ? (
