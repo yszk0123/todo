@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Flex, Box } from 'rebass';
 import { Input } from '@rebass/forms';
-import { stopPropagation } from '../handlers/stopPropagation';
-import { preventDefault } from '../handlers/preventDefault';
+import { stopPropagation } from '../../handlers/stopPropagation';
+import { preventDefault } from '../../handlers/preventDefault';
 
 export const TagForm: React.FunctionComponent<{
   name: string;

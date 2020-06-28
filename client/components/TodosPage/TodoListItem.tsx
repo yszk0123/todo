@@ -3,7 +3,7 @@ import React from 'react';
 import Linkify from 'react-linkify';
 import { Flex, Text, Box } from 'rebass';
 import { Checkbox } from '@rebass/forms';
-import { TodoVM } from '../viewModels/TodoVM';
+import { TodoVM } from '../../viewModels/TodoVM';
 
 function linkifyComponentDecorator(
   decoratedHref: string,

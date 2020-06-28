@@ -10,14 +10,14 @@ import {
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../graphql/__generated__/TodosPage.graphql';
+} from '../../graphql/__generated__/TodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
   UpdateTodoInput,
-} from '../graphql/__generated__/baseTypes';
-import { ContentWrapper } from './layout/ContentWrapper';
-import { TodoVM } from '../viewModels/TodoVM';
+} from '../../graphql/__generated__/baseTypes';
+import { ContentWrapper } from '../layout/ContentWrapper';
+import { TodoVM } from '../../viewModels/TodoVM';
 import { TodoCount } from './TodoCount';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
