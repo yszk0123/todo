@@ -33,25 +33,27 @@ export const CategoryForm: React.FunctionComponent<{
         >
           Delete
         </Button>
-        <Button
-          type="button"
-          width={1}
-          variant="outline"
-          ml={2}
-          disabled={!isSelected}
-          onClick={onUpdateOneCategory}
-        >
-          Update
-        </Button>
-        <Button
-          type="submit"
-          width={1}
-          ml={2}
-          variant="primary"
-          onClick={onCreateOneCategory}
-        >
-          Create
-        </Button>
+        {isSelected ? (
+          <Button
+            type="button"
+            width={1}
+            variant="outline"
+            ml={2}
+            onClick={onUpdateOneCategory}
+          >
+            Update
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            width={1}
+            ml={2}
+            variant="primary"
+            onClick={onCreateOneCategory}
+          >
+            Create
+          </Button>
+        )}
       </Flex>
     </Box>
   );

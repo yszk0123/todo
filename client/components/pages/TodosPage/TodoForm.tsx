@@ -71,25 +71,27 @@ export const TodoForm: React.FunctionComponent<{
         >
           Delete
         </Button>
-        <Button
-          type="button"
-          width={1}
-          variant="outline"
-          ml={2}
-          disabled={!isSelected}
-          onClick={onUpdateOneTodo}
-        >
-          Update
-        </Button>
-        <Button
-          type="submit"
-          width={1}
-          ml={2}
-          variant="primary"
-          onClick={onCreateOneTodo}
-        >
-          Create
-        </Button>
+        {isSelected ? (
+          <Button
+            type="button"
+            width={1}
+            variant="primary"
+            ml={2}
+            onClick={onUpdateOneTodo}
+          >
+            Update
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            width={1}
+            ml={2}
+            variant="primary"
+            onClick={onCreateOneTodo}
+          >
+            Create
+          </Button>
+        )}
       </Flex>
       <Box>
         {categoryTags.map((categoryTag) => {

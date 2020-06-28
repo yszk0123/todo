@@ -33,25 +33,27 @@ export const TagForm: React.FunctionComponent<{
         >
           Delete
         </Button>
-        <Button
-          type="button"
-          width={1}
-          variant="outline"
-          ml={2}
-          disabled={!isSelected}
-          onClick={onUpdateOneTag}
-        >
-          Update
-        </Button>
-        <Button
-          type="submit"
-          width={1}
-          ml={2}
-          variant="primary"
-          onClick={onCreateOneTag}
-        >
-          Create
-        </Button>
+        {isSelected ? (
+          <Button
+            type="button"
+            width={1}
+            variant="outline"
+            ml={2}
+            onClick={onUpdateOneTag}
+          >
+            Update
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            width={1}
+            ml={2}
+            variant="primary"
+            onClick={onCreateOneTag}
+          >
+            Create
+          </Button>
+        )}
       </Flex>
     </Box>
   );
