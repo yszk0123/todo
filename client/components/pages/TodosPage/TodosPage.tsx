@@ -171,7 +171,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         })}
       </TodoList>
       <TodoForm
-        name={name}
+        name={text}
         isSelected={isSelected}
         onChangeName={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
