@@ -11,20 +11,45 @@ generator client {
 }
 
 model User {
+  id         Int        @default(autoincrement()) @id
+  createdAt  DateTime   @default(now())
+  name       String
+  email      String     @unique
+  role       Role       @default(USER)
+  categories Category[]
+  todos      Todo[]
+  tags       Tag[]
+}
+
+model Category {
   id        Int      @default(autoincrement()) @id
   createdAt DateTime @default(now())
   name      String
-  email     String   @unique
-  role      Role     @default(USER)
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   Int
   todos     Todo[]
+  tags      Tag[]
 }
 
 model Todo {
-  id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  text      String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  id         Int      @default(autoincrement()) @id
+  createdAt  DateTime @default(now())
+  text       String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  tags       Tag[]
+}
+
+model Tag {
+  id         Int        @default(autoincrement()) @id
+  createdAt  DateTime   @default(now())
+  name       String
+  owner      User       @relation(fields: [ownerId], references: [id])
+  ownerId    Int
+  categories Category[] @relation(references: [id])
+  todos      Todo[]     @relation(references: [id])
 }
 
 enum Role {
