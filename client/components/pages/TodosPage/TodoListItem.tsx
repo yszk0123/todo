@@ -26,6 +26,11 @@ export const TodoListItem: React.FunctionComponent<{
     onClick(todo);
   }, [todo, onClick]);
 
+  const tags = React.useMemo(
+    () => todo.tags.map((t) => `#${t.name}`).join(', '),
+    [todo.tags]
+  );
+
   return (
     <Flex alignItems="center" p={2}>
       <Checkbox />
@@ -39,6 +44,7 @@ export const TodoListItem: React.FunctionComponent<{
             {todo.text}
           </Linkify>
         </Text>
+        {tags && <Text color="gray">{` ${tags}`}</Text>}
       </Box>
     </Flex>
   );

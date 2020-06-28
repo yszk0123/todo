@@ -771,6 +771,7 @@ export type TodoWhereUniqueInput = {
 
 export type UpdateTodoInput = {
   id: Scalars['Int'];
+  tags?: Maybe<Array<Scalars['Int']>>;
   text?: Maybe<Scalars['String']>;
 };
 

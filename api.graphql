@@ -664,6 +664,7 @@ input TodoWhereUniqueInput {
 
 input UpdateTodoInput {
   id: Int!
+  tags: [Int!]
   text: String
 }
 

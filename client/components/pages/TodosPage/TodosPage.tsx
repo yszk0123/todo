@@ -22,6 +22,7 @@ import { TodoCount } from './TodoCount';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
+import { TagVM } from '../../../viewModels/TagVM';
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -93,11 +94,13 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
+  const [tags, setTags] = React.useState<TagVM[]>([]);
   const isSelected = !!currentTodoId;
 
   const deselect = React.useCallback(() => {
     setCurrentTodoId(null);
     setText('');
+    setTags([]);
   }, []);
 
   const handleSelectTodo = React.useCallback(
@@ -105,6 +108,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       if (todo.id !== currentTodoId) {
         setCurrentTodoId(todo.id);
         setText(todo.text);
+        setTags(todo.tags);
       } else {
         deselect();
       }
@@ -138,9 +142,21 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
 
   const handleUpdateTodo = React.useCallback(() => {
     if (!currentTodoId) return;
-    const input: UpdateTodoInput = { id: currentTodoId, text };
+    const tagIds = tags?.map((tag) => tag.id);
+    const input: UpdateTodoInput = { id: currentTodoId, text, tags: tagIds };
     updateTodo({ variables: { input } });
-  }, [data, text, createOneTodo, currentTodoId]);
+  }, [data, text, createOneTodo, currentTodoId, tags]);
+
+  const handleToggleTag = React.useCallback(
+    (tag: TagVM) => {
+      const has = tags.find((t) => t.id === tag.id);
+      const newTags = has
+        ? tags.filter((t) => t.id !== tag.id)
+        : [...tags, tag];
+      setTags(newTags);
+    },
+    [tags]
+  );
 
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,6 +170,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     return null;
   }
   const todos = data.category?.todos ?? [];
+  const categoryTags = data.tags ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
@@ -172,11 +189,14 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       </TodoList>
       <TodoForm
         name={text}
+        tags={tags}
+        categoryTags={categoryTags}
         isSelected={isSelected}
         onChangeName={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
         onUpdateOneTodo={handleUpdateTodo}
         onDeleteOneTodo={handleDeleteTodo}
+        onToggleTag={handleToggleTag}
       />
     </ContentWrapper>
   );

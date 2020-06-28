@@ -17,6 +17,7 @@ schema.inputObjectType({
   definition(t) {
     t.int('id', { required: true });
     t.string('text', {});
+    t.list.int('tags', {});
   },
 });
 
@@ -127,6 +128,7 @@ schema.mutationType({
         const todoId = args.data.id;
         const text = args.data.text ?? undefined;
         const userId = ctx.user?.id;
+        const tags = (args.data.tags ?? []).map((id) => ({ id }));
 
         const todo = await ctx.db.todo.findOne({
           where: { id: todoId },
@@ -139,7 +141,7 @@ schema.mutationType({
         }
 
         const updatedTodo = await ctx.db.todo.update({
-          data: { text },
+          data: { text, tags: { set: tags } },
           where: { id: todoId },
         });
         return updatedTodo;

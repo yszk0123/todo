@@ -14,6 +14,11 @@ query TodosPage($categoryId: Int!) {
       }
     }
   }
+  # FIXME: Use category.tags
+  tags {
+    id
+    name
+  }
 }
 
 mutation CreateOneTodo($input: TodoCreateInput!) {
@@ -39,5 +44,10 @@ mutation UpdateTodo($input: UpdateTodoInput!) {
   updateTodo(data: $input) {
     id
     text
+    categoryId
+    tags {
+      id
+      name
+    }
   }
 }

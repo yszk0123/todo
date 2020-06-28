@@ -25,7 +25,10 @@ export type TodosPageQuery = (
         & Pick<Types.Tag, 'id' | 'name'>
       )> }
     )> }
-  )> }
+  )>, tags?: Types.Maybe<Array<(
+    { __typename?: 'Tag' }
+    & Pick<Types.Tag, 'id' | 'name'>
+  )>> }
 );
 
 export type CreateOneTodoMutationVariables = Types.Exact<{
@@ -67,7 +70,11 @@ export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
   & { updateTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text'>
+    & Pick<Types.Todo, 'id' | 'text' | 'categoryId'>
+    & { tags: Array<(
+      { __typename?: 'Tag' }
+      & Pick<Types.Tag, 'id' | 'name'>
+    )> }
   )> }
 );
 
@@ -88,6 +95,10 @@ export const TodosPageDocument = gql`
         name
       }
     }
+  }
+  tags {
+    id
+    name
   }
 }
     `;
@@ -196,6 +207,11 @@ export const UpdateTodoDocument = gql`
   updateTodo(data: $input) {
     id
     text
+    categoryId
+    tags {
+      id
+      name
+    }
   }
 }
     `;

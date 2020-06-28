@@ -1,2 +1,4 @@
 import { Todo } from '../graphql/__generated__/baseTypes';
-export type TodoVM = Pick<Todo, 'id' | 'text'>;
+import { TagVM } from './TagVM';
+
+export type TodoVM = Pick<Todo, 'id' | 'text'> & { tags: TagVM[] };
