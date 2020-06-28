@@ -32,11 +32,11 @@ export const TodoListItem: React.FunctionComponent<{
   );
 
   return (
-    <Flex alignItems="center" p={2}>
+    <Flex alignItems="center">
       <Checkbox />
       <Box
         flex="1 1 auto"
-        p={1}
+        p={2}
         bg={isActive ? 'highlight' : undefined}
         onClick={handleClick}
       >

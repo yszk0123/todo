@@ -123,15 +123,17 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
+      const newTags = tags.map((tag) => ({ id: tag.id }));
       const input: TodoCreateInput = {
         author: { connect: { id: data.me.id } },
         category: { connect: { id: categoryId } },
+        tags: { connect: newTags },
         text,
       };
       createOneTodo({ variables: { input } });
       deselect();
     }
-  }, [data, text, deselect, createOneTodo, categoryId]);
+  }, [data, text, tags, deselect, createOneTodo, categoryId]);
 
   const handleDeleteTodo = React.useCallback(() => {
     if (!currentTodoId) return;
