@@ -16,6 +16,7 @@
     "nexus:build": "nexus build --entrypoint pages/api/graphql.ts",
     "next:build": "next build",
     "next:watch": "next",
+    "typecheck": "tsc --noEmit",
     "generate": "npm-run-all -p nexus:reflection codegen:generate:once",
     "dev": "npm-run-all -p nexus:reflection codegen:generate:watch next:watch",
     "build": "npm-run-all -s nexus:build next:build",
