@@ -38,6 +38,10 @@ export type CreateOneTodoMutation = (
   & { createOneTodo: (
     { __typename?: 'Todo' }
     & Pick<Types.Todo, 'id' | 'text'>
+    & { tags: Array<(
+      { __typename?: 'Tag' }
+      & Pick<Types.Tag, 'id' | 'name'>
+    )> }
   ) }
 );
 
@@ -121,6 +125,10 @@ export const CreateOneTodoDocument = gql`
   createOneTodo(data: $input) {
     id
     text
+    tags {
+      id
+      name
+    }
   }
 }
     `;

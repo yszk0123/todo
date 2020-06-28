@@ -20,6 +20,10 @@ mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
     id
     text
+    tags {
+      id
+      name
+    }
   }
 }
 
