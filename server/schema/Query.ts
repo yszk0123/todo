@@ -57,6 +57,24 @@ schema.queryType({
       },
     });
 
+    t.field('tag', {
+      type: 'Tag',
+      args: {
+        id: schema.intArg({ required: true }),
+      },
+      resolve(_root, args, ctx) {
+        if (!ctx.user?.id) {
+          return null;
+        }
+
+        return ctx.db.tag.findOne({
+          where: {
+            id: args.id,
+          },
+        });
+      },
+    });
+
     t.list.field('tags', {
       type: 'Tag',
       resolve(_root, _args, ctx) {

@@ -251,16 +251,24 @@ export type IntFilter = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOneCategory: Category;
+  createOneTag: Tag;
   createOneTodo: Todo;
   deleteOneCategory?: Maybe<Category>;
+  deleteOneTag?: Maybe<Tag>;
   deleteTodo?: Maybe<Todo>;
   updateOneCategory?: Maybe<Category>;
+  updateOneTag?: Maybe<Tag>;
   updateTodo?: Maybe<Todo>;
 };
 
 
 export type MutationCreateOneCategoryArgs = {
   data: CategoryCreateInput;
+};
+
+
+export type MutationCreateOneTagArgs = {
+  data: TagCreateInput;
 };
 
 
@@ -271,6 +279,11 @@ export type MutationCreateOneTodoArgs = {
 
 export type MutationDeleteOneCategoryArgs = {
   where: CategoryWhereUniqueInput;
+};
+
+
+export type MutationDeleteOneTagArgs = {
+  where: TagWhereUniqueInput;
 };
 
 
@@ -285,6 +298,12 @@ export type MutationUpdateOneCategoryArgs = {
 };
 
 
+export type MutationUpdateOneTagArgs = {
+  data: TagUpdateInput;
+  where: TagWhereUniqueInput;
+};
+
+
 export type MutationUpdateTodoArgs = {
   data: UpdateTodoInput;
 };
@@ -294,12 +313,18 @@ export type Query = {
   categories?: Maybe<Array<Category>>;
   category?: Maybe<Category>;
   me?: Maybe<User>;
+  tag?: Maybe<Tag>;
   tags?: Maybe<Array<Tag>>;
   todos?: Maybe<Array<Todo>>;
 };
 
 
 export type QueryCategoryArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryTagArgs = {
   id: Scalars['Int'];
 };
 
@@ -346,6 +371,14 @@ export type TagTodosArgs = {
   before?: Maybe<TodoWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+export type TagCreateInput = {
+  categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  owner: UserCreateOneWithoutTagsInput;
+  todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
 export type TagCreateManyWithoutCategoriesInput = {
@@ -400,6 +433,15 @@ export type TagScalarWhereInput = {
   OR?: Maybe<Array<TagScalarWhereInput>>;
   ownerId?: Maybe<IntFilter>;
   todos?: Maybe<TodoFilter>;
+};
+
+export type TagUpdateInput = {
+  categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
 export type TagUpdateManyDataInput = {

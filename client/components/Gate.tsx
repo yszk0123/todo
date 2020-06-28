@@ -31,6 +31,9 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
           <NextLink href="/categories" passHref>
             <Link variant="nav">Categories</Link>
           </NextLink>
+          <NextLink href="/tags" passHref>
+            <Link variant="nav">Tags</Link>
+          </NextLink>
         </Box>
         <Box mx="auto" />
         {username && <Text p={2}>{username}</Text>}
