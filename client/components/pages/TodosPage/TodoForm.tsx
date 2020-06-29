@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Flex, Box, Text } from 'rebass';
-import { Label, Radio, Checkbox, Textarea } from '@rebass/forms';
+import { Label, Radio, Checkbox, Input } from '@rebass/forms';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { TagVM } from '../../../viewModels/TagVM';
@@ -164,7 +164,7 @@ export const TodoForm: React.FunctionComponent<{
         <StatusSelect status={status} onClick={onSelectStatus} />
       </Flex>
       <Flex mt={2} alignItems="center">
-        <Textarea value={name} onChange={onChangeName} />
+        <Input value={name} onChange={onChangeName} />
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
         <Button type="button" variant="outline" onClick={onDeleteOneTodo}>
