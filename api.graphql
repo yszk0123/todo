@@ -8,7 +8,7 @@ type Category {
   name: String!
   owner: User!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
 }
 
 input CategoryCreateInput {
@@ -247,6 +247,11 @@ input NullableDateTimeFilter {
   lte: DateTime
   not: DateTime
   notIn: [DateTime!]
+}
+
+enum OrderByArg {
+  asc
+  desc
 }
 
 type Query {
@@ -547,6 +552,16 @@ input TodoFilter {
   every: TodoWhereInput
   none: TodoWhereInput
   some: TodoWhereInput
+}
+
+input TodoOrderByInput {
+  archivedAt: OrderByArg
+  authorId: OrderByArg
+  categoryId: OrderByArg
+  createdAt: OrderByArg
+  id: OrderByArg
+  status: OrderByArg
+  text: OrderByArg
 }
 
 input TodoScalarWhereInput {

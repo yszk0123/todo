@@ -37,6 +37,8 @@ export type CategoryTodosArgs = {
   before?: Maybe<TodoWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<TodoOrderByInput>;
+  where?: Maybe<TodoWhereInput>;
 };
 
 export type CategoryCreateInput = {
@@ -318,6 +320,11 @@ export type NullableDateTimeFilter = {
   not?: Maybe<Scalars['DateTime']>;
   notIn?: Maybe<Array<Scalars['DateTime']>>;
 };
+
+export enum OrderByArg {
+  Asc = 'asc',
+  Desc = 'desc'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -654,6 +661,16 @@ export type TodoFilter = {
   every?: Maybe<TodoWhereInput>;
   none?: Maybe<TodoWhereInput>;
   some?: Maybe<TodoWhereInput>;
+};
+
+export type TodoOrderByInput = {
+  archivedAt?: Maybe<OrderByArg>;
+  authorId?: Maybe<OrderByArg>;
+  categoryId?: Maybe<OrderByArg>;
+  createdAt?: Maybe<OrderByArg>;
+  id?: Maybe<OrderByArg>;
+  status?: Maybe<OrderByArg>;
+  text?: Maybe<OrderByArg>;
 };
 
 export type TodoScalarWhereInput = {

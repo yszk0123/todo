@@ -7,7 +7,11 @@ schema.objectType({
     t.model.createdAt();
     t.model.name();
     t.model.owner();
-    t.model.todos();
+    t.model.todos({
+      filtering: true,
+      pagination: true,
+      ordering: true,
+    });
     t.model.tags();
   },
 });
