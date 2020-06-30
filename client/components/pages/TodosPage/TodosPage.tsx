@@ -158,7 +158,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       status,
     };
     updateTodo({ variables: { input } });
-  }, [data, text, status, createOneTodo, currentTodoId, tags]);
+  }, [data, text, status, updateTodo, currentTodoId, tags]);
 
   const handleArchiveTodo = React.useCallback(() => {
     if (!currentTodoId) return;
