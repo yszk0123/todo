@@ -5,12 +5,12 @@ export const Badge: React.FunctionComponent<{ text: string }> = ({ text }) => {
   return (
     <Box
       sx={{
-        borderWidth: 2,
-        borderColor: 'gray',
-        borderStyle: 'solid',
+        color: 'white',
+        bg: 'gray',
         display: 'inline-block',
         px: 2,
         py: 1,
+        fontSize: 10,
         borderRadius: 9999,
       }}
     >
