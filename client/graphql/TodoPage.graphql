@@ -1,0 +1,34 @@
+query TodoPage($categoryId: Int!) {
+  me {
+    id
+  }
+  category(id: $categoryId) {
+    id
+    name
+    todos(where: { archivedAt: { equals: null } }) {
+      ...CategoryTodo
+    }
+    tags {
+      ...CategoryTag
+    }
+  }
+}
+
+mutation CreateOneTodo($input: TodoCreateInput!) {
+  createOneTodo(data: $input) {
+    ...CategoryTodo
+  }
+}
+
+mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(data: $input) {
+    id
+    categoryId
+  }
+}
+
+mutation UpdateTodo($input: UpdateTodoInput!) {
+  updateTodo(data: $input) {
+    ...CategoryTodo
+  }
+}

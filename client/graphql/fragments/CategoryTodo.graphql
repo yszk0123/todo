@@ -1,0 +1,10 @@
+fragment CategoryTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    ...CategoryTag
+  }
+  status
+  archivedAt
+}

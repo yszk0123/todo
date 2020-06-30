@@ -2,9 +2,9 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 import { Flex, Text, Box } from 'rebass';
-import { TodoVM } from '../../../viewModels/TodoVM';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 import { Badge } from './Badge';
+import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -20,8 +20,8 @@ function linkifyComponentDecorator(
 
 export const TodoListItem: React.FunctionComponent<{
   isActive: boolean;
-  todo: TodoVM;
-  onClick: (todo: TodoVM) => void;
+  todo: CategoryTodoFragment;
+  onClick: (todo: CategoryTodoFragment) => void;
 }> = ({ isActive, todo, onClick }) => {
   const handleClick = React.useCallback(() => {
     onClick(todo);

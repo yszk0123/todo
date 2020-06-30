@@ -17,12 +17,12 @@ import {
   TagWhereUniqueInput,
   TagUpdateInput,
 } from '../../../graphql/__generated__/baseTypes';
-import { TagVM } from '../../../viewModels/TagVM';
 import { TagForm } from './TagForm';
 import { TagList } from './TagList';
 import { TagCount } from './TagCount';
 import { TagListItem } from './TagListItem';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 
 const createOneTagMutationOptions: CreateOneTagMutationOptions = {
   update(cache, result) {
@@ -79,7 +79,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   }, []);
 
   const handleSelectTag = React.useCallback(
-    (tag: TagVM) => {
+    (tag: RootTagFragment) => {
       if (tag.id !== currentTagId) {
         setCurrentTagId(tag.id);
         setName(tag.name);

@@ -2,14 +2,16 @@ import React from 'react';
 import produce from 'immer';
 import {
   useCategoryTodosPageQuery,
-  useCreateOneTodoMutation,
   CategoryTodosPageDocument,
   CategoryTodosPageQuery,
+} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
+import {
+  useCreateOneTodoMutation,
   useDeleteTodoMutation,
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
+} from '../../../graphql/__generated__/TodoPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
@@ -17,12 +19,12 @@ import {
   TodoStatus,
 } from '../../../graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../layout/ContentWrapper';
-import { TodoVM } from '../../../viewModels/TodoVM';
 import { TodoCount } from './TodoCount';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
-import { CategoryTagVM } from '../../../viewModels/TagVM';
+import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -98,7 +100,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
-  const [tags, setTags] = React.useState<CategoryTagVM[]>([]);
+  const [tags, setTags] = React.useState<CategoryTagFragment[]>([]);
   const [status, setStatus] = React.useState(TodoStatus.Todo);
   const isSelected = !!currentTodoId;
 
@@ -110,7 +112,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   }, []);
 
   const handleSelectTodo = React.useCallback(
-    (todo: TodoVM) => {
+    (todo: CategoryTodoFragment) => {
       if (todo.id !== currentTodoId) {
         setCurrentTodoId(todo.id);
         setText(todo.text);
@@ -172,7 +174,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   }, [currentTodoId]);
 
   const handleToggleTag = React.useCallback(
-    (tag: CategoryTagVM) => {
+    (tag: CategoryTagFragment) => {
       const has = tags.find((t) => t.id === tag.id);
       const newTags = has
         ? tags.filter((t) => t.id !== tag.id)

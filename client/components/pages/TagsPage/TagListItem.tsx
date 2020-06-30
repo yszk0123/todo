@@ -1,11 +1,11 @@
 import React from 'react';
 import { Flex, Text, Box } from 'rebass';
-import { TagVM } from '../../../viewModels/TagVM';
+import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 
 export const TagListItem: React.FunctionComponent<{
   isActive: boolean;
-  tag: TagVM;
-  onClick: (tag: TagVM) => void;
+  tag: RootTagFragment;
+  onClick: (tag: RootTagFragment) => void;
 }> = ({ isActive, tag, onClick }) => {
   const handleClick = React.useCallback(() => {
     onClick(tag);

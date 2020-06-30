@@ -1,0 +1,8 @@
+fragment RootTag on Tag {
+  id
+  name
+  categories {
+    id
+    name
+  }
+}

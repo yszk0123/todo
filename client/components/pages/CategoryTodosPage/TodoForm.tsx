@@ -3,9 +3,9 @@ import { Button, Flex, Box } from 'rebass';
 import { Label, Radio, Input } from '@rebass/forms';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
-import { CategoryTagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { CheckboxList } from '../../molecules/CheckboxList';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 
 const StatusSelect: React.FunctionComponent<{
   status: TodoStatus;
@@ -68,9 +68,9 @@ const StatusSelect: React.FunctionComponent<{
 
 export const TodoForm: React.FunctionComponent<{
   name: string;
-  tags: CategoryTagVM[];
+  tags: CategoryTagFragment[];
   status: TodoStatus;
-  categoryTags: CategoryTagVM[];
+  categoryTags: CategoryTagFragment[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -79,7 +79,7 @@ export const TodoForm: React.FunctionComponent<{
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
   onArchiveTodo: () => void;
-  onToggleTag: (tag: CategoryTagVM) => void;
+  onToggleTag: (tag: CategoryTagFragment) => void;
   onSelectStatus: (status: TodoStatus) => void;
 }> = ({
   name,

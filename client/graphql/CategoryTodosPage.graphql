@@ -13,38 +13,3 @@ query CategoryTodosPage($categoryId: Int!) {
     }
   }
 }
-
-mutation CreateOneTodo($input: TodoCreateInput!) {
-  createOneTodo(data: $input) {
-    ...CategoryTodo
-  }
-}
-
-mutation DeleteTodo($input: DeleteTodoInput!) {
-  deleteTodo(data: $input) {
-    id
-    categoryId
-  }
-}
-
-mutation UpdateTodo($input: UpdateTodoInput!) {
-  updateTodo(data: $input) {
-    ...CategoryTodo
-  }
-}
-
-fragment CategoryTodo on Todo {
-  id
-  text
-  categoryId
-  tags {
-    ...CategoryTag
-  }
-  status
-  archivedAt
-}
-
-fragment CategoryTag on Tag {
-  id
-  name
-}
