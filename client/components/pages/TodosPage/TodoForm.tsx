@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, Flex, Box, Text } from 'rebass';
-import { Label, Radio, Checkbox, Input } from '@rebass/forms';
+import { Button, Flex, Box } from 'rebass';
+import { Label, Radio, Input } from '@rebass/forms';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { TagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { TodoVM } from '../../../viewModels/TodoVM';
 import { createLookupTable } from '../../helpers/createLookupTable';
+import { CheckboxListItem } from '../../molecules/CheckboxList';
 
 function printStatus(todo: TodoVM) {
   switch (todo.status) {
@@ -20,33 +21,6 @@ function printStatus(todo: TodoVM) {
       return '[x]';
   }
 }
-
-const Item: React.FunctionComponent<{
-  tag: TagVM;
-  isFirst: boolean;
-  isChecked: boolean;
-  onClick: (tag: TagVM) => void;
-}> = ({ tag, isFirst, isChecked, onClick }) => {
-  const handleClick = React.useCallback(
-    (event: React.SyntheticEvent) => {
-      onClick(tag);
-      event.preventDefault();
-    },
-    [tag, onClick]
-  );
-
-  return (
-    <Flex
-      ml={isFirst ? undefined : 3}
-      alignItems="center"
-      key={tag.id}
-      onClick={handleClick}
-    >
-      <Checkbox readOnly checked={isChecked} onClick={preventDefault} />
-      <Text>{tag.name}</Text>
-    </Flex>
-  );
-};
 
 const StatusSelect: React.FunctionComponent<{
   status: TodoStatus;
@@ -145,10 +119,10 @@ export const TodoForm: React.FunctionComponent<{
           const isChecked = lookupTable[categoryTag.id] === true;
 
           return (
-            <Item
+            <CheckboxListItem
               key={categoryTag.id}
               isFirst={i === 0}
-              tag={categoryTag}
+              item={categoryTag}
               isChecked={isChecked}
               onClick={onToggleTag}
             />
