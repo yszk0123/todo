@@ -6,14 +6,7 @@ import { stopPropagation } from '../../../handlers/stopPropagation';
 import { TagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { TodoVM } from '../../../viewModels/TodoVM';
-
-function createLookupTable(tags: TagVM[]): Record<string, true | undefined> {
-  const table: Record<string, true | undefined> = {};
-  tags.forEach((tag) => {
-    table[tag.id] = true;
-  });
-  return table;
-}
+import { createLookupTable } from '../../helpers/createLookupTable';
 
 function printStatus(todo: TodoVM) {
   switch (todo.status) {
