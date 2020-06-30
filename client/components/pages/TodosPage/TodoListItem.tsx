@@ -41,6 +41,8 @@ export const TodoListItem: React.FunctionComponent<{
     onClick(todo);
   }, [todo, onClick]);
 
+  const isArchived = todo.archivedAt !== null;
+
   return (
     <Flex alignItems="center">
       <Flex
@@ -48,6 +50,7 @@ export const TodoListItem: React.FunctionComponent<{
         alignItems="center"
         p={2}
         bg={isActive ? 'highlight' : undefined}
+        color={isArchived ? 'lightgray' : undefined}
         onClick={handleClick}
       >
         <Text width={16}>{printStatus(todo)}</Text>

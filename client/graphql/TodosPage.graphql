@@ -5,7 +5,7 @@ query TodosPage($categoryId: Int!) {
   category(id: $categoryId) {
     id
     name
-    todos {
+    todos(where: { archivedAt: { equals: null } }) {
       id
       text
       tags {

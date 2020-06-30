@@ -87,7 +87,7 @@ export const TodosPageDocument = gql`
   category(id: $categoryId) {
     id
     name
-    todos {
+    todos(where: {archivedAt: {equals: null}}) {
       id
       text
       tags {

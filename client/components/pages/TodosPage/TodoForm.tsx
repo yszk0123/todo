@@ -126,6 +126,7 @@ export const TodoForm: React.FunctionComponent<{
   onCreateOneTodo: () => void;
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
+  onArchiveTodo: () => void;
   onToggleTag: (tag: TagVM) => void;
   onSelectStatus: (status: TodoStatus) => void;
 }> = ({
@@ -138,6 +139,7 @@ export const TodoForm: React.FunctionComponent<{
   onCreateOneTodo,
   onUpdateOneTodo,
   onDeleteOneTodo,
+  onArchiveTodo,
   onToggleTag,
   onSelectStatus,
 }) => {
@@ -167,24 +169,33 @@ export const TodoForm: React.FunctionComponent<{
         <Input value={name} onChange={onChangeName} />
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
-        <Button type="button" variant="outline" onClick={onDeleteOneTodo}>
-          Delete
-        </Button>
         {isSelected ? (
-          <Button
-            type="submit"
-            width={1}
-            variant="primary"
-            ml={2}
-            onClick={onUpdateOneTodo}
-          >
-            Update
-          </Button>
+          <>
+            <Button type="button" variant="outline" onClick={onDeleteOneTodo}>
+              Delete
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              ml={2}
+              onClick={onArchiveTodo}
+            >
+              Archive
+            </Button>
+            <Button
+              type="submit"
+              width={1}
+              variant="primary"
+              ml={2}
+              onClick={onUpdateOneTodo}
+            >
+              Update
+            </Button>
+          </>
         ) : (
           <Button
             type="submit"
             width={1}
-            ml={2}
             variant="primary"
             onClick={onCreateOneTodo}
           >

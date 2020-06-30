@@ -160,6 +160,15 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     updateTodo({ variables: { input } });
   }, [data, text, status, createOneTodo, currentTodoId, tags]);
 
+  const handleArchiveTodo = React.useCallback(() => {
+    if (!currentTodoId) return;
+    const input: UpdateTodoInput = {
+      id: currentTodoId,
+      archivedAt: new Date(),
+    };
+    updateTodo({ variables: { input } });
+  }, [currentTodoId]);
+
   const handleToggleTag = React.useCallback(
     (tag: TagVM) => {
       const has = tags.find((t) => t.id === tag.id);
@@ -214,6 +223,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         onCreateOneTodo={handleCreateOneTodo}
         onUpdateOneTodo={handleUpdateTodo}
         onDeleteOneTodo={handleDeleteTodo}
+        onArchiveTodo={handleArchiveTodo}
         onToggleTag={handleToggleTag}
         onSelectStatus={handleSelectStatus}
       />
