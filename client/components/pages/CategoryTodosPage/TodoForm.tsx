@@ -96,8 +96,8 @@ export const TodoForm: React.FunctionComponent<{
   onSelectStatus,
 }) => {
   return (
-    <Box as="form" my={4} onSubmit={preventDefault} onClick={stopPropagation}>
-      <Flex mt={2}>
+    <Box as="form" onSubmit={preventDefault} onClick={stopPropagation}>
+      <Flex>
         <CheckboxList
           items={categoryTags}
           checkedItems={tags}

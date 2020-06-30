@@ -1,0 +1,4 @@
+fragment RootCategory on Category {
+  id
+  name
+}

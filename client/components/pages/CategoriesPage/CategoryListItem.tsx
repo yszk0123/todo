@@ -1,7 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 
 const CategoryGoToTodoLink: React.FunctionComponent<{
   categoryId: number;
@@ -19,8 +19,8 @@ const CategoryGoToTodoLink: React.FunctionComponent<{
 
 export const CategoryListItem: React.FunctionComponent<{
   isActive: boolean;
-  category: CategoryVM;
-  onClick: (category: CategoryVM) => void;
+  category: RootCategoryFragment;
+  onClick: (category: RootCategoryFragment) => void;
 }> = ({ isActive, category, onClick }) => {
   const handleClick = React.useCallback(() => {
     onClick(category);

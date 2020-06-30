@@ -3,15 +3,13 @@ query CategoriesPage {
     id
   }
   categories {
-    id
-    name
+    ...RootCategory
   }
 }
 
 mutation CreateOneCategory($data: CategoryCreateInput!) {
   createOneCategory(data: $data) {
-    id
-    name
+    ...RootCategory
   }
 }
 
@@ -20,8 +18,7 @@ mutation UpdateOneCategory(
   $where: CategoryWhereUniqueInput!
 ) {
   updateOneCategory(data: $data, where: $where) {
-    id
-    name
+    ...RootCategory
   }
 }
 

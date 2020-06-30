@@ -28,8 +28,8 @@ export const TagForm: React.FunctionComponent<{
   onToggleCategory,
 }) => {
   return (
-    <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
-      <Flex mt={2}>
+    <Box as="form" onSubmit={preventDefault} onClick={stopPropagation}>
+      <Flex>
         <CheckboxList
           items={categories}
           checkedItems={tagCategories}

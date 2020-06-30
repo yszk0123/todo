@@ -1,11 +1,26 @@
 import React from 'react';
 import { Box } from 'rebass';
 import { stopPropagation } from '../../../handlers/stopPropagation';
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { CategoryListItem } from './CategoryListItem';
 
-export const CategoryList: React.FunctionComponent<{}> = ({ children }) => {
+export const CategoryList: React.FunctionComponent<{
+  categories: RootCategoryFragment[];
+  currentCategoryId: number | null;
+  onClick: (category: RootCategoryFragment) => void;
+}> = ({ categories, currentCategoryId, onClick }) => {
   return (
-    <Box mt={1} onClick={stopPropagation}>
-      {children}
+    <Box onClick={stopPropagation}>
+      {categories.map((category) => {
+        return (
+          <CategoryListItem
+            key={category.id}
+            category={category}
+            isActive={category.id === currentCategoryId}
+            onClick={onClick}
+          />
+        );
+      })}
     </Box>
   );
 };

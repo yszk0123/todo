@@ -20,7 +20,7 @@ export const CategoryForm: React.FunctionComponent<{
   onDeleteOneCategory,
 }) => {
   return (
-    <Box as="form" my={2} onSubmit={preventDefault} onClick={stopPropagation}>
+    <Box as="form" onSubmit={preventDefault} onClick={stopPropagation}>
       <Flex alignItems="center">
         <Input value={name} onChange={onChangeName} />
       </Flex>

@@ -1,6 +1,8 @@
 import * as Types from './baseTypes';
 
+import { RootCategoryFragment } from '../fragments/__generated__/RootCategory.graphql';
 import gql from 'graphql-tag';
+import { RootCategoryFragmentDoc } from '../fragments/__generated__/RootCategory.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
@@ -14,7 +16,7 @@ export type CategoriesPageQuery = (
     & Pick<Types.User, 'id'>
   )>, categories?: Types.Maybe<Array<(
     { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
+    & RootCategoryFragment
   )>> }
 );
 
@@ -27,7 +29,7 @@ export type CreateOneCategoryMutation = (
   { __typename?: 'Mutation' }
   & { createOneCategory: (
     { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
+    & RootCategoryFragment
   ) }
 );
 
@@ -41,7 +43,7 @@ export type UpdateOneCategoryMutation = (
   { __typename?: 'Mutation' }
   & { updateOneCategory?: Types.Maybe<(
     { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
+    & RootCategoryFragment
   )> }
 );
 
@@ -65,11 +67,10 @@ export const CategoriesPageDocument = gql`
     id
   }
   categories {
-    id
-    name
+    ...RootCategory
   }
 }
-    `;
+    ${RootCategoryFragmentDoc}`;
 
 /**
  * __useCategoriesPageQuery__
@@ -101,11 +102,10 @@ export function refetchCategoriesPageQuery(variables?: CategoriesPageQueryVariab
 export const CreateOneCategoryDocument = gql`
     mutation CreateOneCategory($data: CategoryCreateInput!) {
   createOneCategory(data: $data) {
-    id
-    name
+    ...RootCategory
   }
 }
-    `;
+    ${RootCategoryFragmentDoc}`;
 export type CreateOneCategoryMutationFn = ApolloReactCommon.MutationFunction<CreateOneCategoryMutation, CreateOneCategoryMutationVariables>;
 
 /**
@@ -134,11 +134,10 @@ export type CreateOneCategoryMutationOptions = ApolloReactCommon.BaseMutationOpt
 export const UpdateOneCategoryDocument = gql`
     mutation UpdateOneCategory($data: CategoryUpdateInput!, $where: CategoryWhereUniqueInput!) {
   updateOneCategory(data: $data, where: $where) {
-    id
-    name
+    ...RootCategory
   }
 }
-    `;
+    ${RootCategoryFragmentDoc}`;
 export type UpdateOneCategoryMutationFn = ApolloReactCommon.MutationFunction<UpdateOneCategoryMutation, UpdateOneCategoryMutationVariables>;
 
 /**

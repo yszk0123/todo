@@ -146,18 +146,11 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
   return (
     <ContentWrapper onClick={handleDeselectCategory}>
       <CategoryCount count={categories.length} />
-      <CategoryList>
-        {categories.map((category) => {
-          return (
-            <CategoryListItem
-              key={category.id}
-              category={category}
-              isActive={category.id === currentCategoryId}
-              onClick={handleSelectCategory}
-            />
-          );
-        })}
-      </CategoryList>
+      <CategoryList
+        categories={categories}
+        currentCategoryId={currentCategoryId}
+        onClick={handleSelectCategory}
+      />
       <CategoryForm
         name={name}
         isSelected={isSelected}
