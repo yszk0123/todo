@@ -4,14 +4,12 @@ import {
   useCategoryTodosPageQuery,
   CategoryTodosPageDocument,
   CategoryTodosPageQuery,
-} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
-import {
   useCreateOneTodoMutation,
   useDeleteTodoMutation,
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../../../graphql/__generated__/TodoPage.graphql';
+} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
