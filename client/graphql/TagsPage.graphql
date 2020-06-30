@@ -5,6 +5,10 @@ query TagsPage {
   tags {
     ...TagsTag
   }
+  categories {
+    id
+    name
+  }
 }
 
 mutation CreateOneTag($data: TagCreateInput!) {

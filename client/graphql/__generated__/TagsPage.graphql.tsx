@@ -15,6 +15,9 @@ export type TagsPageQuery = (
   )>, tags?: Types.Maybe<Array<(
     { __typename?: 'Tag' }
     & TagsTagFragment
+  )>>, categories?: Types.Maybe<Array<(
+    { __typename?: 'Category' }
+    & Pick<Types.Category, 'id' | 'name'>
   )>> }
 );
 
@@ -84,6 +87,10 @@ export const TagsPageDocument = gql`
   }
   tags {
     ...TagsTag
+  }
+  categories {
+    id
+    name
   }
 }
     ${TagsTagFragmentDoc}`;
