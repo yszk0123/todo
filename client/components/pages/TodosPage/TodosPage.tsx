@@ -23,8 +23,6 @@ import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
 import { CategoryTagVM } from '../../../viewModels/TagVM';
-import { Text } from 'rebass';
-import { TodoOutput } from './TodoOutput';
 
 const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
   update(cache, result) {
@@ -227,7 +225,6 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         onToggleTag={handleToggleTag}
         onSelectStatus={handleSelectStatus}
       />
-      <TodoOutput todos={todos} />
     </ContentWrapper>
   );
 };

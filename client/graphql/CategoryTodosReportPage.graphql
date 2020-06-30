@@ -1,0 +1,26 @@
+query CategoryTodosReportPage($categoryId: Int!) {
+  category(id: $categoryId) {
+    id
+    name
+    todos(where: { archivedAt: { equals: null } }) {
+      ...CategoryTodosReportPageTodo
+    }
+    tags {
+      ...CategoryTodosReportPageTag
+    }
+  }
+}
+
+fragment CategoryTodosReportPageTodo on Todo {
+  id
+  text
+  tags {
+    ...CategoryTodosReportPageTag
+  }
+  status
+}
+
+fragment CategoryTodosReportPageTag on Tag {
+  id
+  name
+}
