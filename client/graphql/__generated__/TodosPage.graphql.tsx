@@ -20,11 +20,11 @@ export type TodosPageQuery = (
     & { todos: Array<(
       { __typename?: 'Todo' }
       & CategoryTodoFragment
+    )>, tags: Array<(
+      { __typename?: 'Tag' }
+      & CategoryTagFragment
     )> }
-  )>, tags?: Types.Maybe<Array<(
-    { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name'>
-  )>> }
+  )> }
 );
 
 export type CreateOneTodoMutationVariables = Types.Exact<{
@@ -71,23 +71,33 @@ export type CategoryTodoFragment = (
   & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
   & { tags: Array<(
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name'>
+    & CategoryTagFragment
   )> }
 );
 
+export type CategoryTagFragment = (
+  { __typename?: 'Tag' }
+  & Pick<Types.Tag, 'id' | 'name'>
+);
+
+export const CategoryTagFragmentDoc = gql`
+    fragment CategoryTag on Tag {
+  id
+  name
+}
+    `;
 export const CategoryTodoFragmentDoc = gql`
     fragment CategoryTodo on Todo {
   id
   text
   categoryId
   tags {
-    id
-    name
+    ...CategoryTag
   }
   status
   archivedAt
 }
-    `;
+    ${CategoryTagFragmentDoc}`;
 export const TodosPageDocument = gql`
     query TodosPage($categoryId: Int!) {
   me {
@@ -99,13 +109,13 @@ export const TodosPageDocument = gql`
     todos(where: {archivedAt: {equals: null}}) {
       ...CategoryTodo
     }
-  }
-  tags {
-    id
-    name
+    tags {
+      ...CategoryTag
+    }
   }
 }
-    ${CategoryTodoFragmentDoc}`;
+    ${CategoryTodoFragmentDoc}
+${CategoryTagFragmentDoc}`;
 
 /**
  * __useTodosPageQuery__

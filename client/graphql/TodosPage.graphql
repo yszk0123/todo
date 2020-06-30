@@ -8,11 +8,9 @@ query TodosPage($categoryId: Int!) {
     todos(where: { archivedAt: { equals: null } }) {
       ...CategoryTodo
     }
-  }
-  # FIXME: Use category.tags
-  tags {
-    id
-    name
+    tags {
+      ...CategoryTag
+    }
   }
 }
 
@@ -40,9 +38,13 @@ fragment CategoryTodo on Todo {
   text
   categoryId
   tags {
-    id
-    name
+    ...CategoryTag
   }
   status
   archivedAt
+}
+
+fragment CategoryTag on Tag {
+  id
+  name
 }

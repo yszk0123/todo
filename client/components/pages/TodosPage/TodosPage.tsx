@@ -22,7 +22,7 @@ import { TodoCount } from './TodoCount';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
-import { TagVM } from '../../../viewModels/TagVM';
+import { CategoryTagVM } from '../../../viewModels/TagVM';
 import { Text } from 'rebass';
 import { TodoOutput } from './TodoOutput';
 
@@ -96,7 +96,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const [updateTodo] = useUpdateTodoMutation();
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
-  const [tags, setTags] = React.useState<TagVM[]>([]);
+  const [tags, setTags] = React.useState<CategoryTagVM[]>([]);
   const [status, setStatus] = React.useState(TodoStatus.Todo);
   const isSelected = !!currentTodoId;
 
@@ -170,7 +170,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   }, [currentTodoId]);
 
   const handleToggleTag = React.useCallback(
-    (tag: TagVM) => {
+    (tag: CategoryTagVM) => {
       const has = tags.find((t) => t.id === tag.id);
       const newTags = has
         ? tags.filter((t) => t.id !== tag.id)
@@ -196,7 +196,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     return null;
   }
   const todos = data.category?.todos ?? [];
-  const categoryTags = data.tags ?? [];
+  const categoryTags = data.category?.tags ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>

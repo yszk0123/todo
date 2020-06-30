@@ -3,10 +3,9 @@ import { Button, Flex, Box } from 'rebass';
 import { Label, Radio, Input } from '@rebass/forms';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
-import { TagVM } from '../../../viewModels/TagVM';
+import { CategoryTagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { TodoVM } from '../../../viewModels/TodoVM';
-import { createLookupTable } from '../../helpers/createLookupTable';
 import { CheckboxList } from '../../molecules/CheckboxList';
 
 function printStatus(todo: TodoVM) {
@@ -83,9 +82,9 @@ const StatusSelect: React.FunctionComponent<{
 
 export const TodoForm: React.FunctionComponent<{
   name: string;
-  tags: TagVM[];
+  tags: CategoryTagVM[];
   status: TodoStatus;
-  categoryTags: TagVM[];
+  categoryTags: CategoryTagVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -94,7 +93,7 @@ export const TodoForm: React.FunctionComponent<{
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
   onArchiveTodo: () => void;
-  onToggleTag: (tag: TagVM) => void;
+  onToggleTag: (tag: CategoryTagVM) => void;
   onSelectStatus: (status: TodoStatus) => void;
 }> = ({
   name,
