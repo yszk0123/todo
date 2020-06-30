@@ -1,4 +1,4 @@
-query TodosPage($categoryId: Int!) {
+query CategoryTodosPage($categoryId: Int!) {
   me {
     id
   }

@@ -1,5 +1,3 @@
-import { Todo } from '../graphql/__generated__/baseTypes';
-import { TagVM } from './TagVM';
-import { CategoryTodoFragment } from '../graphql/__generated__/TodosPage.graphql';
+import { CategoryTodoFragment } from '../graphql/__generated__/CategoryTodosPage.graphql';
 
 export type TodoVM = CategoryTodoFragment;

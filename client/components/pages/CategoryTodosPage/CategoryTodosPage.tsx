@@ -1,15 +1,15 @@
 import React from 'react';
 import produce from 'immer';
 import {
-  useTodosPageQuery,
+  useCategoryTodosPageQuery,
   useCreateOneTodoMutation,
-  TodosPageDocument,
-  TodosPageQuery,
+  CategoryTodosPageDocument,
+  CategoryTodosPageQuery,
   useDeleteTodoMutation,
   CreateOneTodoMutationOptions,
   DeleteTodoMutationOptions,
   useUpdateTodoMutation,
-} from '../../../graphql/__generated__/TodosPage.graphql';
+} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import {
   TodoCreateInput,
   DeleteTodoInput,
@@ -30,8 +30,8 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
     if (categoryId == null) {
       return;
     }
-    const data = cache.readQuery<TodosPageQuery>({
-      query: TodosPageDocument,
+    const data = cache.readQuery<CategoryTodosPageQuery>({
+      query: CategoryTodosPageDocument,
       variables: { categoryId },
     });
 
@@ -43,8 +43,8 @@ const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
       }
     });
 
-    cache.writeQuery<TodosPageQuery>({
-      query: TodosPageDocument,
+    cache.writeQuery<CategoryTodosPageQuery>({
+      query: CategoryTodosPageDocument,
       variables: { categoryId },
       data: newData,
     });
@@ -58,8 +58,8 @@ const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
       return;
     }
 
-    const data = cache.readQuery<TodosPageQuery>({
-      query: TodosPageDocument,
+    const data = cache.readQuery<CategoryTodosPageQuery>({
+      query: CategoryTodosPageDocument,
       variables: { categoryId },
     });
 
@@ -73,8 +73,8 @@ const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
       }
     });
 
-    cache.writeQuery<TodosPageQuery>({
-      query: TodosPageDocument,
+    cache.writeQuery<CategoryTodosPageQuery>({
+      query: CategoryTodosPageDocument,
       variables: { categoryId },
       data: newData,
     });
@@ -85,8 +85,12 @@ type Props = {
   categoryId: number;
 };
 
-export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
-  const { loading, data } = useTodosPageQuery({ variables: { categoryId } });
+export const CategoryTodosPage: React.FunctionComponent<Props> = ({
+  categoryId,
+}) => {
+  const { loading, data } = useCategoryTodosPageQuery({
+    variables: { categoryId },
+  });
   const [createOneTodo] = useCreateOneTodoMutation(
     createOneTodoMutationOptions
   );
