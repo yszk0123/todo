@@ -25,7 +25,8 @@ function printReport(
   todos: CategoryTodosReportPageTodoFragment[],
   tags: CategoryTodosReportPageTagFragment[]
 ): string {
-  return todos
+  const tagsString = tags.map((tag) => tag.name).join(', ');
+  const todosString = todos
     .map((todo) => {
       const text = todo.text;
       const tagNames = todo.tags.map((tag) => tag.name);
@@ -34,6 +35,7 @@ function printReport(
       return `- ${status} ${tags}${text}`;
     })
     .join('\n');
+  return [tagsString, todosString].join('\n');
 }
 
 export const CategoryTodosReport: React.FunctionComponent<{
