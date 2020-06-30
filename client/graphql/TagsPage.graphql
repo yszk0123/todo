@@ -3,27 +3,33 @@ query TagsPage {
     id
   }
   tags {
-    id
-    name
+    ...TagsTag
   }
 }
 
 mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {
-    id
-    name
+    ...TagsTag
   }
 }
 
 mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
-    id
-    name
+    ...TagsTag
   }
 }
 
 mutation DeleteOneTag($where: TagWhereUniqueInput!) {
   deleteOneTag(where: $where) {
     id
+  }
+}
+
+fragment TagsTag on Tag {
+  id
+  name
+  categories {
+    id
+    name
   }
 }

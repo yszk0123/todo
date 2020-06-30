@@ -14,7 +14,7 @@ export type TagsPageQuery = (
     & Pick<Types.User, 'id'>
   )>, tags?: Types.Maybe<Array<(
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name'>
+    & TagsTagFragment
   )>> }
 );
 
@@ -27,7 +27,7 @@ export type CreateOneTagMutation = (
   { __typename?: 'Mutation' }
   & { createOneTag: (
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name'>
+    & TagsTagFragment
   ) }
 );
 
@@ -41,7 +41,7 @@ export type UpdateOneTagMutation = (
   { __typename?: 'Mutation' }
   & { updateOneTag?: Types.Maybe<(
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name'>
+    & TagsTagFragment
   )> }
 );
 
@@ -58,18 +58,35 @@ export type DeleteOneTagMutation = (
   )> }
 );
 
+export type TagsTagFragment = (
+  { __typename?: 'Tag' }
+  & Pick<Types.Tag, 'id' | 'name'>
+  & { categories: Array<(
+    { __typename?: 'Category' }
+    & Pick<Types.Category, 'id' | 'name'>
+  )> }
+);
 
+export const TagsTagFragmentDoc = gql`
+    fragment TagsTag on Tag {
+  id
+  name
+  categories {
+    id
+    name
+  }
+}
+    `;
 export const TagsPageDocument = gql`
     query TagsPage {
   me {
     id
   }
   tags {
-    id
-    name
+    ...TagsTag
   }
 }
-    `;
+    ${TagsTagFragmentDoc}`;
 
 /**
  * __useTagsPageQuery__
@@ -101,11 +118,10 @@ export function refetchTagsPageQuery(variables?: TagsPageQueryVariables) {
 export const CreateOneTagDocument = gql`
     mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {
-    id
-    name
+    ...TagsTag
   }
 }
-    `;
+    ${TagsTagFragmentDoc}`;
 export type CreateOneTagMutationFn = ApolloReactCommon.MutationFunction<CreateOneTagMutation, CreateOneTagMutationVariables>;
 
 /**
@@ -134,11 +150,10 @@ export type CreateOneTagMutationOptions = ApolloReactCommon.BaseMutationOptions<
 export const UpdateOneTagDocument = gql`
     mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
-    id
-    name
+    ...TagsTag
   }
 }
-    `;
+    ${TagsTagFragmentDoc}`;
 export type UpdateOneTagMutationFn = ApolloReactCommon.MutationFunction<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
 
 /**
