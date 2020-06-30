@@ -6,14 +6,7 @@ query TodosPage($categoryId: Int!) {
     id
     name
     todos(where: { archivedAt: { equals: null } }) {
-      id
-      text
-      tags {
-        id
-        name
-      }
-      status
-      archivedAt
+      ...CategoryTodo
     }
   }
   # FIXME: Use category.tags
@@ -25,15 +18,7 @@ query TodosPage($categoryId: Int!) {
 
 mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
-    id
-    text
-    categoryId
-    tags {
-      id
-      name
-    }
-    status
-    archivedAt
+    ...CategoryTodo
   }
 }
 
@@ -46,14 +31,18 @@ mutation DeleteTodo($input: DeleteTodoInput!) {
 
 mutation UpdateTodo($input: UpdateTodoInput!) {
   updateTodo(data: $input) {
-    id
-    text
-    categoryId
-    tags {
-      id
-      name
-    }
-    status
-    archivedAt
+    ...CategoryTodo
   }
+}
+
+fragment CategoryTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    id
+    name
+  }
+  status
+  archivedAt
 }

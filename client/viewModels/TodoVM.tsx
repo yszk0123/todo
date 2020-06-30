@@ -1,6 +1,5 @@
 import { Todo } from '../graphql/__generated__/baseTypes';
 import { TagVM } from './TagVM';
+import { CategoryTodoFragment } from '../graphql/__generated__/TodosPage.graphql';
 
-export type TodoVM = Pick<Todo, 'id' | 'text' | 'status' | 'archivedAt'> & {
-  tags: TagVM[];
-};
+export type TodoVM = CategoryTodoFragment;

@@ -19,11 +19,7 @@ export type TodosPageQuery = (
     & Pick<Types.Category, 'id' | 'name'>
     & { todos: Array<(
       { __typename?: 'Todo' }
-      & Pick<Types.Todo, 'id' | 'text' | 'status' | 'archivedAt'>
-      & { tags: Array<(
-        { __typename?: 'Tag' }
-        & Pick<Types.Tag, 'id' | 'name'>
-      )> }
+      & CategoryTodoFragment
     )> }
   )>, tags?: Types.Maybe<Array<(
     { __typename?: 'Tag' }
@@ -40,11 +36,7 @@ export type CreateOneTodoMutation = (
   { __typename?: 'Mutation' }
   & { createOneTodo: (
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
-    & { tags: Array<(
-      { __typename?: 'Tag' }
-      & Pick<Types.Tag, 'id' | 'name'>
-    )> }
+    & CategoryTodoFragment
   ) }
 );
 
@@ -70,15 +62,32 @@ export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
   & { updateTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
-    & { tags: Array<(
-      { __typename?: 'Tag' }
-      & Pick<Types.Tag, 'id' | 'name'>
-    )> }
+    & CategoryTodoFragment
   )> }
 );
 
+export type CategoryTodoFragment = (
+  { __typename?: 'Todo' }
+  & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
+  & { tags: Array<(
+    { __typename?: 'Tag' }
+    & Pick<Types.Tag, 'id' | 'name'>
+  )> }
+);
 
+export const CategoryTodoFragmentDoc = gql`
+    fragment CategoryTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    id
+    name
+  }
+  status
+  archivedAt
+}
+    `;
 export const TodosPageDocument = gql`
     query TodosPage($categoryId: Int!) {
   me {
@@ -88,14 +97,7 @@ export const TodosPageDocument = gql`
     id
     name
     todos(where: {archivedAt: {equals: null}}) {
-      id
-      text
-      tags {
-        id
-        name
-      }
-      status
-      archivedAt
+      ...CategoryTodo
     }
   }
   tags {
@@ -103,7 +105,7 @@ export const TodosPageDocument = gql`
     name
   }
 }
-    `;
+    ${CategoryTodoFragmentDoc}`;
 
 /**
  * __useTodosPageQuery__
@@ -136,18 +138,10 @@ export function refetchTodosPageQuery(variables?: TodosPageQueryVariables) {
 export const CreateOneTodoDocument = gql`
     mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
-    id
-    text
-    categoryId
-    tags {
-      id
-      name
-    }
-    status
-    archivedAt
+    ...CategoryTodo
   }
 }
-    `;
+    ${CategoryTodoFragmentDoc}`;
 export type CreateOneTodoMutationFn = ApolloReactCommon.MutationFunction<CreateOneTodoMutation, CreateOneTodoMutationVariables>;
 
 /**
@@ -209,18 +203,10 @@ export type DeleteTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<De
 export const UpdateTodoDocument = gql`
     mutation UpdateTodo($input: UpdateTodoInput!) {
   updateTodo(data: $input) {
-    id
-    text
-    categoryId
-    tags {
-      id
-      name
-    }
-    status
-    archivedAt
+    ...CategoryTodo
   }
 }
-    `;
+    ${CategoryTodoFragmentDoc}`;
 export type UpdateTodoMutationFn = ApolloReactCommon.MutationFunction<UpdateTodoMutation, UpdateTodoMutationVariables>;
 
 /**
