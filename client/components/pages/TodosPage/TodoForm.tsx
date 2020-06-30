@@ -7,7 +7,7 @@ import { TagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { TodoVM } from '../../../viewModels/TodoVM';
 import { createLookupTable } from '../../helpers/createLookupTable';
-import { CheckboxListItem } from '../../molecules/CheckboxList';
+import { CheckboxList } from '../../molecules/CheckboxList';
 
 function printStatus(todo: TodoVM) {
   switch (todo.status) {
@@ -110,24 +110,14 @@ export const TodoForm: React.FunctionComponent<{
   onToggleTag,
   onSelectStatus,
 }) => {
-  const lookupTable = React.useMemo(() => createLookupTable(tags), [tags]);
-
   return (
     <Box as="form" my={4} onSubmit={preventDefault} onClick={stopPropagation}>
-      <Flex mt={2} alignItems="center">
-        {categoryTags.map((categoryTag, i) => {
-          const isChecked = lookupTable[categoryTag.id] === true;
-
-          return (
-            <CheckboxListItem
-              key={categoryTag.id}
-              isFirst={i === 0}
-              item={categoryTag}
-              isChecked={isChecked}
-              onClick={onToggleTag}
-            />
-          );
-        })}
+      <Flex mt={2}>
+        <CheckboxList
+          items={categoryTags}
+          checkedItems={tags}
+          onClick={onToggleTag}
+        />
       </Flex>
       <Flex mt={2} alignItems="center">
         <StatusSelect status={status} onClick={onSelectStatus} />
