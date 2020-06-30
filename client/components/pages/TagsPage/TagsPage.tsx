@@ -22,6 +22,7 @@ import { TagForm } from './TagForm';
 import { TagList } from './TagList';
 import { TagCount } from './TagCount';
 import { TagListItem } from './TagListItem';
+import { CategoryVM } from '../../../viewModels/CategoryVM';
 
 const createOneTagMutationOptions: CreateOneTagMutationOptions = {
   update(cache, result) {
@@ -67,12 +68,14 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   const [deleteOneTag] = useDeleteOneTagMutation(deleteOneTagMutationOptions);
   const [updateOneTag] = useUpdateOneTagMutation();
   const [name, setName] = React.useState('');
+  const [tagCategories, setTagCategories] = React.useState<CategoryVM[]>([]);
   const [currentTagId, setCurrentTagId] = React.useState<number | null>(null);
   const isSelected = !!currentTagId;
 
   const deselect = React.useCallback(() => {
     setCurrentTagId(null);
     setName('');
+    setTagCategories([]);
   }, []);
 
   const handleSelectTag = React.useCallback(
@@ -80,6 +83,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
       if (tag.id !== currentTagId) {
         setCurrentTagId(tag.id);
         setName(tag.name);
+        setTagCategories(tag.categories);
       } else {
         deselect();
       }
@@ -93,14 +97,16 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
 
   const handleCreateOneTag = React.useCallback(() => {
     if (data?.me) {
+      const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
       const newData: TagCreateInput = {
         owner: { connect: { id: data.me.id } },
         name,
+        categories: { connect: categoriesToConnect },
       };
       createOneTag({ variables: { data: newData } });
       deselect();
     }
-  }, [data, name, deselect, createOneTag]);
+  }, [data, name, deselect, createOneTag, tagCategories]);
 
   const handleDeleteOneTag = React.useCallback(() => {
     if (!currentTagId) return;
@@ -112,10 +118,25 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
 
   const handleUpdateOneTag = React.useCallback(() => {
     if (!currentTagId) return;
-    const newData: TagUpdateInput = { name };
+    const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
+    const newData: TagUpdateInput = {
+      name,
+      categories: { connect: categoriesToConnect },
+    };
     const where: TagWhereUniqueInput = { id: currentTagId };
     updateOneTag({ variables: { data: newData, where } });
-  }, [data, name, createOneTag, currentTagId]);
+  }, [data, name, createOneTag, currentTagId, tagCategories]);
+
+  const handleToggleTagCategory = React.useCallback(
+    (tag: CategoryVM) => {
+      const has = tagCategories.find((t) => t.id === tag.id);
+      const newCategories = has
+        ? tagCategories.filter((t) => t.id !== tag.id)
+        : [...tagCategories, tag];
+      setTagCategories(newCategories);
+    },
+    [tagCategories]
+  );
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,6 +155,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   }
 
   const tags = data.tags ?? [];
+  const categories = data.categories ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTag}>
@@ -152,11 +174,14 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
       </TagList>
       <TagForm
         name={name}
+        categories={categories}
+        tagCategories={tagCategories}
         isSelected={isSelected}
         onChangeName={handleChangeName}
         onCreateOneTag={handleCreateOneTag}
         onUpdateOneTag={handleUpdateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
+        onToggleCategory={handleToggleTagCategory}
       />
     </ContentWrapper>
   );

@@ -1,2 +1,3 @@
-import { Tag } from '../graphql/__generated__/baseTypes';
-export type TagVM = Pick<Tag, 'id' | 'name'>;
+import { TagsTagFragment } from '../graphql/__generated__/TagsPage.graphql';
+
+export type TagVM = TagsTagFragment;
