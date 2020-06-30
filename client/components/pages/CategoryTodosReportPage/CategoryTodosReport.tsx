@@ -5,21 +5,9 @@ import {
   CategoryTodosReportPageTodoFragment,
   CategoryTodosReportPageTagFragment,
 } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
+import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 
 const MIN_HEIGHT = 300;
-
-function printStatus(todo: CategoryTodosReportPageTodoFragment) {
-  switch (todo.status) {
-    case TodoStatus.Todo:
-      return '[ ]';
-    case TodoStatus.InProgress:
-      return '[-]';
-    case TodoStatus.Waiting:
-      return '[>]';
-    case TodoStatus.Done:
-      return '[x]';
-  }
-}
 
 function printReport(
   todos: CategoryTodosReportPageTodoFragment[],
@@ -31,8 +19,8 @@ function printReport(
       const text = todo.text;
       const tagNames = todo.tags.map((tag) => tag.name);
       const tags = tagNames.length ? `${tagNames.join(', ')}: ` : '';
-      const status = printStatus(todo);
-      return `- ${status} ${tags}${text}`;
+      const status = printTodoStatus(todo.status);
+      return `- [${status}] ${tags}${text}`;
     })
     .join('\n');
   return [tagsString, todosString].join('\n');

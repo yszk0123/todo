@@ -2,10 +2,9 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 import { Flex, Text, Box } from 'rebass';
-import { Checkbox } from '@rebass/forms';
 import { TodoVM } from '../../../viewModels/TodoVM';
+import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 import { Badge } from './Badge';
-import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -17,19 +16,6 @@ function linkifyComponentDecorator(
       {decoratedText}
     </a>
   );
-}
-
-function printStatus(todo: TodoVM) {
-  switch (todo.status) {
-    case TodoStatus.Todo:
-      return '[ ]';
-    case TodoStatus.InProgress:
-      return '[-]';
-    case TodoStatus.Waiting:
-      return '[>]';
-    case TodoStatus.Done:
-      return '[x]';
-  }
 }
 
 export const TodoListItem: React.FunctionComponent<{
@@ -54,7 +40,7 @@ export const TodoListItem: React.FunctionComponent<{
         onClick={handleClick}
       >
         <Text width={16} sx={{ whiteSpace: 'nowrap' }}>
-          {printStatus(todo)}
+          [{printTodoStatus(todo.status)}]
         </Text>
         <Text ml={2}>
           <Linkify componentDecorator={linkifyComponentDecorator}>

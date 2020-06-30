@@ -5,21 +5,7 @@ import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { CategoryTagVM } from '../../../viewModels/TagVM';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { TodoVM } from '../../../viewModels/TodoVM';
 import { CheckboxList } from '../../molecules/CheckboxList';
-
-function printStatus(todo: TodoVM) {
-  switch (todo.status) {
-    case TodoStatus.Todo:
-      return '[ ]';
-    case TodoStatus.InProgress:
-      return '[-]';
-    case TodoStatus.Waiting:
-      return '[>]';
-    case TodoStatus.Done:
-      return '[x]';
-  }
-}
 
 const StatusSelect: React.FunctionComponent<{
   status: TodoStatus;
