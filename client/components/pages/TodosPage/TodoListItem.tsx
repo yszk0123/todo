@@ -53,7 +53,9 @@ export const TodoListItem: React.FunctionComponent<{
         color={isArchived ? 'lightgray' : undefined}
         onClick={handleClick}
       >
-        <Text width={16}>{printStatus(todo)}</Text>
+        <Text width={16} sx={{ whiteSpace: 'nowrap' }}>
+          {printStatus(todo)}
+        </Text>
         <Text ml={2}>
           <Linkify componentDecorator={linkifyComponentDecorator}>
             {todo.text}
