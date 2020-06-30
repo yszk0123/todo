@@ -13,10 +13,11 @@ export const ContentWrapper: React.FunctionComponent<Props> = ({
     <Box
       onClick={onClick}
       sx={{
-        maxWidth: 1024,
+        width: '100vw',
         mx: 'auto',
         pt: 2,
         px: 2,
+        overflowX: 'hidden',
       }}
     >
       {children}

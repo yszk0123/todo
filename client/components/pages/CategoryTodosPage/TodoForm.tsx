@@ -25,44 +25,52 @@ const StatusSelect: React.FunctionComponent<{
   }, [onClick]);
 
   return (
-    <Box>
+    <Flex alignItems="center" sx={{ flexGrow: 1 }}>
       <Label onClick={handleClickTodo}>
-        <Radio
-          name="status"
-          value="Todo"
-          checked={status === TodoStatus.Todo}
-          readOnly
-        />
-        Todo
+        <Flex alignItems="center">
+          <Radio
+            name="status"
+            value="Todo"
+            checked={status === TodoStatus.Todo}
+            readOnly
+          />
+          Todo
+        </Flex>
       </Label>
       <Label onClick={handleClickInProgress}>
-        <Radio
-          name="status"
-          value="InProgress"
-          checked={status === TodoStatus.InProgress}
-          readOnly
-        />
-        InProgress
+        <Flex alignItems="center">
+          <Radio
+            name="status"
+            value="InProgress"
+            checked={status === TodoStatus.InProgress}
+            readOnly
+          />
+          InProgress
+        </Flex>
       </Label>
       <Label onClick={handleClickWaiting}>
-        <Radio
-          name="status"
-          value="Waiting"
-          checked={status === TodoStatus.Waiting}
-          readOnly
-        />
-        Waiting
+        <Flex alignItems="center">
+          <Radio
+            name="status"
+            value="Waiting"
+            checked={status === TodoStatus.Waiting}
+            readOnly
+          />
+          Waiting
+        </Flex>
       </Label>
       <Label onClick={handleClickDone}>
-        <Radio
-          name="status"
-          value="Done"
-          checked={status === TodoStatus.Done}
-          readOnly
-        />
-        Done
+        <Flex alignItems="center">
+          <Radio
+            name="status"
+            value="Done"
+            checked={status === TodoStatus.Done}
+            readOnly
+          />
+          Done
+        </Flex>
       </Label>
-    </Box>
+    </Flex>
   );
 };
 
@@ -96,7 +104,12 @@ export const TodoForm: React.FunctionComponent<{
   onSelectStatus,
 }) => {
   return (
-    <Box as="form" onSubmit={preventDefault} onClick={stopPropagation}>
+    <Box
+      sx={{ boxShadow: 1, p: 2 }}
+      as="form"
+      onSubmit={preventDefault}
+      onClick={stopPropagation}
+    >
       <Flex>
         <CheckboxList
           items={categoryTags}
@@ -126,9 +139,8 @@ export const TodoForm: React.FunctionComponent<{
             </Button>
             <Button
               type="submit"
-              width={1}
+              sx={{ flexGrow: 1, ml: 2 }}
               variant="primary"
-              ml={2}
               onClick={onUpdateOneTodo}
             >
               Update
@@ -137,8 +149,8 @@ export const TodoForm: React.FunctionComponent<{
         ) : (
           <Button
             type="submit"
-            width={1}
             variant="primary"
+            sx={{ flexGrow: 1 }}
             onClick={onCreateOneTodo}
           >
             Create

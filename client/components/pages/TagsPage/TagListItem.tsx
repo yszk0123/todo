@@ -12,7 +12,7 @@ export const TagListItem: React.FunctionComponent<{
   }, [tag, onClick]);
 
   return (
-    <Flex alignItems="center" p={2}>
+    <Flex alignItems="center" p={2} sx={{ cursor: 'pointer' }}>
       <Box
         flex="1 1 auto"
         bg={isActive ? 'highlight' : undefined}

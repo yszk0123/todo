@@ -28,7 +28,12 @@ export const TagForm: React.FunctionComponent<{
   onToggleCategory,
 }) => {
   return (
-    <Box as="form" onSubmit={preventDefault} onClick={stopPropagation}>
+    <Box
+      sx={{ boxShadow: 1, p: 2 }}
+      as="form"
+      onSubmit={preventDefault}
+      onClick={stopPropagation}
+    >
       <Flex>
         <CheckboxList
           items={categories}
@@ -47,9 +52,8 @@ export const TagForm: React.FunctionComponent<{
             </Button>
             <Button
               type="submit"
-              width={1}
               variant="primary"
-              ml={2}
+              sx={{ flexGrow: 1, ml: 2 }}
               onClick={onUpdateOneTag}
             >
               Update
@@ -58,8 +62,7 @@ export const TagForm: React.FunctionComponent<{
         ) : (
           <Button
             type="submit"
-            width={1}
-            ml={2}
+            sx={{ flexGrow: 1 }}
             variant="primary"
             onClick={onCreateOneTag}
           >

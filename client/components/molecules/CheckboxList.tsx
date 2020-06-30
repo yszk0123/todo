@@ -18,7 +18,7 @@ export function CheckboxList<T extends DisplayableVM>({
   ]);
 
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" flexWrap="wrap">
       {items.map((item, i) => {
         const isChecked = lookupTable[item.id] === true;
 

@@ -30,33 +30,38 @@ export const TodoListItem: React.FunctionComponent<{
   const isArchived = todo.archivedAt !== null;
 
   return (
-    <Flex alignItems="center">
+    <Flex
+      flex="1 1 auto"
+      alignItems="center"
+      p={2}
+      bg={isActive ? 'highlight' : undefined}
+      color={isArchived ? 'lightgray' : undefined}
+      sx={{ cursor: 'pointer' }}
+      onClick={handleClick}
+    >
       <Flex
-        flex="1 1 auto"
+        width={16}
+        height={16}
         alignItems="center"
-        p={2}
-        bg={isActive ? 'highlight' : undefined}
-        color={isArchived ? 'lightgray' : undefined}
-        onClick={handleClick}
+        justifyContent="center"
+        sx={{ border: '2px solid gray' }}
       >
-        <Text width={16} sx={{ whiteSpace: 'nowrap' }}>
-          [{printTodoStatus(todo.status)}]
-        </Text>
-        <Text ml={2}>
-          <Linkify componentDecorator={linkifyComponentDecorator}>
-            {todo.text}
-          </Linkify>
-        </Text>
-        {todo.tags.length > 0 && (
-          <Box ml={2}>
-            {todo.tags.map((tag) => (
-              <Box key={tag.id} display="inline-block" ml={1}>
-                <Badge key={tag.id} text={tag.name} />
-              </Box>
-            ))}
-          </Box>
-        )}
+        <Text>{printTodoStatus(todo.status)}</Text>
       </Flex>
+      <Text sx={{ flexGrow: 1, ml: 2 }}>
+        <Linkify componentDecorator={linkifyComponentDecorator}>
+          {todo.text}
+        </Linkify>
+      </Text>
+      {todo.tags.length > 0 && (
+        <Box ml={2}>
+          {todo.tags.map((tag) => (
+            <Box key={tag.id} display="inline-block" ml={1}>
+              <Badge key={tag.id} text={tag.name} />
+            </Box>
+          ))}
+        </Box>
+      )}
     </Flex>
   );
 };
