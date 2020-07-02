@@ -59,8 +59,7 @@ export const TodoListItem: React.FunctionComponent<{
           sx={{
             flexShrink: 0,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
           }}
         >
           {todo.tags.map((tag) => (
