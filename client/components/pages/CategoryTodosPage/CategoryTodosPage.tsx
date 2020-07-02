@@ -1,13 +1,8 @@
 import React from 'react';
-import produce from 'immer';
 import {
   useCategoryTodosPageQuery,
-  CategoryTodosPageDocument,
-  CategoryTodosPageQuery,
   useCreateOneTodoMutation,
   useDeleteTodoMutation,
-  CreateOneTodoMutationOptions,
-  DeleteTodoMutationOptions,
   useUpdateTodoMutation,
 } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import {
@@ -24,63 +19,6 @@ import { TodoForm } from './TodoForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 
-const createOneTodoMutationOptions: CreateOneTodoMutationOptions = {
-  update(cache, result) {
-    const categoryId = result.data?.createOneTodo.categoryId;
-    if (categoryId == null) {
-      return;
-    }
-    const data = cache.readQuery<CategoryTodosPageQuery>({
-      query: CategoryTodosPageDocument,
-      variables: { categoryId },
-    });
-
-    const todo = result.data?.createOneTodo;
-    if (!data || !todo) return;
-    const newData = produce(data, (d) => {
-      if (d.category) {
-        d.category.todos = [...(d.category.todos ?? []), todo];
-      }
-    });
-
-    cache.writeQuery<CategoryTodosPageQuery>({
-      query: CategoryTodosPageDocument,
-      variables: { categoryId },
-      data: newData,
-    });
-  },
-};
-
-const deleteTodoMutationOptions: DeleteTodoMutationOptions = {
-  update(cache, result) {
-    const categoryId = result.data?.deleteTodo?.categoryId;
-    if (categoryId == null) {
-      return;
-    }
-
-    const data = cache.readQuery<CategoryTodosPageQuery>({
-      query: CategoryTodosPageDocument,
-      variables: { categoryId },
-    });
-
-    const todoId = result.data?.deleteTodo?.id;
-    if (!data || !todoId) return;
-    const newData = produce(data, (d) => {
-      if (d.category) {
-        d.category.todos = (d.category.todos ?? []).filter(
-          (todo) => todo.id !== todoId
-        );
-      }
-    });
-
-    cache.writeQuery<CategoryTodosPageQuery>({
-      query: CategoryTodosPageDocument,
-      variables: { categoryId },
-      data: newData,
-    });
-  },
-};
-
 type Props = {
   categoryId: number;
 };
@@ -88,14 +26,17 @@ type Props = {
 export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { loading, data } = useCategoryTodosPageQuery({
+  const { loading, data, refetch } = useCategoryTodosPageQuery({
     variables: { categoryId },
   });
-  const [createOneTodo] = useCreateOneTodoMutation(
-    createOneTodoMutationOptions
-  );
-  const [deleteTodo] = useDeleteTodoMutation(deleteTodoMutationOptions);
-  const [updateTodo] = useUpdateTodoMutation();
+  const handleCompleted = React.useCallback(() => {
+    refetch();
+  }, [refetch]);
+  const [createOneTodo] = useCreateOneTodoMutation({
+    onCompleted: handleCompleted,
+  });
+  const [deleteTodo] = useDeleteTodoMutation({ onCompleted: handleCompleted });
+  const [updateTodo] = useUpdateTodoMutation({ onCompleted: handleCompleted });
   const [text, setText] = React.useState('');
   const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
   const [tags, setTags] = React.useState<CategoryTagFragment[]>([]);
@@ -137,8 +78,8 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         text,
         status,
       };
-      createOneTodo({ variables: { input } });
       deselect();
+      createOneTodo({ variables: { input } });
     }
   }, [data, text, tags, status, deselect, createOneTodo, categoryId]);
 
@@ -146,9 +87,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     if (!currentTodoId) return;
     if (!confirm('Delete?')) return;
     const input: DeleteTodoInput = { id: currentTodoId };
-    deleteTodo({ variables: { input } });
     deselect();
-  }, [data, text, deselect, createOneTodo, currentTodoId]);
+    deleteTodo({ variables: { input } });
+  }, [data, text, deselect, deleteTodo, currentTodoId]);
 
   const handleUpdateTodo = React.useCallback(() => {
     if (!currentTodoId) return;
@@ -169,7 +110,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       archivedAt: new Date(),
     };
     updateTodo({ variables: { input } });
-  }, [currentTodoId]);
+  }, [currentTodoId, updateTodo]);
 
   const handleToggleTag = React.useCallback(
     (tag: CategoryTagFragment) => {

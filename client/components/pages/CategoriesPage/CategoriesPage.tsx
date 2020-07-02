@@ -3,10 +3,8 @@ import produce from 'immer';
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import {
   useCategoriesPageQuery,
-  CreateOneCategoryMutationOptions,
   CategoriesPageQuery,
   CategoriesPageDocument,
-  DeleteOneCategoryMutationOptions,
   useCreateOneCategoryMutation,
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
@@ -23,55 +21,20 @@ import { CategoryForm } from './CategoryForm';
 import { CategoryList } from './CategoryList';
 import { CategoryCount } from './CategoryCount';
 
-const createOneCategoryMutationOptions: CreateOneCategoryMutationOptions = {
-  update(cache, result) {
-    const data = cache.readQuery<CategoriesPageQuery>({
-      query: CategoriesPageDocument,
-    });
-
-    const category = result.data?.createOneCategory;
-    if (!data || !category) return;
-    const newData = produce(data, (d) => {
-      d.categories = [...(d.categories ?? []), category];
-    });
-
-    cache.writeQuery<CategoriesPageQuery>({
-      query: CategoriesPageDocument,
-      data: newData,
-    });
-  },
-};
-
-const deleteOneCategoryMutationOptions: DeleteOneCategoryMutationOptions = {
-  update(cache, result) {
-    const data = cache.readQuery<CategoriesPageQuery>({
-      query: CategoriesPageDocument,
-    });
-
-    const todoId = result.data?.deleteOneCategory?.id;
-    if (!data || !todoId) return;
-    const newData = produce(data, (d) => {
-      d.categories = (d.categories ?? []).filter(
-        (category) => category.id !== todoId
-      );
-    });
-
-    cache.writeQuery<CategoriesPageQuery>({
-      query: CategoriesPageDocument,
-      data: newData,
-    });
-  },
-};
-
 export const CategoriesPage: React.FunctionComponent<{}> = () => {
-  const { data, loading } = useCategoriesPageQuery();
-  const [createOneCategory] = useCreateOneCategoryMutation(
-    createOneCategoryMutationOptions
-  );
-  const [deleteOneCategory] = useDeleteOneCategoryMutation(
-    deleteOneCategoryMutationOptions
-  );
-  const [updateOneCategory] = useUpdateOneCategoryMutation();
+  const { data, loading, refetch } = useCategoriesPageQuery();
+  const handleCompleted = React.useCallback(() => {
+    refetch();
+  }, [refetch]);
+  const [createOneCategory] = useCreateOneCategoryMutation({
+    onCompleted: handleCompleted,
+  });
+  const [deleteOneCategory] = useDeleteOneCategoryMutation({
+    onCompleted: handleCompleted,
+  });
+  const [updateOneCategory] = useUpdateOneCategoryMutation({
+    onCompleted: handleCompleted,
+  });
   const [name, setName] = React.useState('');
   const [currentCategoryId, setCurrentCategoryId] = React.useState<
     number | null
@@ -105,8 +68,8 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
         owner: { connect: { id: data.me.id } },
         name,
       };
-      createOneCategory({ variables: { data: newData } });
       deselect();
+      createOneCategory({ variables: { data: newData } });
     }
   }, [data, name, deselect, createOneCategory]);
 
@@ -114,16 +77,16 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
     if (!currentCategoryId) return;
     if (!confirm('Delete?')) return;
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
-    deleteOneCategory({ variables: { where } });
     deselect();
-  }, [data, name, deselect, createOneCategory, currentCategoryId]);
+    deleteOneCategory({ variables: { where } });
+  }, [data, name, deselect, deleteOneCategory, currentCategoryId]);
 
   const handleUpdateOneCategory = React.useCallback(() => {
     if (!currentCategoryId) return;
     const newData: CategoryUpdateInput = { name };
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     updateOneCategory({ variables: { data: newData, where } });
-  }, [data, name, createOneCategory, currentCategoryId]);
+  }, [data, name, updateOneCategory, currentCategoryId]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

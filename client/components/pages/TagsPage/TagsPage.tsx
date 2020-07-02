@@ -1,12 +1,7 @@
 import React from 'react';
-import produce from 'immer';
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import {
   useTagsPageQuery,
-  CreateOneTagMutationOptions,
-  TagsPageQuery,
-  TagsPageDocument,
-  DeleteOneTagMutationOptions,
   useCreateOneTagMutation,
   useDeleteOneTagMutation,
   useUpdateOneTagMutation,
@@ -24,49 +19,20 @@ import { TagListItem } from './TagListItem';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 
-const createOneTagMutationOptions: CreateOneTagMutationOptions = {
-  update(cache, result) {
-    const data = cache.readQuery<TagsPageQuery>({
-      query: TagsPageDocument,
-    });
-
-    const tag = result.data?.createOneTag;
-    if (!data || !tag) return;
-    const newData = produce(data, (d) => {
-      d.tags = [...(d.tags ?? []), tag];
-    });
-
-    cache.writeQuery<TagsPageQuery>({
-      query: TagsPageDocument,
-      data: newData,
-    });
-  },
-};
-
-const deleteOneTagMutationOptions: DeleteOneTagMutationOptions = {
-  update(cache, result) {
-    const data = cache.readQuery<TagsPageQuery>({
-      query: TagsPageDocument,
-    });
-
-    const todoId = result.data?.deleteOneTag?.id;
-    if (!data || !todoId) return;
-    const newData = produce(data, (d) => {
-      d.tags = (d.tags ?? []).filter((tag) => tag.id !== todoId);
-    });
-
-    cache.writeQuery<TagsPageQuery>({
-      query: TagsPageDocument,
-      data: newData,
-    });
-  },
-};
-
 export const TagsPage: React.FunctionComponent<{}> = () => {
-  const { data, loading } = useTagsPageQuery();
-  const [createOneTag] = useCreateOneTagMutation(createOneTagMutationOptions);
-  const [deleteOneTag] = useDeleteOneTagMutation(deleteOneTagMutationOptions);
-  const [updateOneTag] = useUpdateOneTagMutation();
+  const { data, loading, refetch } = useTagsPageQuery();
+  const handleCompleted = React.useCallback(() => {
+    refetch();
+  }, [refetch]);
+  const [createOneTag] = useCreateOneTagMutation({
+    onCompleted: handleCompleted,
+  });
+  const [deleteOneTag] = useDeleteOneTagMutation({
+    onCompleted: handleCompleted,
+  });
+  const [updateOneTag] = useUpdateOneTagMutation({
+    onCompleted: handleCompleted,
+  });
   const [name, setName] = React.useState('');
   const [tagCategories, setTagCategories] = React.useState<CategoryVM[]>([]);
   const [currentTagId, setCurrentTagId] = React.useState<number | null>(null);
@@ -103,8 +69,8 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
         name,
         categories: { connect: categoriesToConnect },
       };
-      createOneTag({ variables: { data: newData } });
       deselect();
+      createOneTag({ variables: { data: newData } });
     }
   }, [data, name, deselect, createOneTag, tagCategories]);
 
@@ -112,9 +78,9 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     if (!currentTagId) return;
     if (!confirm('Delete?')) return;
     const where: TagWhereUniqueInput = { id: currentTagId };
-    deleteOneTag({ variables: { where } });
     deselect();
-  }, [data, name, deselect, createOneTag, currentTagId]);
+    deleteOneTag({ variables: { where } });
+  }, [data, name, deselect, deleteOneTag, currentTagId]);
 
   const handleUpdateOneTag = React.useCallback(() => {
     if (!currentTagId) return;
@@ -125,7 +91,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     };
     const where: TagWhereUniqueInput = { id: currentTagId };
     updateOneTag({ variables: { data: newData, where } });
-  }, [data, name, createOneTag, currentTagId, tagCategories]);
+  }, [data, name, updateOneTag, currentTagId, tagCategories]);
 
   const handleToggleTagCategory = React.useCallback(
     (tag: CategoryVM) => {
