@@ -6,6 +6,7 @@ schema.objectType({
     t.model.id();
     t.model.createdAt();
     t.model.name();
+    t.model.color();
     t.model.owner();
     t.model.categories();
     t.model.todos();
