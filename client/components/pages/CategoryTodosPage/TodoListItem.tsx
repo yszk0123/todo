@@ -18,6 +18,14 @@ function linkifyComponentDecorator(
   );
 }
 
+const CustomizedLinkify: React.FunctionComponent<{ text: string }> = React.memo(
+  ({ text }) => {
+    return (
+      <Linkify componentDecorator={linkifyComponentDecorator}>{text}</Linkify>
+    );
+  }
+);
+
 export const TodoListItem: React.FunctionComponent<{
   isActive: boolean;
   todo: CategoryTodoFragment;
@@ -49,9 +57,7 @@ export const TodoListItem: React.FunctionComponent<{
         <Text>{printTodoStatus(todo.status)}</Text>
       </Flex>
       <Text sx={{ ml: 2, flexGrow: 1 }}>
-        <Linkify componentDecorator={linkifyComponentDecorator}>
-          {todo.text}
-        </Linkify>
+        <CustomizedLinkify text={todo.text} />
       </Text>
       {todo.tags.length > 0 && (
         <Box
