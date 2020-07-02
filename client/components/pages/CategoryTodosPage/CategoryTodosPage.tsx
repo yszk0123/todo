@@ -28,6 +28,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 }) => {
   const { loading, data, refetch } = useCategoryTodosPageQuery({
     variables: { categoryId },
+    fetchPolicy: 'cache-and-network',
   });
   const handleCompleted = React.useCallback(() => {
     refetch();

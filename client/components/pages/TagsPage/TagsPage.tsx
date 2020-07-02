@@ -20,7 +20,9 @@ import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 
 export const TagsPage: React.FunctionComponent<{}> = () => {
-  const { data, loading, refetch } = useTagsPageQuery();
+  const { data, loading, refetch } = useTagsPageQuery({
+    fetchPolicy: 'cache-and-network',
+  });
   const handleCompleted = React.useCallback(() => {
     refetch();
   }, [refetch]);

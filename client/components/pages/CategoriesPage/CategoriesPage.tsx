@@ -18,7 +18,9 @@ import { CategoryList } from './CategoryList';
 import { CategoryCount } from './CategoryCount';
 
 export const CategoriesPage: React.FunctionComponent<{}> = () => {
-  const { data, loading, refetch } = useCategoriesPageQuery();
+  const { data, loading, refetch } = useCategoriesPageQuery({
+    fetchPolicy: 'cache-and-network',
+  });
   const handleCompleted = React.useCallback(() => {
     refetch();
   }, [refetch]);
