@@ -19,7 +19,13 @@ function linkifyComponentDecorator(
 }
 
 function linkifyTextDecorator(text: string): string {
-  return text.replace(/^https?:\/\//, '').replace(/\?.*$/, '');
+  return text
+    .replace(/^https?:\/\//, '')
+    .replace(/\?.*$/, '')
+    .replace(
+      /^github.com\/[^\/]+\/([^\/]+)\/(?:pull|issue)\/([0-9]+)$/,
+      '$1 #$2'
+    );
 }
 
 const CustomizedLinkify: React.FunctionComponent<{ text: string }> = React.memo(
