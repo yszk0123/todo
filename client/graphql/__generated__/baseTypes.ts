@@ -322,6 +322,20 @@ export type NullableDateTimeFilter = {
   notIn?: Maybe<Array<Scalars['DateTime']>>;
 };
 
+export type NullableStringFilter = {
+  contains?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+  equals?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  not?: Maybe<Scalars['String']>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  startsWith?: Maybe<Scalars['String']>;
+};
+
 export enum OrderByArg {
   Asc = 'asc',
   Desc = 'desc'
@@ -369,6 +383,7 @@ export type StringFilter = {
 export type Tag = {
   __typename?: 'Tag';
   categories: Array<Category>;
+  color?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -394,6 +409,7 @@ export type TagTodosArgs = {
 
 export type TagCreateInput = {
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
@@ -416,6 +432,7 @@ export type TagCreateManyWithoutTodosInput = {
 };
 
 export type TagCreateWithoutCategoriesInput = {
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
@@ -424,6 +441,7 @@ export type TagCreateWithoutCategoriesInput = {
 
 export type TagCreateWithoutOwnerInput = {
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
@@ -431,6 +449,7 @@ export type TagCreateWithoutOwnerInput = {
 
 export type TagCreateWithoutTodosInput = {
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
@@ -443,6 +462,7 @@ export type TagFilter = {
 };
 
 export type TagOrderByInput = {
+  color?: Maybe<OrderByArg>;
   createdAt?: Maybe<OrderByArg>;
   id?: Maybe<OrderByArg>;
   name?: Maybe<OrderByArg>;
@@ -452,6 +472,7 @@ export type TagOrderByInput = {
 export type TagScalarWhereInput = {
   AND?: Maybe<Array<TagScalarWhereInput>>;
   categories?: Maybe<CategoryFilter>;
+  color?: Maybe<NullableStringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<IntFilter>;
   name?: Maybe<StringFilter>;
@@ -463,6 +484,7 @@ export type TagScalarWhereInput = {
 
 export type TagUpdateInput = {
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -471,6 +493,7 @@ export type TagUpdateInput = {
 };
 
 export type TagUpdateManyDataInput = {
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -518,6 +541,7 @@ export type TagUpdateManyWithWhereNestedInput = {
 };
 
 export type TagUpdateWithoutCategoriesDataInput = {
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -527,6 +551,7 @@ export type TagUpdateWithoutCategoriesDataInput = {
 
 export type TagUpdateWithoutOwnerDataInput = {
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -535,6 +560,7 @@ export type TagUpdateWithoutOwnerDataInput = {
 
 export type TagUpdateWithoutTodosDataInput = {
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  color?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -577,6 +603,7 @@ export type TagUpsertWithWhereUniqueWithoutTodosInput = {
 export type TagWhereInput = {
   AND?: Maybe<Array<TagWhereInput>>;
   categories?: Maybe<CategoryFilter>;
+  color?: Maybe<NullableStringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<IntFilter>;
   name?: Maybe<StringFilter>;

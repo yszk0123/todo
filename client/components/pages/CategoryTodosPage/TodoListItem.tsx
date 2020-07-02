@@ -79,7 +79,7 @@ export const TodoListItem: React.FunctionComponent<{
         >
           {todo.tags.map((tag) => (
             <Box key={tag.id} display="inline-block" ml={1}>
-              <Badge key={tag.id} text={tag.name} />
+              <Badge key={tag.id} color={tag.color} text={tag.name} />
             </Box>
           ))}
         </Box>

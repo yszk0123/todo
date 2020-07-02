@@ -5,23 +5,28 @@ import { stopPropagation } from '../../../handlers/stopPropagation';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { CheckboxList } from '../../molecules/CheckboxList';
+import { ColorBox } from '../CategoryTodosPage/ColorBox';
 
 export const TagForm: React.FunctionComponent<{
   name: string;
+  color: string;
   tagCategories: CategoryVM[];
   categories: CategoryVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeColor: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneTag: () => void;
   onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;
   onToggleCategory: (category: CategoryVM) => void;
 }> = ({
   name,
+  color,
   tagCategories,
   categories,
   isSelected,
   onChangeName,
+  onChangeColor,
   onCreateOneTag,
   onUpdateOneTag,
   onDeleteOneTag,
@@ -43,6 +48,12 @@ export const TagForm: React.FunctionComponent<{
       </Flex>
       <Flex alignItems="center">
         <Input value={name} onChange={onChangeName} />
+      </Flex>
+      <Flex alignItems="center">
+        <Input value={color} onChange={onChangeColor} />
+        <Box ml={2}>
+          <ColorBox color={color} />
+        </Box>
       </Flex>
       <Flex mt={2} alignItems="center" justifyContent="space-between">
         {isSelected ? (

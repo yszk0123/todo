@@ -1,6 +1,7 @@
 fragment RootTag on Tag {
   id
   name
+  color
   categories {
     id
     name

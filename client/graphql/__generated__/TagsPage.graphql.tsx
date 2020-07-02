@@ -63,7 +63,7 @@ export type DeleteOneTagMutation = (
 
 export type TagsTagFragment = (
   { __typename?: 'Tag' }
-  & Pick<Types.Tag, 'id' | 'name'>
+  & Pick<Types.Tag, 'id' | 'name' | 'color'>
   & { categories: Array<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
@@ -74,6 +74,7 @@ export const TagsTagFragmentDoc = gql`
     fragment TagsTag on Tag {
   id
   name
+  color
   categories {
     id
     name

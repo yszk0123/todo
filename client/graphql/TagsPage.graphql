@@ -32,6 +32,7 @@ mutation DeleteOneTag($where: TagWhereUniqueInput!) {
 fragment TagsTag on Tag {
   id
   name
+  color
   categories {
     id
     name

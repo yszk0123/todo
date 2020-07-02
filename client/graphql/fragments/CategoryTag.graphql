@@ -1,4 +1,5 @@
 fragment CategoryTag on Tag {
   id
   name
+  color
 }
