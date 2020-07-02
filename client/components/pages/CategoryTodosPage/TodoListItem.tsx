@@ -44,17 +44,25 @@ export const TodoListItem: React.FunctionComponent<{
         height={16}
         alignItems="center"
         justifyContent="center"
-        sx={{ border: '2px solid gray' }}
+        sx={{ border: '2px solid gray', flexShrink: 0 }}
       >
         <Text>{printTodoStatus(todo.status)}</Text>
       </Flex>
-      <Text sx={{ flexGrow: 1, ml: 2 }}>
+      <Text sx={{ ml: 2, flexGrow: 1 }}>
         <Linkify componentDecorator={linkifyComponentDecorator}>
           {todo.text}
         </Linkify>
       </Text>
       {todo.tags.length > 0 && (
-        <Box ml={2}>
+        <Box
+          ml={2}
+          sx={{
+            flexShrink: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
           {todo.tags.map((tag) => (
             <Box key={tag.id} display="inline-block" ml={1}>
               <Badge key={tag.id} text={tag.name} />
