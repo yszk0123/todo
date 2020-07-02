@@ -12,7 +12,7 @@ import {
   TodoStatus,
 } from '../../../graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../layout/ContentWrapper';
-import { TodoCount } from './TodoCount';
+import { TodoStatusBar } from './TodoStatusBar';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
@@ -144,7 +144,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <TodoCount count={todos.length} />
+      <TodoStatusBar categoryId={categoryId} count={todos.length} />
       <TodoList>
         {todos.map((todo) => {
           return (
