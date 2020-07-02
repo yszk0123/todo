@@ -8,6 +8,7 @@ export const Badge: React.FunctionComponent<{ text: string }> = ({ text }) => {
         color: 'white',
         bg: 'gray',
         display: 'inline-block',
+        whiteSpace: 'nowrap',
         px: 2,
         py: 1,
         fontSize: 10,
