@@ -10,7 +10,7 @@ schema.objectType({
     t.model.authorId();
     t.model.category();
     t.model.categoryId();
-    t.model.tags();
+    t.model.tags({ ordering: true });
     t.model.status();
     t.model.archivedAt();
   },

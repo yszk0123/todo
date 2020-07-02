@@ -7,7 +7,7 @@ type Category {
   id: Int!
   name: String!
   owner: User!
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
 }
 
@@ -341,6 +341,13 @@ input TagFilter {
   some: TagWhereInput
 }
 
+input TagOrderByInput {
+  createdAt: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  ownerId: OrderByArg
+}
+
 input TagScalarWhereInput {
   AND: [TagScalarWhereInput!]
   categories: CategoryFilter
@@ -492,7 +499,7 @@ type Todo {
   createdAt: DateTime!
   id: Int!
   status: TodoStatus!
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int): [Tag!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
   text: String!
 }
 

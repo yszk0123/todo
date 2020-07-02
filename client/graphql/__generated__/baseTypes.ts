@@ -29,6 +29,7 @@ export type CategoryTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<TagOrderByInput>;
 };
 
 
@@ -441,6 +442,13 @@ export type TagFilter = {
   some?: Maybe<TagWhereInput>;
 };
 
+export type TagOrderByInput = {
+  createdAt?: Maybe<OrderByArg>;
+  id?: Maybe<OrderByArg>;
+  name?: Maybe<OrderByArg>;
+  ownerId?: Maybe<OrderByArg>;
+};
+
 export type TagScalarWhereInput = {
   AND?: Maybe<Array<TagScalarWhereInput>>;
   categories?: Maybe<CategoryFilter>;
@@ -603,6 +611,7 @@ export type TodoTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<TagOrderByInput>;
 };
 
 export type TodoCreateInput = {

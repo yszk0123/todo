@@ -12,6 +12,8 @@ schema.objectType({
       pagination: true,
       ordering: true,
     });
-    t.model.tags();
+    t.model.tags({
+      ordering: true,
+    });
   },
 });
