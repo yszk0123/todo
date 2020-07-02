@@ -57,10 +57,10 @@
     prettysize "^2.0.0"
     sleep-promise "^8.0.1"
 
-"@apollo/client@^3.0.0-rc.9":
-  version "3.0.0-rc.9"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-rc.9.tgz#5b650178f84a6e9aef0d8da009803fb941c8dfff"
-  integrity sha512-cbhLa56KWbWatW4L4LvKbg5voMMO6cKa8Mok3RXGFdmhvVPAKCbGppM/RrdaHRjYlBTH2sAUXuxYuRzAWMfGoA==
+"@apollo/client@^3.0.0-rc.10":
+  version "3.0.0-rc.10"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-rc.10.tgz#5af7efd98166657f0446e4a3185af69ef12709c9"
+  integrity sha512-iE7w3HS3iVLVfENaZBGqlQrUEWQa7ZwhNfXzaYuxMVgnbzT9MCkklq/xWHy8xsuaK3rgHOlTN3AyTF+InV5xpQ==
   dependencies:
     "@types/zen-observable" "^0.8.0"
     "@wry/equality" "^0.1.9"
@@ -7749,10 +7749,10 @@ next@^9.4.4:
     webpack "4.43.0"
     webpack-sources "1.4.3"
 
-nexus-plugin-prisma@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/nexus-plugin-prisma/-/nexus-plugin-prisma-0.16.0.tgz#c34889a83d20e3b70cd39d056967384141f8dad6"
-  integrity sha512-B38yZQtt/ZMQY2OF5fPy3yiYCMnEQ+VKE1V3fDeuCuI2u2zN0IQt8HKQIvVkCX1xtpfxfxIQ4H/8pUNhKoVHcg==
+nexus-plugin-prisma@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/nexus-plugin-prisma/-/nexus-plugin-prisma-0.16.1.tgz#5d688c48cbfd845ccc991bba54df62bc163cc69b"
+  integrity sha512-ss9imkmSQcJJ+TEwbvwxgktHUeobmEhBh9qgB6S2tsX1bmv7fUxVip9JKPiU2sPqs9Tkt/LtwjWzriVp1OXdoA==
   dependencies:
     "@prisma/cli" "2.1.3"
     "@prisma/client" "2.1.3"
@@ -7768,10 +7768,10 @@ nexus-plugin-prisma@^0.16.0:
     prismjs "^1.20.0"
     stacktrace-parser "^0.1.10"
 
-nexus@^0.24.2:
-  version "0.24.2"
-  resolved "https://registry.yarnpkg.com/nexus/-/nexus-0.24.2.tgz#a1cdd3e422c80a79a591f658314ac7938c40afcd"
-  integrity sha512-iqg1gJUcJUx3tba8iXf+t8CLHClxTAkz/QK1dJ2E4iSG6cEVT6m1dX3Tj1ni9GE9TKaLwL/Zmtz/tAb79DEPWw==
+nexus@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/nexus/-/nexus-0.25.0.tgz#e1824d31c837541aff4899cf43cd088189606e2d"
+  integrity sha512-ZA4EW/BS8buSvHlPiUrnXBk4GAuY08EiKnt3MBUB2mxDlt4bYH2HNJw5TB6qZMKeFwjhHeGenvxwj/o9Ijg2PQ==
   dependencies:
     "@nexus/logger" "^0.2.0"
     "@nexus/schema" "^0.14.0"
@@ -7802,6 +7802,7 @@ nexus@^0.24.2:
     prompts "^2.3.0"
     rxjs "^6.5.4"
     simple-git "^2.0.0"
+    slash "^3.0.0"
     strip-ansi "^6.0.0"
     ts-morph "^7.1.0"
     ts-node "^8.10.1"
@@ -10946,10 +10947,10 @@ typeorm@^0.2.24:
     yargonaut "^1.1.2"
     yargs "^13.2.1"
 
-typescript@3.9.x, typescript@^3.9.5, typescript@~3.9.2:
-  version "3.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
-  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+typescript@3.9.x, typescript@^3.9.6, typescript@~3.9.2:
+  version "3.9.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
+  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
