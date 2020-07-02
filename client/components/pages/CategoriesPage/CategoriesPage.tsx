@@ -1,10 +1,7 @@
 import React from 'react';
-import produce from 'immer';
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import {
   useCategoriesPageQuery,
-  CategoriesPageQuery,
-  CategoriesPageDocument,
   useCreateOneCategoryMutation,
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
@@ -16,7 +13,6 @@ import {
   CategoryUpdateInput,
 } from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { CategoryListItem } from './CategoryListItem';
 import { CategoryForm } from './CategoryForm';
 import { CategoryList } from './CategoryList';
 import { CategoryCount } from './CategoryCount';

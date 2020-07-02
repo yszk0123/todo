@@ -1,6 +1,5 @@
 import React from 'react';
 import { Textarea } from '@rebass/forms';
-import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import {
   CategoryTodosReportPageTodoFragment,
   CategoryTodosReportPageTagFragment,
