@@ -18,10 +18,19 @@ function linkifyComponentDecorator(
   );
 }
 
+function linkifyTextDecorator(text: string): string {
+  return text.replace(/^https?:\/\//, '').replace(/\?.*$/, '');
+}
+
 const CustomizedLinkify: React.FunctionComponent<{ text: string }> = React.memo(
   ({ text }) => {
     return (
-      <Linkify componentDecorator={linkifyComponentDecorator}>{text}</Linkify>
+      <Linkify
+        componentDecorator={linkifyComponentDecorator}
+        textDecorator={linkifyTextDecorator}
+      >
+        {text}
+      </Linkify>
     );
   }
 );
