@@ -18,6 +18,7 @@ import { TodoListItem } from './TodoListItem';
 import { TodoForm } from './TodoForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { LoadingIndicator } from '../../atoms/LoadingIndicator';
 
 type Props = {
   categoryId: number;
@@ -136,9 +137,10 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     setStatus(status);
   }, []);
 
-  if (loading || !data) {
-    return null;
+  if (!data) {
+    return loading ? <LoadingIndicator /> : null;
   }
+
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
 

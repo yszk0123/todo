@@ -94,12 +94,8 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
     []
   );
 
-  if (loading) {
-    return <LoadingIndicator />;
-  }
-
   if (!data) {
-    return null;
+    return loading ? <LoadingIndicator /> : null;
   }
 
   const categories = data.categories ?? [];

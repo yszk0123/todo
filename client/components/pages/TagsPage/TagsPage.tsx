@@ -114,12 +114,8 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     []
   );
 
-  if (loading) {
-    return <LoadingIndicator />;
-  }
-
   if (!data) {
-    return null;
+    return loading ? <LoadingIndicator /> : null;
   }
 
   const tags = data.tags ?? [];
