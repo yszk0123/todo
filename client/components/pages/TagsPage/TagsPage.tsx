@@ -15,7 +15,7 @@ import {
 } from '../../../graphql/__generated__/baseTypes';
 import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
-import { TagCount } from './TagCount';
+import { TagStatusBar } from './TagStatusBar';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ID } from '../../../viewModels/ID';
@@ -133,7 +133,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectTag}>
-      <TagCount count={tags.length} />
+      <TagStatusBar count={tags.length} />
       <TagList
         tags={tags}
         onClick={handleSelectTag}
