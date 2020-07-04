@@ -1,10 +1,10 @@
 import React from 'react';
 import { Flex } from 'rebass';
-import { DisplayableVM } from '../../viewModels/DisplayableVM';
-import { CheckboxListItem } from './CheckboxListItem';
-import { createLookupTable } from '../helpers/createLookupTable';
+import { DisplayableVM } from '../../../viewModels/DisplayableVM';
+import { ChecklistItem } from './ChecklistItem';
+import { createLookupTable } from '../../helpers/createLookupTable';
 
-export function CheckboxList<T extends DisplayableVM>({
+export function Checklist<T extends DisplayableVM>({
   items,
   checkedItems,
   onClick,
@@ -23,7 +23,7 @@ export function CheckboxList<T extends DisplayableVM>({
         const isChecked = lookupTable[item.id] === true;
 
         return (
-          <CheckboxListItem
+          <ChecklistItem
             key={item.id}
             isFirst={i === 0}
             item={item}
