@@ -1,12 +1,10 @@
 import React from 'react';
-import { Textarea } from '@rebass/forms';
 import {
   CategoryTodosReportPageTodoFragment,
   CategoryTodosReportPageTagFragment,
 } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
-
-const MIN_HEIGHT = 300;
+import { ReportArea } from '../../layout/ReportArea';
 
 function printReport(
   todos: CategoryTodosReportPageTodoFragment[],
@@ -31,6 +29,5 @@ export const CategoryTodosReport: React.FunctionComponent<{
   tags: CategoryTodosReportPageTagFragment[];
 }> = ({ todos, tags }) => {
   const output = React.useMemo(() => printReport(todos, tags), [todos, tags]);
-
-  return <Textarea readOnly minHeight={MIN_HEIGHT} value={output} />;
+  return <ReportArea text={output} />;
 };
