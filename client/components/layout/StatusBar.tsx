@@ -39,9 +39,9 @@ const StatusBarItemView: React.FunctionComponent<{
 };
 
 export const StatusBar: React.FunctionComponent<{
-  left: (StatusBarItem | null)[];
-  right: (StatusBarItem | null)[];
-}> = ({ left, right }) => {
+  left?: (StatusBarItem | null)[];
+  right?: (StatusBarItem | null)[];
+}> = ({ left = [], right = [] }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }} fontSize={2}>
       <Flex

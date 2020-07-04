@@ -15,7 +15,7 @@ import {
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
-import { CategoryCount } from './CategoryCount';
+import { CategoryStatusBar } from './CategoryStatusBar';
 import { ID } from '../../../viewModels/ID';
 
 export const CategoriesPage: React.FunctionComponent<{}> = () => {
@@ -103,7 +103,7 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectCategory}>
-      <CategoryCount count={categories.length} />
+      <CategoryStatusBar count={categories.length} />
       <CategoryList
         categories={categories}
         currentCategoryId={currentCategoryId}
