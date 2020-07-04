@@ -14,7 +14,6 @@ import {
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import { TodoStatusBar } from './TodoStatusBar';
 import { TodoList } from './TodoList';
-import { TodoListItem } from './TodoListItem';
 import { TodoEditForm } from './TodoEditForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
@@ -159,18 +158,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         categoryName={categoryName}
         count={todos.length}
       />
-      <TodoList>
-        {todos.map((todo) => {
-          return (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              isActive={todo.id === currentTodoId}
-              onClick={handleSelectTodo}
-            />
-          );
-        })}
-      </TodoList>
+      <TodoList
+        todos={todos}
+        currentTodoId={currentTodoId}
+        onClick={handleSelectTodo}
+      />
       <TodoEditForm
         name={text}
         tags={tags}

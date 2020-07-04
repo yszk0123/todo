@@ -1,11 +1,26 @@
 import React from 'react';
-import { Box } from 'rebass';
-import { stopPropagation } from '../../../handlers/stopPropagation';
+import { List } from '../../layout/List';
+import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { TodoListItem } from './TodoListItem';
+import { ID } from '../../../viewModels/ID';
 
-export const TodoList: React.FunctionComponent<{}> = ({ children }) => {
+export const TodoList: React.FunctionComponent<{
+  todos: CategoryTodoFragment[];
+  currentTodoId: ID | null;
+  onClick: (item: CategoryTodoFragment) => void;
+}> = ({ todos, currentTodoId, onClick }) => {
   return (
-    <Box mt={1} onClick={stopPropagation}>
-      {children}
-    </Box>
+    <List>
+      {todos.map((todo) => {
+        return (
+          <TodoListItem
+            key={todo.id}
+            todo={todo}
+            isActive={todo.id === currentTodoId}
+            onClick={onClick}
+          />
+        );
+      })}
+    </List>
   );
 };
