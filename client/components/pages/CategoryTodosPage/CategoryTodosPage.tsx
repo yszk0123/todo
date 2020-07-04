@@ -142,12 +142,17 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <TodoStatusBar categoryId={categoryId} count={todos.length} />
+      <TodoStatusBar
+        categoryId={categoryId}
+        categoryName={categoryName}
+        count={todos.length}
+      />
       <TodoList>
         {todos.map((todo) => {
           return (
