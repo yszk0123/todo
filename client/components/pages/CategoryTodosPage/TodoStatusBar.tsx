@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, Box, Flex } from 'rebass';
+import { Text } from 'rebass';
 import { GoToReportLink } from './GoToReportLink';
 import { ID } from '../../../viewModels/ID';
+import { StatusBar } from '../../layout/StatusBar';
 
 export const TodoStatusBar: React.FunctionComponent<{
   categoryId: ID;
@@ -9,27 +10,14 @@ export const TodoStatusBar: React.FunctionComponent<{
   count: number;
 }> = ({ categoryId, categoryName, count }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between' }} fontSize={2}>
-      <Flex
-        sx={{
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          color: 'gray',
-        }}
-      >
-        <GoToReportLink categoryId={categoryId} />
-      </Flex>
-      <Flex
-        sx={{
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          color: 'gray',
-        }}
-      >
-        {categoryName && <Text>{categoryName}</Text>}
-        <Text ml={2}>{count} todos</Text>
-      </Flex>
-    </Box>
+    <StatusBar
+      left={<GoToReportLink categoryId={categoryId} />}
+      right={
+        <>
+          {categoryName && <Text>{categoryName}</Text>}
+          <Text ml={2}>{count} todos</Text>
+        </>
+      }
+    />
   );
 };
