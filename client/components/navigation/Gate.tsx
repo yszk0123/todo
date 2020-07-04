@@ -1,9 +1,7 @@
 import React from 'react';
-import { Flex } from 'rebass';
 import { useSession } from 'next-auth/client';
 import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
-import { LoadingIndicator } from '../layout/LoadingIndicator';
-import { Navigation } from '../layout/Navigation';
+import { Page } from '../layout/Page';
 
 export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const [session, isSessionLoading] = useSession();
@@ -11,21 +9,16 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const hasSession = !!session;
   const isLoading = isSessionLoading || isQueryLoading;
 
-  if (isLoading || isSessionLoading) {
-    return <LoadingIndicator />;
-  }
-
   const username = data?.me?.name ?? null;
   const avatarUrl = data?.me?.avatarUrl ?? null;
 
   return (
-    <Flex minHeight="100vh" flexDirection="column">
-      <Navigation
-        hasSession={hasSession}
-        username={username}
-        avatarUrl={avatarUrl}
-      />
-      {hasSession && <Flex flexGrow={1}>{children}</Flex>}
-    </Flex>
+    <Page
+      hasSession={hasSession}
+      username={username}
+      avatarUrl={avatarUrl}
+      isLoading={isLoading}
+      content={children}
+    />
   );
 };
