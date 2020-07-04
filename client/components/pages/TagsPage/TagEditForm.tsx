@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { ColorBox } from '../CategoryTodosPage/ColorBox';
+import { ColorBox } from '../../layout/ColorBox';
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import {
   EditForm,
