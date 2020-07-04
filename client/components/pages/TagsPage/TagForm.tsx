@@ -46,10 +46,10 @@ export const TagForm: React.FunctionComponent<{
           onClick={onToggleCategory}
         />
       </Flex>
-      <Flex alignItems="center">
+      <Flex alignItems="center" mt={2}>
         <Input value={name} onChange={onChangeName} />
       </Flex>
-      <Flex alignItems="center">
+      <Flex alignItems="center" mt={2}>
         <Input value={color} onChange={onChangeColor} />
         <Box ml={2}>
           <ColorBox color={color} />
