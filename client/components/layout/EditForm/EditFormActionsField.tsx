@@ -33,7 +33,7 @@ export const EditFormActionsField: React.FunctionComponent<{
     return null;
   }
 
-  const lastIndex = actions.length;
+  const lastIndex = actions.length - 1;
 
   return (
     <EditFormField isFirst={isFirst}>
