@@ -304,6 +304,15 @@ input CategoryWhereUniqueInput {
   id: String
 }
 
+enum Color {
+  BLUE
+  DEFAULT
+  GREEN
+  PURPLE
+  RED
+  YELLOW
+}
+
 """Use JavaScript Date object for date/time fields."""
 scalar DateTime
 
@@ -394,7 +403,7 @@ input StringFilter {
 
 type Tag {
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
-  color: String
+  color: Color!
   createdAt: DateTime!
   id: String!
   name: String!
@@ -404,7 +413,7 @@ type Tag {
 
 input TagCreateInput {
   categories: CategoryCreateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String!
@@ -428,7 +437,7 @@ input TagCreateManyWithoutTodosInput {
 }
 
 input TagCreateWithoutCategoriesInput {
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String!
@@ -438,7 +447,7 @@ input TagCreateWithoutCategoriesInput {
 
 input TagCreateWithoutOwnerInput {
   categories: CategoryCreateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String!
@@ -447,7 +456,7 @@ input TagCreateWithoutOwnerInput {
 
 input TagCreateWithoutTodosInput {
   categories: CategoryCreateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String!
@@ -471,7 +480,7 @@ input TagOrderByInput {
 input TagScalarWhereInput {
   AND: [TagScalarWhereInput!]
   categories: CategoryFilter
-  color: NullableStringFilter
+  color: Color
   createdAt: DateTimeFilter
   id: UUIDFilter
   name: StringFilter
@@ -483,7 +492,7 @@ input TagScalarWhereInput {
 
 input TagUpdateInput {
   categories: CategoryUpdateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String
@@ -492,7 +501,7 @@ input TagUpdateInput {
 }
 
 input TagUpdateManyDataInput {
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String
@@ -540,7 +549,7 @@ input TagUpdateManyWithWhereNestedInput {
 }
 
 input TagUpdateWithoutCategoriesDataInput {
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String
@@ -550,7 +559,7 @@ input TagUpdateWithoutCategoriesDataInput {
 
 input TagUpdateWithoutOwnerDataInput {
   categories: CategoryUpdateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String
@@ -559,7 +568,7 @@ input TagUpdateWithoutOwnerDataInput {
 
 input TagUpdateWithoutTodosDataInput {
   categories: CategoryUpdateManyWithoutTagsInput
-  color: String
+  color: Color
   createdAt: DateTime
   id: String
   name: String
@@ -602,7 +611,7 @@ input TagUpsertWithWhereUniqueWithoutTodosInput {
 input TagWhereInput {
   AND: [TagWhereInput!]
   categories: CategoryFilter
-  color: NullableStringFilter
+  color: Color
   createdAt: DateTimeFilter
   id: UUIDFilter
   name: StringFilter

@@ -1,20 +1,23 @@
 import React from 'react';
 import { Button, Flex, Box } from 'rebass';
-import { Input } from '@rebass/forms';
+import { Input, Select } from '@rebass/forms';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { preventDefault } from '../../../handlers/preventDefault';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { CheckboxList } from '../../molecules/CheckboxList';
 import { ColorBox } from '../CategoryTodosPage/ColorBox';
+import { Color } from '../../../graphql/__generated__/baseTypes';
+
+const colors = Object.values(Color);
 
 export const TagForm: React.FunctionComponent<{
   name: string;
-  color: string;
+  color: Color;
   tagCategories: CategoryVM[];
   categories: CategoryVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeColor: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeColor: React.ChangeEventHandler<HTMLSelectElement>;
   onCreateOneTag: () => void;
   onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;
@@ -49,8 +52,12 @@ export const TagForm: React.FunctionComponent<{
       <Flex alignItems="center" mt={2}>
         <Input value={name} onChange={onChangeName} />
       </Flex>
-      <Flex alignItems="center" mt={2}>
-        <Input value={color} onChange={onChangeColor} />
+      <Flex alignItems="center" flexGrow={1} mt={2}>
+        <Select value={color} onChange={onChangeColor}>
+          {colors.map((c) => {
+            return <option key={c}>{c}</option>;
+          })}
+        </Select>
         <Box ml={2}>
           <ColorBox color={color} />
         </Box>

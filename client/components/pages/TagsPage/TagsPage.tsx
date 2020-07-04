@@ -11,6 +11,7 @@ import {
   TagCreateInput,
   TagWhereUniqueInput,
   TagUpdateInput,
+  Color,
 } from '../../../graphql/__generated__/baseTypes';
 import { TagForm } from './TagForm';
 import { TagList } from './TagList';
@@ -18,8 +19,26 @@ import { TagCount } from './TagCount';
 import { TagListItem } from './TagListItem';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
-import { isValidTagColor } from '../../helpers/isValidTagColor';
 import { ID } from '../../../viewModels/ID';
+
+function parseColorString(colorString: string): Color {
+  switch (colorString) {
+    case Color.Default:
+      return Color.Default;
+    case Color.Blue:
+      return Color.Blue;
+    case Color.Green:
+      return Color.Green;
+    case Color.Purple:
+      return Color.Purple;
+    case Color.Red:
+      return Color.Red;
+    case Color.Yellow:
+      return Color.Yellow;
+    default:
+      throw new Error('Unknown color');
+  }
+}
 
 export const TagsPage: React.FunctionComponent<{}> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
@@ -38,7 +57,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     onCompleted: handleCompleted,
   });
   const [name, setName] = React.useState('');
-  const [color, setColor] = React.useState<string>('');
+  const [color, setColor] = React.useState<Color>(Color.Default);
   const [tagCategories, setTagCategories] = React.useState<CategoryVM[]>([]);
   const [currentTagId, setCurrentTagId] = React.useState<ID | null>(null);
   const isSelected = !!currentTagId;
@@ -46,7 +65,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   const deselect = React.useCallback(() => {
     setCurrentTagId(null);
     setName('');
-    setColor('');
+    setColor(Color.Default);
     setTagCategories([]);
   }, []);
 
@@ -71,11 +90,10 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   const handleCreateOneTag = React.useCallback(() => {
     if (data?.me) {
       const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
-      const newColor = isValidTagColor(color) ? color : undefined;
       const newData: TagCreateInput = {
         owner: { connect: { id: data.me.id } },
         name,
-        color: newColor,
+        color,
         categories: { connect: categoriesToConnect },
       };
       deselect();
@@ -94,10 +112,9 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   const handleUpdateOneTag = React.useCallback(() => {
     if (!currentTagId) return;
     const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
-    const newColor = isValidTagColor(color) ? color : undefined;
     const newData: TagUpdateInput = {
       name,
-      color: newColor,
+      color,
       categories: { connect: categoriesToConnect },
     };
     const where: TagWhereUniqueInput = { id: currentTagId };
@@ -124,8 +141,9 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   );
 
   const handleChangeColor = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const color = event.currentTarget.value;
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const colorString = event.currentTarget.value;
+      const color = parseColorString(colorString);
       setColor(color);
     },
     []
