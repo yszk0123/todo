@@ -24,7 +24,7 @@ declare module 'next-auth/jwt' {
   type Account = {
     provider: string;
     type: string;
-    id: number;
+    id: string;
     accessToken: string;
   };
 

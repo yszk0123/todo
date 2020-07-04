@@ -4,7 +4,7 @@ import { CategoryTodosPage } from '../../../client/components/pages/CategoryTodo
 
 export default () => {
   const router = useRouter();
-  const categoryId = Number(router.query.categoryId);
+  const categoryId = String(router.query.categoryId);
 
   return <CategoryTodosPage categoryId={categoryId} />;
 };

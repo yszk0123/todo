@@ -1,9 +1,10 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Link } from 'rebass';
+import { ID } from '../../../viewModels/ID';
 
 export const GoToReportLink: React.FunctionComponent<{
-  categoryId: number;
+  categoryId: ID;
 }> = ({ categoryId }) => {
   return (
     <NextLink

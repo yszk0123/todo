@@ -5,7 +5,7 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type CategoryTodosReportPageQueryVariables = Types.Exact<{
-  categoryId: Types.Scalars['Int'];
+  categoryId: Types.Scalars['ID'];
 }>;
 
 
@@ -55,7 +55,7 @@ export const CategoryTodosReportPageTodoFragmentDoc = gql`
 }
     ${CategoryTodosReportPageTagFragmentDoc}`;
 export const CategoryTodosReportPageDocument = gql`
-    query CategoryTodosReportPage($categoryId: Int!) {
+    query CategoryTodosReportPage($categoryId: ID!) {
   category(id: $categoryId) {
     id
     name

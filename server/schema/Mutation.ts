@@ -8,16 +8,16 @@ function castOriginResolve(input: unknown): any {
 schema.inputObjectType({
   name: 'DeleteTodoInput',
   definition(t) {
-    t.int('id', { required: true });
+    t.id('id', { required: true });
   },
 });
 
 schema.inputObjectType({
   name: 'UpdateTodoInput',
   definition(t) {
-    t.int('id', { required: true });
+    t.id('id', { required: true });
     t.string('text', {});
-    t.list.int('tags', {});
+    t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
     t.field('archivedAt', { type: 'DateTime' });
   },
@@ -86,9 +86,9 @@ schema.mutationType({
     t.crud.createOneTodo({
       resolve(root, args, ctx, info, originResolve) {
         const userId = ctx.user?.id;
-        const authorId = args.data.author.connect?.id;
+        const ownerId = args.data.owner.connect?.id;
 
-        const authorized = !!userId && !!authorId && userId === authorId;
+        const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
@@ -108,10 +108,10 @@ schema.mutationType({
 
         const todo = await ctx.db.todo.findOne({
           where: { id: todoId },
-          select: { authorId: true },
+          select: { ownerId: true },
         });
-        const authorId = todo?.authorId;
-        const authorized = !!userId && !!authorId && userId === authorId;
+        const ownerId = todo?.ownerId;
+        const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }
@@ -136,10 +136,10 @@ schema.mutationType({
 
         const todo = await ctx.db.todo.findOne({
           where: { id: todoId },
-          select: { authorId: true },
+          select: { ownerId: true },
         });
-        const authorId = todo?.authorId;
-        const authorized = !!userId && !!authorId && userId === authorId;
+        const ownerId = todo?.ownerId;
+        const authorized = !!userId && !!ownerId && userId === ownerId;
         if (!authorized) {
           throw new Error('Unauthorized');
         }

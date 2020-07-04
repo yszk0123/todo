@@ -19,9 +19,10 @@ import { TodoForm } from './TodoForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { LoadingIndicator } from '../../atoms/LoadingIndicator';
+import { ID } from '../../../viewModels/ID';
 
 type Props = {
-  categoryId: number;
+  categoryId: ID;
 };
 
 export const CategoryTodosPage: React.FunctionComponent<Props> = ({
@@ -40,7 +41,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [deleteTodo] = useDeleteTodoMutation({ onCompleted: handleCompleted });
   const [updateTodo] = useUpdateTodoMutation({ onCompleted: handleCompleted });
   const [text, setText] = React.useState('');
-  const [currentTodoId, setCurrentTodoId] = React.useState<number | null>(null);
+  const [currentTodoId, setCurrentTodoId] = React.useState<ID | null>(null);
   const [tags, setTags] = React.useState<CategoryTagFragment[]>([]);
   const [status, setStatus] = React.useState(TodoStatus.Todo);
   const isSelected = !!currentTodoId;
@@ -74,7 +75,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     if (data?.me) {
       const newTags = tags.map((tag) => ({ id: tag.id }));
       const input: TodoCreateInput = {
-        author: { connect: { id: data.me.id } },
+        owner: { connect: { id: data.me.id } },
         category: { connect: { id: categoryId } },
         tags: { connect: newTags },
         text,

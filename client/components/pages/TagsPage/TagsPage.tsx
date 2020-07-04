@@ -19,6 +19,7 @@ import { TagListItem } from './TagListItem';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { isValidTagColor } from '../../helpers/isValidTagColor';
+import { ID } from '../../../viewModels/ID';
 
 export const TagsPage: React.FunctionComponent<{}> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
@@ -39,7 +40,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   const [name, setName] = React.useState('');
   const [color, setColor] = React.useState<string>('');
   const [tagCategories, setTagCategories] = React.useState<CategoryVM[]>([]);
-  const [currentTagId, setCurrentTagId] = React.useState<number | null>(null);
+  const [currentTagId, setCurrentTagId] = React.useState<ID | null>(null);
   const isSelected = !!currentTagId;
 
   const deselect = React.useCallback(() => {

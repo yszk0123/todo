@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, Box } from 'rebass';
 import { GoToReportLink } from './GoToReportLink';
+import { ID } from '../../../viewModels/ID';
 
 export const TodoStatusBar: React.FunctionComponent<{
-  categoryId: number;
+  categoryId: ID;
   count: number;
 }> = ({ categoryId, count }) => {
   return (

@@ -2,9 +2,10 @@ import React from 'react';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { ID } from '../../../viewModels/ID';
 
 const CategoryGoToTodoLink: React.FunctionComponent<{
-  categoryId: number;
+  categoryId: ID;
 }> = ({ categoryId }) => {
   return (
     <NextLink

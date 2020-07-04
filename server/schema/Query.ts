@@ -12,7 +12,7 @@ schema.queryType({
     t.field('category', {
       type: 'Category',
       args: {
-        id: schema.intArg({ required: true }),
+        id: schema.idArg({ required: true }),
       },
       resolve(_root, args, ctx) {
         if (!ctx.user?.id) {
@@ -51,7 +51,7 @@ schema.queryType({
 
         return ctx.db.todo.findMany({
           where: {
-            authorId: ctx.user.id,
+            ownerId: ctx.user.id,
           },
         });
       },
@@ -60,7 +60,7 @@ schema.queryType({
     t.field('tag', {
       type: 'Tag',
       args: {
-        id: schema.intArg({ required: true }),
+        id: schema.idArg({ required: true }),
       },
       resolve(_root, args, ctx) {
         if (!ctx.user?.id) {

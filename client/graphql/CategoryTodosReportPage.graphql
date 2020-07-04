@@ -1,4 +1,4 @@
-query CategoryTodosReportPage($categoryId: Int!) {
+query CategoryTodosReportPage($categoryId: ID!) {
   category(id: $categoryId) {
     id
     name

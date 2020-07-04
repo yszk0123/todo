@@ -6,8 +6,8 @@ schema.objectType({
     t.model.id();
     t.model.createdAt();
     t.model.text();
-    t.model.author();
-    t.model.authorId();
+    t.model.owner();
+    t.model.ownerId();
     t.model.category();
     t.model.categoryId();
     t.model.tags({ ordering: true });

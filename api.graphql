@@ -2,9 +2,117 @@
 ### Do not make changes to this file directly
 
 
+input AccountCreateManyWithoutUserInput {
+  connect: [AccountWhereUniqueInput!]
+  create: [AccountCreateWithoutUserInput!]
+}
+
+input AccountCreateWithoutUserInput {
+  accessToken: String!
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String!
+  providerId: String!
+  providerType: String!
+  refreshToken: String
+}
+
+input AccountFilter {
+  every: AccountWhereInput
+  none: AccountWhereInput
+  some: AccountWhereInput
+}
+
+input AccountScalarWhereInput {
+  accessToken: StringFilter
+  accessTokenExpires: NullableDateTimeFilter
+  AND: [AccountScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [AccountScalarWhereInput!]
+  OR: [AccountScalarWhereInput!]
+  providerAccountId: StringFilter
+  providerId: StringFilter
+  providerType: StringFilter
+  refreshToken: NullableStringFilter
+  userId: StringFilter
+}
+
+input AccountUpdateManyDataInput {
+  accessToken: String
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String
+  providerId: String
+  providerType: String
+  refreshToken: String
+}
+
+input AccountUpdateManyWithoutUserInput {
+  connect: [AccountWhereUniqueInput!]
+  create: [AccountCreateWithoutUserInput!]
+  delete: [AccountWhereUniqueInput!]
+  deleteMany: [AccountScalarWhereInput!]
+  disconnect: [AccountWhereUniqueInput!]
+  set: [AccountWhereUniqueInput!]
+  update: [AccountUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [AccountUpdateManyWithWhereNestedInput!]
+  upsert: [AccountUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input AccountUpdateManyWithWhereNestedInput {
+  data: AccountUpdateManyDataInput!
+  where: AccountScalarWhereInput!
+}
+
+input AccountUpdateWithoutUserDataInput {
+  accessToken: String
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String
+  providerId: String
+  providerType: String
+  refreshToken: String
+}
+
+input AccountUpdateWithWhereUniqueWithoutUserInput {
+  data: AccountUpdateWithoutUserDataInput!
+  where: AccountWhereUniqueInput!
+}
+
+input AccountUpsertWithWhereUniqueWithoutUserInput {
+  create: AccountCreateWithoutUserInput!
+  update: AccountUpdateWithoutUserDataInput!
+  where: AccountWhereUniqueInput!
+}
+
+input AccountWhereInput {
+  accessToken: StringFilter
+  accessTokenExpires: NullableDateTimeFilter
+  AND: [AccountWhereInput!]
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  providerAccountId: StringFilter
+  providerId: StringFilter
+  providerType: StringFilter
+  refreshToken: NullableStringFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+
+input AccountWhereUniqueInput {
+  id: String
+  providerAccountId: String
+}
+
 type Category {
   createdAt: DateTime!
-  id: Int!
+  id: String!
   name: String!
   owner: User!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
@@ -13,6 +121,7 @@ type Category {
 
 input CategoryCreateInput {
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutCategoriesInput!
   tags: TagCreateManyWithoutCategoriesInput
@@ -36,6 +145,7 @@ input CategoryCreateOneWithoutTodosInput {
 
 input CategoryCreateWithoutOwnerInput {
   createdAt: DateTime
+  id: String
   name: String!
   tags: TagCreateManyWithoutCategoriesInput
   todos: TodoCreateManyWithoutCategoryInput
@@ -43,6 +153,7 @@ input CategoryCreateWithoutOwnerInput {
 
 input CategoryCreateWithoutTagsInput {
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutCategoriesInput!
   todos: TodoCreateManyWithoutCategoryInput
@@ -50,6 +161,7 @@ input CategoryCreateWithoutTagsInput {
 
 input CategoryCreateWithoutTodosInput {
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutCategoriesInput!
   tags: TagCreateManyWithoutCategoriesInput
@@ -64,18 +176,18 @@ input CategoryFilter {
 input CategoryScalarWhereInput {
   AND: [CategoryScalarWhereInput!]
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [CategoryScalarWhereInput!]
   OR: [CategoryScalarWhereInput!]
-  ownerId: IntFilter
+  ownerId: StringFilter
   tags: TagFilter
   todos: TodoFilter
 }
 
 input CategoryUpdateInput {
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutCategoriesInput
   tags: TagUpdateManyWithoutCategoriesInput
@@ -84,7 +196,7 @@ input CategoryUpdateInput {
 
 input CategoryUpdateManyDataInput {
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
 }
 
@@ -126,7 +238,7 @@ input CategoryUpdateOneRequiredWithoutTodosInput {
 
 input CategoryUpdateWithoutOwnerDataInput {
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   tags: TagUpdateManyWithoutCategoriesInput
   todos: TodoUpdateManyWithoutCategoryInput
@@ -134,7 +246,7 @@ input CategoryUpdateWithoutOwnerDataInput {
 
 input CategoryUpdateWithoutTagsDataInput {
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutCategoriesInput
   todos: TodoUpdateManyWithoutCategoryInput
@@ -142,7 +254,7 @@ input CategoryUpdateWithoutTagsDataInput {
 
 input CategoryUpdateWithoutTodosDataInput {
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutCategoriesInput
   tags: TagUpdateManyWithoutCategoriesInput
@@ -178,18 +290,18 @@ input CategoryUpsertWithWhereUniqueWithoutTagsInput {
 input CategoryWhereInput {
   AND: [CategoryWhereInput!]
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [CategoryWhereInput!]
   OR: [CategoryWhereInput!]
   owner: UserWhereInput
-  ownerId: IntFilter
+  ownerId: StringFilter
   tags: TagFilter
   todos: TodoFilter
 }
 
 input CategoryWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 """Use JavaScript Date object for date/time fields."""
@@ -207,18 +319,7 @@ input DateTimeFilter {
 }
 
 input DeleteTodoInput {
-  id: Int!
-}
-
-input IntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: Int
-  notIn: [Int!]
+  id: ID!
 }
 
 """
@@ -270,16 +371,11 @@ enum OrderByArg {
 
 type Query {
   categories: [Category!]
-  category(id: Int!): Category
+  category(id: ID!): Category
   me: User
-  tag(id: Int!): Tag
+  tag(id: ID!): Tag
   tags: [Tag!]
   todos: [Todo!]
-}
-
-enum Role {
-  ADMIN
-  USER
 }
 
 input StringFilter {
@@ -300,7 +396,7 @@ type Tag {
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
   color: String
   createdAt: DateTime!
-  id: Int!
+  id: String!
   name: String!
   owner: User!
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
@@ -310,6 +406,7 @@ input TagCreateInput {
   categories: CategoryCreateManyWithoutTagsInput
   color: String
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
   todos: TodoCreateManyWithoutTagsInput
@@ -333,6 +430,7 @@ input TagCreateManyWithoutTodosInput {
 input TagCreateWithoutCategoriesInput {
   color: String
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
   todos: TodoCreateManyWithoutTagsInput
@@ -342,6 +440,7 @@ input TagCreateWithoutOwnerInput {
   categories: CategoryCreateManyWithoutTagsInput
   color: String
   createdAt: DateTime
+  id: String
   name: String!
   todos: TodoCreateManyWithoutTagsInput
 }
@@ -350,6 +449,7 @@ input TagCreateWithoutTodosInput {
   categories: CategoryCreateManyWithoutTagsInput
   color: String
   createdAt: DateTime
+  id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
 }
@@ -373,11 +473,11 @@ input TagScalarWhereInput {
   categories: CategoryFilter
   color: NullableStringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [TagScalarWhereInput!]
   OR: [TagScalarWhereInput!]
-  ownerId: IntFilter
+  ownerId: StringFilter
   todos: TodoFilter
 }
 
@@ -385,7 +485,7 @@ input TagUpdateInput {
   categories: CategoryUpdateManyWithoutTagsInput
   color: String
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
   todos: TodoUpdateManyWithoutTagsInput
@@ -394,7 +494,7 @@ input TagUpdateInput {
 input TagUpdateManyDataInput {
   color: String
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
 }
 
@@ -442,7 +542,7 @@ input TagUpdateManyWithWhereNestedInput {
 input TagUpdateWithoutCategoriesDataInput {
   color: String
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
   todos: TodoUpdateManyWithoutTagsInput
@@ -452,7 +552,7 @@ input TagUpdateWithoutOwnerDataInput {
   categories: CategoryUpdateManyWithoutTagsInput
   color: String
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   todos: TodoUpdateManyWithoutTagsInput
 }
@@ -461,7 +561,7 @@ input TagUpdateWithoutTodosDataInput {
   categories: CategoryUpdateManyWithoutTagsInput
   color: String
   createdAt: DateTime
-  id: Int
+  id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
 }
@@ -504,27 +604,27 @@ input TagWhereInput {
   categories: CategoryFilter
   color: NullableStringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   name: StringFilter
   NOT: [TagWhereInput!]
   OR: [TagWhereInput!]
   owner: UserWhereInput
-  ownerId: IntFilter
+  ownerId: StringFilter
   todos: TodoFilter
 }
 
 input TagWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 type Todo {
   archivedAt: DateTime
-  author: User!
-  authorId: Int!
   category: Category!
-  categoryId: Int!
+  categoryId: String!
   createdAt: DateTime!
-  id: Int!
+  id: String!
+  owner: User!
+  ownerId: String!
   status: TodoStatus!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
   text: String!
@@ -532,17 +632,13 @@ type Todo {
 
 input TodoCreateInput {
   archivedAt: DateTime
-  author: UserCreateOneWithoutTodosInput!
   category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
-}
-
-input TodoCreateManyWithoutAuthorInput {
-  connect: [TodoWhereUniqueInput!]
-  create: [TodoCreateWithoutAuthorInput!]
 }
 
 input TodoCreateManyWithoutCategoryInput {
@@ -550,24 +646,31 @@ input TodoCreateManyWithoutCategoryInput {
   create: [TodoCreateWithoutCategoryInput!]
 }
 
+input TodoCreateManyWithoutOwnerInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutOwnerInput!]
+}
+
 input TodoCreateManyWithoutTagsInput {
   connect: [TodoWhereUniqueInput!]
   create: [TodoCreateWithoutTagsInput!]
 }
 
-input TodoCreateWithoutAuthorInput {
+input TodoCreateWithoutCategoryInput {
   archivedAt: DateTime
-  category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
 }
 
-input TodoCreateWithoutCategoryInput {
+input TodoCreateWithoutOwnerInput {
   archivedAt: DateTime
-  author: UserCreateOneWithoutTodosInput!
+  category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  id: String
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
@@ -575,9 +678,10 @@ input TodoCreateWithoutCategoryInput {
 
 input TodoCreateWithoutTagsInput {
   archivedAt: DateTime
-  author: UserCreateOneWithoutTodosInput!
   category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
   status: TodoStatus
   text: String!
 }
@@ -590,10 +694,10 @@ input TodoFilter {
 
 input TodoOrderByInput {
   archivedAt: OrderByArg
-  authorId: OrderByArg
   categoryId: OrderByArg
   createdAt: OrderByArg
   id: OrderByArg
+  ownerId: OrderByArg
   status: OrderByArg
   text: OrderByArg
 }
@@ -601,12 +705,12 @@ input TodoOrderByInput {
 input TodoScalarWhereInput {
   AND: [TodoScalarWhereInput!]
   archivedAt: NullableDateTimeFilter
-  authorId: IntFilter
-  categoryId: IntFilter
+  categoryId: StringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   NOT: [TodoScalarWhereInput!]
   OR: [TodoScalarWhereInput!]
+  ownerId: StringFilter
   status: TodoStatus
   tags: TagFilter
   text: StringFilter
@@ -622,21 +726,9 @@ enum TodoStatus {
 input TodoUpdateManyDataInput {
   archivedAt: DateTime
   createdAt: DateTime
-  id: Int
+  id: String
   status: TodoStatus
   text: String
-}
-
-input TodoUpdateManyWithoutAuthorInput {
-  connect: [TodoWhereUniqueInput!]
-  create: [TodoCreateWithoutAuthorInput!]
-  delete: [TodoWhereUniqueInput!]
-  deleteMany: [TodoScalarWhereInput!]
-  disconnect: [TodoWhereUniqueInput!]
-  set: [TodoWhereUniqueInput!]
-  update: [TodoUpdateWithWhereUniqueWithoutAuthorInput!]
-  updateMany: [TodoUpdateManyWithWhereNestedInput!]
-  upsert: [TodoUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input TodoUpdateManyWithoutCategoryInput {
@@ -649,6 +741,18 @@ input TodoUpdateManyWithoutCategoryInput {
   update: [TodoUpdateWithWhereUniqueWithoutCategoryInput!]
   updateMany: [TodoUpdateManyWithWhereNestedInput!]
   upsert: [TodoUpsertWithWhereUniqueWithoutCategoryInput!]
+}
+
+input TodoUpdateManyWithoutOwnerInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutOwnerInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
 input TodoUpdateManyWithoutTagsInput {
@@ -668,21 +772,21 @@ input TodoUpdateManyWithWhereNestedInput {
   where: TodoScalarWhereInput!
 }
 
-input TodoUpdateWithoutAuthorDataInput {
+input TodoUpdateWithoutCategoryDataInput {
   archivedAt: DateTime
-  category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
-  id: Int
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
   status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
 }
 
-input TodoUpdateWithoutCategoryDataInput {
+input TodoUpdateWithoutOwnerDataInput {
   archivedAt: DateTime
-  author: UserUpdateOneRequiredWithoutTodosInput
+  category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
-  id: Int
+  id: String
   status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
@@ -690,21 +794,21 @@ input TodoUpdateWithoutCategoryDataInput {
 
 input TodoUpdateWithoutTagsDataInput {
   archivedAt: DateTime
-  author: UserUpdateOneRequiredWithoutTodosInput
   category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
-  id: Int
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
   status: TodoStatus
   text: String
 }
 
-input TodoUpdateWithWhereUniqueWithoutAuthorInput {
-  data: TodoUpdateWithoutAuthorDataInput!
+input TodoUpdateWithWhereUniqueWithoutCategoryInput {
+  data: TodoUpdateWithoutCategoryDataInput!
   where: TodoWhereUniqueInput!
 }
 
-input TodoUpdateWithWhereUniqueWithoutCategoryInput {
-  data: TodoUpdateWithoutCategoryDataInput!
+input TodoUpdateWithWhereUniqueWithoutOwnerInput {
+  data: TodoUpdateWithoutOwnerDataInput!
   where: TodoWhereUniqueInput!
 }
 
@@ -713,15 +817,15 @@ input TodoUpdateWithWhereUniqueWithoutTagsInput {
   where: TodoWhereUniqueInput!
 }
 
-input TodoUpsertWithWhereUniqueWithoutAuthorInput {
-  create: TodoCreateWithoutAuthorInput!
-  update: TodoUpdateWithoutAuthorDataInput!
-  where: TodoWhereUniqueInput!
-}
-
 input TodoUpsertWithWhereUniqueWithoutCategoryInput {
   create: TodoCreateWithoutCategoryInput!
   update: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutOwnerInput {
+  create: TodoCreateWithoutOwnerInput!
+  update: TodoUpdateWithoutOwnerDataInput!
   where: TodoWhereUniqueInput!
 }
 
@@ -734,35 +838,35 @@ input TodoUpsertWithWhereUniqueWithoutTagsInput {
 input TodoWhereInput {
   AND: [TodoWhereInput!]
   archivedAt: NullableDateTimeFilter
-  author: UserWhereInput
-  authorId: IntFilter
   category: CategoryWhereInput
-  categoryId: IntFilter
+  categoryId: StringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
+  id: UUIDFilter
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
   status: TodoStatus
   tags: TagFilter
   text: StringFilter
 }
 
 input TodoWhereUniqueInput {
-  id: Int
+  id: String
 }
 
 input UpdateTodoInput {
   archivedAt: DateTime
-  id: Int!
+  id: ID!
   status: TodoStatus
-  tags: [Int!]
+  tags: [ID!]
   text: String
 }
 
 type User {
   email: String!
-  id: Int!
-  name: String!
+  id: String!
+  name: String
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
 
@@ -782,29 +886,35 @@ input UserCreateOneWithoutTodosInput {
 }
 
 input UserCreateWithoutCategoriesInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
   createdAt: DateTime
   email: String!
-  name: String!
-  role: Role
+  id: String
+  name: String
   tags: TagCreateManyWithoutOwnerInput
-  todos: TodoCreateManyWithoutAuthorInput
+  todos: TodoCreateManyWithoutOwnerInput
 }
 
 input UserCreateWithoutTagsInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
-  name: String!
-  role: Role
-  todos: TodoCreateManyWithoutAuthorInput
+  id: String
+  name: String
+  todos: TodoCreateManyWithoutOwnerInput
 }
 
 input UserCreateWithoutTodosInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
-  name: String!
-  role: Role
+  id: String
+  name: String
   tags: TagCreateManyWithoutOwnerInput
 }
 
@@ -830,32 +940,35 @@ input UserUpdateOneRequiredWithoutTodosInput {
 }
 
 input UserUpdateWithoutCategoriesDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String
-  role: Role
   tags: TagUpdateManyWithoutOwnerInput
-  todos: TodoUpdateManyWithoutAuthorInput
+  todos: TodoUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateWithoutTagsDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String
-  role: Role
-  todos: TodoUpdateManyWithoutAuthorInput
+  todos: TodoUpdateManyWithoutOwnerInput
 }
 
 input UserUpdateWithoutTodosDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
-  id: Int
+  id: String
   name: String
-  role: Role
   tags: TagUpdateManyWithoutOwnerInput
 }
 
@@ -875,20 +988,37 @@ input UserUpsertWithoutTodosInput {
 }
 
 input UserWhereInput {
+  accounts: AccountFilter
   AND: [UserWhereInput!]
+  avatarUrl: NullableStringFilter
   categories: CategoryFilter
   createdAt: DateTimeFilter
   email: StringFilter
-  id: IntFilter
-  name: StringFilter
+  id: UUIDFilter
+  name: NullableStringFilter
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
-  role: Role
   tags: TagFilter
   todos: TodoFilter
 }
 
 input UserWhereUniqueInput {
   email: String
-  id: Int
+  id: String
+}
+
+scalar UUID
+
+input UUIDFilter {
+  contains: UUID
+  endsWith: UUID
+  equals: UUID
+  gt: UUID
+  gte: UUID
+  in: [UUID!]
+  lt: UUID
+  lte: UUID
+  not: UUID
+  notIn: [UUID!]
+  startsWith: UUID
 }
