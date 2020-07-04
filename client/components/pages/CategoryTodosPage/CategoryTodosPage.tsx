@@ -20,6 +20,7 @@ import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/C
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { LoadingIndicator } from '../../atoms/LoadingIndicator';
 import { ID } from '../../../viewModels/ID';
+import Head from 'next/head';
 
 type Props = {
   categoryId: ID;
@@ -148,6 +149,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
+      {categoryName && (
+        <Head>
+          <title>{categoryName}</title>
+        </Head>
+      )}
       <TodoStatusBar
         categoryId={categoryId}
         categoryName={categoryName}
