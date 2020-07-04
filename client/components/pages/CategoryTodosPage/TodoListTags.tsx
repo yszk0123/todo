@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Box } from 'rebass';
-import { Badge } from './Badge';
+import { ColorBadge } from '../../layout/ColorBadge';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 
 export const TodoListTags: React.FunctionComponent<{
@@ -14,7 +14,7 @@ export const TodoListTags: React.FunctionComponent<{
     <Flex justifyContent="flex-end">
       {tags.map((tag, i) => (
         <Box key={tag.id} display="inline-block" ml={i === 0 ? 0 : 1}>
-          <Badge key={tag.id} color={tag.color} text={tag.name} />
+          <ColorBadge key={tag.id} color={tag.color} text={tag.name} />
         </Box>
       ))}
     </Flex>
