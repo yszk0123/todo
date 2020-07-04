@@ -15,7 +15,7 @@ import { ContentWrapper } from '../../layout/ContentWrapper';
 import { TodoStatusBar } from './TodoStatusBar';
 import { TodoList } from './TodoList';
 import { TodoListItem } from './TodoListItem';
-import { TodoForm } from './TodoForm';
+import { TodoEditForm } from './TodoEditForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { LoadingIndicator } from '../../atoms/LoadingIndicator';
@@ -171,7 +171,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
           );
         })}
       </TodoList>
-      <TodoForm
+      <TodoEditForm
         name={text}
         tags={tags}
         status={status}

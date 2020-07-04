@@ -10,7 +10,7 @@ import { Color } from '../../../graphql/__generated__/baseTypes';
 
 const colors = Object.values(Color);
 
-export const TagForm: React.FunctionComponent<{
+export const TagEditForm: React.FunctionComponent<{
   name: string;
   color: Color;
   tagCategories: CategoryVM[];

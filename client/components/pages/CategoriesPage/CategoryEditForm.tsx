@@ -4,7 +4,7 @@ import { Input } from '@rebass/forms';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { preventDefault } from '../../../handlers/preventDefault';
 
-export const CategoryForm: React.FunctionComponent<{
+export const CategoryEditForm: React.FunctionComponent<{
   name: string;
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;

@@ -13,7 +13,7 @@ import {
   TagUpdateInput,
   Color,
 } from '../../../graphql/__generated__/baseTypes';
-import { TagForm } from './TagForm';
+import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
 import { TagCount } from './TagCount';
 import { TagListItem } from './TagListItem';
@@ -171,7 +171,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
           );
         })}
       </TagList>
-      <TagForm
+      <TagEditForm
         name={name}
         color={color}
         categories={categories}

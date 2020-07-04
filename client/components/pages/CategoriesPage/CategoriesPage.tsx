@@ -13,7 +13,7 @@ import {
   CategoryUpdateInput,
 } from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { CategoryForm } from './CategoryForm';
+import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryCount } from './CategoryCount';
 import { ID } from '../../../viewModels/ID';
@@ -109,7 +109,7 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
         currentCategoryId={currentCategoryId}
         onClick={handleSelectCategory}
       />
-      <CategoryForm
+      <CategoryEditForm
         name={name}
         isSelected={isSelected}
         onChangeName={handleChangeName}

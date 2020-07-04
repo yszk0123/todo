@@ -74,7 +74,7 @@ const StatusSelect: React.FunctionComponent<{
   );
 };
 
-export const TodoForm: React.FunctionComponent<{
+export const TodoEditForm: React.FunctionComponent<{
   name: string;
   tags: CategoryTagFragment[];
   status: TodoStatus;
