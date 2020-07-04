@@ -22,7 +22,8 @@ function printReport(
       return `- [${status}] ${tags}${text}`;
     })
     .join('\n');
-  return [tagsString, todosString].join('\n');
+  const text = [tagsString, todosString].join('\n');
+  return `\`\`\`\n${text}\n\`\`\``;
 }
 
 export const CategoryTodosReport: React.FunctionComponent<{
