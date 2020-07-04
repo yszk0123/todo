@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flex } from 'rebass';
 import { useSession } from 'next-auth/client';
 import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
 import { LoadingIndicator } from '../atoms/LoadingIndicator';
@@ -18,13 +19,13 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   const avatarUrl = data?.me?.avatarUrl ?? null;
 
   return (
-    <div>
+    <Flex minHeight="100vh" flexDirection="column">
       <Navigation
         hasSession={hasSession}
         username={username}
         avatarUrl={avatarUrl}
       />
-      {hasSession && children}
-    </div>
+      {hasSession && <Flex flexGrow={1}>{children}</Flex>}
+    </Flex>
   );
 };
