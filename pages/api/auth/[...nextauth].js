@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+import { createPrismaAdapter } from '../../../server/plugins/createPrismaAdapter';
+import { getPrismaClient } from '../../../server/plugins/getPrismaClient';
 
 const options = {
   site: process.env.SITE,
@@ -26,6 +28,10 @@ const options = {
   jwt: {
     secret: process.env.JWT_SECRET,
   },
+
+  adapter: createPrismaAdapter({
+    client: getPrismaClient(),
+  }),
 };
 
 export default (req, res) => NextAuth(req, res, options);

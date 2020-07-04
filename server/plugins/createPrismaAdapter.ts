@@ -10,7 +10,7 @@ interface Profile {
   image: string;
 }
 
-export function PrismaAdapter({ client }: { client: PrismaClient }) {
+export function createPrismaAdapter({ client }: { client: PrismaClient }) {
   function debug(...args: any[]) {
     if (process.env.NODE_ENV === 'development') console.log(...args);
   }
