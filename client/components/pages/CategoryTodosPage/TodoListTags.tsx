@@ -1,3 +1,4 @@
+// FIXME: Use layout components instead of using rebass directly
 import React from 'react';
 import { Flex, Box } from 'rebass';
 import { ColorBadge } from '../../layout/ColorBadge';
