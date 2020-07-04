@@ -1,18 +1,30 @@
 import React from 'react';
-import { Text, Box } from 'rebass';
-import { GoToReportLink } from './GoToReportLink';
 import { ID } from '../../../viewModels/ID';
+import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
 export const TodoStatusBar: React.FunctionComponent<{
   categoryId: ID;
+  categoryName: string | null;
   count: number;
-}> = ({ categoryId, count }) => {
+}> = ({ categoryId, categoryName, count }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-      <GoToReportLink categoryId={categoryId} />
-      <Text textAlign="right" fontSize={2} color="gray">
-        {count} todos
-      </Text>
-    </Box>
+    <StatusBar
+      left={[
+        {
+          type: StatusBarItemType.LINK,
+          content: {
+            href: '/categories/[categoryId]/todos/report',
+            as: `/categories/${categoryId}/todos/report`,
+            text: 'See report',
+          },
+        },
+      ]}
+      right={[
+        categoryName !== null
+          ? { type: StatusBarItemType.TEXT, content: categoryName }
+          : null,
+        { type: StatusBarItemType.TEXT, content: `${count} todos` },
+      ]}
+    />
   );
 };

@@ -6,16 +6,16 @@ import {
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
 } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { LoadingIndicator } from '../../atoms/LoadingIndicator';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import {
   CategoryCreateInput,
   CategoryWhereUniqueInput,
   CategoryUpdateInput,
 } from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { CategoryForm } from './CategoryForm';
+import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
-import { CategoryCount } from './CategoryCount';
+import { CategoryStatusBar } from './CategoryStatusBar';
 import { ID } from '../../../viewModels/ID';
 
 export const CategoriesPage: React.FunctionComponent<{}> = () => {
@@ -103,13 +103,13 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectCategory}>
-      <CategoryCount count={categories.length} />
+      <CategoryStatusBar count={categories.length} />
       <CategoryList
         categories={categories}
         currentCategoryId={currentCategoryId}
         onClick={handleSelectCategory}
       />
-      <CategoryForm
+      <CategoryEditForm
         name={name}
         isSelected={isSelected}
         onChangeName={handleChangeName}

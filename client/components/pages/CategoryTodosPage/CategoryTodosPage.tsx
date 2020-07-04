@@ -14,12 +14,12 @@ import {
 import { ContentWrapper } from '../../layout/ContentWrapper';
 import { TodoStatusBar } from './TodoStatusBar';
 import { TodoList } from './TodoList';
-import { TodoListItem } from './TodoListItem';
-import { TodoForm } from './TodoForm';
+import { TodoEditForm } from './TodoEditForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { LoadingIndicator } from '../../atoms/LoadingIndicator';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { ID } from '../../../viewModels/ID';
+import Head from 'next/head';
 
 type Props = {
   categoryId: ID;
@@ -142,25 +142,28 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
-      <TodoStatusBar categoryId={categoryId} count={todos.length} />
-      <TodoList>
-        {todos.map((todo) => {
-          return (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              isActive={todo.id === currentTodoId}
-              onClick={handleSelectTodo}
-            />
-          );
-        })}
-      </TodoList>
-      <TodoForm
+      {categoryName && (
+        <Head>
+          <title>{categoryName}</title>
+        </Head>
+      )}
+      <TodoStatusBar
+        categoryId={categoryId}
+        categoryName={categoryName}
+        count={todos.length}
+      />
+      <TodoList
+        todos={todos}
+        currentTodoId={currentTodoId}
+        onClick={handleSelectTodo}
+      />
+      <TodoEditForm
         name={text}
         tags={tags}
         status={status}

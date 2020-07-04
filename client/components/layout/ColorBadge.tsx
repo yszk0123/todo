@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box } from 'rebass';
-import { getColorCode } from '../../helpers/getColorCode';
-import { Color } from '../../../graphql/__generated__/baseTypes';
+import { getColorCode } from '../helpers/getColorCode';
+import { Color } from '../../graphql/__generated__/baseTypes';
 
-export const Badge: React.FunctionComponent<{
+export const ColorBadge: React.FunctionComponent<{
   text: string;
   color: Color;
 }> = ({ text, color }) => {

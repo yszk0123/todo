@@ -1,0 +1,53 @@
+import React from 'react';
+import { Button } from 'rebass';
+import { EditFormField } from './EditFormField';
+
+export type EditFormAction = {
+  label: string;
+  onClick: () => void;
+};
+
+const EditFormButton: React.FunctionComponent<{
+  label: string;
+  onClick: () => void;
+  isFirst: boolean;
+  isPrimary: boolean;
+}> = ({ label, onClick, isFirst, isPrimary }) => {
+  return (
+    <Button
+      type={isPrimary ? 'submit' : 'button'}
+      variant={isPrimary ? 'primary' : 'outline'}
+      onClick={onClick}
+      sx={{ flexGrow: isPrimary ? 1 : undefined, ml: isFirst ? 0 : 2 }}
+    >
+      {label}
+    </Button>
+  );
+};
+
+export const EditFormActionsField: React.FunctionComponent<{
+  actions: EditFormAction[];
+  isFirst?: boolean;
+}> = ({ actions, isFirst = false }) => {
+  if (actions.length === 0) {
+    return null;
+  }
+
+  const lastIndex = actions.length - 1;
+
+  return (
+    <EditFormField isFirst={isFirst}>
+      {actions.map((action, i) => {
+        return (
+          <EditFormButton
+            key={i}
+            label={action.label}
+            onClick={action.onClick}
+            isFirst={i === 0}
+            isPrimary={i === lastIndex}
+          />
+        );
+      })}
+    </EditFormField>
+  );
+};

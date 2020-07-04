@@ -1,11 +1,26 @@
 import React from 'react';
-import { Box } from 'rebass';
-import { stopPropagation } from '../../../handlers/stopPropagation';
+import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
+import { TagListItem } from './TagListItem';
+import { ID } from '../../../viewModels/ID';
+import { List } from '../../layout/List';
 
-export const TagList: React.FunctionComponent<{}> = ({ children }) => {
+export const TagList: React.FunctionComponent<{
+  tags: RootTagFragment[];
+  currentTagId: ID | null;
+  onClick: (tag: RootTagFragment) => void;
+}> = ({ tags, currentTagId, onClick }) => {
   return (
-    <Box mt={1} onClick={stopPropagation}>
-      {children}
-    </Box>
+    <List>
+      {tags.map((tag) => {
+        return (
+          <TagListItem
+            key={tag.id}
+            tag={tag}
+            isActive={tag.id === currentTagId}
+            onClick={onClick}
+          />
+        );
+      })}
+    </List>
   );
 };

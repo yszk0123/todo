@@ -6,39 +6,19 @@ import {
   useDeleteOneTagMutation,
   useUpdateOneTagMutation,
 } from '../../../graphql/__generated__/TagsPage.graphql';
-import { LoadingIndicator } from '../../atoms/LoadingIndicator';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import {
   TagCreateInput,
   TagWhereUniqueInput,
   TagUpdateInput,
   Color,
 } from '../../../graphql/__generated__/baseTypes';
-import { TagForm } from './TagForm';
+import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
-import { TagCount } from './TagCount';
-import { TagListItem } from './TagListItem';
+import { TagStatusBar } from './TagStatusBar';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ID } from '../../../viewModels/ID';
-
-function parseColorString(colorString: string): Color {
-  switch (colorString) {
-    case Color.Default:
-      return Color.Default;
-    case Color.Blue:
-      return Color.Blue;
-    case Color.Green:
-      return Color.Green;
-    case Color.Purple:
-      return Color.Purple;
-    case Color.Red:
-      return Color.Red;
-    case Color.Yellow:
-      return Color.Yellow;
-    default:
-      throw new Error('Unknown color');
-  }
-}
 
 export const TagsPage: React.FunctionComponent<{}> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
@@ -140,14 +120,9 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     []
   );
 
-  const handleChangeColor = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const colorString = event.currentTarget.value;
-      const color = parseColorString(colorString);
-      setColor(color);
-    },
-    []
-  );
+  const handleChangeColor = React.useCallback((color: Color) => {
+    setColor(color);
+  }, []);
 
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
@@ -158,20 +133,13 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
 
   return (
     <ContentWrapper onClick={handleDeselectTag}>
-      <TagCount count={tags.length} />
-      <TagList>
-        {tags.map((tag) => {
-          return (
-            <TagListItem
-              key={tag.id}
-              tag={tag}
-              isActive={tag.id === currentTagId}
-              onClick={handleSelectTag}
-            />
-          );
-        })}
-      </TagList>
-      <TagForm
+      <TagStatusBar count={tags.length} />
+      <TagList
+        tags={tags}
+        onClick={handleSelectTag}
+        currentTagId={currentTagId}
+      />
+      <TagEditForm
         name={name}
         color={color}
         categories={categories}
