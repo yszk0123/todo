@@ -1,24 +1,12 @@
 // FIXME: Nexus.js ignores types.d.ts...
 // @ts-ignore
 import jwt from 'next-auth/jwt';
+import { User, Account } from '@prisma/client';
 
 const secret = process.env.JWT_SECRET ?? '__NULL__';
 if (secret === '__NULL__') {
   throw new Error('process.env.JWT_SECRET is required');
 }
-
-type User = {
-  name: string;
-  email: string | null;
-  image: string;
-};
-
-type Account = {
-  provider: string;
-  type: string;
-  id: string;
-  accessToken: string;
-};
 
 export type Token = {
   user: User;
@@ -26,6 +14,6 @@ export type Token = {
 };
 
 export async function getJWT(req: any): Promise<Token> {
-  const token = await jwt.getJwt({ req, secret });
+  const token = (await jwt.getJwt({ req, secret })) as Token;
   return token;
 }

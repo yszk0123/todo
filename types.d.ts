@@ -15,23 +15,5 @@ declare module 'next-auth/client' {
 }
 
 declare module 'next-auth/jwt' {
-  type User = {
-    name: string;
-    email: string;
-    image: string;
-  };
-
-  type Account = {
-    provider: string;
-    type: string;
-    id: string;
-    accessToken: string;
-  };
-
-  type Token = {
-    user: User;
-    account: Account;
-  };
-
-  function getJwt(params: { req: any; secret: string }): Promise<Token>;
+  function getJwt(params: { req: any; secret: string }): Promise<unknown>;
 }

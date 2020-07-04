@@ -1,5 +1,5 @@
 import { schema } from 'nexus';
-import { getJWT, Token } from '../getJWT';
+import { getJWT } from '../getJWT';
 import { User } from '@prisma/client';
 
 // Prevent nexus build error
@@ -10,7 +10,8 @@ const add = schema.addToContext;
 add(async (req) => {
   try {
     const token = await getJWT(req);
-    return { token };
+    const user = token.user;
+    return { token, user };
   } catch {
     return {};
   }
@@ -21,43 +22,3 @@ declare global {
     user?: User;
   }
 }
-
-schema.middleware(
-  (_config) => async (source, args, ctx: NexusContext, info, next) => {
-    // FIXME
-    const token: Token | null | undefined = (ctx as any).token;
-
-    if (token && token.user.email) {
-      const name = token.user.name;
-      const email = token.user.email;
-      let user = await ctx.db.user.findOne({ where: { email } });
-      if (!user) {
-        user = await ctx.db.user.create({
-          data: {
-            name,
-            email,
-          },
-        });
-      }
-      ctx.user = user ?? undefined;
-      return next(source, args, ctx, info);
-    }
-
-    if (process.env.NODE_ENV !== 'production') {
-      const email = 'test@example.com';
-      let user = await ctx.db.user.findOne({ where: { email } });
-      if (!user) {
-        user = await ctx.db.user.create({
-          data: {
-            name: 'test',
-            email,
-          },
-        });
-      }
-      ctx.user = user ?? undefined;
-      return next(source, args, ctx, info);
-    }
-
-    return next(source, args, ctx, info);
-  }
-);
