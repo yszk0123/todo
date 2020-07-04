@@ -1,21 +1,18 @@
 import React from 'react';
-import NextLink from 'next/link';
-import { Link } from 'rebass';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { ID } from '../../../viewModels/ID';
 import { ListItem } from '../../layout/List';
+import { Link } from '../../layout/Link';
 
-const CategoryGoToTodoLink: React.FunctionComponent<{
+const GoToTodoLink: React.FunctionComponent<{
   categoryId: ID;
 }> = ({ categoryId }) => {
   return (
-    <NextLink
+    <Link
       href="/categories/[categoryId]/todos"
       as={`/categories/${categoryId}/todos`}
-      passHref
-    >
-      <Link>Go</Link>
-    </NextLink>
+      text="Go"
+    />
   );
 };
 
@@ -29,7 +26,7 @@ export const CategoryListItem: React.FunctionComponent<{
       isActive={isActive}
       item={category}
       onClick={onClick}
-      leftElement={<CategoryGoToTodoLink categoryId={category.id} />}
+      leftElement={<GoToTodoLink categoryId={category.id} />}
       mainElement={category.name}
     />
   );

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text } from 'rebass';
-import NextLink from 'next/link';
-import { Link } from 'rebass';
 import { isNotNull } from '../helpers/isNotNull';
+import { Link } from './Link';
 
 export enum StatusBarItemType {
   TEXT,
@@ -29,9 +28,11 @@ const StatusBarItemView: React.FunctionComponent<{
     }
     case StatusBarItemType.LINK: {
       return (
-        <NextLink href={item.content.href} as={item.content.as} passHref>
-          <Link>{item.content.text}</Link>
-        </NextLink>
+        <Link
+          href={item.content.href}
+          as={item.content.as}
+          text={item.content.text}
+        />
       );
     }
   }
