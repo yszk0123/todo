@@ -12,8 +12,8 @@ export const ColorBox: React.FunctionComponent<{
       sx={{
         bg: colorCode,
         p: 1,
-        width: 12,
-        height: 12,
+        width: 24,
+        height: 24,
         border: '1px solid black',
       }}
     />
