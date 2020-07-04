@@ -25,6 +25,17 @@ schema.inputObjectType({
   },
 });
 
+schema.inputObjectType({
+  name: 'UpdateTodosByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
+    t.string('text', {});
+    t.list.id('tags', {});
+    t.field('status', { type: 'TodoStatus' });
+    t.field('archivedAt', { type: 'DateTime' });
+  },
+});
+
 schema.mutationType({
   definition(t) {
     t.crud.createOneCategory({
@@ -153,6 +164,40 @@ schema.mutationType({
           where: { id: todoId },
         });
         return updatedTodo;
+      },
+    });
+
+    t.list.field('updateTodosById', {
+      type: 'Todo',
+      args: {
+        data: schema.arg({ type: 'UpdateTodosByIdInput', required: true }),
+      },
+      async authorize(_root, args, ctx) {
+        const todoIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const todo = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && todo.every((todo) => todo.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoIds = args.data.ids;
+        const text = args.data.text ?? undefined;
+        const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const status = args.data.status ?? undefined;
+        const archivedAt = args.data.archivedAt ?? undefined;
+
+        const updatedTodos = await Promise.all(
+          todoIds.map((todoId) =>
+            ctx.db.todo.update({
+              data: { text, tags: { set: tags }, status, archivedAt },
+              where: { id: todoId },
+            })
+          )
+        );
+        return updatedTodos;
       },
     });
 

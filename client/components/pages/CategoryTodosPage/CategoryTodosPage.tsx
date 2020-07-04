@@ -2,13 +2,13 @@ import React from 'react';
 import {
   useCategoryTodosPageQuery,
   useCreateOneTodoMutation,
-  useUpdateTodoMutation,
   useDeleteTodosByIdMutation,
+  useUpdateTodosByIdMutation,
 } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import {
-  TodoCreateInput,
-  UpdateTodoInput,
   TodoStatus,
+  TodoCreateInput,
+  UpdateTodosByIdInput,
   DeleteTodosByIdInput,
 } from '../../../graphql/__generated__/baseTypes';
 import { ContentWrapper } from '../../layout/ContentWrapper';
@@ -42,7 +42,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [createOneTodo] = useCreateOneTodoMutation({
     onCompleted: handleCompleted,
   });
-  const [updateTodo] = useUpdateTodoMutation({ onCompleted: handleCompleted });
+  const [updateTodosById] = useUpdateTodosByIdMutation({
+    onCompleted: handleCompleted,
+  });
   const [deleteTodosById] = useDeleteTodosByIdMutation({
     onCompleted: handleCompleted,
   });
@@ -112,28 +114,27 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     deleteTodosById({ variables: { input } });
   }, [data, text, deselect, deleteTodosById, selectedTodoIds]);
 
-  const handleUpdateTodo = React.useCallback(() => {
-    const currentTodoId = first(selectedTodoIds);
-    if (!currentTodoId) return;
+  const handleUpdateTodosById = React.useCallback(() => {
+    const count = selectedTodoIds.length;
+    if (count === 0) return;
     const tagIds = tags?.map((tag) => tag.id);
-    const input: UpdateTodoInput = {
-      id: currentTodoId,
-      text,
-      tags: tagIds,
+    const input: UpdateTodosByIdInput = {
+      ids: selectedTodoIds,
+      text: count === 1 ? text : undefined,
+      tags: count === 1 ? tagIds : undefined,
       status,
     };
-    updateTodo({ variables: { input } });
-  }, [data, text, status, updateTodo, selectedTodoIds, tags]);
+    updateTodosById({ variables: { input } });
+  }, [data, text, status, updateTodosById, selectedTodoIds, tags]);
 
-  const handleArchiveTodo = React.useCallback(() => {
-    const currentTodoId = first(selectedTodoIds);
-    if (!currentTodoId) return;
-    const input: UpdateTodoInput = {
-      id: currentTodoId,
+  const handleArchiveTodosById = React.useCallback(() => {
+    if (selectedTodoIds.length === 0) return;
+    const input: UpdateTodosByIdInput = {
+      ids: selectedTodoIds,
       archivedAt: new Date(),
     };
-    updateTodo({ variables: { input } });
-  }, [selectedTodoIds, updateTodo]);
+    updateTodosById({ variables: { input } });
+  }, [selectedTodoIds, updateTodosById]);
 
   const handleToggleTag = React.useCallback(
     (tag: CategoryTagFragment) => {
@@ -193,9 +194,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         isSelected={isSelected}
         onChangeName={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
-        onUpdateOneTodo={handleUpdateTodo}
+        onUpdateOneTodo={handleUpdateTodosById}
         onDeleteOneTodo={handleDeleteTodosById}
-        onArchiveTodo={handleArchiveTodo}
+        onArchiveTodo={handleArchiveTodosById}
         onToggleTag={handleToggleTag}
         onSelectStatus={handleSelectStatus}
       />

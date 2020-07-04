@@ -36,3 +36,9 @@ mutation UpdateTodo($input: UpdateTodoInput!) {
 mutation DeleteTodosById($input: DeleteTodosByIdInput!) {
   deleteTodosById(data: $input)
 }
+
+mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
+  updateTodosById(data: $input) {
+    ...CategoryTodo
+  }
+}

@@ -351,6 +351,7 @@ type Mutation {
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateTodo(data: UpdateTodoInput!): Todo
+  updateTodosById(data: UpdateTodosByIdInput!): [Todo!]
 }
 
 input NullableDateTimeFilter {
@@ -872,6 +873,14 @@ input TodoWhereUniqueInput {
 input UpdateTodoInput {
   archivedAt: DateTime
   id: ID!
+  status: TodoStatus
+  tags: [ID!]
+  text: String
+}
+
+input UpdateTodosByIdInput {
+  archivedAt: DateTime
+  ids: [ID!]!
   status: TodoStatus
   tags: [ID!]
   text: String
