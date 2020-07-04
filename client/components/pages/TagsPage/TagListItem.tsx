@@ -1,26 +1,18 @@
 import React from 'react';
-import { Flex, Text, Box } from 'rebass';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
+import { ListItem } from '../../layout/List';
 
 export const TagListItem: React.FunctionComponent<{
   isActive: boolean;
   tag: RootTagFragment;
   onClick: (tag: RootTagFragment) => void;
 }> = ({ isActive, tag, onClick }) => {
-  const handleClick = React.useCallback(() => {
-    onClick(tag);
-  }, [tag, onClick]);
-
   return (
-    <Flex alignItems="center" p={2} sx={{ cursor: 'pointer' }}>
-      <Box
-        flex="1 1 auto"
-        bg={isActive ? 'highlight' : undefined}
-        color={isActive ? 'highlightText' : undefined}
-        onClick={handleClick}
-      >
-        <Text>{tag.name}</Text>
-      </Box>
-    </Flex>
+    <ListItem
+      isActive={isActive}
+      item={tag}
+      onClick={onClick}
+      mainElement={tag.name}
+    />
   );
 };

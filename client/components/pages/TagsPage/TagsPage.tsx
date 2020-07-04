@@ -16,7 +16,6 @@ import {
 import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
 import { TagCount } from './TagCount';
-import { TagListItem } from './TagListItem';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ID } from '../../../viewModels/ID';
@@ -135,18 +134,11 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
   return (
     <ContentWrapper onClick={handleDeselectTag}>
       <TagCount count={tags.length} />
-      <TagList>
-        {tags.map((tag) => {
-          return (
-            <TagListItem
-              key={tag.id}
-              tag={tag}
-              isActive={tag.id === currentTagId}
-              onClick={handleSelectTag}
-            />
-          );
-        })}
-      </TagList>
+      <TagList
+        tags={tags}
+        onClick={handleSelectTag}
+        currentTagId={currentTagId}
+      />
       <TagEditForm
         name={name}
         color={color}
