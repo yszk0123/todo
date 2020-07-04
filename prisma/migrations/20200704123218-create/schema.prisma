@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         String     @default(uuid()) @id
+  email      String     @unique
+  avatarUrl  String?
+  name       String?
+  accounts   Account[]
+  categories Category[]
+  todos      Todo[]
+  tags       Tag[]
+  createdAt  DateTime   @default(now())
+}
+
+model Account {
+  id                 String    @default(uuid()) @id
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  providerId         String
+  providerType       String
+  providerAccountId  String    @unique
+  refreshToken       String?
+  accessToken        String
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+}
+
+model Category {
+  id        String   @default(uuid()) @id
+  createdAt DateTime @default(now())
+  name      String
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  todos     Todo[]
+  tags      Tag[]
+}
+
+model Todo {
+  id         String     @default(uuid()) @id
+  createdAt  DateTime   @default(now())
+  text       String
+  owner      User       @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  category   Category   @relation(fields: [categoryId], references: [id])
+  categoryId String
+  tags       Tag[]
+  status     TodoStatus @default(TODO)
+  archivedAt DateTime?
+}
+
+model Tag {
+  id         String     @default(uuid()) @id
+  createdAt  DateTime   @default(now())
+  name       String
+  color      String?
+  owner      User       @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  categories Category[] @relation(references: [id])
+  todos      Todo[]     @relation(references: [id])
+}
+
+enum TodoStatus {
+  TODO
+  IN_PROGRESS
+  WAITING
+  DONE
+}
