@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex } from 'rebass';
 import { useSession } from 'next-auth/client';
 import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
-import { LoadingIndicator } from '../atoms/LoadingIndicator';
+import { LoadingIndicator } from '../layout/LoadingIndicator';
 import { Navigation } from './Navigation';
 
 export const Gate: React.FunctionComponent<{}> = ({ children }) => {

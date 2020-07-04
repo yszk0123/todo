@@ -17,7 +17,7 @@ import { TodoList } from './TodoList';
 import { TodoEditForm } from './TodoEditForm';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { LoadingIndicator } from '../../atoms/LoadingIndicator';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { ID } from '../../../viewModels/ID';
 import Head from 'next/head';
 

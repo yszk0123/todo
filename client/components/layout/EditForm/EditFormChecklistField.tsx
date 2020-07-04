@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checklist } from '../../molecules/Checklist';
+import { Checklist } from '../Checklist';
 import { DisplayableVM } from '../../../viewModels/DisplayableVM';
 import { EditFormField } from './EditFormField';
 
