@@ -102,17 +102,29 @@ export const theme = {
       color: 'background',
       bg: 'primary',
       borderRadius: 'default',
+      ':hover': {
+        cursor: 'pointer',
+        opacity: 0.8,
+      },
     },
     outline: {
       variant: 'buttons.primary',
       color: 'primary',
       bg: 'transparent',
       boxShadow: 'inset 0 0 2px',
+      ':hover': {
+        cursor: 'pointer',
+        opacity: 0.8,
+      },
     },
     secondary: {
       variant: 'buttons.primary',
       color: 'background',
       bg: 'secondary',
+      ':hover': {
+        cursor: 'pointer',
+        opacity: 0.8,
+      },
     },
   },
   styles: {
