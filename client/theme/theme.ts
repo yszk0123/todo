@@ -128,6 +128,14 @@ export const theme = {
       },
     },
   },
+  forms: {
+    input: {
+      fontSize: 18,
+    },
+    textarea: {
+      fontSize: 18,
+    },
+  },
   styles: {
     root: {
       fontFamily: 'body',
