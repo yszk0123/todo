@@ -10,7 +10,8 @@ export const theme = {
     secondary: '#30c',
     muted: '#f6f6f9',
     gray: '#555',
-    highlight: 'hsla(205, 100%, 40%, 0.125)',
+    highlightText: '#fff',
+    highlight: '#07c',
   },
   fonts: {
     body: 'Roboto, sans-serif',

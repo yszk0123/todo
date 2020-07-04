@@ -16,6 +16,7 @@ export const TagListItem: React.FunctionComponent<{
       <Box
         flex="1 1 auto"
         bg={isActive ? 'highlight' : undefined}
+        color={isActive ? 'highlightText' : undefined}
         onClick={handleClick}
       >
         <Text>{tag.name}</Text>

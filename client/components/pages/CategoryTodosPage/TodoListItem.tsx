@@ -71,7 +71,7 @@ export const TodoListItem: React.FunctionComponent<{
       alignItems="center"
       p={2}
       bg={isActive ? 'highlight' : undefined}
-      color={isArchived ? 'lightgray' : undefined}
+      color={isArchived ? 'lightgray' : isActive ? 'highlightText' : undefined}
       sx={{ cursor: 'pointer' }}
       onClick={handleClick}
     >
