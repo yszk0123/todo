@@ -52,12 +52,14 @@ export const TagForm: React.FunctionComponent<{
       <Flex alignItems="center" mt={2}>
         <Input value={name} onChange={onChangeName} />
       </Flex>
-      <Flex alignItems="center" flexGrow={1} mt={2}>
-        <Select value={color} onChange={onChangeColor}>
-          {colors.map((c) => {
-            return <option key={c}>{c}</option>;
-          })}
-        </Select>
+      <Flex alignItems="center" mt={2}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Select value={color} onChange={onChangeColor}>
+            {colors.map((c) => {
+              return <option key={c}>{c}</option>;
+            })}
+          </Select>
+        </Box>
         <Box ml={2}>
           <ColorBox color={color} />
         </Box>
