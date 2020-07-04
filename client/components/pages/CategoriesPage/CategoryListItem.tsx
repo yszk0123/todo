@@ -1,20 +1,7 @@
 import React from 'react';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
-import { ID } from '../../../viewModels/ID';
 import { ListItem } from '../../layout/List';
-import { Link } from '../../layout/Link';
-
-const GoToTodoLink: React.FunctionComponent<{
-  categoryId: ID;
-}> = ({ categoryId }) => {
-  return (
-    <Link
-      href="/categories/[categoryId]/todos"
-      as={`/categories/${categoryId}/todos`}
-      text="Go"
-    />
-  );
-};
+import { GoToTodoLink } from './GoToTodoLink';
 
 export const CategoryListItem: React.FunctionComponent<{
   isActive: boolean;
