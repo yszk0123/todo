@@ -1,8 +1,9 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Link, Flex, Text, Box } from 'rebass';
+import { Link } from 'rebass';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { ID } from '../../../viewModels/ID';
+import { ListItem } from '../../layout/List';
 
 const CategoryGoToTodoLink: React.FunctionComponent<{
   categoryId: ID;
@@ -23,21 +24,13 @@ export const CategoryListItem: React.FunctionComponent<{
   category: RootCategoryFragment;
   onClick: (category: RootCategoryFragment) => void;
 }> = ({ isActive, category, onClick }) => {
-  const handleClick = React.useCallback(() => {
-    onClick(category);
-  }, [category, onClick]);
-
   return (
-    <Flex alignItems="center" p={2} sx={{ cursor: 'pointer' }}>
-      <Box
-        flex="1 1 auto"
-        bg={isActive ? 'highlight' : undefined}
-        color={isActive ? 'highlightText' : undefined}
-        onClick={handleClick}
-      >
-        <CategoryGoToTodoLink categoryId={category.id} />
-        <Text>{category.name}</Text>
-      </Box>
-    </Flex>
+    <ListItem
+      isActive={isActive}
+      item={category}
+      onClick={onClick}
+      leftElement={<CategoryGoToTodoLink categoryId={category.id} />}
+      mainElement={category.name}
+    />
   );
 };

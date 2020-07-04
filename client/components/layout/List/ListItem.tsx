@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
-import { Flex, Box } from 'rebass';
+import { Flex, Box, Text } from 'rebass';
 
 export function ListItem<T>({
   isActive,
@@ -15,7 +15,7 @@ export function ListItem<T>({
   item: T;
   onClick: (item: T) => void;
   leftElement?: JSX.Element | null;
-  mainElement: JSX.Element;
+  mainElement: JSX.Element | string;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   const handleClick = React.useCallback(() => {
@@ -37,7 +37,13 @@ export function ListItem<T>({
           {leftElement}
         </Flex>
       )}
-      <Box sx={{ flexGrow: 1 }}>{mainElement}</Box>
+      <Box sx={{ flexGrow: 1 }}>
+        {typeof mainElement === 'string' ? (
+          <Text>{mainElement}</Text>
+        ) : (
+          mainElement
+        )}
+      </Box>
       {rightElement != null && (
         <Flex ml={2} flexShrink={0}>
           {rightElement}

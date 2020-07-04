@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box } from 'rebass';
-import { stopPropagation } from '../../../handlers/stopPropagation';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { CategoryListItem } from './CategoryListItem';
 import { ID } from '../../../viewModels/ID';
+import { List } from '../../layout/List';
 
 export const CategoryList: React.FunctionComponent<{
   categories: RootCategoryFragment[];
@@ -11,7 +10,7 @@ export const CategoryList: React.FunctionComponent<{
   onClick: (category: RootCategoryFragment) => void;
 }> = ({ categories, currentCategoryId, onClick }) => {
   return (
-    <Box onClick={stopPropagation}>
+    <List>
       {categories.map((category) => {
         return (
           <CategoryListItem
@@ -22,6 +21,6 @@ export const CategoryList: React.FunctionComponent<{
           />
         );
       })}
-    </Box>
+    </List>
   );
 };
