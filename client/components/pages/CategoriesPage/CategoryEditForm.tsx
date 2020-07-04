@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button, Flex, Box } from 'rebass';
-import { Input } from '@rebass/forms';
-import { stopPropagation } from '../../../handlers/stopPropagation';
-import { preventDefault } from '../../../handlers/preventDefault';
+import {
+  EditFormAction,
+  EditForm,
+  EditFormInputField,
+  EditFormActionsField,
+} from '../../layout/EditForm';
 
 export const CategoryEditForm: React.FunctionComponent<{
   name: string;
@@ -19,46 +21,17 @@ export const CategoryEditForm: React.FunctionComponent<{
   onUpdateOneCategory,
   onDeleteOneCategory,
 }) => {
+  const actions: EditFormAction[] = isSelected
+    ? [
+        { label: 'Delete', onClick: onDeleteOneCategory },
+        { label: 'Update', onClick: onUpdateOneCategory },
+      ]
+    : [{ label: 'Create', onClick: onCreateOneCategory }];
+
   return (
-    <Box
-      sx={{ boxShadow: 1, p: 2 }}
-      as="form"
-      onSubmit={preventDefault}
-      onClick={stopPropagation}
-    >
-      <Flex alignItems="center">
-        <Input value={name} onChange={onChangeName} />
-      </Flex>
-      <Flex mt={2} alignItems="center" justifyContent="space-between">
-        {isSelected ? (
-          <>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onDeleteOneCategory}
-            >
-              Delete
-            </Button>
-            <Button
-              type="submit"
-              variant="outline"
-              sx={{ flexGrow: 1, ml: 2 }}
-              onClick={onUpdateOneCategory}
-            >
-              Update
-            </Button>
-          </>
-        ) : (
-          <Button
-            type="submit"
-            variant="primary"
-            sx={{ flexGrow: 1 }}
-            onClick={onCreateOneCategory}
-          >
-            Create
-          </Button>
-        )}
-      </Flex>
-    </Box>
+    <EditForm>
+      <EditFormInputField isFirst value={name} onChange={onChangeName} />
+      <EditFormActionsField actions={actions} />
+    </EditForm>
   );
 };
