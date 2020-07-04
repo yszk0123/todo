@@ -5,6 +5,9 @@ import { Flex, Text, Box } from 'rebass';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 import { Badge } from './Badge';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { ListItem } from '../../layout/List';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
@@ -54,6 +57,40 @@ const CustomizedLinkify: React.FunctionComponent<{ text: string }> = React.memo(
   }
 );
 
+const TodoListStatus: React.FunctionComponent<{ status: TodoStatus }> = ({
+  status,
+}) => {
+  return (
+    <Flex
+      width={16}
+      height={16}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ border: '2px solid gray' }}
+    >
+      <Text>{printTodoStatus(status)}</Text>
+    </Flex>
+  );
+};
+
+const TodoListTags: React.FunctionComponent<{
+  tags: CategoryTagFragment[];
+}> = ({ tags }) => {
+  if (tags.length === 0) {
+    return null;
+  }
+
+  return (
+    <Flex justifyContent="flex-end">
+      {tags.map((tag, i) => (
+        <Box key={tag.id} display="inline-block" ml={i === 0 ? 0 : 1}>
+          <Badge key={tag.id} color={tag.color} text={tag.name} />
+        </Box>
+      ))}
+    </Flex>
+  );
+};
+
 export const TodoListItem: React.FunctionComponent<{
   isActive: boolean;
   todo: CategoryTodoFragment;
@@ -63,46 +100,14 @@ export const TodoListItem: React.FunctionComponent<{
     onClick(todo);
   }, [todo, onClick]);
 
-  const isArchived = todo.archivedAt !== null;
-
   return (
-    <Flex
-      flex="1 1 auto"
-      alignItems="center"
-      p={2}
-      bg={isActive ? 'highlight' : undefined}
-      color={isArchived ? 'lightgray' : isActive ? 'highlightText' : undefined}
-      sx={{ cursor: 'pointer' }}
+    <ListItem
+      isActive={isActive}
+      item={todo}
       onClick={handleClick}
-    >
-      <Flex
-        width={16}
-        height={16}
-        alignItems="center"
-        justifyContent="center"
-        sx={{ border: '2px solid gray', flexShrink: 0 }}
-      >
-        <Text>{printTodoStatus(todo.status)}</Text>
-      </Flex>
-      <Text sx={{ ml: 2, flexGrow: 1 }}>
-        <CustomizedLinkify text={todo.text} />
-      </Text>
-      {todo.tags.length > 0 && (
-        <Box
-          ml={2}
-          sx={{
-            flexShrink: 0,
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          {todo.tags.map((tag) => (
-            <Box key={tag.id} display="inline-block" ml={1}>
-              <Badge key={tag.id} color={tag.color} text={tag.name} />
-            </Box>
-          ))}
-        </Box>
-      )}
-    </Flex>
+      mainElement={<CustomizedLinkify text={todo.text} />}
+      leftElement={<TodoListStatus status={todo.status} />}
+      rightElement={<TodoListTags tags={todo.tags} />}
+    ></ListItem>
   );
 };
