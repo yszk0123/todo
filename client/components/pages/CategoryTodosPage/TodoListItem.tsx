@@ -28,6 +28,16 @@ function linkifyTextDecorator(text: string): string {
       '$1 #$2'
     );
 
+  const splittedText = simplifiedText.split('/');
+  if (splittedText.length >= 5) {
+    return [
+      splittedText[0],
+      splittedText[1],
+      '...',
+      splittedText[splittedText.length - 1],
+    ].join('/');
+  }
+
   return simplifiedText;
 }
 
