@@ -1,10 +1,5 @@
 import { schema } from 'nexus';
 
-// FIXME: Workaround
-function castOriginResolve(input: unknown): any {
-  return input as any;
-}
-
 schema.inputObjectType({
   name: 'DeleteTodoInput',
   definition(t) {
@@ -26,25 +21,19 @@ schema.inputObjectType({
 schema.mutationType({
   definition(t) {
     t.crud.createOneCategory({
-      resolve(root, args, ctx, info, originResolve) {
+      authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const ownerId = args.data.owner.connect?.id;
-
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return originResolve(root, args, ctx, info);
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
     t.crud.updateOneCategory({
-      async resolve(root, args, ctx, info, originResolve) {
+      async authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const categoryId = args.where.id;
         if (categoryId == null) {
-          throw new Error('Invalid input');
+          return false;
         }
 
         const category = await ctx.db.category.findOne({
@@ -52,21 +41,16 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = category?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return castOriginResolve(originResolve(root, args, ctx, info));
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
     t.crud.deleteOneCategory({
-      async resolve(root, args, ctx, info, originResolve) {
+      async authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const categoryId = args.where.id;
         if (categoryId == null) {
-          throw new Error('Invalid input');
+          return false;
         }
 
         const category = await ctx.db.category.findOne({
@@ -74,26 +58,15 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = category?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return castOriginResolve(originResolve(root, args, ctx, info));
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
     t.crud.createOneTodo({
-      resolve(root, args, ctx, info, originResolve) {
+      authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const ownerId = args.data.owner.connect?.id;
-
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return originResolve(root, args, ctx, info);
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
@@ -102,7 +75,7 @@ schema.mutationType({
       args: {
         data: schema.arg({ type: 'DeleteTodoInput', required: true }),
       },
-      async resolve(_root, args, ctx, _info) {
+      async authorize(_root, args, ctx) {
         const todoId = args.data.id;
         const userId = ctx.user?.id;
 
@@ -111,10 +84,10 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = todo?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
+        return !!userId && !!ownerId && userId === ownerId;
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoId = args.data.id;
 
         const deletedTodo = await ctx.db.todo.delete({ where: { id: todoId } });
         return deletedTodo;
@@ -126,23 +99,23 @@ schema.mutationType({
       args: {
         data: schema.arg({ type: 'UpdateTodoInput', required: true }),
       },
-      async resolve(_root, args, ctx, _info) {
+      async authorize(_root, args, ctx) {
         const todoId = args.data.id;
-        const text = args.data.text ?? undefined;
         const userId = ctx.user?.id;
-        const tags = (args.data.tags ?? []).map((id) => ({ id }));
-        const status = args.data.status ?? undefined;
-        const archivedAt = args.data.archivedAt ?? undefined;
 
         const todo = await ctx.db.todo.findOne({
           where: { id: todoId },
           select: { ownerId: true },
         });
         const ownerId = todo?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
+        return !!userId && !!ownerId && userId === ownerId;
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoId = args.data.id;
+        const text = args.data.text ?? undefined;
+        const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const status = args.data.status ?? undefined;
+        const archivedAt = args.data.archivedAt ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
           data: { text, tags: { set: tags }, status, archivedAt },
@@ -153,25 +126,19 @@ schema.mutationType({
     });
 
     t.crud.createOneTag({
-      resolve(root, args, ctx, info, originResolve) {
+      authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const ownerId = args.data.owner.connect?.id;
-
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return originResolve(root, args, ctx, info);
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
     t.crud.updateOneTag({
-      async resolve(root, args, ctx, info, originResolve) {
+      async authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const tagId = args.where.id;
         if (tagId == null) {
-          throw new Error('Invalid input');
+          return false;
         }
 
         const tag = await ctx.db.tag.findOne({
@@ -179,21 +146,16 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = tag?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return castOriginResolve(originResolve(root, args, ctx, info));
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
 
     t.crud.deleteOneTag({
-      async resolve(root, args, ctx, info, originResolve) {
+      async authorize(_root, args, ctx) {
         const userId = ctx.user?.id;
         const tagId = args.where.id;
         if (tagId == null) {
-          throw new Error('Invalid input');
+          return false;
         }
 
         const tag = await ctx.db.tag.findOne({
@@ -201,12 +163,7 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = tag?.ownerId;
-        const authorized = !!userId && !!ownerId && userId === ownerId;
-        if (!authorized) {
-          throw new Error('Unauthorized');
-        }
-
-        return castOriginResolve(originResolve(root, args, ctx, info));
+        return !!userId && !!ownerId && userId === ownerId;
       },
     });
   },
