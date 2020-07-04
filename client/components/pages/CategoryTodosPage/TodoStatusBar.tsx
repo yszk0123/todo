@@ -10,7 +10,15 @@ export const TodoStatusBar: React.FunctionComponent<{
 }> = ({ categoryId, categoryName, count }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }} fontSize={2}>
-      <GoToReportLink categoryId={categoryId} />
+      <Flex
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          color: 'gray',
+        }}
+      >
+        <GoToReportLink categoryId={categoryId} />
+      </Flex>
       <Flex
         sx={{
           flexGrow: 1,
