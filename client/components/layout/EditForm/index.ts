@@ -4,3 +4,4 @@ export type { EditFormAction } from './EditFormActionsField';
 export { EditFormChecklistField } from './EditFormChecklistField';
 export { EditFormInputField } from './EditFormInputField';
 export { EditFormRadioField } from './EditFormRadioField';
+export { EditFormSelectField } from './EditFormSelectField';

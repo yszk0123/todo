@@ -21,25 +21,6 @@ import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ID } from '../../../viewModels/ID';
 
-function parseColorString(colorString: string): Color {
-  switch (colorString) {
-    case Color.Default:
-      return Color.Default;
-    case Color.Blue:
-      return Color.Blue;
-    case Color.Green:
-      return Color.Green;
-    case Color.Purple:
-      return Color.Purple;
-    case Color.Red:
-      return Color.Red;
-    case Color.Yellow:
-      return Color.Yellow;
-    default:
-      throw new Error('Unknown color');
-  }
-}
-
 export const TagsPage: React.FunctionComponent<{}> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
@@ -140,14 +121,9 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     []
   );
 
-  const handleChangeColor = React.useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const colorString = event.currentTarget.value;
-      const color = parseColorString(colorString);
-      setColor(color);
-    },
-    []
-  );
+  const handleChangeColor = React.useCallback((color: Color) => {
+    setColor(color);
+  }, []);
 
   if (!data) {
     return loading ? <LoadingIndicator /> : null;

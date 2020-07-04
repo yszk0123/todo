@@ -1,8 +1,5 @@
 import React from 'react';
-import { Button, Flex, Box } from 'rebass';
-import { Input, Select } from '@rebass/forms';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { CheckboxList } from '../../molecules/CheckboxList';
 import { ColorBox } from '../CategoryTodosPage/ColorBox';
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import {
@@ -11,7 +8,9 @@ import {
   EditFormInputField,
   EditFormActionsField,
   EditFormAction,
+  EditFormSelectField,
 } from '../../layout/EditForm';
+import { parseColorString } from '../../helpers/parseColorString';
 
 const colors = Object.values(Color);
 
@@ -22,7 +21,7 @@ export const TagEditForm: React.FunctionComponent<{
   categories: CategoryVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeColor: React.ChangeEventHandler<HTMLSelectElement>;
+  onChangeColor: (color: Color) => void;
   onCreateOneTag: () => void;
   onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;
@@ -56,18 +55,13 @@ export const TagEditForm: React.FunctionComponent<{
         onClick={onToggleCategory}
       />
       <EditFormInputField value={name} onChange={onChangeName} />
-      <Flex alignItems="center" mt={2}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Select value={color} onChange={onChangeColor}>
-            {colors.map((c) => {
-              return <option key={c}>{c}</option>;
-            })}
-          </Select>
-        </Box>
-        <Box ml={2}>
-          <ColorBox color={color} />
-        </Box>
-      </Flex>
+      <EditFormSelectField
+        selectedItem={color}
+        items={colors}
+        onChange={onChangeColor}
+        parseString={parseColorString}
+        rightElement={<ColorBox color={color} />}
+      />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );
