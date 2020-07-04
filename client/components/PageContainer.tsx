@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSession } from 'next-auth/client';
-import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
-import { Page } from '../layout/Page';
+import { useIndexPageQuery } from '../graphql/__generated__/IndexPage.graphql';
+import { Page } from './layout/Page';
 
-export const Gate: React.FunctionComponent<{}> = ({ children }) => {
+export const PageContainer: React.FunctionComponent<{}> = ({ children }) => {
   const [session, isSessionLoading] = useSession();
   const { loading: isQueryLoading, data } = useIndexPageQuery();
   const hasSession = !!session;

@@ -3,7 +3,7 @@ import { Provider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from '../client/theme/theme';
-import { Gate } from '../client/components/navigation/Gate';
+import { PageContainer } from '../client/components/PageContainer';
 import { createApolloClient } from '../client/apollo/createApolloClient';
 
 import 'normalize.css';
@@ -21,9 +21,9 @@ const AppHead = () => {
 
 const AppBody = ({ Component, pageProps }) => {
   return (
-    <Gate>
+    <PageContainer>
       <Component {...pageProps} />
-    </Gate>
+    </PageContainer>
   );
 };
 
