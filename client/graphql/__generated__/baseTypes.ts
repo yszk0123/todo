@@ -361,6 +361,10 @@ export type DeleteTodoInput = {
   id: Scalars['ID'];
 };
 
+export type DeleteTodosByIdInput = {
+  ids: Array<Scalars['ID']>;
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -370,6 +374,7 @@ export type Mutation = {
   deleteOneCategory?: Maybe<Category>;
   deleteOneTag?: Maybe<Tag>;
   deleteTodo?: Maybe<Todo>;
+  deleteTodosById?: Maybe<Array<Scalars['ID']>>;
   updateOneCategory?: Maybe<Category>;
   updateOneTag?: Maybe<Tag>;
   updateTodo?: Maybe<Todo>;
@@ -403,6 +408,11 @@ export type MutationDeleteOneTagArgs = {
 
 export type MutationDeleteTodoArgs = {
   data: DeleteTodoInput;
+};
+
+
+export type MutationDeleteTodosByIdArgs = {
+  data: DeleteTodosByIdInput;
 };
 
 

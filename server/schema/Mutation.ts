@@ -8,6 +8,13 @@ schema.inputObjectType({
 });
 
 schema.inputObjectType({
+  name: 'DeleteTodosByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
+  },
+});
+
+schema.inputObjectType({
   name: 'UpdateTodoInput',
   definition(t) {
     t.id('id', { required: true });
@@ -91,6 +98,30 @@ schema.mutationType({
 
         const deletedTodo = await ctx.db.todo.delete({ where: { id: todoId } });
         return deletedTodo;
+      },
+    });
+
+    t.list.field('deleteTodosById', {
+      type: 'ID',
+      args: {
+        data: schema.arg({ type: 'DeleteTodosByIdInput', required: true }),
+      },
+      async authorize(_root, args, ctx) {
+        const todoIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const todo = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && todo.every((e) => e.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoIds = args.data.ids;
+        await ctx.db.todo.deleteMany({
+          where: { id: { in: todoIds } },
+        });
+        return todoIds;
       },
     });
 
