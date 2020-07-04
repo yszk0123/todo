@@ -11,7 +11,7 @@ export type IndexPageQuery = (
   { __typename?: 'Query' }
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
-    & Pick<Types.User, 'id' | 'name'>
+    & Pick<Types.User, 'id' | 'name' | 'avatarUrl'>
   )> }
 );
 
@@ -21,6 +21,7 @@ export const IndexPageDocument = gql`
   me {
     id
     name
+    avatarUrl
   }
 }
     `;

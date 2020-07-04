@@ -977,6 +977,7 @@ export type UpdateTodoInput = {
 
 export type User = {
   __typename?: 'User';
+  avatarUrl?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;

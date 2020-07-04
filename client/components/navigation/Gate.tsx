@@ -15,10 +15,15 @@ export const Gate: React.FunctionComponent<{}> = ({ children }) => {
   }
 
   const username = data?.me?.name ?? null;
+  const avatarUrl = data?.me?.avatarUrl ?? null;
 
   return (
     <div>
-      <Navigation hasSession={hasSession} username={username} />
+      <Navigation
+        hasSession={hasSession}
+        username={username}
+        avatarUrl={avatarUrl}
+      />
       {hasSession && children}
     </div>
   );

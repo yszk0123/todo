@@ -1,11 +1,13 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Link, Flex, Text, Box } from 'rebass';
+import { Avatar } from './Avatar';
 
 export const Navigation: React.FunctionComponent<{
   hasSession: boolean;
   username: string | null;
-}> = ({ hasSession, username }) => {
+  avatarUrl: string | null;
+}> = ({ hasSession, username, avatarUrl }) => {
   return (
     <Flex px={2} color="white" bg="black" alignItems="center">
       <NextLink href="/" passHref>
@@ -25,6 +27,7 @@ export const Navigation: React.FunctionComponent<{
       </Box>
       <Box mx="auto" />
       {username && <Text p={2}>{username}</Text>}
+      {avatarUrl && <Avatar url={avatarUrl} alt={username || 'avatar'} />}
       <Box p={2}>
         {hasSession ? (
           <NextLink href="/api/auth/signout" passHref>

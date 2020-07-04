@@ -864,6 +864,7 @@ input UpdateTodoInput {
 }
 
 type User {
+  avatarUrl: String
   email: String!
   id: String!
   name: String
