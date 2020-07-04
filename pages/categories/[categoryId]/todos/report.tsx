@@ -4,7 +4,7 @@ import { CategoryTodosReportPage } from '../../../../client/components/pages/Cat
 
 export default () => {
   const router = useRouter();
-  const categoryId = Number(router.query.categoryId);
+  const categoryId = String(router.query.categoryId);
 
   return <CategoryTodosReportPage categoryId={categoryId} />;
 };

@@ -15,8 +15,7 @@ export const ContentWrapper: React.FunctionComponent<Props> = ({
       sx={{
         width: '100vw',
         mx: 'auto',
-        pt: 2,
-        px: 2,
+        p: 2,
         overflowX: 'hidden',
       }}
     >

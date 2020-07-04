@@ -1,16 +1,19 @@
 import React from 'react';
 import { Box } from 'rebass';
-import { defaultTagColor } from '../../../theme/defaultTagColor';
+import { getColorCode } from '../../helpers/getColorCode';
+import { Color } from '../../../graphql/__generated__/baseTypes';
 
 export const Badge: React.FunctionComponent<{
   text: string;
-  color: string | null | undefined;
+  color: Color;
 }> = ({ text, color }) => {
+  const colorCode = getColorCode(color);
+
   return (
     <Box
       sx={{
         color: 'white',
-        bg: color ?? defaultTagColor,
+        bg: colorCode,
         display: 'inline-block',
         whiteSpace: 'nowrap',
         px: 2,

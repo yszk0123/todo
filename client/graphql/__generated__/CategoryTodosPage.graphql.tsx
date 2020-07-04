@@ -9,7 +9,7 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type CategoryTodosPageQueryVariables = Types.Exact<{
-  categoryId: Types.Scalars['Int'];
+  categoryId: Types.Scalars['ID'];
 }>;
 
 
@@ -72,7 +72,7 @@ export type UpdateTodoMutation = (
 
 
 export const CategoryTodosPageDocument = gql`
-    query CategoryTodosPage($categoryId: Int!) {
+    query CategoryTodosPage($categoryId: ID!) {
   me {
     id
   }

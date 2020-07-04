@@ -11,51 +11,61 @@ generator client {
 }
 
 model User {
-  id         Int        @default(autoincrement()) @id
-  createdAt  DateTime   @default(now())
-  name       String
+  id         String     @default(uuid()) @id
   email      String     @unique
-  role       Role       @default(USER)
+  avatarUrl  String?
+  name       String?
+  accounts   Account[]
   categories Category[]
   todos      Todo[]
   tags       Tag[]
+  createdAt  DateTime   @default(now())
+}
+
+model Account {
+  id                 String    @default(uuid()) @id
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  providerId         String
+  providerType       String
+  providerAccountId  String    @unique
+  refreshToken       String?
+  accessToken        String
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
 }
 
 model Category {
-  id        Int      @default(autoincrement()) @id
+  id        String   @default(uuid()) @id
   createdAt DateTime @default(now())
   name      String
   owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   Int
+  ownerId   String
   todos     Todo[]
   tags      Tag[]
 }
 
 model Todo {
-  id         Int        @default(autoincrement()) @id
+  id         String     @default(uuid()) @id
   createdAt  DateTime   @default(now())
   text       String
-  author     User       @relation(fields: [authorId], references: [id])
-  authorId   Int
+  owner      User       @relation(fields: [ownerId], references: [id])
+  ownerId    String
   category   Category   @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  categoryId String
   tags       Tag[]
   status     TodoStatus @default(TODO)
+  archivedAt DateTime?
 }
 
 model Tag {
-  id         Int        @default(autoincrement()) @id
+  id         String     @default(uuid()) @id
   createdAt  DateTime   @default(now())
   name       String
   owner      User       @relation(fields: [ownerId], references: [id])
-  ownerId    Int
+  ownerId    String
   categories Category[] @relation(references: [id])
   todos      Todo[]     @relation(references: [id])
-}
-
-enum Role {
-  USER
-  ADMIN
 }
 
 enum TodoStatus {

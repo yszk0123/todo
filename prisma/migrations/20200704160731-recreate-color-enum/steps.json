@@ -3,19 +3,21 @@
   "steps": [
     {
       "tag": "CreateEnum",
-      "enum": "TodoStatus",
+      "enum": "Color",
       "values": [
-        "TODO",
-        "IN_PROGRESS",
-        "WAITING",
-        "DONE"
+        "DEFAULT",
+        "RED",
+        "PURPLE",
+        "BLUE",
+        "GREEN",
+        "YELLOW"
       ]
     },
     {
       "tag": "CreateField",
-      "model": "Todo",
-      "field": "status",
-      "type": "TodoStatus",
+      "model": "Tag",
+      "field": "color",
+      "type": "Color",
       "arity": "Required"
     },
     {
@@ -23,8 +25,8 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Todo",
-          "field": "status"
+          "model": "Tag",
+          "field": "color"
         },
         "directive": "default"
       }
@@ -35,13 +37,13 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Todo",
-          "field": "status"
+          "model": "Tag",
+          "field": "color"
         },
         "directive": "default"
       },
       "argument": "",
-      "value": "TODO"
+      "value": "DEFAULT"
     }
   ]
 }

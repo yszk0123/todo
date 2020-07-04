@@ -16,6 +16,7 @@ import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { CategoryForm } from './CategoryForm';
 import { CategoryList } from './CategoryList';
 import { CategoryCount } from './CategoryCount';
+import { ID } from '../../../viewModels/ID';
 
 export const CategoriesPage: React.FunctionComponent<{}> = () => {
   const { data, loading, refetch } = useCategoriesPageQuery({
@@ -34,9 +35,9 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
     onCompleted: handleCompleted,
   });
   const [name, setName] = React.useState('');
-  const [currentCategoryId, setCurrentCategoryId] = React.useState<
-    number | null
-  >(null);
+  const [currentCategoryId, setCurrentCategoryId] = React.useState<ID | null>(
+    null
+  );
   const isSelected = !!currentCategoryId;
 
   const deselect = React.useCallback(() => {
