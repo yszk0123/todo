@@ -2,6 +2,7 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 
+import { simplifyURL } from '../../helpers/simplifyURL';
 import { ListText } from '../../layout/List';
 
 function linkifyComponentDecorator(
@@ -17,26 +18,7 @@ function linkifyComponentDecorator(
 }
 
 function linkifyTextDecorator(text: string): string {
-  const simplifiedText = text
-    .replace(/^https?:\/\//, '')
-    .replace(/\?.*$/, '')
-    .replace(/#.*$/, '')
-    .replace(
-      /^github.com\/[^/]+\/([^/]+)\/(?:pull|issue)\/([0-9]+)$/,
-      '$1 #$2'
-    );
-
-  const splittedText = simplifiedText.split('/');
-  if (splittedText.length >= 5) {
-    return [
-      splittedText[0],
-      splittedText[1],
-      '...',
-      splittedText[splittedText.length - 1],
-    ].join('/');
-  }
-
-  return simplifiedText;
+  return simplifyURL(text);
 }
 
 export const TodoListText: React.FunctionComponent<{
