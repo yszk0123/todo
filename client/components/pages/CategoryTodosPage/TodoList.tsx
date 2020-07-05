@@ -6,18 +6,22 @@ import { ID } from '../../../viewModels/ID';
 
 export const TodoList: React.FunctionComponent<{
   todos: CategoryTodoFragment[];
-  currentTodoId: ID | null;
+  selectedTodoIds: ID[];
   onClick: (item: CategoryTodoFragment) => void;
-}> = ({ todos, currentTodoId, onClick }) => {
+  onClickToggle: (item: CategoryTodoFragment) => void;
+}> = ({ todos, selectedTodoIds, onClick, onClickToggle }) => {
   return (
     <List>
       {todos.map((todo) => {
+        const isSelected = selectedTodoIds.includes(todo.id);
+
         return (
           <TodoListItem
             key={todo.id}
             todo={todo}
-            isActive={todo.id === currentTodoId}
+            isSelected={isSelected}
             onClick={onClick}
+            onClickToggle={onClickToggle}
           />
         );
       })}

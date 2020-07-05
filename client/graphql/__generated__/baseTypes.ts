@@ -361,6 +361,10 @@ export type DeleteTodoInput = {
   id: Scalars['ID'];
 };
 
+export type DeleteTodosByIdInput = {
+  ids: Array<Scalars['ID']>;
+};
+
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -370,9 +374,11 @@ export type Mutation = {
   deleteOneCategory?: Maybe<Category>;
   deleteOneTag?: Maybe<Tag>;
   deleteTodo?: Maybe<Todo>;
+  deleteTodosById?: Maybe<Array<Scalars['ID']>>;
   updateOneCategory?: Maybe<Category>;
   updateOneTag?: Maybe<Tag>;
   updateTodo?: Maybe<Todo>;
+  updateTodosById?: Maybe<Array<Todo>>;
 };
 
 
@@ -406,6 +412,11 @@ export type MutationDeleteTodoArgs = {
 };
 
 
+export type MutationDeleteTodosByIdArgs = {
+  data: DeleteTodosByIdInput;
+};
+
+
 export type MutationUpdateOneCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
@@ -420,6 +431,11 @@ export type MutationUpdateOneTagArgs = {
 
 export type MutationUpdateTodoArgs = {
   data: UpdateTodoInput;
+};
+
+
+export type MutationUpdateTodosByIdArgs = {
+  data: UpdateTodosByIdInput;
 };
 
 export type NullableDateTimeFilter = {
@@ -979,6 +995,14 @@ export type TodoWhereUniqueInput = {
 export type UpdateTodoInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
+  status?: Maybe<TodoStatus>;
+  tags?: Maybe<Array<Scalars['ID']>>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type UpdateTodosByIdInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  ids: Array<Scalars['ID']>;
   status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['ID']>>;
   text?: Maybe<Scalars['String']>;

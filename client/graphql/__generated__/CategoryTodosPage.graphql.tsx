@@ -70,6 +70,29 @@ export type UpdateTodoMutation = (
   )> }
 );
 
+export type DeleteTodosByIdMutationVariables = Types.Exact<{
+  input: Types.DeleteTodosByIdInput;
+}>;
+
+
+export type DeleteTodosByIdMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Types.Mutation, 'deleteTodosById'>
+);
+
+export type UpdateTodosByIdMutationVariables = Types.Exact<{
+  input: Types.UpdateTodosByIdInput;
+}>;
+
+
+export type UpdateTodosByIdMutation = (
+  { __typename?: 'Mutation' }
+  & { updateTodosById?: Types.Maybe<Array<(
+    { __typename?: 'Todo' }
+    & CategoryTodoFragment
+  )>> }
+);
+
 
 export const CategoryTodosPageDocument = gql`
     query CategoryTodosPage($categoryId: ID!) {
@@ -215,3 +238,65 @@ export function useUpdateTodoMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type UpdateTodoMutationHookResult = ReturnType<typeof useUpdateTodoMutation>;
 export type UpdateTodoMutationResult = ApolloReactCommon.MutationResult<UpdateTodoMutation>;
 export type UpdateTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateTodoMutation, UpdateTodoMutationVariables>;
+export const DeleteTodosByIdDocument = gql`
+    mutation DeleteTodosById($input: DeleteTodosByIdInput!) {
+  deleteTodosById(data: $input)
+}
+    `;
+export type DeleteTodosByIdMutationFn = ApolloReactCommon.MutationFunction<DeleteTodosByIdMutation, DeleteTodosByIdMutationVariables>;
+
+/**
+ * __useDeleteTodosByIdMutation__
+ *
+ * To run a mutation, you first call `useDeleteTodosByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTodosByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTodosByIdMutation, { data, loading, error }] = useDeleteTodosByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteTodosByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteTodosByIdMutation, DeleteTodosByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteTodosByIdMutation, DeleteTodosByIdMutationVariables>(DeleteTodosByIdDocument, baseOptions);
+      }
+export type DeleteTodosByIdMutationHookResult = ReturnType<typeof useDeleteTodosByIdMutation>;
+export type DeleteTodosByIdMutationResult = ApolloReactCommon.MutationResult<DeleteTodosByIdMutation>;
+export type DeleteTodosByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteTodosByIdMutation, DeleteTodosByIdMutationVariables>;
+export const UpdateTodosByIdDocument = gql`
+    mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
+  updateTodosById(data: $input) {
+    ...CategoryTodo
+  }
+}
+    ${CategoryTodoFragmentDoc}`;
+export type UpdateTodosByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>;
+
+/**
+ * __useUpdateTodosByIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateTodosByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTodosByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTodosByIdMutation, { data, loading, error }] = useUpdateTodosByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateTodosByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>(UpdateTodosByIdDocument, baseOptions);
+      }
+export type UpdateTodosByIdMutationHookResult = ReturnType<typeof useUpdateTodosByIdMutation>;
+export type UpdateTodosByIdMutationResult = ApolloReactCommon.MutationResult<UpdateTodosByIdMutation>;
+export type UpdateTodosByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>;

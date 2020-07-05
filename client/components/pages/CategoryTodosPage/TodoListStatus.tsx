@@ -13,6 +13,7 @@ export const TodoListStatus: React.FunctionComponent<{
       height={16}
       alignItems="center"
       justifyContent="center"
+      color="gray"
       sx={{ border: '2px solid gray' }}
     >
       <Text>{printTodoStatus(status)}</Text>

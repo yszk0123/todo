@@ -8,9 +8,27 @@ schema.inputObjectType({
 });
 
 schema.inputObjectType({
+  name: 'DeleteTodosByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
+  },
+});
+
+schema.inputObjectType({
   name: 'UpdateTodoInput',
   definition(t) {
     t.id('id', { required: true });
+    t.string('text', {});
+    t.list.id('tags', {});
+    t.field('status', { type: 'TodoStatus' });
+    t.field('archivedAt', { type: 'DateTime' });
+  },
+});
+
+schema.inputObjectType({
+  name: 'UpdateTodosByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
     t.string('text', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
@@ -94,6 +112,30 @@ schema.mutationType({
       },
     });
 
+    t.list.field('deleteTodosById', {
+      type: 'ID',
+      args: {
+        data: schema.arg({ type: 'DeleteTodosByIdInput', required: true }),
+      },
+      async authorize(_root, args, ctx) {
+        const todoIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const todo = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && todo.every((e) => e.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoIds = args.data.ids;
+        await ctx.db.todo.deleteMany({
+          where: { id: { in: todoIds } },
+        });
+        return todoIds;
+      },
+    });
+
     t.field('updateTodo', {
       type: 'Todo',
       args: {
@@ -114,14 +156,60 @@ schema.mutationType({
         const todoId = args.data.id;
         const text = args.data.text ?? undefined;
         const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
-          data: { text, tags: { set: tags }, status, archivedAt },
+          data: {
+            text,
+            tags: hasTags ? { set: tags } : undefined,
+            status,
+            archivedAt,
+          },
           where: { id: todoId },
         });
         return updatedTodo;
+      },
+    });
+
+    t.list.field('updateTodosById', {
+      type: 'Todo',
+      args: {
+        data: schema.arg({ type: 'UpdateTodosByIdInput', required: true }),
+      },
+      async authorize(_root, args, ctx) {
+        const todoIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const todo = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && todo.every((todo) => todo.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoIds = args.data.ids;
+        const text = args.data.text ?? undefined;
+        const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const hasTags = !!args.data.tags;
+        const status = args.data.status ?? undefined;
+        const archivedAt = args.data.archivedAt ?? undefined;
+
+        const updatedTodos = await Promise.all(
+          todoIds.map((todoId) =>
+            ctx.db.todo.update({
+              data: {
+                text,
+                tags: hasTags ? { set: tags } : undefined,
+                status,
+                archivedAt,
+              },
+              where: { id: todoId },
+            })
+          )
+        );
+        return updatedTodos;
       },
     });
 

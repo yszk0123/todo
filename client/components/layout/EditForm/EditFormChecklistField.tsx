@@ -7,15 +7,17 @@ export function EditFormChecklistField<T extends DisplayableVM>({
   items,
   checkedItems,
   onClick,
+  rightElement,
   isFirst = false,
 }: {
   items: T[];
   checkedItems: T[];
   onClick: (item: T) => void;
   isFirst?: boolean;
+  rightElement?: JSX.Element | null;
 }): JSX.Element {
   return (
-    <EditFormField isFirst={isFirst}>
+    <EditFormField isFirst={isFirst} rightElement={rightElement}>
       <Checklist items={items} checkedItems={checkedItems} onClick={onClick} />
     </EditFormField>
   );

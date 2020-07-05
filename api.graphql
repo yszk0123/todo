@@ -331,6 +331,10 @@ input DeleteTodoInput {
   id: ID!
 }
 
+input DeleteTodosByIdInput {
+  ids: [ID!]!
+}
+
 """
 The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -343,9 +347,11 @@ type Mutation {
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
   deleteOneTag(where: TagWhereUniqueInput!): Tag
   deleteTodo(data: DeleteTodoInput!): Todo
+  deleteTodosById(data: DeleteTodosByIdInput!): [ID!]
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateTodo(data: UpdateTodoInput!): Todo
+  updateTodosById(data: UpdateTodosByIdInput!): [Todo!]
 }
 
 input NullableDateTimeFilter {
@@ -867,6 +873,14 @@ input TodoWhereUniqueInput {
 input UpdateTodoInput {
   archivedAt: DateTime
   id: ID!
+  status: TodoStatus
+  tags: [ID!]
+  text: String
+}
+
+input UpdateTodosByIdInput {
+  archivedAt: DateTime
+  ids: [ID!]!
   status: TodoStatus
   tags: [ID!]
   text: String
