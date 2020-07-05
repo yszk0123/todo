@@ -52,6 +52,8 @@ schema.queryType({
         return ctx.db.checkpoint.findMany({
           where: {
             ownerId: ctx.user.id,
+            // FIXME: Set from client
+            archivedAt: { equals: null },
           },
         });
       },

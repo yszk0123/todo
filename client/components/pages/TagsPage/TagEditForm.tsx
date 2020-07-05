@@ -22,7 +22,7 @@ export const TagEditForm: React.FunctionComponent<{
   categories: CategoryVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeColor: (color: Color) => void;
+  onChangeColor: (color: Color | null) => void;
   onCreateOneTag: () => void;
   onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;

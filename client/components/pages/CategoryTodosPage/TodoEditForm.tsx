@@ -25,7 +25,7 @@ const statuses: TodoStatus[] = [
 const NoneForm: React.FunctionComponent<{
   text: string;
   tags: CategoryTagFragment[];
-  status: TodoStatus;
+  status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
   checkpoint: RootCheckpointFragment | null;
@@ -33,7 +33,7 @@ const NoneForm: React.FunctionComponent<{
   onCreateOneTodo: () => void;
   onToggleTag: (tag: CategoryTagFragment) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onSelectCheckpoint: (checkpoint: RootCheckpointFragment) => void;
+  onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
 }> = ({
   text,
   tags,
@@ -69,6 +69,7 @@ const NoneForm: React.FunctionComponent<{
       />
       <EditFormRadioField
         items={statuses}
+        rightElement={!status ? <Badge text="preserved" /> : null}
         selectedItem={status}
         onClick={onSelectStatus}
       />
@@ -88,7 +89,7 @@ const NoneForm: React.FunctionComponent<{
 const SingleForm: React.FunctionComponent<{
   text: string;
   tags: CategoryTagFragment[];
-  status: TodoStatus;
+  status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
   checkpoint: RootCheckpointFragment | null;
@@ -98,7 +99,7 @@ const SingleForm: React.FunctionComponent<{
   onArchiveTodo: () => void;
   onToggleTag: (tag: CategoryTagFragment) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onSelectCheckpoint: (checkpoint: RootCheckpointFragment) => void;
+  onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
 }> = ({
   text,
   tags,
@@ -138,6 +139,7 @@ const SingleForm: React.FunctionComponent<{
       />
       <EditFormRadioField
         items={statuses}
+        rightElement={!status ? <Badge text="preserved" /> : null}
         selectedItem={status}
         onClick={onSelectStatus}
       />
@@ -156,7 +158,7 @@ const SingleForm: React.FunctionComponent<{
 
 const MultiForm: React.FunctionComponent<{
   tags: CategoryTagFragment[];
-  status: TodoStatus;
+  status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
   checkpoint: RootCheckpointFragment | null;
@@ -166,7 +168,7 @@ const MultiForm: React.FunctionComponent<{
   onArchiveTodo: () => void;
   onToggleTag: (tag: CategoryTagFragment) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onSelectCheckpoint: (checkpoint: RootCheckpointFragment) => void;
+  onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
 }> = ({
   tags,
   status,
@@ -198,6 +200,7 @@ const MultiForm: React.FunctionComponent<{
       />
       <EditFormRadioField
         items={statuses}
+        rightElement={!status ? <Badge text="preserved" /> : null}
         selectedItem={status}
         onClick={onSelectStatus}
       />
@@ -226,7 +229,7 @@ export const TodoEditForm: React.FunctionComponent<{
   text: string;
   tags: CategoryTagFragment[];
   isTagsChanged: boolean;
-  status: TodoStatus;
+  status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   selectMode: SelectMode;
   checkpoints: RootCheckpointFragment[];
@@ -238,7 +241,7 @@ export const TodoEditForm: React.FunctionComponent<{
   onArchiveTodo: () => void;
   onToggleTag: (tag: CategoryTagFragment) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onSelectCheckpoint: (checkpoint: RootCheckpointFragment) => void;
+  onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
 }> = ({
   text,
   tags,

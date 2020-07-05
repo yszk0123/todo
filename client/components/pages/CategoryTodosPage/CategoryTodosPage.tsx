@@ -54,7 +54,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [text, setText] = React.useState('');
   const [selectedTodoIds, setSelectedTodoIds] = React.useState<ID[]>([]);
   const [tags, setTags] = React.useState<CategoryTagFragment[] | null>(null);
-  const [status, setStatus] = React.useState(TodoStatus.Todo);
+  const [status, setStatus] = React.useState<TodoStatus | null>(null);
   const [
     checkpoint,
     setCheckpoint,
@@ -64,7 +64,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     setSelectedTodoIds([]);
     setText('');
     setTags(null);
-    setStatus(TodoStatus.Todo);
+    setStatus(null);
     setCheckpoint(null);
   }, []);
 
@@ -91,7 +91,10 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         ? selectedTodoIds.filter((id) => id !== todo.id)
         : [...selectedTodoIds, todo.id];
       setSelectedTodoIds(newSelectedTodoIds);
-      setTags(newSelectedTodoIds.length === 1 ? todo.tags : null);
+      const isSingle = newSelectedTodoIds.length === 1;
+      setTags(isSingle ? todo.tags : null);
+      setStatus(isSingle ? todo.status : null);
+      setCheckpoint(isSingle ? todo.checkpoint ?? null : null);
     },
     [selectedTodoIds]
   );
@@ -142,8 +145,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       ids: selectedTodoIds,
       text: count === 1 ? text : undefined,
       tags: tagIds,
-      status,
-      checkpointId: checkpoint ? checkpoint.id : undefined,
+      status: status ? status : undefined,
+      checkpointId:
+        checkpoint === null ? null : checkpoint ? checkpoint.id : undefined,
     };
     updateTodosById({ variables: { input } });
   }, [selectedTodoIds, tags, text, status, checkpoint, updateTodosById]);
@@ -178,7 +182,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   }, []);
 
   const handleSelectCheckpoint = React.useCallback(
-    (checkpoint: RootCheckpointFragment) => {
+    (checkpoint: RootCheckpointFragment | null) => {
       setCheckpoint(checkpoint);
     },
     []

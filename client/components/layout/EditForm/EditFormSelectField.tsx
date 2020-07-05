@@ -4,6 +4,8 @@ import { Box } from 'rebass';
 
 import { EditFormField } from './EditFormField';
 
+const DEFAULT_VALUE = '__DEFAULT__';
+
 export function EditFormSelectField<T>({
   isFirst = false,
   selectedItem,
@@ -18,16 +20,14 @@ export function EditFormSelectField<T>({
   items: T[];
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
-  onChange: (item: T) => void;
+  onChange: (item: T | null) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const value = event.currentTarget.value;
-      const item = items.find((item) => getValue(item) === value);
-      if (item) {
-        onChange(item);
-      }
+      const item = items.find((item) => getValue(item) === value) ?? null;
+      onChange(item);
     },
     [getValue, items, onChange]
   );
@@ -39,6 +39,7 @@ export function EditFormSelectField<T>({
           value={selectedItem !== null ? getValue(selectedItem) : ''}
           onChange={handleChange}
         >
+          <option value={DEFAULT_VALUE}>-</option>
           {items.map((item) => {
             const value = getValue(item);
             return (

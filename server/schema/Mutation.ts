@@ -243,7 +243,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
-        const checkpointId = args.data.checkpointId ?? undefined;
+        const checkpointId = args.data.checkpointId;
 
         const updatedTodos = await Promise.all(
           todoIds.map((todoId) =>
@@ -253,9 +253,12 @@ schema.mutationType({
                 tags: hasTags ? { set: tags } : undefined,
                 status,
                 archivedAt,
-                checkpoint: checkpointId
-                  ? { connect: { id: checkpointId } }
-                  : undefined,
+                checkpoint:
+                  checkpointId === null
+                    ? { disconnect: true }
+                    : checkpointId
+                    ? { connect: { id: checkpointId } }
+                    : undefined,
               },
               where: { id: todoId },
             })
