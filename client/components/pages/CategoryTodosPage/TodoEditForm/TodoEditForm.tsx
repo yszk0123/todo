@@ -1,30 +1,22 @@
 import React from 'react';
 
-import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { Badge } from '../../layout/Badge';
+import { TodoStatus } from '../../../../graphql/__generated__/baseTypes';
+import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { RootCheckpointFragment } from '../../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { SelectMode } from '../../../../viewModels/SelectMode';
 import {
   EditForm,
   EditFormAction,
   EditFormActionsField,
-  EditFormChecklistField,
-  EditFormInputField,
-  EditFormRadioField,
-  EditFormSelectField,
-} from '../../layout/EditForm';
-
-const statuses: TodoStatus[] = [
-  TodoStatus.Todo,
-  TodoStatus.InProgress,
-  TodoStatus.Waiting,
-  TodoStatus.Done,
-];
+} from '../../../layout/EditForm';
+import { TodoEditFormCheckpointField } from './TodoEditFormCheckpointField';
+import { TodoEditFormStatusField } from './TodoEditFormStatusField';
+import { TodoEditFormTagsField } from './TodoEditFormTagsField';
+import { TodoEditFormTextField } from './TodoEditFormTextField';
 
 const NoneForm: React.FunctionComponent<{
   text: string;
-  tags: CategoryTagFragment[];
+  tags: CategoryTagFragment[] | null;
   status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
@@ -47,41 +39,27 @@ const NoneForm: React.FunctionComponent<{
   onSelectStatus,
   onSelectCheckpoint,
 }) => {
-  const handleChangeText = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const text = event.currentTarget.value;
-      onChangeText(text);
-    },
-    [onChangeText]
-  );
-
   const actions: EditFormAction[] = [
     { label: 'Create', onClick: onCreateOneTodo },
   ];
 
   return (
     <EditForm>
-      <EditFormChecklistField
-        checkedItems={tags}
-        isFirst
-        items={categoryTags}
-        onClick={onToggleTag}
+      <TodoEditFormTagsField
+        categoryTags={categoryTags}
+        tags={tags}
+        onToggleTag={onToggleTag}
       />
-      <EditFormRadioField
-        items={statuses}
-        rightElement={!status ? <Badge text="preserved" /> : null}
-        selectedItem={status}
-        onClick={onSelectStatus}
+      <TodoEditFormStatusField
+        status={status}
+        onSelectStatus={onSelectStatus}
       />
-      <EditFormSelectField
-        getDisplayName={getDisplayNameFromCheckpoint}
-        getValue={getValueFromCheckpoint}
-        items={checkpoints}
-        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
-        selectedItem={checkpoint}
-        onChange={onSelectCheckpoint}
+      <TodoEditFormCheckpointField
+        checkpoint={checkpoint}
+        checkpoints={checkpoints}
+        onSelectCheckpoint={onSelectCheckpoint}
       />
-      <EditFormInputField value={text} onChange={handleChangeText} />
+      <TodoEditFormTextField text={text} onChangeText={onChangeText} />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );
@@ -89,7 +67,7 @@ const NoneForm: React.FunctionComponent<{
 
 const SingleForm: React.FunctionComponent<{
   text: string;
-  tags: CategoryTagFragment[];
+  tags: CategoryTagFragment[] | null;
   status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
@@ -116,14 +94,6 @@ const SingleForm: React.FunctionComponent<{
   onSelectStatus,
   onSelectCheckpoint,
 }) => {
-  const handleChangeText = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const text = event.currentTarget.value;
-      onChangeText(text);
-    },
-    [onChangeText]
-  );
-
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
     { label: 'Archive', onClick: onArchiveTodo },
@@ -132,39 +102,32 @@ const SingleForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormChecklistField
-        checkedItems={tags}
-        isFirst
-        items={categoryTags}
-        onClick={onToggleTag}
+      <TodoEditFormTagsField
+        categoryTags={categoryTags}
+        tags={tags}
+        onToggleTag={onToggleTag}
       />
-      <EditFormRadioField
-        items={statuses}
-        rightElement={!status ? <Badge text="preserved" /> : null}
-        selectedItem={status}
-        onClick={onSelectStatus}
+      <TodoEditFormStatusField
+        status={status}
+        onSelectStatus={onSelectStatus}
       />
-      <EditFormSelectField
-        getDisplayName={getDisplayNameFromCheckpoint}
-        getValue={getValueFromCheckpoint}
-        items={checkpoints}
-        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
-        selectedItem={checkpoint}
-        onChange={onSelectCheckpoint}
+      <TodoEditFormCheckpointField
+        checkpoint={checkpoint}
+        checkpoints={checkpoints}
+        onSelectCheckpoint={onSelectCheckpoint}
       />
-      <EditFormInputField value={text} onChange={handleChangeText} />
+      <TodoEditFormTextField text={text} onChangeText={onChangeText} />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );
 };
 
 const MultiForm: React.FunctionComponent<{
-  tags: CategoryTagFragment[];
+  tags: CategoryTagFragment[] | null;
   status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   checkpoints: RootCheckpointFragment[];
   checkpoint: RootCheckpointFragment | null;
-  isTagsChanged: boolean;
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
   onArchiveTodo: () => void;
@@ -177,7 +140,6 @@ const MultiForm: React.FunctionComponent<{
   categoryTags,
   checkpoints,
   checkpoint,
-  isTagsChanged,
   onUpdateOneTodo,
   onDeleteOneTodo,
   onArchiveTodo,
@@ -193,45 +155,28 @@ const MultiForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormChecklistField
-        checkedItems={tags}
-        isFirst
-        items={categoryTags}
-        rightElement={!isTagsChanged ? <Badge text="preserved" /> : null}
-        onClick={onToggleTag}
+      <TodoEditFormTagsField
+        categoryTags={categoryTags}
+        tags={tags}
+        onToggleTag={onToggleTag}
       />
-      <EditFormRadioField
-        items={statuses}
-        rightElement={!status ? <Badge text="preserved" /> : null}
-        selectedItem={status}
-        onClick={onSelectStatus}
+      <TodoEditFormStatusField
+        status={status}
+        onSelectStatus={onSelectStatus}
       />
-      <EditFormSelectField
-        getDisplayName={getDisplayNameFromCheckpoint}
-        getValue={getValueFromCheckpoint}
-        items={checkpoints}
-        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
-        selectedItem={checkpoint}
-        onChange={onSelectCheckpoint}
+      <TodoEditFormCheckpointField
+        checkpoint={checkpoint}
+        checkpoints={checkpoints}
+        onSelectCheckpoint={onSelectCheckpoint}
       />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );
 };
 
-function getDisplayNameFromCheckpoint(
-  checkpoint: RootCheckpointFragment
-): string {
-  return checkpoint.name ?? '';
-}
-function getValueFromCheckpoint(checkpoint: RootCheckpointFragment): string {
-  return checkpoint.id;
-}
-
 export const TodoEditForm: React.FunctionComponent<{
   text: string;
-  tags: CategoryTagFragment[];
-  isTagsChanged: boolean;
+  tags: CategoryTagFragment[] | null;
   status: TodoStatus | null;
   categoryTags: CategoryTagFragment[];
   selectMode: SelectMode;
@@ -248,7 +193,6 @@ export const TodoEditForm: React.FunctionComponent<{
 }> = ({
   text,
   tags,
-  isTagsChanged,
   status,
   checkpoints,
   checkpoint,
@@ -306,7 +250,6 @@ export const TodoEditForm: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoint={checkpoint}
           checkpoints={checkpoints}
-          isTagsChanged={isTagsChanged}
           status={status}
           tags={tags}
           onArchiveTodo={onArchiveTodo}

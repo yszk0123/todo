@@ -244,10 +244,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         categoryTags={categoryTags}
         checkpoint={checkpoint}
         checkpoints={checkpointsWithDummy}
-        isTagsChanged={tags !== null}
         selectMode={selectMode}
         status={status}
-        tags={tags ?? []}
+        tags={tags}
         text={text}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
