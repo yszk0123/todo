@@ -20,6 +20,7 @@ import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/Ca
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { ID } from '../../../viewModels/ID';
 import Head from 'next/head';
+import { SelectMode } from '../../../viewModels/SelectMode';
 
 function first<T>(values: T[]): T | undefined {
   return values[0];
@@ -147,13 +148,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     [tags]
   );
 
-  const handleChangeText = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const text = event.currentTarget.value;
-      setText(text);
-    },
-    []
-  );
+  const handleChangeText = React.useCallback((text: string) => {
+    setText(text);
+  }, []);
 
   const handleSelectStatus = React.useCallback((status: TodoStatus) => {
     setStatus(status);
@@ -166,7 +163,13 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
-  const isSelected = selectedTodoIds.length > 0;
+  const count = selectedTodoIds.length;
+  const selectMode =
+    count === 0
+      ? SelectMode.NONE
+      : count === 1
+      ? SelectMode.SINGLE
+      : SelectMode.MULTI;
 
   return (
     <ContentWrapper onClick={handleDeselectTodo}>
@@ -187,12 +190,12 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm
-        name={text}
+        text={text}
         tags={tags}
         status={status}
         categoryTags={categoryTags}
-        isSelected={isSelected}
-        onChangeName={handleChangeText}
+        selectMode={selectMode}
+        onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
         onUpdateOneTodo={handleUpdateTodosById}
         onDeleteOneTodo={handleDeleteTodosById}
