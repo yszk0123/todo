@@ -156,11 +156,17 @@ schema.mutationType({
         const todoId = args.data.id;
         const text = args.data.text ?? undefined;
         const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
-          data: { text, tags: { set: tags }, status, archivedAt },
+          data: {
+            text,
+            tags: hasTags ? { set: tags } : undefined,
+            status,
+            archivedAt,
+          },
           where: { id: todoId },
         });
         return updatedTodo;
@@ -186,13 +192,19 @@ schema.mutationType({
         const todoIds = args.data.ids;
         const text = args.data.text ?? undefined;
         const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
 
         const updatedTodos = await Promise.all(
           todoIds.map((todoId) =>
             ctx.db.todo.update({
-              data: { text, tags: { set: tags }, status, archivedAt },
+              data: {
+                text,
+                tags: hasTags ? { set: tags } : undefined,
+                status,
+                archivedAt,
+              },
               where: { id: todoId },
             })
           )

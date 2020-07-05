@@ -51,13 +51,13 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   });
   const [text, setText] = React.useState('');
   const [selectedTodoIds, setSelectedTodoIds] = React.useState<ID[]>([]);
-  const [tags, setTags] = React.useState<CategoryTagFragment[]>([]);
+  const [tags, setTags] = React.useState<CategoryTagFragment[] | null>(null);
   const [status, setStatus] = React.useState(TodoStatus.Todo);
 
   const deselect = React.useCallback(() => {
     setSelectedTodoIds([]);
     setText('');
-    setTags([]);
+    setTags(null);
     setStatus(TodoStatus.Todo);
   }, []);
 
@@ -83,6 +83,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         ? selectedTodoIds.filter((id) => id !== todo.id)
         : [...selectedTodoIds, todo.id];
       setSelectedTodoIds(newSelectedTodoIds);
+      setTags(newSelectedTodoIds.length === 1 ? todo.tags : null);
     },
     [selectedTodoIds]
   );
@@ -93,11 +94,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
-      const newTags = tags.map((tag) => ({ id: tag.id }));
+      const newTags = tags?.map((tag) => ({ id: tag.id }));
       const input: TodoCreateInput = {
         owner: { connect: { id: data.me.id } },
         category: { connect: { id: categoryId } },
-        tags: { connect: newTags },
+        tags: newTags ? { connect: newTags } : undefined,
         text,
         status,
       };
@@ -122,7 +123,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     const input: UpdateTodosByIdInput = {
       ids: selectedTodoIds,
       text: count === 1 ? text : undefined,
-      tags: count === 1 ? tagIds : undefined,
+      tags: tagIds,
       status,
     };
     updateTodosById({ variables: { input } });
@@ -139,10 +140,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   const handleToggleTag = React.useCallback(
     (tag: CategoryTagFragment) => {
-      const has = tags.find((t) => t.id === tag.id);
+      const oldTags = tags ?? [];
+      const has = oldTags.find((t) => t.id === tag.id);
       const newTags = has
-        ? tags.filter((t) => t.id !== tag.id)
-        : [...tags, tag];
+        ? oldTags.filter((t) => t.id !== tag.id)
+        : [...oldTags, tag];
       setTags(newTags);
     },
     [tags]
@@ -191,7 +193,8 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       />
       <TodoEditForm
         text={text}
-        tags={tags}
+        tags={tags ?? []}
+        isTagsChanged={tags !== null}
         status={status}
         categoryTags={categoryTags}
         selectMode={selectMode}

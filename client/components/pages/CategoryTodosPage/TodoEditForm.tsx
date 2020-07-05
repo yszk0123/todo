@@ -10,6 +10,7 @@ import {
   EditFormRadioField,
 } from '../../layout/EditForm';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import { Badge } from '../../layout/Badge';
 
 const statuses: TodoStatus[] = [
   TodoStatus.Todo,
@@ -128,6 +129,7 @@ const MultiForm: React.FunctionComponent<{
   tags: CategoryTagFragment[];
   status: TodoStatus;
   categoryTags: CategoryTagFragment[];
+  isTagsChanged: boolean;
   onUpdateOneTodo: () => void;
   onDeleteOneTodo: () => void;
   onArchiveTodo: () => void;
@@ -137,6 +139,7 @@ const MultiForm: React.FunctionComponent<{
   tags,
   status,
   categoryTags,
+  isTagsChanged,
   onUpdateOneTodo,
   onDeleteOneTodo,
   onArchiveTodo,
@@ -156,6 +159,7 @@ const MultiForm: React.FunctionComponent<{
         items={categoryTags}
         checkedItems={tags}
         onClick={onToggleTag}
+        rightElement={!isTagsChanged ? <Badge text="preserved" /> : null}
       />
       <EditFormRadioField
         selectedItem={status}
@@ -170,6 +174,7 @@ const MultiForm: React.FunctionComponent<{
 export const TodoEditForm: React.FunctionComponent<{
   text: string;
   tags: CategoryTagFragment[];
+  isTagsChanged: boolean;
   status: TodoStatus;
   categoryTags: CategoryTagFragment[];
   selectMode: SelectMode;
@@ -183,6 +188,7 @@ export const TodoEditForm: React.FunctionComponent<{
 }> = ({
   text,
   tags,
+  isTagsChanged,
   status,
   categoryTags,
   selectMode,
@@ -231,6 +237,7 @@ export const TodoEditForm: React.FunctionComponent<{
           tags={tags}
           status={status}
           categoryTags={categoryTags}
+          isTagsChanged={isTagsChanged}
           onUpdateOneTodo={onUpdateOneTodo}
           onDeleteOneTodo={onDeleteOneTodo}
           onArchiveTodo={onArchiveTodo}
