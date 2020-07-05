@@ -15,6 +15,8 @@ const statusToIndex = {
 const TIME_RE = /^(\d{2}:\d{2})[-~]/;
 const TIME_WHOLE_RE = /^(\d{2}:\d{2}[-~])(.*)$/;
 
+const IGNORE_RE = /^\* /;
+
 function getTime(text: string): number {
   const match = TIME_RE.exec(text);
   return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
@@ -24,9 +26,10 @@ export function printTodosReport(
   todos: CategoryTodosReportPageTodoFragment[],
   tags: CategoryTodosReportPageTagFragment[]
 ): string {
+  const filteredTodos = todos.filter((todo) => !IGNORE_RE.test(todo.text));
   const tagsString = tags.map((tag) => tag.name).join(', ');
-  const tasks = todos.filter((todo) => !TIME_RE.test(todo.text));
-  const schedules = todos.filter((todo) => TIME_RE.test(todo.text));
+  const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
+  const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
 
   const tasksString = tasks
     .sort((a, b) => statusToIndex[a.status] - statusToIndex[b.status])
