@@ -1091,6 +1091,7 @@ input TodoWhereUniqueInput {
 
 input UpdateTodoInput {
   archivedAt: DateTime
+  checkpointId: ID
   id: ID!
   status: TodoStatus
   tags: [ID!]
@@ -1099,6 +1100,7 @@ input UpdateTodoInput {
 
 input UpdateTodosByIdInput {
   archivedAt: DateTime
+  checkpointId: ID
   ids: [ID!]!
   status: TodoStatus
   tags: [ID!]

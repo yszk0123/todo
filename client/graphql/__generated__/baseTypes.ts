@@ -1230,6 +1230,7 @@ export type TodoWhereUniqueInput = {
 
 export type UpdateTodoInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpointId?: Maybe<Scalars['ID']>;
   id: Scalars['ID'];
   status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['ID']>>;
@@ -1238,6 +1239,7 @@ export type UpdateTodoInput = {
 
 export type UpdateTodosByIdInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpointId?: Maybe<Scalars['ID']>;
   ids: Array<Scalars['ID']>;
   status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['ID']>>;

@@ -21,6 +21,7 @@ schema.inputObjectType({
     t.string('text', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
+    t.id('checkpointId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -32,6 +33,7 @@ schema.inputObjectType({
     t.string('text', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
+    t.id('checkpointId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -201,6 +203,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
+        const checkpointId = args.data.checkpointId ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
           data: {
@@ -208,6 +211,9 @@ schema.mutationType({
             tags: hasTags ? { set: tags } : undefined,
             status,
             archivedAt,
+            checkpoint: checkpointId
+              ? { connect: { id: checkpointId } }
+              : undefined,
           },
           where: { id: todoId },
         });
@@ -237,6 +243,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
+        const checkpointId = args.data.checkpointId ?? undefined;
 
         const updatedTodos = await Promise.all(
           todoIds.map((todoId) =>
@@ -246,6 +253,9 @@ schema.mutationType({
                 tags: hasTags ? { set: tags } : undefined,
                 status,
                 archivedAt,
+                checkpoint: checkpointId
+                  ? { connect: { id: checkpointId } }
+                  : undefined,
               },
               where: { id: todoId },
             })
