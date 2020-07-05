@@ -13,7 +13,7 @@ export default () => {
       <Head>
         <title>Todo</title>
       </Head>
-      <CategoryTodosPage categoryId={categoryId} />
+      <CategoryTodosPage categoryId={categoryId} key={categoryId} />
     </>
   );
 };

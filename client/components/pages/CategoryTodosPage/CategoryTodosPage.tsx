@@ -210,6 +210,14 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     [data?.checkpoints]
   );
 
+  React.useEffect(
+    () => {
+      deselect();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [categoryId]
+  );
+
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
   }
