@@ -7,4 +7,9 @@ fragment CategoryTodo on Todo {
   }
   status
   archivedAt
+  checkpoint {
+    id
+    name
+    endAt
+  }
 }
