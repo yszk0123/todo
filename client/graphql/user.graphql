@@ -1,7 +1,0 @@
-query User {
-  me {
-    id
-    email
-    avatarUrl
-  }
-}
