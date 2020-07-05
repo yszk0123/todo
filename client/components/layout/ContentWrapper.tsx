@@ -11,13 +11,13 @@ export const ContentWrapper: React.FunctionComponent<Props> = ({
 }) => {
   return (
     <Box
-      onClick={onClick}
       sx={{
         width: '100vw',
         mx: 'auto',
         p: 2,
         overflowX: 'hidden',
       }}
+      onClick={onClick}
     >
       {children}
     </Box>

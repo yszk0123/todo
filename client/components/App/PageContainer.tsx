@@ -17,11 +17,11 @@ export const PageContainer: React.FunctionComponent<EmptyProps> = ({
 
   return (
     <Page
-      hasSession={hasSession}
-      username={username}
       avatarUrl={avatarUrl}
-      isLoading={isLoading}
       content={children}
+      hasSession={hasSession}
+      isLoading={isLoading}
+      username={username}
     />
   );
 };

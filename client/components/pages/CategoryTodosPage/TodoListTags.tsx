@@ -14,8 +14,8 @@ export const TodoListTags: React.FunctionComponent<{
   return (
     <Flex justifyContent="flex-end">
       {tags.map((tag, i) => (
-        <Box key={tag.id} display="inline-block" ml={i === 0 ? 0 : 1}>
-          <ColorBadge key={tag.id} color={tag.color} text={tag.name} />
+        <Box display="inline-block" key={tag.id} ml={i === 0 ? 0 : 1}>
+          <ColorBadge color={tag.color} key={tag.id} text={tag.name} />
         </Box>
       ))}
     </Flex>

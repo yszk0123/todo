@@ -111,12 +111,12 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
         onClick={handleSelectCategory}
       />
       <CategoryEditForm
-        name={name}
         isSelected={isSelected}
+        name={name}
         onChangeName={handleChangeName}
         onCreateOneCategory={handleCreateOneCategory}
-        onUpdateOneCategory={handleUpdateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
+        onUpdateOneCategory={handleUpdateOneCategory}
       />
     </ContentWrapper>
   );

@@ -9,12 +9,12 @@ export const TodoListStatus: React.FunctionComponent<{
 }> = ({ status }) => {
   return (
     <Flex
-      width={16}
-      height={16}
       alignItems="center"
-      justifyContent="center"
       color="gray"
+      height={16}
+      justifyContent="center"
       sx={{ border: '2px solid gray' }}
+      width={16}
     >
       <Text>{printTodoStatus(status)}</Text>
     </Flex>

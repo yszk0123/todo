@@ -12,9 +12,9 @@ export const CategoryListItem: React.FunctionComponent<{
     <ListItem
       isActive={isActive}
       item={category}
-      onClick={onClick}
       leftElement={<GoToTodoLink categoryId={category.id} />}
       mainElement={category.name}
+      onClick={onClick}
     />
   );
 };

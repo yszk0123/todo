@@ -14,9 +14,9 @@ export const CategoryList: React.FunctionComponent<{
       {categories.map((category) => {
         return (
           <CategoryListItem
-            key={category.id}
             category={category}
             isActive={category.id === currentCategoryId}
+            key={category.id}
             onClick={onClick}
           />
         );

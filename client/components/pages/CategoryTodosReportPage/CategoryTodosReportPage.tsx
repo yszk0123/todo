@@ -24,7 +24,7 @@ export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
 
   return (
     <ContentWrapper>
-      <CategoryTodosReport todos={todos} tags={tags} />
+      <CategoryTodosReport tags={tags} todos={todos} />
     </ContentWrapper>
   );
 };

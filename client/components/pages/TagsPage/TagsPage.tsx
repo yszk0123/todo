@@ -136,22 +136,22 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     <ContentWrapper onClick={handleDeselectTag}>
       <TagStatusBar count={tags.length} />
       <TagList
+        currentTagId={currentTagId}
         tags={tags}
         onClick={handleSelectTag}
-        currentTagId={currentTagId}
       />
       <TagEditForm
-        name={name}
-        color={color}
         categories={categories}
-        tagCategories={tagCategories}
+        color={color}
         isSelected={isSelected}
-        onChangeName={handleChangeName}
+        name={name}
+        tagCategories={tagCategories}
         onChangeColor={handleChangeColor}
+        onChangeName={handleChangeName}
         onCreateOneTag={handleCreateOneTag}
-        onUpdateOneTag={handleUpdateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
         onToggleCategory={handleToggleTagCategory}
+        onUpdateOneTag={handleUpdateOneTag}
       />
     </ContentWrapper>
   );

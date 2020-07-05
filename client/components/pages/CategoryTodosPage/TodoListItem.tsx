@@ -27,17 +27,17 @@ export const TodoListItem: React.FunctionComponent<{
     <ListItem
       isActive={isSelected}
       item={todo}
-      onClick={onClick}
-      mainElement={<TodoListText text={todo.text} />}
       leftElement={
         <>
           <Box onClick={handleClickToggle}>
-            <Checkbox readOnly checked={isSelected} />
+            <Checkbox checked={isSelected} readOnly />
           </Box>
           <TodoListStatus status={todo.status} />
         </>
       }
+      mainElement={<TodoListText text={todo.text} />}
       rightElement={<TodoListTags tags={todo.tags} />}
+      onClick={onClick}
     ></ListItem>
   );
 };

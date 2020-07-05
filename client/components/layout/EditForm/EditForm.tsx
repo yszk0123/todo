@@ -7,10 +7,10 @@ import { EmptyProps } from '../../../viewModels/EmptyProps';
 export const EditForm: React.FunctionComponent<EmptyProps> = ({ children }) => {
   return (
     <Box
-      sx={{ boxShadow: 1, p: 2 }}
       as="form"
-      onSubmit={preventDefault}
+      sx={{ boxShadow: 1, p: 2 }}
       onClick={stopPropagation}
+      onSubmit={preventDefault}
     >
       {children}
     </Box>

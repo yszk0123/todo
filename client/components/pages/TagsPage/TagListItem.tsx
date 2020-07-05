@@ -11,8 +11,8 @@ export const TagListItem: React.FunctionComponent<{
     <ListItem
       isActive={isActive}
       item={tag}
-      onClick={onClick}
       mainElement={tag.name}
+      onClick={onClick}
     />
   );
 };

@@ -18,7 +18,7 @@ export function EditFormChecklistField<T extends DisplayableVM>({
 }): JSX.Element {
   return (
     <EditFormField isFirst={isFirst} rightElement={rightElement}>
-      <Checklist items={items} checkedItems={checkedItems} onClick={onClick} />
+      <Checklist checkedItems={checkedItems} items={items} onClick={onClick} />
     </EditFormField>
   );
 }

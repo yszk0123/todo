@@ -29,8 +29,8 @@ const StatusBarItemView: React.FunctionComponent<{
     case StatusBarItemType.LINK: {
       return (
         <Link
-          href={item.content.href}
           as={item.content.as}
+          href={item.content.href}
           text={item.content.text}
         />
       );
@@ -43,7 +43,7 @@ export const StatusBar: React.FunctionComponent<{
   right?: (StatusBarItem | null)[];
 }> = ({ left = [], right = [] }) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between' }} fontSize={2}>
+    <Box fontSize={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Flex
         sx={{
           alignItems: 'center',
@@ -52,7 +52,7 @@ export const StatusBar: React.FunctionComponent<{
         }}
       >
         {left.filter(isNotNull).map((item, i) => {
-          return <StatusBarItemView key={i} item={item} isFirst={i === 0} />;
+          return <StatusBarItemView isFirst={i === 0} item={item} key={i} />;
         })}
       </Flex>
       <Flex
@@ -64,7 +64,7 @@ export const StatusBar: React.FunctionComponent<{
         }}
       >
         {right.filter(isNotNull).map((item, i) => {
-          return <StatusBarItemView key={i} item={item} isFirst={i === 0} />;
+          return <StatusBarItemView isFirst={i === 0} item={item} key={i} />;
         })}
       </Flex>
     </Box>

@@ -14,9 +14,9 @@ export const TagList: React.FunctionComponent<{
       {tags.map((tag) => {
         return (
           <TagListItem
+            isActive={tag.id === currentTagId}
             key={tag.id}
             tag={tag}
-            isActive={tag.id === currentTagId}
             onClick={onClick}
           />
         );

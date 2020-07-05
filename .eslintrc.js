@@ -20,6 +20,10 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/jsx-sort-props': [
+      'error',
+      { callbacksLast: true, ignoreCase: true },
+    ],
   },
   settings: {
     react: {

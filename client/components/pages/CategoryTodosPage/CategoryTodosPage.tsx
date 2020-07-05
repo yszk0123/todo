@@ -186,25 +186,25 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         count={todos.length}
       />
       <TodoList
-        todos={todos}
         selectedTodoIds={selectedTodoIds}
+        todos={todos}
         onClick={handleSelectOneTodo}
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm
-        text={text}
-        tags={tags ?? []}
-        isTagsChanged={tags !== null}
-        status={status}
         categoryTags={categoryTags}
+        isTagsChanged={tags !== null}
         selectMode={selectMode}
+        status={status}
+        tags={tags ?? []}
+        text={text}
+        onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
-        onUpdateOneTodo={handleUpdateTodosById}
         onDeleteOneTodo={handleDeleteTodosById}
-        onArchiveTodo={handleArchiveTodosById}
-        onToggleTag={handleToggleTag}
         onSelectStatus={handleSelectStatus}
+        onToggleTag={handleToggleTag}
+        onUpdateOneTodo={handleUpdateTodosById}
       />
     </ContentWrapper>
   );

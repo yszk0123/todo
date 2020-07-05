@@ -7,7 +7,7 @@ export const Avatar: React.FunctionComponent<{ alt: string; url: string }> = ({
 }) => {
   return (
     <Box variant="avatar">
-      <Image src={url} alt={alt} />
+      <Image alt={alt} src={url} />
     </Box>
   );
 };

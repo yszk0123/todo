@@ -46,10 +46,10 @@ export function EditFormRadioField<T extends string>({
       {items.map((item, i) => {
         return (
           <EditFormRadioFieldItem
-            key={i}
-            label={item}
             isChecked={item === selectedItem}
             item={item}
+            key={i}
+            label={item}
             onClick={onClick}
           />
         );

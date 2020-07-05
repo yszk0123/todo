@@ -7,8 +7,8 @@ export const GoToTodoLink: React.FunctionComponent<{
 }> = ({ categoryId }) => {
   return (
     <Link
-      href="/categories/[categoryId]/todos"
       as={`/categories/${categoryId}/todos`}
+      href="/categories/[categoryId]/todos"
       text="Go"
     />
   );

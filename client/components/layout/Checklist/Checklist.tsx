@@ -24,10 +24,10 @@ export function Checklist<T extends DisplayableVM>({
 
         return (
           <ChecklistItem
-            key={item.id}
+            isChecked={isChecked}
             isFirst={i === 0}
             item={item}
-            isChecked={isChecked}
+            key={item.id}
             onClick={onClick}
           />
         );

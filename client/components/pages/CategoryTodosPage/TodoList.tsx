@@ -17,9 +17,9 @@ export const TodoList: React.FunctionComponent<{
 
         return (
           <TodoListItem
+            isSelected={isSelected}
             key={todo.id}
             todo={todo}
-            isSelected={isSelected}
             onClick={onClick}
             onClickToggle={onClickToggle}
           />

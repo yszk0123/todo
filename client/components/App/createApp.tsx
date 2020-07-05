@@ -36,8 +36,8 @@ export function createApp(): React.FunctionComponent<Props> {
             <Head>
               <title>Todo</title>
               <meta
-                name="viewport"
                 content="initial-scale=1.0, width=device-width"
+                name="viewport"
               />
             </Head>
             <PageContainer>

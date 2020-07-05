@@ -8,7 +8,7 @@ function linkifyComponentDecorator(
   key: number
 ): React.ReactNode {
   return (
-    <a href={decoratedHref} rel="noreferrer" target="_blank" key={key}>
+    <a href={decoratedHref} key={key} rel="noreferrer" target="_blank">
       {decoratedText}
     </a>
   );
