@@ -10,13 +10,15 @@ export const Navigation: React.FunctionComponent<{
   avatarUrl: string | null;
 }> = ({ hasSession, username, avatarUrl }) => {
   return (
-    <Flex alignItems="center" bg="black" color="white" px={2}>
+    <Flex alignItems="center" bg="black" color="white" height={48} px={2}>
       <NavigationLink href="/" text="Todo" />
-      <Box>
-        <NavigationLink href="/categories" text="Categories" />
-        <NavigationLink href="/tags" text="Tags" />
-        <NavigationLink href="/checkpoints" text="CP" />
-      </Box>
+      <Flex overflowX="auto">
+        <Flex flexShrink={0}>
+          <NavigationLink href="/categories" text="Categories" />
+          <NavigationLink href="/tags" text="Tags" />
+          <NavigationLink href="/checkpoints" text="Checkpoints" />
+        </Flex>
+      </Flex>
       <Box mx="auto" />
       {username && <Text p={2}>{username}</Text>}
       {avatarUrl && <Avatar alt={username || 'avatar'} url={avatarUrl} />}

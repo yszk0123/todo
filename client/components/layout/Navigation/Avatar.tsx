@@ -1,13 +1,13 @@
 import React from 'react';
-import { Box, Image } from 'rebass';
+import { Flex, Image } from 'rebass';
 
 export const Avatar: React.FunctionComponent<{ alt: string; url: string }> = ({
   alt,
   url,
 }) => {
   return (
-    <Box variant="avatar">
+    <Flex alignItems="center" variant="avatar">
       <Image alt={alt} src={url} />
-    </Box>
+    </Flex>
   );
 };
