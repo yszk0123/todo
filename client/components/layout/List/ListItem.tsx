@@ -23,14 +23,13 @@ export function ListItem<T>({
   return (
     <Flex
       alignItems="center"
-      bg={isActive ? 'highlight' : undefined}
-      color={isActive ? 'highlightText' : undefined}
+      bg={isActive ? 'muted' : undefined}
       flex="1 1 auto"
       p={2}
       sx={{
         cursor: 'pointer',
         borderBottom: '1px dotted',
-        borderColor: 'muted',
+        borderColor: 'gray',
         ':last-child': { borderBottom: 'none' },
       }}
       variant="listItem"

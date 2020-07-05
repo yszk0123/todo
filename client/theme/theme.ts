@@ -8,12 +8,11 @@ export const theme = {
     background: '#fff',
     primary: '#07c',
     secondary: '#30c',
-    muted: '#aaa',
+    muted: '#f8f8f8',
     gray: '#555',
     warning: '#f44',
-    highlightText: '#fff',
-    highlight: '#0c7',
-    dark: 'rgba(0, 10, 20, 0.3)',
+    highlight: '#07c',
+    dark: 'rgba(0, 10, 20, 0.2)',
   },
   fonts: {
     body: 'Roboto, sans-serif',
@@ -94,6 +93,11 @@ export const theme = {
       textDecoration: 'none',
       ':hover,:focus,.active': {
         color: 'primary',
+      },
+    },
+    listItem: {
+      ':hover': {
+        bg: 'muted',
       },
     },
   },
