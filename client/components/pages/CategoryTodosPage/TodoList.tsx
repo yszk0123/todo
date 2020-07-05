@@ -2,9 +2,9 @@ import React from 'react';
 
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ID } from '../../../viewModels/ID';
+import { DateTimeText } from '../../layout/DateTimeText';
 import { List } from '../../layout/List';
 import { Note } from '../../layout/Note';
-import { TimeText } from '../../layout/TimeText';
 import { TodoListItem } from './TodoListItem';
 
 type Group = {
@@ -54,7 +54,7 @@ export const TodoList: React.FunctionComponent<{
             key={i}
             leftElement={header.name ? <Note text={header.name} /> : null}
             rightElement={
-              header.endAt ? <TimeText value={header.endAt} /> : null
+              header.endAt ? <DateTimeText value={header.endAt} /> : null
             }
           >
             {todos.map((todo) => {
