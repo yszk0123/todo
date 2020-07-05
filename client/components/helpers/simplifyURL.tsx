@@ -1,22 +1,14 @@
 export function simplifyURL(text: string): string {
-  const simplifiedText = text
-    .replace(/^https?:\/\//, '')
-    .replace(/\?.*$/, '')
-    .replace(/#.*$/, '')
-    .replace(
-      /^github.com\/[^/]+\/([^/]+)\/(?:pull|issue)\/([0-9]+)$/,
-      '$1 #$2'
-    );
+  const simplifiedText = text.replace(/\?.*$/, '').replace(/#.*$/, '');
 
-  const splittedText = simplifiedText.split('/');
-  if (splittedText.length >= 5) {
-    return [
-      splittedText[0],
-      splittedText[1],
-      '...',
-      splittedText[splittedText.length - 1],
-    ].join('/');
+  const github = simplifiedText.replace(
+    /^https?:\/\/github.com\/[^/]+\/([^/]+)\/(?:pull|issue)\/([0-9]+)$/,
+    '$1 #$2'
+  );
+  if (github !== simplifiedText) {
+    return github;
   }
 
-  return simplifiedText;
+  const [schema, , domain] = simplifiedText.split('/');
+  return schema && domain ? [schema, domain].join('//') : simplifiedText;
 }
