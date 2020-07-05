@@ -4,6 +4,7 @@ import {
   CategoryTodosReportPageTodoFragment,
 } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
+import { simplifyURL } from '../../helpers/simplifyURL';
 
 const statusToIndex = {
   [TodoStatus.Todo]: 0,
@@ -26,7 +27,15 @@ export function printTodosReport(
   todos: CategoryTodosReportPageTodoFragment[],
   tags: CategoryTodosReportPageTagFragment[]
 ): string {
-  const filteredTodos = todos.filter((todo) => !IGNORE_RE.test(todo.text));
+  const filteredTodos = todos
+    .filter((todo) => !IGNORE_RE.test(todo.text))
+    .map((todo) => {
+      const text = todo.text.replace(
+        /(^|\s)(https?:\/\/[^\s]+)/g,
+        (_, prefix, url) => `${prefix}${simplifyURL(url)}`
+      );
+      return { ...todo, text };
+    });
   const tagsString = tags.map((tag) => tag.name).join(', ');
   const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
   const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
