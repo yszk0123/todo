@@ -33,7 +33,7 @@ export function ListItem<T>({
       onClick={handleClick}
     >
       {leftElement != null && (
-        <Flex flexShrink={0} mr={2}>
+        <Flex alignItems="center" flexShrink={0} mr={2}>
           {leftElement}
         </Flex>
       )}
