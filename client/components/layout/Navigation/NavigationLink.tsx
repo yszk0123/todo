@@ -1,5 +1,5 @@
-import React from 'react';
 import NextLink from 'next/link';
+import React from 'react';
 import { Link as RebassLink, Text } from 'rebass';
 
 export const NavigationLink: React.FunctionComponent<{

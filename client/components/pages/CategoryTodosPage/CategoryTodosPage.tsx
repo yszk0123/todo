@@ -1,26 +1,27 @@
+import Head from 'next/head';
 import React from 'react';
+
+import {
+  DeleteTodosByIdInput,
+  TodoCreateInput,
+  TodoStatus,
+  UpdateTodosByIdInput,
+} from '../../../graphql/__generated__/baseTypes';
 import {
   useCategoryTodosPageQuery,
   useCreateOneTodoMutation,
   useDeleteTodosByIdMutation,
   useUpdateTodosByIdMutation,
 } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
-import {
-  TodoStatus,
-  TodoCreateInput,
-  UpdateTodosByIdInput,
-  DeleteTodosByIdInput,
-} from '../../../graphql/__generated__/baseTypes';
-import { ContentWrapper } from '../../layout/ContentWrapper';
-import { TodoStatusBar } from './TodoStatusBar';
-import { TodoList } from './TodoList';
-import { TodoEditForm } from './TodoEditForm';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ID } from '../../../viewModels/ID';
-import Head from 'next/head';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import { ContentWrapper } from '../../layout/ContentWrapper';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { TodoEditForm } from './TodoEditForm';
+import { TodoList } from './TodoList';
+import { TodoStatusBar } from './TodoStatusBar';
 
 function first<T>(values: T[]): T | undefined {
   return values[0];

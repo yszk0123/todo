@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from 'rebass';
+
 import { Color } from '../../graphql/__generated__/baseTypes';
 import { getColorCode } from '../helpers/getColorCode';
 

@@ -1,8 +1,9 @@
-import React from 'react';
 import { useSession } from 'next-auth/client';
+import React from 'react';
+
 import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
-import { Page } from '../layout/Page';
 import { EmptyProps } from '../../viewModels/EmptyProps';
+import { Page } from '../layout/Page';
 
 export const PageContainer: React.FunctionComponent<EmptyProps> = ({
   children,

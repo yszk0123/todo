@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex } from 'rebass';
+
 import { LoadingIndicator } from './LoadingIndicator';
 import { Navigation } from './Navigation';
 

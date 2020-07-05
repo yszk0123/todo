@@ -2,7 +2,7 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -24,6 +24,7 @@ module.exports = {
       'error',
       { callbacksLast: true, ignoreCase: true },
     ],
+    'simple-import-sort/sort': 'error',
   },
   settings: {
     react: {

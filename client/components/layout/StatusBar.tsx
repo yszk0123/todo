@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from 'rebass';
+
 import { isNotNull } from '../helpers/isNotNull';
 import { Link } from './Link';
 

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Textarea } from '@rebass/forms';
+import React from 'react';
 
 const MIN_HEIGHT = 300;
 

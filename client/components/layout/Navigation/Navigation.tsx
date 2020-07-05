@@ -1,5 +1,6 @@
 import React from 'react';
-import { Flex, Text, Box } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
+
 import { Avatar } from './Avatar';
 import { NavigationLink } from './NavigationLink';
 

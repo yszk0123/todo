@@ -1,7 +1,7 @@
 // FIXME: Nexus.js ignores types.d.ts...
 // @ts-ignore
+import { Account, User } from '@prisma/client';
 import jwt from 'next-auth/jwt';
-import { User, Account } from '@prisma/client';
 
 const secret = process.env.JWT_SECRET ?? '__NULL__';
 if (secret === '__NULL__') {

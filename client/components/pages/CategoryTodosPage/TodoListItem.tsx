@@ -1,12 +1,13 @@
 // FIXME: Use layout components instead of using rebass directly
-import React from 'react';
 import { Checkbox } from '@rebass/forms';
+import React from 'react';
 import { Box } from 'rebass';
+
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ListItem } from '../../layout/List';
-import { TodoListText } from './TodoListText';
 import { TodoListStatus } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
+import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
   isSelected: boolean;

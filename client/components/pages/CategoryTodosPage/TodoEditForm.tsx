@@ -1,6 +1,9 @@
 import React from 'react';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { SelectMode } from '../../../viewModels/SelectMode';
+import { Badge } from '../../layout/Badge';
 import {
   EditForm,
   EditFormAction,
@@ -9,8 +12,6 @@ import {
   EditFormInputField,
   EditFormRadioField,
 } from '../../layout/EditForm';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { Badge } from '../../layout/Badge';
 
 const statuses: TodoStatus[] = [
   TodoStatus.Todo,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'rebass';
+
 import { EditFormField } from './EditFormField';
 
 export type EditFormAction = {

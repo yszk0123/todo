@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
+
 import { TagsPage } from '../client/components/pages/TagsPage';
 
 export default () => {

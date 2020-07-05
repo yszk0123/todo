@@ -1,8 +1,9 @@
 // FIXME: Use layout components instead of using rebass directly
 import React from 'react';
-import { Flex, Box } from 'rebass';
-import { ColorBadge } from '../../layout/ColorBadge';
+import { Box, Flex } from 'rebass';
+
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { ColorBadge } from '../../layout/ColorBadge';
 
 export const TodoListTags: React.FunctionComponent<{
   tags: CategoryTagFragment[];

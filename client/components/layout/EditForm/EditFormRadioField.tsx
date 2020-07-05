@@ -1,6 +1,7 @@
+import { Label, Radio } from '@rebass/forms';
 import React from 'react';
 import { Flex } from 'rebass';
-import { Label, Radio } from '@rebass/forms';
+
 import { EditFormField } from './EditFormField';
 
 function EditFormRadioFieldItem<T>({

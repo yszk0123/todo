@@ -1,6 +1,6 @@
-import { createApp } from '../client/components/App';
-
 import 'normalize.css';
+
+import { createApp } from '../client/components/App';
 
 const App = createApp();
 

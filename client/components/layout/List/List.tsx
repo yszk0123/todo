@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from 'rebass';
+
 import { stopPropagation } from '../../../handlers/stopPropagation';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 

@@ -1,6 +1,7 @@
+import { Checkbox } from '@rebass/forms';
 import React from 'react';
 import { Flex, Text } from 'rebass';
-import { Checkbox } from '@rebass/forms';
+
 import { preventDefault } from '../../../handlers/preventDefault';
 import { DisplayableVM } from '../../../viewModels/DisplayableVM';
 

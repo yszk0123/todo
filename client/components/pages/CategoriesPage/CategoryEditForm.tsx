@@ -1,9 +1,10 @@
 import React from 'react';
+
 import {
-  EditFormAction,
   EditForm,
-  EditFormInputField,
+  EditFormAction,
   EditFormActionsField,
+  EditFormInputField,
 } from '../../layout/EditForm';
 
 export const CategoryEditForm: React.FunctionComponent<{

@@ -1,16 +1,17 @@
 import React from 'react';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { ColorBox } from '../../layout/ColorBox';
+
 import { Color } from '../../../graphql/__generated__/baseTypes';
+import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { parseColorString } from '../../helpers/parseColorString';
+import { ColorBox } from '../../layout/ColorBox';
 import {
   EditForm,
+  EditFormAction,
+  EditFormActionsField,
   EditFormChecklistField,
   EditFormInputField,
-  EditFormActionsField,
-  EditFormAction,
   EditFormSelectField,
 } from '../../layout/EditForm';
-import { parseColorString } from '../../helpers/parseColorString';
 
 const colors = Object.values(Color);
 

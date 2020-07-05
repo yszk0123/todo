@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
-import { TagListItem } from './TagListItem';
 import { ID } from '../../../viewModels/ID';
 import { List } from '../../layout/List';
+import { TagListItem } from './TagListItem';
 
 export const TagList: React.FunctionComponent<{
   tags: RootTagFragment[];

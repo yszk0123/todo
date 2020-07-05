@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 
 export function ListItem<T>({
   isActive,

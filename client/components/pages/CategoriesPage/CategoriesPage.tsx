@@ -1,23 +1,24 @@
 import React from 'react';
-import { ContentWrapper } from '../../layout/ContentWrapper';
+
+import {
+  CategoryCreateInput,
+  CategoryUpdateInput,
+  CategoryWhereUniqueInput,
+} from '../../../graphql/__generated__/baseTypes';
 import {
   useCategoriesPageQuery,
   useCreateOneCategoryMutation,
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
 } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { LoadingIndicator } from '../../layout/LoadingIndicator';
-import {
-  CategoryCreateInput,
-  CategoryWhereUniqueInput,
-  CategoryUpdateInput,
-} from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
+import { ID } from '../../../viewModels/ID';
+import { ContentWrapper } from '../../layout/ContentWrapper';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
-import { ID } from '../../../viewModels/ID';
-import { EmptyProps } from '../../../viewModels/EmptyProps';
 
 export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useCategoriesPageQuery({

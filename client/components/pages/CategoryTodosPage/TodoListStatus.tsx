@@ -1,8 +1,9 @@
 // FIXME: Use layout components instead of using rebass directly
 import React from 'react';
 import { Flex, Text } from 'rebass';
-import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
+
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 
 export const TodoListStatus: React.FunctionComponent<{
   status: TodoStatus;
