@@ -32,8 +32,8 @@ export const CheckpointEditForm: React.FunctionComponent<{
   const actions: EditFormAction[] = isSelected
     ? [
         { label: 'Delete', onClick: onDeleteOneCheckpoint },
-        { label: 'Update', onClick: onUpdateOneCheckpoint },
         { label: 'Archive', onClick: onArchiveOneCheckpoint },
+        { label: 'Update', onClick: onUpdateOneCheckpoint },
       ]
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
 
