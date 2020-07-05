@@ -9,6 +9,9 @@ export function simplifyURL(text: string): string {
     return github;
   }
 
-  const [schema, , domain] = simplifiedText.split('/');
-  return schema && domain ? [schema, domain].join('//') : simplifiedText;
+  const [schema, , domain, ...rest] = simplifiedText.split('/');
+  if (!schema || !domain) {
+    return simplifiedText;
+  }
+  return [schema, '', domain, ...rest.slice(0, 2)].join('/');
 }
