@@ -3,3 +3,5 @@
 20200704123218-create
 20200704140032-remove-tag-color
 20200704160731-recreate-color-enum
+20200705114513-create-checkpoint
+20200705115304-add-checkpoint-archived-at

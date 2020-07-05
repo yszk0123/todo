@@ -15,6 +15,7 @@ export const Navigation: React.FunctionComponent<{
       <Box>
         <NavigationLink href="/categories" text="Categories" />
         <NavigationLink href="/tags" text="Tags" />
+        <NavigationLink href="/checkpoints" text="CP" />
       </Box>
       <Box mx="auto" />
       {username && <Text p={2}>{username}</Text>}

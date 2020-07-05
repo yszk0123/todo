@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -73,13 +73,12 @@ model Tag {
 }
 
 model Checkpoint {
-  id         String    @default(uuid()) @id
-  name       String?
-  endAt      DateTime
-  owner      User      @relation(fields: [ownerId], references: [id])
-  ownerId    String
-  todos      Todo[]
-  archivedAt DateTime?
+  id      String   @default(uuid()) @id
+  name    String?
+  endAt   DateTime
+  owner   User     @relation(fields: [ownerId], references: [id])
+  ownerId String
+  todos   Todo[]
 }
 
 enum TodoStatus {

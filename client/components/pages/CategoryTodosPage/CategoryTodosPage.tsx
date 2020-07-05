@@ -15,6 +15,7 @@ import {
 } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
 import { ContentWrapper } from '../../layout/ContentWrapper';
@@ -53,13 +54,18 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [text, setText] = React.useState('');
   const [selectedTodoIds, setSelectedTodoIds] = React.useState<ID[]>([]);
   const [tags, setTags] = React.useState<CategoryTagFragment[] | null>(null);
-  const [status, setStatus] = React.useState(TodoStatus.Todo);
+  const [status, setStatus] = React.useState<TodoStatus | null>(null);
+  const [
+    checkpoint,
+    setCheckpoint,
+  ] = React.useState<RootCheckpointFragment | null>(null);
 
   const deselect = React.useCallback(() => {
     setSelectedTodoIds([]);
     setText('');
     setTags(null);
-    setStatus(TodoStatus.Todo);
+    setStatus(null);
+    setCheckpoint(null);
   }, []);
 
   const handleSelectOneTodo = React.useCallback(
@@ -73,6 +79,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       setText(todo.text);
       setTags(todo.tags);
       setStatus(todo.status);
+      setCheckpoint(todo.checkpoint ?? null);
     },
     [selectedTodoIds, deselect]
   );
@@ -84,7 +91,10 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         ? selectedTodoIds.filter((id) => id !== todo.id)
         : [...selectedTodoIds, todo.id];
       setSelectedTodoIds(newSelectedTodoIds);
-      setTags(newSelectedTodoIds.length === 1 ? todo.tags : null);
+      const isSingle = newSelectedTodoIds.length === 1;
+      setTags(isSingle ? todo.tags : null);
+      setStatus(isSingle ? todo.status : null);
+      setCheckpoint(isSingle ? todo.checkpoint ?? null : null);
     },
     [selectedTodoIds]
   );
@@ -95,18 +105,28 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (data?.me) {
-      const newTags = tags?.map((tag) => ({ id: tag.id }));
+      const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
       const input: TodoCreateInput = {
         owner: { connect: { id: data.me.id } },
         category: { connect: { id: categoryId } },
         tags: newTags ? { connect: newTags } : undefined,
         text,
         status,
+        checkpoint: checkpoint ? { connect: { id: checkpoint.id } } : undefined,
       };
       deselect();
       createOneTodo({ variables: { input } });
     }
-  }, [data, text, tags, status, deselect, createOneTodo, categoryId]);
+  }, [
+    data?.me,
+    tags,
+    categoryId,
+    text,
+    status,
+    checkpoint,
+    deselect,
+    createOneTodo,
+  ]);
 
   const handleDeleteTodosById = React.useCallback(() => {
     const count = selectedTodoIds.length;
@@ -120,15 +140,17 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const handleUpdateTodosById = React.useCallback(() => {
     const count = selectedTodoIds.length;
     if (count === 0) return;
-    const tagIds = tags?.map((tag) => tag.id);
+    const tagIds = tags ? tags.map((tag) => tag.id) : undefined;
     const input: UpdateTodosByIdInput = {
       ids: selectedTodoIds,
       text: count === 1 ? text : undefined,
       tags: tagIds,
-      status,
+      status: status ? status : undefined,
+      checkpointId:
+        checkpoint === null ? null : checkpoint ? checkpoint.id : undefined,
     };
     updateTodosById({ variables: { input } });
-  }, [text, status, updateTodosById, selectedTodoIds, tags]);
+  }, [selectedTodoIds, tags, text, status, checkpoint, updateTodosById]);
 
   const handleArchiveTodosById = React.useCallback(() => {
     if (selectedTodoIds.length === 0) return;
@@ -159,6 +181,13 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     setStatus(status);
   }, []);
 
+  const handleSelectCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      setCheckpoint(checkpoint);
+    },
+    []
+  );
+
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
   }
@@ -166,6 +195,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
+  const checkpoints = data.checkpoints ?? [];
   const count = selectedTodoIds.length;
   const selectMode =
     count === 0
@@ -194,6 +224,8 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       />
       <TodoEditForm
         categoryTags={categoryTags}
+        checkpoint={checkpoint}
+        checkpoints={checkpoints}
         isTagsChanged={tags !== null}
         selectMode={selectMode}
         status={status}
@@ -203,6 +235,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
         onDeleteOneTodo={handleDeleteTodosById}
+        onSelectCheckpoint={handleSelectCheckpoint}
         onSelectStatus={handleSelectStatus}
         onToggleTag={handleToggleTag}
         onUpdateOneTodo={handleUpdateTodosById}

@@ -10,6 +10,9 @@ export type CategoryTodoFragment = (
   & { tags: Array<(
     { __typename?: 'Tag' }
     & CategoryTagFragment
+  )>, checkpoint?: Types.Maybe<(
+    { __typename?: 'Checkpoint' }
+    & Pick<Types.Checkpoint, 'id' | 'name' | 'endAt'>
   )> }
 );
 
@@ -23,5 +26,10 @@ export const CategoryTodoFragmentDoc = gql`
   }
   status
   archivedAt
+  checkpoint {
+    id
+    name
+    endAt
+  }
 }
     ${CategoryTagFragmentDoc}`;

@@ -122,8 +122,10 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     []
   );
 
-  const handleChangeColor = React.useCallback((color: Color) => {
-    setColor(color);
+  const handleChangeColor = React.useCallback((color: Color | null) => {
+    if (color) {
+      setColor(color);
+    }
   }, []);
 
   if (!data) {

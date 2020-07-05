@@ -21,6 +21,7 @@ schema.inputObjectType({
     t.string('text', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
+    t.id('checkpointId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -32,6 +33,7 @@ schema.inputObjectType({
     t.string('text', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
+    t.id('checkpointId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -76,6 +78,48 @@ schema.mutationType({
           select: { ownerId: true },
         });
         const ownerId = category?.ownerId;
+        return !!userId && !!ownerId && userId === ownerId;
+      },
+    });
+
+    t.crud.createOneCheckpoint({
+      authorize(_root, args, ctx) {
+        const userId = ctx.user?.id;
+        const ownerId = args.data.owner.connect?.id;
+        return !!userId && !!ownerId && userId === ownerId;
+      },
+    });
+
+    t.crud.updateOneCheckpoint({
+      async authorize(_root, args, ctx) {
+        const userId = ctx.user?.id;
+        const checkpointId = args.where.id;
+        if (checkpointId == null) {
+          return false;
+        }
+
+        const checkpoint = await ctx.db.checkpoint.findOne({
+          where: { id: checkpointId },
+          select: { ownerId: true },
+        });
+        const ownerId = checkpoint?.ownerId;
+        return !!userId && !!ownerId && userId === ownerId;
+      },
+    });
+
+    t.crud.deleteOneCheckpoint({
+      async authorize(_root, args, ctx) {
+        const userId = ctx.user?.id;
+        const checkpointId = args.where.id;
+        if (checkpointId == null) {
+          return false;
+        }
+
+        const checkpoint = await ctx.db.checkpoint.findOne({
+          where: { id: checkpointId },
+          select: { ownerId: true },
+        });
+        const ownerId = checkpoint?.ownerId;
         return !!userId && !!ownerId && userId === ownerId;
       },
     });
@@ -159,6 +203,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
+        const checkpointId = args.data.checkpointId ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
           data: {
@@ -166,6 +211,9 @@ schema.mutationType({
             tags: hasTags ? { set: tags } : undefined,
             status,
             archivedAt,
+            checkpoint: checkpointId
+              ? { connect: { id: checkpointId } }
+              : undefined,
           },
           where: { id: todoId },
         });
@@ -195,6 +243,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
+        const checkpointId = args.data.checkpointId;
 
         const updatedTodos = await Promise.all(
           todoIds.map((todoId) =>
@@ -204,6 +253,12 @@ schema.mutationType({
                 tags: hasTags ? { set: tags } : undefined,
                 status,
                 archivedAt,
+                checkpoint:
+                  checkpointId === null
+                    ? { disconnect: true }
+                    : checkpointId
+                    ? { connect: { id: checkpointId } }
+                    : undefined,
               },
               where: { id: todoId },
             })

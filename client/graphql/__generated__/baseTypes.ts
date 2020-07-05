@@ -336,6 +336,159 @@ export type CategoryWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
+export type Checkpoint = {
+  __typename?: 'Checkpoint';
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  ownerId: Scalars['String'];
+};
+
+export type CheckpointCreateInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt: Scalars['DateTime'];
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner: UserCreateOneWithoutCheckpointsInput;
+  todos?: Maybe<TodoCreateManyWithoutCheckpointInput>;
+};
+
+export type CheckpointCreateManyWithoutOwnerInput = {
+  connect?: Maybe<Array<CheckpointWhereUniqueInput>>;
+  create?: Maybe<Array<CheckpointCreateWithoutOwnerInput>>;
+};
+
+export type CheckpointCreateOneWithoutTodosInput = {
+  connect?: Maybe<CheckpointWhereUniqueInput>;
+  create?: Maybe<CheckpointCreateWithoutTodosInput>;
+};
+
+export type CheckpointCreateWithoutOwnerInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt: Scalars['DateTime'];
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  todos?: Maybe<TodoCreateManyWithoutCheckpointInput>;
+};
+
+export type CheckpointCreateWithoutTodosInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt: Scalars['DateTime'];
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner: UserCreateOneWithoutCheckpointsInput;
+};
+
+export type CheckpointFilter = {
+  every?: Maybe<CheckpointWhereInput>;
+  none?: Maybe<CheckpointWhereInput>;
+  some?: Maybe<CheckpointWhereInput>;
+};
+
+export type CheckpointScalarWhereInput = {
+  AND?: Maybe<Array<CheckpointScalarWhereInput>>;
+  archivedAt?: Maybe<NullableDateTimeFilter>;
+  endAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<UuidFilter>;
+  name?: Maybe<NullableStringFilter>;
+  NOT?: Maybe<Array<CheckpointScalarWhereInput>>;
+  OR?: Maybe<Array<CheckpointScalarWhereInput>>;
+  ownerId?: Maybe<StringFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
+export type CheckpointUpdateInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCheckpointsInput>;
+  todos?: Maybe<TodoUpdateManyWithoutCheckpointInput>;
+};
+
+export type CheckpointUpdateManyDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type CheckpointUpdateManyWithoutOwnerInput = {
+  connect?: Maybe<Array<CheckpointWhereUniqueInput>>;
+  create?: Maybe<Array<CheckpointCreateWithoutOwnerInput>>;
+  delete?: Maybe<Array<CheckpointWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<CheckpointScalarWhereInput>>;
+  disconnect?: Maybe<Array<CheckpointWhereUniqueInput>>;
+  set?: Maybe<Array<CheckpointWhereUniqueInput>>;
+  update?: Maybe<Array<CheckpointUpdateWithWhereUniqueWithoutOwnerInput>>;
+  updateMany?: Maybe<Array<CheckpointUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<CheckpointUpsertWithWhereUniqueWithoutOwnerInput>>;
+};
+
+export type CheckpointUpdateManyWithWhereNestedInput = {
+  data: CheckpointUpdateManyDataInput;
+  where: CheckpointScalarWhereInput;
+};
+
+export type CheckpointUpdateOneWithoutTodosInput = {
+  connect?: Maybe<CheckpointWhereUniqueInput>;
+  create?: Maybe<CheckpointCreateWithoutTodosInput>;
+  delete?: Maybe<Scalars['Boolean']>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<CheckpointUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<CheckpointUpsertWithoutTodosInput>;
+};
+
+export type CheckpointUpdateWithoutOwnerDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  todos?: Maybe<TodoUpdateManyWithoutCheckpointInput>;
+};
+
+export type CheckpointUpdateWithoutTodosDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutCheckpointsInput>;
+};
+
+export type CheckpointUpdateWithWhereUniqueWithoutOwnerInput = {
+  data: CheckpointUpdateWithoutOwnerDataInput;
+  where: CheckpointWhereUniqueInput;
+};
+
+export type CheckpointUpsertWithoutTodosInput = {
+  create: CheckpointCreateWithoutTodosInput;
+  update: CheckpointUpdateWithoutTodosDataInput;
+};
+
+export type CheckpointUpsertWithWhereUniqueWithoutOwnerInput = {
+  create: CheckpointCreateWithoutOwnerInput;
+  update: CheckpointUpdateWithoutOwnerDataInput;
+  where: CheckpointWhereUniqueInput;
+};
+
+export type CheckpointWhereInput = {
+  AND?: Maybe<Array<CheckpointWhereInput>>;
+  archivedAt?: Maybe<NullableDateTimeFilter>;
+  endAt?: Maybe<DateTimeFilter>;
+  id?: Maybe<UuidFilter>;
+  name?: Maybe<NullableStringFilter>;
+  NOT?: Maybe<Array<CheckpointWhereInput>>;
+  OR?: Maybe<Array<CheckpointWhereInput>>;
+  owner?: Maybe<UserWhereInput>;
+  ownerId?: Maybe<StringFilter>;
+  todos?: Maybe<TodoFilter>;
+};
+
+export type CheckpointWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+};
+
 export enum Color {
   Blue = 'BLUE',
   Default = 'DEFAULT',
@@ -369,13 +522,16 @@ export type DeleteTodosByIdInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOneCategory: Category;
+  createOneCheckpoint: Checkpoint;
   createOneTag: Tag;
   createOneTodo: Todo;
   deleteOneCategory?: Maybe<Category>;
+  deleteOneCheckpoint?: Maybe<Checkpoint>;
   deleteOneTag?: Maybe<Tag>;
   deleteTodo?: Maybe<Todo>;
   deleteTodosById?: Maybe<Array<Scalars['ID']>>;
   updateOneCategory?: Maybe<Category>;
+  updateOneCheckpoint?: Maybe<Checkpoint>;
   updateOneTag?: Maybe<Tag>;
   updateTodo?: Maybe<Todo>;
   updateTodosById?: Maybe<Array<Todo>>;
@@ -384,6 +540,11 @@ export type Mutation = {
 
 export type MutationCreateOneCategoryArgs = {
   data: CategoryCreateInput;
+};
+
+
+export type MutationCreateOneCheckpointArgs = {
+  data: CheckpointCreateInput;
 };
 
 
@@ -399,6 +560,11 @@ export type MutationCreateOneTodoArgs = {
 
 export type MutationDeleteOneCategoryArgs = {
   where: CategoryWhereUniqueInput;
+};
+
+
+export type MutationDeleteOneCheckpointArgs = {
+  where: CheckpointWhereUniqueInput;
 };
 
 
@@ -420,6 +586,12 @@ export type MutationDeleteTodosByIdArgs = {
 export type MutationUpdateOneCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneCheckpointArgs = {
+  data: CheckpointUpdateInput;
+  where: CheckpointWhereUniqueInput;
 };
 
 
@@ -472,6 +644,7 @@ export type Query = {
   __typename?: 'Query';
   categories?: Maybe<Array<Category>>;
   category?: Maybe<Category>;
+  checkpoints?: Maybe<Array<Checkpoint>>;
   me?: Maybe<User>;
   tag?: Maybe<Tag>;
   tags?: Maybe<Array<Tag>>;
@@ -749,6 +922,8 @@ export type Todo = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category: Category;
   categoryId: Scalars['String'];
+  checkpoint?: Maybe<Checkpoint>;
+  checkpointId?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   id: Scalars['String'];
   owner: User;
@@ -770,6 +945,7 @@ export type TodoTagsArgs = {
 export type TodoCreateInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category: CategoryCreateOneWithoutTodosInput;
+  checkpoint?: Maybe<CheckpointCreateOneWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   owner: UserCreateOneWithoutTodosInput;
@@ -781,6 +957,11 @@ export type TodoCreateInput = {
 export type TodoCreateManyWithoutCategoryInput = {
   connect?: Maybe<Array<TodoWhereUniqueInput>>;
   create?: Maybe<Array<TodoCreateWithoutCategoryInput>>;
+};
+
+export type TodoCreateManyWithoutCheckpointInput = {
+  connect?: Maybe<Array<TodoWhereUniqueInput>>;
+  create?: Maybe<Array<TodoCreateWithoutCheckpointInput>>;
 };
 
 export type TodoCreateManyWithoutOwnerInput = {
@@ -795,6 +976,18 @@ export type TodoCreateManyWithoutTagsInput = {
 
 export type TodoCreateWithoutCategoryInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpoint?: Maybe<CheckpointCreateOneWithoutTodosInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  owner: UserCreateOneWithoutTodosInput;
+  status?: Maybe<TodoStatus>;
+  tags?: Maybe<TagCreateManyWithoutTodosInput>;
+  text: Scalars['String'];
+};
+
+export type TodoCreateWithoutCheckpointInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  category: CategoryCreateOneWithoutTodosInput;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   owner: UserCreateOneWithoutTodosInput;
@@ -806,6 +999,7 @@ export type TodoCreateWithoutCategoryInput = {
 export type TodoCreateWithoutOwnerInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category: CategoryCreateOneWithoutTodosInput;
+  checkpoint?: Maybe<CheckpointCreateOneWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   status?: Maybe<TodoStatus>;
@@ -816,6 +1010,7 @@ export type TodoCreateWithoutOwnerInput = {
 export type TodoCreateWithoutTagsInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category: CategoryCreateOneWithoutTodosInput;
+  checkpoint?: Maybe<CheckpointCreateOneWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   owner: UserCreateOneWithoutTodosInput;
@@ -832,6 +1027,7 @@ export type TodoFilter = {
 export type TodoOrderByInput = {
   archivedAt?: Maybe<OrderByArg>;
   categoryId?: Maybe<OrderByArg>;
+  checkpointId?: Maybe<OrderByArg>;
   createdAt?: Maybe<OrderByArg>;
   id?: Maybe<OrderByArg>;
   ownerId?: Maybe<OrderByArg>;
@@ -843,6 +1039,7 @@ export type TodoScalarWhereInput = {
   AND?: Maybe<Array<TodoScalarWhereInput>>;
   archivedAt?: Maybe<NullableDateTimeFilter>;
   categoryId?: Maybe<StringFilter>;
+  checkpointId?: Maybe<NullableStringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<TodoScalarWhereInput>>;
@@ -880,6 +1077,18 @@ export type TodoUpdateManyWithoutCategoryInput = {
   upsert?: Maybe<Array<TodoUpsertWithWhereUniqueWithoutCategoryInput>>;
 };
 
+export type TodoUpdateManyWithoutCheckpointInput = {
+  connect?: Maybe<Array<TodoWhereUniqueInput>>;
+  create?: Maybe<Array<TodoCreateWithoutCheckpointInput>>;
+  delete?: Maybe<Array<TodoWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TodoScalarWhereInput>>;
+  disconnect?: Maybe<Array<TodoWhereUniqueInput>>;
+  set?: Maybe<Array<TodoWhereUniqueInput>>;
+  update?: Maybe<Array<TodoUpdateWithWhereUniqueWithoutCheckpointInput>>;
+  updateMany?: Maybe<Array<TodoUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TodoUpsertWithWhereUniqueWithoutCheckpointInput>>;
+};
+
 export type TodoUpdateManyWithoutOwnerInput = {
   connect?: Maybe<Array<TodoWhereUniqueInput>>;
   create?: Maybe<Array<TodoCreateWithoutOwnerInput>>;
@@ -911,6 +1120,18 @@ export type TodoUpdateManyWithWhereNestedInput = {
 
 export type TodoUpdateWithoutCategoryDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpoint?: Maybe<CheckpointUpdateOneWithoutTodosInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
+  status?: Maybe<TodoStatus>;
+  tags?: Maybe<TagUpdateManyWithoutTodosInput>;
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodoUpdateWithoutCheckpointDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
@@ -922,6 +1143,7 @@ export type TodoUpdateWithoutCategoryDataInput = {
 export type TodoUpdateWithoutOwnerDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
+  checkpoint?: Maybe<CheckpointUpdateOneWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   status?: Maybe<TodoStatus>;
@@ -932,6 +1154,7 @@ export type TodoUpdateWithoutOwnerDataInput = {
 export type TodoUpdateWithoutTagsDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   category?: Maybe<CategoryUpdateOneRequiredWithoutTodosInput>;
+  checkpoint?: Maybe<CheckpointUpdateOneWithoutTodosInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTodosInput>;
@@ -941,6 +1164,11 @@ export type TodoUpdateWithoutTagsDataInput = {
 
 export type TodoUpdateWithWhereUniqueWithoutCategoryInput = {
   data: TodoUpdateWithoutCategoryDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpdateWithWhereUniqueWithoutCheckpointInput = {
+  data: TodoUpdateWithoutCheckpointDataInput;
   where: TodoWhereUniqueInput;
 };
 
@@ -957,6 +1185,12 @@ export type TodoUpdateWithWhereUniqueWithoutTagsInput = {
 export type TodoUpsertWithWhereUniqueWithoutCategoryInput = {
   create: TodoCreateWithoutCategoryInput;
   update: TodoUpdateWithoutCategoryDataInput;
+  where: TodoWhereUniqueInput;
+};
+
+export type TodoUpsertWithWhereUniqueWithoutCheckpointInput = {
+  create: TodoCreateWithoutCheckpointInput;
+  update: TodoUpdateWithoutCheckpointDataInput;
   where: TodoWhereUniqueInput;
 };
 
@@ -977,6 +1211,8 @@ export type TodoWhereInput = {
   archivedAt?: Maybe<NullableDateTimeFilter>;
   category?: Maybe<CategoryWhereInput>;
   categoryId?: Maybe<StringFilter>;
+  checkpoint?: Maybe<CheckpointWhereInput>;
+  checkpointId?: Maybe<NullableStringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<TodoWhereInput>>;
@@ -994,6 +1230,7 @@ export type TodoWhereUniqueInput = {
 
 export type UpdateTodoInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpointId?: Maybe<Scalars['ID']>;
   id: Scalars['ID'];
   status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['ID']>>;
@@ -1002,6 +1239,7 @@ export type UpdateTodoInput = {
 
 export type UpdateTodosByIdInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  checkpointId?: Maybe<Scalars['ID']>;
   ids: Array<Scalars['ID']>;
   status?: Maybe<TodoStatus>;
   tags?: Maybe<Array<Scalars['ID']>>;
@@ -1030,6 +1268,11 @@ export type UserCreateOneWithoutCategoriesInput = {
   create?: Maybe<UserCreateWithoutCategoriesInput>;
 };
 
+export type UserCreateOneWithoutCheckpointsInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutCheckpointsInput>;
+};
+
 export type UserCreateOneWithoutTagsInput = {
   connect?: Maybe<UserWhereUniqueInput>;
   create?: Maybe<UserCreateWithoutTagsInput>;
@@ -1043,6 +1286,19 @@ export type UserCreateOneWithoutTodosInput = {
 export type UserCreateWithoutCategoriesInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
+  checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  tags?: Maybe<TagCreateManyWithoutOwnerInput>;
+  todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+};
+
+export type UserCreateWithoutCheckpointsInput = {
+  accounts?: Maybe<AccountCreateManyWithoutUserInput>;
+  avatarUrl?: Maybe<Scalars['String']>;
+  categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
   id?: Maybe<Scalars['String']>;
@@ -1055,6 +1311,7 @@ export type UserCreateWithoutTagsInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
+  checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
   id?: Maybe<Scalars['String']>;
@@ -1066,6 +1323,7 @@ export type UserCreateWithoutTodosInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
+  checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
   id?: Maybe<Scalars['String']>;
@@ -1078,6 +1336,13 @@ export type UserUpdateOneRequiredWithoutCategoriesInput = {
   create?: Maybe<UserCreateWithoutCategoriesInput>;
   update?: Maybe<UserUpdateWithoutCategoriesDataInput>;
   upsert?: Maybe<UserUpsertWithoutCategoriesInput>;
+};
+
+export type UserUpdateOneRequiredWithoutCheckpointsInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateWithoutCheckpointsInput>;
+  update?: Maybe<UserUpdateWithoutCheckpointsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCheckpointsInput>;
 };
 
 export type UserUpdateOneRequiredWithoutTagsInput = {
@@ -1097,6 +1362,19 @@ export type UserUpdateOneRequiredWithoutTodosInput = {
 export type UserUpdateWithoutCategoriesDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
+  checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
+  todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+};
+
+export type UserUpdateWithoutCheckpointsDataInput = {
+  accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
+  avatarUrl?: Maybe<Scalars['String']>;
+  categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -1109,6 +1387,7 @@ export type UserUpdateWithoutTagsDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
+  checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -1120,6 +1399,7 @@ export type UserUpdateWithoutTodosDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
   avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
+  checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -1130,6 +1410,11 @@ export type UserUpdateWithoutTodosDataInput = {
 export type UserUpsertWithoutCategoriesInput = {
   create: UserCreateWithoutCategoriesInput;
   update: UserUpdateWithoutCategoriesDataInput;
+};
+
+export type UserUpsertWithoutCheckpointsInput = {
+  create: UserCreateWithoutCheckpointsInput;
+  update: UserUpdateWithoutCheckpointsDataInput;
 };
 
 export type UserUpsertWithoutTagsInput = {
@@ -1147,6 +1432,7 @@ export type UserWhereInput = {
   AND?: Maybe<Array<UserWhereInput>>;
   avatarUrl?: Maybe<NullableStringFilter>;
   categories?: Maybe<CategoryFilter>;
+  checkpoints?: Maybe<CheckpointFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   email?: Maybe<StringFilter>;
   id?: Maybe<UuidFilter>;

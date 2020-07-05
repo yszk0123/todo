@@ -4,36 +4,49 @@ import { Box } from 'rebass';
 
 import { EditFormField } from './EditFormField';
 
-export function EditFormSelectField<T extends string>({
+const DEFAULT_VALUE = '__DEFAULT__';
+
+export function EditFormSelectField<T>({
   isFirst = false,
   selectedItem,
   items,
+  getDisplayName,
+  getValue,
   onChange,
-  parseString: parseValue,
   rightElement,
 }: {
   isFirst?: boolean;
-  selectedItem: T;
+  selectedItem: T | null;
   items: T[];
-  onChange: (item: T) => void;
-  parseString: (itemAsString: string) => T;
+  getDisplayName: (item: T) => string;
+  getValue: (item: T) => string;
+  onChange: (item: T | null) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const value = event.currentTarget.value;
-      const parsedValue = parseValue(value);
-      onChange(parsedValue);
+      const item = items.find((item) => getValue(item) === value) ?? null;
+      onChange(item);
     },
-    [onChange, parseValue]
+    [getValue, items, onChange]
   );
 
   return (
     <EditFormField isFirst={isFirst}>
       <Box sx={{ flexGrow: 1 }}>
-        <Select value={selectedItem} onChange={handleChange}>
+        <Select
+          value={selectedItem !== null ? getValue(selectedItem) : ''}
+          onChange={handleChange}
+        >
+          <option value={DEFAULT_VALUE}>-</option>
           {items.map((item) => {
-            return <option key={item}>{item}</option>;
+            const value = getValue(item);
+            return (
+              <option key={value} value={value}>
+                {getDisplayName(item)}
+              </option>
+            );
           })}
         </Select>
       </Box>

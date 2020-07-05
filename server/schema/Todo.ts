@@ -12,6 +12,8 @@ schema.objectType({
     t.model.categoryId();
     t.model.tags({ ordering: true });
     t.model.status();
+    t.model.checkpoint();
+    t.model.checkpointId();
     t.model.archivedAt();
   },
 });

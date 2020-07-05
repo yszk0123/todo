@@ -6,3 +6,4 @@ import './User';
 import './Category';
 import './Todo';
 import './Tag';
+import './Checkpoint';

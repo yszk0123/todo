@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { parseColorString } from '../../helpers/parseColorString';
+import { identity } from '../../helpers/identity';
 import { ColorBox } from '../../layout/ColorBox';
 import {
   EditForm,
@@ -22,7 +22,7 @@ export const TagEditForm: React.FunctionComponent<{
   categories: CategoryVM[];
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeColor: (color: Color) => void;
+  onChangeColor: (color: Color | null) => void;
   onCreateOneTag: () => void;
   onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;
@@ -57,8 +57,9 @@ export const TagEditForm: React.FunctionComponent<{
       />
       <EditFormInputField value={name} onChange={onChangeName} />
       <EditFormSelectField
+        getDisplayName={identity}
+        getValue={identity}
         items={colors}
-        parseString={parseColorString}
         rightElement={<ColorBox color={color} />}
         selectedItem={color}
         onChange={onChangeColor}
