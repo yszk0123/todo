@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ID } from '../../../viewModels/ID';
 import { List } from '../../layout/List';
@@ -18,10 +19,35 @@ function isOld(dateString: Date): boolean {
   return date < currentDate;
 }
 
+const statusToIndex = {
+  [TodoStatus.Todo]: 0,
+  [TodoStatus.InProgress]: 1,
+  [TodoStatus.Waiting]: 2,
+  [TodoStatus.Done]: 3,
+};
+
+const TIME_RE = /^(\d{2}:\d{2})[-~]/;
+
+function getTime(text: string): number {
+  const match = TIME_RE.exec(text);
+  return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
+}
+
+function sortTodosByContent(
+  todos: CategoryTodoFragment[]
+): CategoryTodoFragment[] {
+  return [...todos].sort((a, b) => {
+    const time = getTime(a.text) - getTime(b.text);
+    if (time !== 0) return time;
+    const status = statusToIndex[a.status] - statusToIndex[b.status];
+    return status;
+  });
+}
+
 function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
   const groupsById: Record<string, Group> = {};
 
-  todos.forEach((todo) => {
+  sortTodosByContent(todos).forEach((todo) => {
     const key = todo.checkpoint?.id ?? '__DEFAULT__';
     let group = groupsById[key];
     if (!group) {

@@ -112,7 +112,7 @@ export const CategoryTodosPageDocument = gql`
   category(id: $categoryId) {
     id
     name
-    todos(where: {archivedAt: {equals: null}}, orderBy: {status: asc}) {
+    todos(where: {archivedAt: {equals: null}}) {
       ...CategoryTodo
     }
     tags(orderBy: {name: asc}) {
