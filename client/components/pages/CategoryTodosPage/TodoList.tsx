@@ -73,7 +73,7 @@ export const TodoList: React.FunctionComponent<{
   onClickToggle: (item: CategoryTodoFragment) => void;
   selectedTodoIds: ID[];
   todos: CategoryTodoFragment[];
-}> = ({ todos, selectedTodoIds, onClick, onClickToggle, onClickStatus }) => {
+}> = ({ onClick, onClickStatus, onClickToggle, selectedTodoIds, todos }) => {
   const groups = React.useMemo(() => groupByCheckpoint(todos), [todos]);
 
   return (

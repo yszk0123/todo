@@ -12,7 +12,7 @@ type Props = {
 export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { loading, data } = useCategoryTodosReportPageQuery({
+  const { data, loading } = useCategoryTodosReportPageQuery({
     variables: { categoryId },
   });
 

@@ -15,7 +15,7 @@ export const TodoListItem: React.FunctionComponent<{
   onClickStatus: (todo: CategoryTodoFragment) => void;
   onClickToggle: (todo: CategoryTodoFragment) => void;
   todo: CategoryTodoFragment;
-}> = ({ isSelected, todo, onClick, onClickToggle, onClickStatus }) => {
+}> = ({ isSelected, onClick, onClickStatus, onClickToggle, todo }) => {
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();

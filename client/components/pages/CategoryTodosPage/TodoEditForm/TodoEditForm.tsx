@@ -27,17 +27,17 @@ const NoneForm: React.FunctionComponent<{
   tags: CategoryTagFragment[] | null;
   text: string;
 }> = ({
-  text,
-  tags,
-  status,
   categoryTags,
-  checkpoints,
   checkpoint,
+  checkpoints,
   onChangeText,
   onCreateOneTodo,
-  onToggleTag,
-  onSelectStatus,
   onSelectCheckpoint,
+  onSelectStatus,
+  onToggleTag,
+  status,
+  tags,
+  text,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Create', onClick: onCreateOneTodo },
@@ -80,19 +80,19 @@ const SingleForm: React.FunctionComponent<{
   tags: CategoryTagFragment[] | null;
   text: string;
 }> = ({
-  text,
-  tags,
-  status,
   categoryTags,
-  checkpoints,
   checkpoint,
-  onChangeText,
-  onUpdateOneTodo,
-  onDeleteOneTodo,
+  checkpoints,
   onArchiveTodo,
-  onToggleTag,
-  onSelectStatus,
+  onChangeText,
+  onDeleteOneTodo,
   onSelectCheckpoint,
+  onSelectStatus,
+  onToggleTag,
+  onUpdateOneTodo,
+  status,
+  tags,
+  text,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
@@ -135,17 +135,17 @@ const MultiForm: React.FunctionComponent<{
   status: TodoStatus | null;
   tags: CategoryTagFragment[] | null;
 }> = ({
-  tags,
-  status,
   categoryTags,
-  checkpoints,
   checkpoint,
-  onUpdateOneTodo,
-  onDeleteOneTodo,
+  checkpoints,
   onArchiveTodo,
-  onToggleTag,
-  onSelectStatus,
+  onDeleteOneTodo,
   onSelectCheckpoint,
+  onSelectStatus,
+  onToggleTag,
+  onUpdateOneTodo,
+  status,
+  tags,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
@@ -191,21 +191,21 @@ export const TodoEditForm: React.FunctionComponent<{
   tags: CategoryTagFragment[] | null;
   text: string;
 }> = ({
-  text,
-  tags,
-  status,
-  checkpoints,
-  checkpoint,
   categoryTags,
-  selectMode,
+  checkpoint,
+  checkpoints,
+  onArchiveTodo,
   onChangeText,
   onCreateOneTodo,
-  onUpdateOneTodo,
   onDeleteOneTodo,
-  onArchiveTodo,
-  onToggleTag,
-  onSelectStatus,
   onSelectCheckpoint,
+  onSelectStatus,
+  onToggleTag,
+  onUpdateOneTodo,
+  selectMode,
+  status,
+  tags,
+  text,
 }) => {
   switch (selectMode) {
     case SelectMode.NONE: {

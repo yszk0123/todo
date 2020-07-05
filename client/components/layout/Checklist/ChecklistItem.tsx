@@ -6,9 +6,9 @@ import { preventDefault } from '../../../handlers/preventDefault';
 import { DisplayableVM } from '../../../viewModels/DisplayableVM';
 
 export function ChecklistItem<T extends DisplayableVM>({
-  item,
-  isFirst,
   isChecked,
+  isFirst,
+  item,
   onClick,
 }: {
   isChecked: boolean;

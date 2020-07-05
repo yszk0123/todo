@@ -5,10 +5,10 @@ import { Flex } from 'rebass';
 import { EditFormField } from './EditFormField';
 
 function EditFormRadioFieldItem<T>({
-  label,
-  item,
-  onClick,
   isChecked,
+  item,
+  label,
+  onClick,
 }: {
   isChecked: boolean;
   item: T;
@@ -32,10 +32,10 @@ function EditFormRadioFieldItem<T>({
 }
 
 export function EditFormRadioField<T extends string>({
-  selectedItem,
   items,
   onClick,
   rightElement,
+  selectedItem,
 }: {
   items: T[];
   onClick: (item: T) => void;

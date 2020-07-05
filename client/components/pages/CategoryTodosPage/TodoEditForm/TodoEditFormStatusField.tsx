@@ -12,8 +12,8 @@ const statuses: TodoStatus[] = [
 ];
 
 export function TodoEditFormStatusField({
-  status,
   onSelectStatus,
+  status,
 }: {
   onSelectStatus: (status: TodoStatus) => void;
   status: TodoStatus | null;

@@ -8,7 +8,7 @@ export const Navigation: React.FunctionComponent<{
   avatarUrl: string | null;
   hasSession: boolean;
   username: string | null;
-}> = ({ hasSession, username, avatarUrl }) => {
+}> = ({ avatarUrl, hasSession, username }) => {
   return (
     <Flex
       alignItems="center"

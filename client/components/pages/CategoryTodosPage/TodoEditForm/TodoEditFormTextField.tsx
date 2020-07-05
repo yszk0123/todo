@@ -7,7 +7,7 @@ type Props = {
   text: string;
 };
 
-export function TodoEditFormTextField({ text, onChangeText }: Props) {
+export function TodoEditFormTextField({ onChangeText, text }: Props) {
   const handleChangeText = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const text = event.currentTarget.value;

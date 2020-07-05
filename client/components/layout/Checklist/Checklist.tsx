@@ -6,8 +6,8 @@ import { createLookupTable } from '../../helpers/createLookupTable';
 import { ChecklistItem } from './ChecklistItem';
 
 export function Checklist<T extends DisplayableVM>({
-  items,
   checkedItems,
+  items,
   onClick,
 }: {
   checkedItems: T[];

@@ -5,9 +5,9 @@ import { Badge } from '../../../layout/Badge';
 import { EditFormChecklistField } from '../../../layout/EditForm';
 
 export function TodoEditFormTagsField({
-  tags,
   categoryTags,
   onToggleTag,
+  tags,
 }: {
   categoryTags: CategoryTagFragment[];
   onToggleTag: (tag: CategoryTagFragment) => void;

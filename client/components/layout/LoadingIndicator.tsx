@@ -60,8 +60,8 @@ const AnimatedCircle = ({
 };
 
 const Circle = ({
-  r,
   color,
+  r,
   w,
   ...props
 }: BoxProps & { color: string; r: number; w: number }) => {

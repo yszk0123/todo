@@ -9,7 +9,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   categoryId: ID;
   categoryName: string | null;
   count: number;
-}> = ({ categoryId, categoryName, categories, count }) => {
+}> = ({ categories, categoryId, categoryName, count }) => {
   return (
     <StatusBar
       left={[

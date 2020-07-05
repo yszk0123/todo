@@ -8,7 +8,7 @@ export const Link: React.FunctionComponent<{
   as: string;
   href: string;
   text: string;
-}> = ({ href, as, text }) => {
+}> = ({ as, href, text }) => {
   return (
     <NextLink as={as} href={href} passHref>
       <RebassLink onClick={stopPropagation}>{text}</RebassLink>

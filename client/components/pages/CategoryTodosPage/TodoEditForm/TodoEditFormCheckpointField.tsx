@@ -7,8 +7,8 @@ import { getDisplayNameFromCheckpoint } from './getDisplayNameFromCheckpoint';
 import { getValueFromCheckpoint } from './getValueFromCheckpoint';
 
 export function TodoEditFormCheckpointField({
-  checkpoints,
   checkpoint,
+  checkpoints,
   onSelectCheckpoint,
 }: {
   checkpoint: RootCheckpointFragment | null;

@@ -6,7 +6,7 @@ import { EditFormField } from './EditFormField';
 export const EditFormInputField: React.FunctionComponent<{
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
-}> = ({ value, onChange }) => {
+}> = ({ onChange, value }) => {
   return (
     <EditFormField>
       <Input value={value} onChange={onChange} />

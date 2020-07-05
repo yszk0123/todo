@@ -28,17 +28,17 @@ export const TagEditForm: React.FunctionComponent<{
   onUpdateOneTag: () => void;
   tagCategories: CategoryVM[];
 }> = ({
-  name,
-  color,
-  tagCategories,
   categories,
+  color,
   isSelected,
-  onChangeName,
+  name,
   onChangeColor,
+  onChangeName,
   onCreateOneTag,
-  onUpdateOneTag,
   onDeleteOneTag,
   onToggleCategory,
+  onUpdateOneTag,
+  tagCategories,
 }) => {
   const actions: EditFormAction[] = isSelected
     ? [

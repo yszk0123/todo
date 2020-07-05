@@ -2,7 +2,11 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'simple-import-sort'],
+  plugins: [
+    '@typescript-eslint',
+    'simple-import-sort',
+    'sort-destructure-keys',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -25,6 +29,7 @@ module.exports = {
       'error',
       { callbacksLast: true, ignoreCase: true },
     ],
+    'sort-destructure-keys/sort-destructure-keys': 'error',
     'simple-import-sort/sort': 'error',
   },
   settings: {

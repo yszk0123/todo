@@ -8,7 +8,7 @@ import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 export const TodoListStatus: React.FunctionComponent<{
   onClick: () => void;
   status: TodoStatus;
-}> = ({ status, onClick }) => {
+}> = ({ onClick, status }) => {
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {
       event.stopPropagation();

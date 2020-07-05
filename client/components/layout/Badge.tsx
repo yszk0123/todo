@@ -4,7 +4,7 @@ import { Box } from 'rebass';
 export const Badge: React.FunctionComponent<{
   color?: string;
   text: string;
-}> = ({ text, color = 'gray' }) => {
+}> = ({ color = 'gray', text }) => {
   return (
     <Box
       sx={{

@@ -55,7 +55,7 @@ type Props = {
 export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { loading, data, refetch } = useCategoryTodosPageQuery({
+  const { data, loading, refetch } = useCategoryTodosPageQuery({
     variables: { categoryId },
     fetchPolicy: 'cache-and-network',
   });

@@ -8,7 +8,7 @@ export const CategoryListItem: React.FunctionComponent<{
   category: RootCategoryFragment;
   isActive: boolean;
   onClick: (category: RootCategoryFragment) => void;
-}> = ({ isActive, category, onClick }) => {
+}> = ({ category, isActive, onClick }) => {
   return (
     <ListItem
       isActive={isActive}

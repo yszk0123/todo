@@ -8,7 +8,7 @@ export const CheckpointListItem: React.FunctionComponent<{
   checkpoint: RootCheckpointFragment;
   isActive: boolean;
   onClick: (checkpoint: RootCheckpointFragment) => void;
-}> = ({ isActive, checkpoint, onClick }) => {
+}> = ({ checkpoint, isActive, onClick }) => {
   return (
     <ListItem
       isActive={isActive}

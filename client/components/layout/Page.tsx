@@ -10,7 +10,7 @@ export const Page: React.FunctionComponent<{
   hasSession: boolean;
   isLoading: boolean;
   username: string | null;
-}> = ({ isLoading, hasSession, username, avatarUrl, content }) => {
+}> = ({ avatarUrl, content, hasSession, isLoading, username }) => {
   if (isLoading) {
     return <LoadingIndicator />;
   }

@@ -17,7 +17,7 @@ function convertIntoDateString(value: Date | null): string {
 export const EditFormDateTimeInputField: React.FunctionComponent<{
   onChange: (value: Date | null) => void;
   value: Date | null;
-}> = ({ value, onChange }) => {
+}> = ({ onChange, value }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;

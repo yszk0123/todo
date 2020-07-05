@@ -9,7 +9,7 @@ export const PageContainer: React.FunctionComponent<EmptyProps> = ({
   children,
 }) => {
   const [session, isSessionLoading] = useSession();
-  const { loading: isQueryLoading, data } = useIndexPageQuery();
+  const { data, loading: isQueryLoading } = useIndexPageQuery();
   const hasSession = !!session;
   const isLoading = isSessionLoading || isQueryLoading;
 

@@ -4,9 +4,9 @@ import { Box, Flex, Text } from 'rebass';
 export function ListItem<T>({
   isActive,
   item,
-  onClick,
   leftElement,
   mainElement,
+  onClick,
   rightElement,
 }: {
   isActive: boolean;

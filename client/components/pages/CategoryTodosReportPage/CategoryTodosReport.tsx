@@ -10,7 +10,7 @@ import { printTodosReport } from './printTodosReport';
 export const CategoryTodosReport: React.FunctionComponent<{
   tags: CategoryTodosReportPageTagFragment[];
   todos: CategoryTodosReportPageTodoFragment[];
-}> = ({ todos, tags }) => {
+}> = ({ tags, todos }) => {
   const output = React.useMemo(() => printTodosReport(todos, tags), [
     todos,
     tags,

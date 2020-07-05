@@ -6,7 +6,7 @@ export const NavigationLink: React.FunctionComponent<{
   as?: string;
   href: string;
   text: string;
-}> = ({ href, as, text }) => {
+}> = ({ as, href, text }) => {
   return (
     <NextLink as={as} href={href} passHref>
       <RebassLink mr={1} variant="nav">

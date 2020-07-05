@@ -9,7 +9,7 @@ export const TagList: React.FunctionComponent<{
   currentTagId: ID | null;
   onClick: (tag: RootTagFragment) => void;
   tags: RootTagFragment[];
-}> = ({ tags, currentTagId, onClick }) => {
+}> = ({ currentTagId, onClick, tags }) => {
   return (
     <List>
       {tags.map((tag) => {

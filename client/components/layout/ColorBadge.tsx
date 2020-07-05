@@ -7,7 +7,7 @@ import { Badge } from './Badge';
 export const ColorBadge: React.FunctionComponent<{
   color: Color;
   text: string;
-}> = ({ text, color }) => {
+}> = ({ color, text }) => {
   const colorCode = getColorCode(color);
 
   return <Badge color={colorCode} text={text} />;

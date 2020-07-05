@@ -13,7 +13,7 @@ const EditFormButton: React.FunctionComponent<{
   isPrimary: boolean;
   label: string;
   onClick: () => void;
-}> = ({ label, onClick, isFirst, isPrimary }) => {
+}> = ({ isFirst, isPrimary, label, onClick }) => {
   return (
     <Button
       sx={{ flexGrow: isPrimary ? 1 : undefined, ml: isFirst ? 0 : 2 }}

@@ -15,12 +15,12 @@ export const CategoryEditForm: React.FunctionComponent<{
   onDeleteOneCategory: () => void;
   onUpdateOneCategory: () => void;
 }> = ({
-  name,
   isSelected,
+  name,
   onChangeName,
   onCreateOneCategory,
-  onUpdateOneCategory,
   onDeleteOneCategory,
+  onUpdateOneCategory,
 }) => {
   const actions: EditFormAction[] = isSelected
     ? [

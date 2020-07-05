@@ -19,15 +19,15 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onDeleteOneCheckpoint: () => void;
   onUpdateOneCheckpoint: () => void;
 }> = ({
-  name,
   endAt,
   isSelected,
-  onChangeName,
-  onChangeEndAt,
-  onCreateOneCheckpoint,
-  onUpdateOneCheckpoint,
+  name,
   onArchiveOneCheckpoint,
+  onChangeEndAt,
+  onChangeName,
+  onCreateOneCheckpoint,
   onDeleteOneCheckpoint,
+  onUpdateOneCheckpoint,
 }) => {
   const actions: EditFormAction[] = isSelected
     ? [

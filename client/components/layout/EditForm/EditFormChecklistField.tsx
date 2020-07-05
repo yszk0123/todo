@@ -5,8 +5,8 @@ import { Checklist } from '../Checklist';
 import { EditFormField } from './EditFormField';
 
 export function EditFormChecklistField<T extends DisplayableVM>({
-  items,
   checkedItems,
+  items,
   onClick,
   rightElement,
 }: {

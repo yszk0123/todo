@@ -3,7 +3,7 @@ import { Box, Flex } from 'rebass';
 
 export const EditFormField: React.FunctionComponent<{
   rightElement?: JSX.Element | null;
-}> = ({ rightElement, children }) => {
+}> = ({ children, rightElement }) => {
   return (
     <Flex
       alignItems="center"

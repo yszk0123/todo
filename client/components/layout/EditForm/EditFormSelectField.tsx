@@ -7,12 +7,12 @@ import { EditFormField } from './EditFormField';
 const DEFAULT_VALUE = '__DEFAULT__';
 
 export function EditFormSelectField<T>({
-  selectedItem,
-  items,
   getDisplayName,
   getValue,
+  items,
   onChange,
   rightElement,
+  selectedItem,
 }: {
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;

@@ -10,10 +10,10 @@ type Props = {
 };
 
 export const List: React.FunctionComponent<Props> = ({
+  children,
   leftElement,
   rightElement,
   variant = 'gray',
-  children,
 }) => {
   const hasHeader = !!leftElement || !!rightElement;
 
