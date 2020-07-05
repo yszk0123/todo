@@ -14,12 +14,12 @@ export function EditFormSelectField<T>({
   onChange,
   rightElement,
 }: {
-  selectedItem: T | null;
-  items: T[];
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
+  items: T[];
   onChange: (item: T | null) => void;
   rightElement?: JSX.Element | null;
+  selectedItem: T | null;
 }): JSX.Element {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {

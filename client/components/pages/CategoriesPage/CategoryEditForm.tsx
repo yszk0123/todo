@@ -8,12 +8,12 @@ import {
 } from '../../layout/EditForm';
 
 export const CategoryEditForm: React.FunctionComponent<{
-  name: string;
   isSelected: boolean;
+  name: string;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneCategory: () => void;
-  onUpdateOneCategory: () => void;
   onDeleteOneCategory: () => void;
+  onUpdateOneCategory: () => void;
 }> = ({
   name,
   isSelected,

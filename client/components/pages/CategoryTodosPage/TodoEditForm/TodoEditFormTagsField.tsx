@@ -9,9 +9,9 @@ export function TodoEditFormTagsField({
   categoryTags,
   onToggleTag,
 }: {
-  tags: CategoryTagFragment[] | null;
   categoryTags: CategoryTagFragment[];
   onToggleTag: (tag: CategoryTagFragment) => void;
+  tags: CategoryTagFragment[] | null;
 }): JSX.Element | null {
   if (categoryTags.length === 0) {
     return null;

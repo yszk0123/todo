@@ -10,8 +10,8 @@ export function EditFormChecklistField<T extends DisplayableVM>({
   onClick,
   rightElement,
 }: {
-  items: T[];
   checkedItems: T[];
+  items: T[];
   onClick: (item: T) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {

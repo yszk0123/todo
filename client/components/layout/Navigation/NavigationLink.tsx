@@ -3,8 +3,8 @@ import React from 'react';
 import { Link as RebassLink, Text } from 'rebass';
 
 export const NavigationLink: React.FunctionComponent<{
-  href: string;
   as?: string;
+  href: string;
   text: string;
 }> = ({ href, as, text }) => {
   return (

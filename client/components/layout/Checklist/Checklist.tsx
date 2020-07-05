@@ -10,8 +10,8 @@ export function Checklist<T extends DisplayableVM>({
   checkedItems,
   onClick,
 }: {
-  items: T[];
   checkedItems: T[];
+  items: T[];
   onClick: (item: T) => void;
 }): JSX.Element {
   const lookupTable = React.useMemo(() => createLookupTable(checkedItems), [

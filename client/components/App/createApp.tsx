@@ -10,8 +10,8 @@ import { theme } from '../../theme/theme';
 import { PageContainer } from './PageContainer';
 
 type PageProps = {
-  session: unknown;
   [key: string]: unknown;
+  session: unknown;
 };
 
 type Component = React.Factory<PageProps>;

@@ -11,9 +11,9 @@ export function ChecklistItem<T extends DisplayableVM>({
   isChecked,
   onClick,
 }: {
-  item: T;
-  isFirst: boolean;
   isChecked: boolean;
+  isFirst: boolean;
+  item: T;
   onClick: (item: T) => void;
 }): JSX.Element {
   const handleClick = React.useCallback(

@@ -11,9 +11,9 @@ export function ListItem<T>({
 }: {
   isActive: boolean;
   item: T;
-  onClick: (item: T) => void;
   leftElement?: JSX.Element | null;
   mainElement: JSX.Element | string;
+  onClick: (item: T) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   const handleClick = React.useCallback(() => {

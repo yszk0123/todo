@@ -11,8 +11,8 @@ export function TodoEditFormCheckpointField({
   checkpoint,
   onSelectCheckpoint,
 }: {
-  checkpoints: RootCheckpointFragment[];
   checkpoint: RootCheckpointFragment | null;
+  checkpoints: RootCheckpointFragment[];
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
 }): JSX.Element {
   return (

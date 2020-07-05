@@ -11,10 +11,10 @@ import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
   isSelected: boolean;
-  todo: CategoryTodoFragment;
   onClick: (todo: CategoryTodoFragment) => void;
-  onClickToggle: (todo: CategoryTodoFragment) => void;
   onClickStatus: (todo: CategoryTodoFragment) => void;
+  onClickToggle: (todo: CategoryTodoFragment) => void;
+  todo: CategoryTodoFragment;
 }> = ({ isSelected, todo, onClick, onClickToggle, onClickStatus }) => {
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {

@@ -11,12 +11,12 @@ export enum StatusBarItemType {
 
 export type StatusBarItem =
   | {
-      type: StatusBarItemType.TEXT;
       content: string;
+      type: StatusBarItemType.TEXT;
     }
   | {
+      content: { as: string; href: string; text: string };
       type: StatusBarItemType.LINK;
-      content: { href: string; as: string; text: string };
     };
 
 const StatusBarItemView: React.FunctionComponent<{

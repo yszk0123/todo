@@ -10,9 +10,9 @@ function EditFormRadioFieldItem<T>({
   onClick,
   isChecked,
 }: {
-  label: string;
-  item: T;
   isChecked: boolean;
+  item: T;
+  label: string;
   onClick: (item: T) => void;
 }): JSX.Element {
   const handleClick = React.useCallback(() => {
@@ -37,10 +37,10 @@ export function EditFormRadioField<T extends string>({
   onClick,
   rightElement,
 }: {
-  selectedItem: T | null;
   items: T[];
   onClick: (item: T) => void;
   rightElement?: JSX.Element | null;
+  selectedItem: T | null;
 }): JSX.Element {
   return (
     <EditFormField rightElement={rightElement}>

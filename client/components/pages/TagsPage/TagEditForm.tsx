@@ -16,17 +16,17 @@ import {
 const colors = Object.values(Color);
 
 export const TagEditForm: React.FunctionComponent<{
-  name: string;
-  color: Color;
-  tagCategories: CategoryVM[];
   categories: CategoryVM[];
+  color: Color;
   isSelected: boolean;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  name: string;
   onChangeColor: (color: Color | null) => void;
+  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneTag: () => void;
-  onUpdateOneTag: () => void;
   onDeleteOneTag: () => void;
   onToggleCategory: (category: CategoryVM) => void;
+  onUpdateOneTag: () => void;
+  tagCategories: CategoryVM[];
 }> = ({
   name,
   color,

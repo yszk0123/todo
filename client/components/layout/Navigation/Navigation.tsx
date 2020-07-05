@@ -5,9 +5,9 @@ import { Avatar } from './Avatar';
 import { NavigationLink } from './NavigationLink';
 
 export const Navigation: React.FunctionComponent<{
+  avatarUrl: string | null;
   hasSession: boolean;
   username: string | null;
-  avatarUrl: string | null;
 }> = ({ hasSession, username, avatarUrl }) => {
   return (
     <Flex

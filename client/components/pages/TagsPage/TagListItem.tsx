@@ -5,8 +5,8 @@ import { ListItem } from '../../layout/List';
 
 export const TagListItem: React.FunctionComponent<{
   isActive: boolean;
-  tag: RootTagFragment;
   onClick: (tag: RootTagFragment) => void;
+  tag: RootTagFragment;
 }> = ({ isActive, tag, onClick }) => {
   return (
     <ListItem

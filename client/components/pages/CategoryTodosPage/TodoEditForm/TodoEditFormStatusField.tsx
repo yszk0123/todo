@@ -15,8 +15,8 @@ export function TodoEditFormStatusField({
   status,
   onSelectStatus,
 }: {
-  status: TodoStatus | null;
   onSelectStatus: (status: TodoStatus) => void;
+  status: TodoStatus | null;
 }): JSX.Element {
   return (
     <EditFormRadioField

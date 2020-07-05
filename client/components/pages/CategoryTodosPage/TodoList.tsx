@@ -9,7 +9,7 @@ import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 import { TodoListItem } from './TodoListItem';
 
 type Group = {
-  header: { name: string | null; endAt: Date | null; isOld: boolean };
+  header: { endAt: Date | null; isOld: boolean; name: string | null };
   todos: CategoryTodoFragment[];
 };
 
@@ -68,11 +68,11 @@ function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
 }
 
 export const TodoList: React.FunctionComponent<{
-  todos: CategoryTodoFragment[];
-  selectedTodoIds: ID[];
   onClick: (item: CategoryTodoFragment) => void;
-  onClickToggle: (item: CategoryTodoFragment) => void;
   onClickStatus: (todo: CategoryTodoFragment) => void;
+  onClickToggle: (item: CategoryTodoFragment) => void;
+  selectedTodoIds: ID[];
+  todos: CategoryTodoFragment[];
 }> = ({ todos, selectedTodoIds, onClick, onClickToggle, onClickStatus }) => {
   const groups = React.useMemo(() => groupByCheckpoint(todos), [todos]);
 

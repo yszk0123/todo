@@ -5,9 +5,9 @@
 import { PrismaClient, User } from '@prisma/client';
 
 interface Profile {
-  name: string;
   email: string;
   image: string;
+  name: string;
 }
 
 export function createPrismaAdapter({ client }: { client: PrismaClient }) {

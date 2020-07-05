@@ -9,15 +9,15 @@ import {
 } from '../../layout/EditForm';
 
 export const CheckpointEditForm: React.FunctionComponent<{
-  name: string | null;
   endAt: Date | null;
   isSelected: boolean;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
-  onChangeEndAt: (endAt: Date | null) => void;
-  onCreateOneCheckpoint: () => void;
-  onUpdateOneCheckpoint: () => void;
+  name: string | null;
   onArchiveOneCheckpoint: () => void;
+  onChangeEndAt: (endAt: Date | null) => void;
+  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onCreateOneCheckpoint: () => void;
   onDeleteOneCheckpoint: () => void;
+  onUpdateOneCheckpoint: () => void;
 }> = ({
   name,
   endAt,

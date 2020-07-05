@@ -3,8 +3,8 @@ import React from 'react';
 import { EditFormInputField } from '../../../layout/EditForm';
 
 type Props = {
-  text: string;
   onChangeText: (text: string) => void;
+  text: string;
 };
 
 export function TodoEditFormTextField({ text, onChangeText }: Props) {

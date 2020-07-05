@@ -5,8 +5,8 @@ import { Link as RebassLink } from 'rebass';
 import { stopPropagation } from '../../handlers/stopPropagation';
 
 export const Link: React.FunctionComponent<{
-  href: string;
   as: string;
+  href: string;
   text: string;
 }> = ({ href, as, text }) => {
   return (

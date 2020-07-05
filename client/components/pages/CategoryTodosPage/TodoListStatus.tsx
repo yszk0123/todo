@@ -6,8 +6,8 @@ import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 
 export const TodoListStatus: React.FunctionComponent<{
-  status: TodoStatus;
   onClick: () => void;
+  status: TodoStatus;
 }> = ({ status, onClick }) => {
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {

@@ -5,9 +5,9 @@ import { ID } from '../../../viewModels/ID';
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
 export const TodoStatusBar: React.FunctionComponent<{
+  categories: RootCategoryFragment[];
   categoryId: ID;
   categoryName: string | null;
-  categories: RootCategoryFragment[];
   count: number;
 }> = ({ categoryId, categoryName, categories, count }) => {
   return (

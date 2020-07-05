@@ -9,8 +9,8 @@ if (secret === '__NULL__') {
 }
 
 export type Token = {
-  user: User;
   account: Account;
+  user: User;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

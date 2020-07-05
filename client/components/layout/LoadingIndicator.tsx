@@ -28,11 +28,11 @@ const AnimatedCircle = ({
   duration,
   ...props
 }: BoxProps & {
+  color: string;
   delay?: number;
   duration: number;
   r: number;
   w: number;
-  color: string;
 }) => {
   const sx = React.useMemo(() => {
     return {
@@ -64,7 +64,7 @@ const Circle = ({
   color,
   w,
   ...props
-}: BoxProps & { r: number; w: number; color: string }) => {
+}: BoxProps & { color: string; r: number; w: number }) => {
   return (
     <Box
       {...props}

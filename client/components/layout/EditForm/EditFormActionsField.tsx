@@ -9,10 +9,10 @@ export type EditFormAction = {
 };
 
 const EditFormButton: React.FunctionComponent<{
-  label: string;
-  onClick: () => void;
   isFirst: boolean;
   isPrimary: boolean;
+  label: string;
+  onClick: () => void;
 }> = ({ label, onClick, isFirst, isPrimary }) => {
   return (
     <Button

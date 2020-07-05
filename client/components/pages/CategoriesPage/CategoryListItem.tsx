@@ -5,8 +5,8 @@ import { ListItem } from '../../layout/List';
 import { GoToTodoLink } from './GoToTodoLink';
 
 export const CategoryListItem: React.FunctionComponent<{
-  isActive: boolean;
   category: RootCategoryFragment;
+  isActive: boolean;
   onClick: (category: RootCategoryFragment) => void;
 }> = ({ isActive, category, onClick }) => {
   return (

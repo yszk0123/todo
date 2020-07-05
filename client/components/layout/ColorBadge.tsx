@@ -5,8 +5,8 @@ import { getColorCode } from '../helpers/getColorCode';
 import { Badge } from './Badge';
 
 export const ColorBadge: React.FunctionComponent<{
-  text: string;
   color: Color;
+  text: string;
 }> = ({ text, color }) => {
   const colorCode = getColorCode(color);
 

@@ -5,11 +5,11 @@ import { LoadingIndicator } from './LoadingIndicator';
 import { Navigation } from './Navigation';
 
 export const Page: React.FunctionComponent<{
-  isLoading: boolean;
-  hasSession: boolean;
-  username: string | null;
   avatarUrl: string | null;
   content: React.ReactNode;
+  hasSession: boolean;
+  isLoading: boolean;
+  username: string | null;
 }> = ({ isLoading, hasSession, username, avatarUrl, content }) => {
   if (isLoading) {
     return <LoadingIndicator />;

@@ -6,9 +6,9 @@ import { List } from '../../layout/List';
 import { TagListItem } from './TagListItem';
 
 export const TagList: React.FunctionComponent<{
-  tags: RootTagFragment[];
   currentTagId: ID | null;
   onClick: (tag: RootTagFragment) => void;
+  tags: RootTagFragment[];
 }> = ({ tags, currentTagId, onClick }) => {
   return (
     <List>

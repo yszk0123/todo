@@ -5,8 +5,8 @@ import { ListItem } from '../../layout/List';
 import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 
 export const CheckpointListItem: React.FunctionComponent<{
-  isActive: boolean;
   checkpoint: RootCheckpointFragment;
+  isActive: boolean;
   onClick: (checkpoint: RootCheckpointFragment) => void;
 }> = ({ isActive, checkpoint, onClick }) => {
   return (
