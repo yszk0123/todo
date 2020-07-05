@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  CategoryCreateInput,
-  CategoryUpdateInput,
-  CategoryWhereUniqueInput,
-} from '../../../graphql/__generated__/baseTypes';
+import { CategoryCreateInput } from '../../../graphql/__generated__/baseTypes';
 import {
   useCategoriesPageQuery,
   useCreateOneCategoryMutation,
@@ -77,16 +73,15 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const handleDeleteOneCategory = React.useCallback(() => {
     if (!currentCategoryId) return;
     if (!confirm('Delete?')) return;
-    const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     deselect();
-    deleteOneCategory({ variables: { where } });
+    deleteOneCategory({ variables: { where: { id: currentCategoryId } } });
   }, [deselect, deleteOneCategory, currentCategoryId]);
 
   const handleUpdateOneCategory = React.useCallback(() => {
     if (!currentCategoryId) return;
-    const newData: CategoryUpdateInput = { name };
-    const where: CategoryWhereUniqueInput = { id: currentCategoryId };
-    updateOneCategory({ variables: { data: newData, where } });
+    updateOneCategory({
+      variables: { data: { name }, where: { id: currentCategoryId } },
+    });
   }, [name, updateOneCategory, currentCategoryId]);
 
   const handleChangeName = React.useCallback(
