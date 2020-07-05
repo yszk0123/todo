@@ -28,6 +28,19 @@ function first<T>(values: T[]): T | undefined {
   return values[0];
 }
 
+function getNextStatus(status: TodoStatus): TodoStatus {
+  switch (status) {
+    case TodoStatus.Todo:
+      return TodoStatus.InProgress;
+    case TodoStatus.InProgress:
+      return TodoStatus.Done;
+    case TodoStatus.Waiting:
+      return TodoStatus.InProgress;
+    case TodoStatus.Done:
+      return TodoStatus.Todo;
+  }
+}
+
 // FIXME
 const DUMMY_CHECKPOINT: RootCheckpointFragment = {
   id: '__DUMMY__',
@@ -158,8 +171,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
 
   const handleToggleStatus = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      const newStatus =
-        todo.status === TodoStatus.Done ? TodoStatus.Todo : TodoStatus.Done;
+      const newStatus = getNextStatus(todo.status);
       const input: UpdateTodosByIdInput = {
         ids: [todo.id],
         status: newStatus,
