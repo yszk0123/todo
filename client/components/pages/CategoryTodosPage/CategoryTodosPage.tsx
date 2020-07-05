@@ -28,6 +28,13 @@ function first<T>(values: T[]): T | undefined {
   return values[0];
 }
 
+// FIXME
+const DUMMY_CHECKPOINT: RootCheckpointFragment = {
+  id: '__DUMMY__',
+  name: 'RESET',
+  endAt: null,
+};
+
 type Props = {
   categoryId: ID;
 };
@@ -111,8 +118,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         category: { connect: { id: categoryId } },
         tags: newTags ? { connect: newTags } : undefined,
         text,
-        status,
-        checkpoint: checkpoint ? { connect: { id: checkpoint.id } } : undefined,
+        status: status ?? TodoStatus.Todo,
+        checkpoint:
+          checkpoint && checkpoint !== DUMMY_CHECKPOINT
+            ? { connect: { id: checkpoint.id } }
+            : undefined,
       };
       deselect();
       createOneTodo({ variables: { input } });
@@ -147,7 +157,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       tags: tagIds,
       status: status ? status : undefined,
       checkpointId:
-        checkpoint === null ? null : checkpoint ? checkpoint.id : undefined,
+        checkpoint === DUMMY_CHECKPOINT
+          ? null
+          : checkpoint
+          ? checkpoint.id
+          : undefined,
     };
     updateTodosById({ variables: { input } });
   }, [selectedTodoIds, tags, text, status, checkpoint, updateTodosById]);
@@ -188,6 +202,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     []
   );
 
+  const checkpointsWithDummy = React.useMemo(
+    () => [DUMMY_CHECKPOINT, ...(data?.checkpoints ?? [])],
+    [data?.checkpoints]
+  );
+
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
   }
@@ -195,7 +214,6 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
-  const checkpoints = data.checkpoints ?? [];
   const count = selectedTodoIds.length;
   const selectMode =
     count === 0
@@ -225,7 +243,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       <TodoEditForm
         categoryTags={categoryTags}
         checkpoint={checkpoint}
-        checkpoints={checkpoints}
+        checkpoints={checkpointsWithDummy}
         isTagsChanged={tags !== null}
         selectMode={selectMode}
         status={status}
