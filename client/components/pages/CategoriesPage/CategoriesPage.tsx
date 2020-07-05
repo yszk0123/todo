@@ -10,8 +10,8 @@ import {
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
-import { ContentWrapper } from '../../layout/ContentWrapper';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { PageContent } from '../../layout/PageContent';
 import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
@@ -99,7 +99,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const categories = data.categories ?? [];
 
   return (
-    <ContentWrapper onClick={handleDeselectCategory}>
+    <PageContent onClick={handleDeselectCategory}>
       <CategoryStatusBar count={categories.length} />
       <CategoryList
         categories={categories}
@@ -114,6 +114,6 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
         onDeleteOneCategory={handleDeleteOneCategory}
         onUpdateOneCategory={handleUpdateOneCategory}
       />
-    </ContentWrapper>
+    </PageContent>
   );
 };

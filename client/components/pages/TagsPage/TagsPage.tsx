@@ -16,8 +16,8 @@ import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTa
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
-import { ContentWrapper } from '../../layout/ContentWrapper';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { PageContent } from '../../layout/PageContent';
 import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
 import { TagStatusBar } from './TagStatusBar';
@@ -136,7 +136,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const categories = data.categories ?? [];
 
   return (
-    <ContentWrapper onClick={handleDeselectTag}>
+    <PageContent onClick={handleDeselectTag}>
       <TagStatusBar count={tags.length} />
       <TagList
         currentTagId={currentTagId}
@@ -156,6 +156,6 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         onToggleCategory={handleToggleTagCategory}
         onUpdateOneTag={handleUpdateOneTag}
       />
-    </ContentWrapper>
+    </PageContent>
   );
 };

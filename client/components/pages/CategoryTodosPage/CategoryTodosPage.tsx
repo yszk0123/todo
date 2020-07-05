@@ -18,8 +18,8 @@ import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/C
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
-import { ContentWrapper } from '../../layout/ContentWrapper';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { PageContent } from '../../layout/PageContent';
 import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
@@ -223,7 +223,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       : SelectMode.MULTI;
 
   return (
-    <ContentWrapper onClick={handleDeselectTodo}>
+    <PageContent onClick={handleDeselectTodo}>
       {categoryName && (
         <Head>
           <title>{categoryName}</title>
@@ -257,6 +257,6 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         onToggleTag={handleToggleTag}
         onUpdateOneTodo={handleUpdateTodosById}
       />
-    </ContentWrapper>
+    </PageContent>
   );
 };

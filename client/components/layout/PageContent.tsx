@@ -5,7 +5,7 @@ type Props = {
   onClick?: React.MouseEventHandler;
 };
 
-export const ContentWrapper: React.FunctionComponent<Props> = ({
+export const PageContent: React.FunctionComponent<Props> = ({
   children,
   onClick,
 }) => {

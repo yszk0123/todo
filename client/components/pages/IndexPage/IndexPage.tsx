@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { ContentWrapper } from '../../layout/ContentWrapper';
+import { PageContent } from '../../layout/PageContent';
 
 export const IndexPage: React.FunctionComponent<EmptyProps> = () => {
-  return <ContentWrapper>Home</ContentWrapper>;
+  return <PageContent>Home</PageContent>;
 };

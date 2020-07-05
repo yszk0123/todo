@@ -10,8 +10,8 @@ import {
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
-import { ContentWrapper } from '../../layout/ContentWrapper';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { PageContent } from '../../layout/PageContent';
 import { CheckpointEditForm } from './CheckpointEditForm';
 import { CheckpointList } from './CheckpointList';
 import { CheckpointStatusBar } from './CheckpointStatusBar';
@@ -119,7 +119,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const checkpoints = data.checkpoints ?? [];
 
   return (
-    <ContentWrapper onClick={handleDeselectCheckpoint}>
+    <PageContent onClick={handleDeselectCheckpoint}>
       <CheckpointStatusBar count={checkpoints.length} />
       <CheckpointList
         checkpoints={checkpoints}
@@ -137,6 +137,6 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         onDeleteOneCheckpoint={handleDeleteOneCheckpoint}
         onUpdateOneCheckpoint={handleUpdateOneCheckpoint}
       />
-    </ContentWrapper>
+    </PageContent>
   );
 };

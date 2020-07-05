@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useCategoryTodosReportPageQuery } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
 import { ID } from '../../../viewModels/ID';
-import { ContentWrapper } from '../../layout/ContentWrapper';
+import { PageContent } from '../../layout/PageContent';
 import { CategoryTodosReport } from './CategoryTodosReport';
 
 type Props = {
@@ -24,8 +24,8 @@ export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
   const tags = data.category?.tags ?? [];
 
   return (
-    <ContentWrapper>
+    <PageContent>
       <CategoryTodosReport tags={tags} todos={todos} />
-    </ContentWrapper>
+    </PageContent>
   );
 };
