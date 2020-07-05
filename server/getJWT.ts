@@ -1,6 +1,6 @@
+import { Account, User } from '@prisma/client';
 // FIXME: Nexus.js ignores types.d.ts...
 // @ts-ignore
-import { Account, User } from '@prisma/client';
 import jwt from 'next-auth/jwt';
 
 const secret = process.env.JWT_SECRET ?? '__NULL__';
