@@ -7,7 +7,6 @@ import { EditFormField } from './EditFormField';
 const DEFAULT_VALUE = '__DEFAULT__';
 
 export function EditFormSelectField<T>({
-  isFirst = false,
   selectedItem,
   items,
   getDisplayName,
@@ -15,7 +14,6 @@ export function EditFormSelectField<T>({
   onChange,
   rightElement,
 }: {
-  isFirst?: boolean;
   selectedItem: T | null;
   items: T[];
   getDisplayName: (item: T) => string;
@@ -33,7 +31,7 @@ export function EditFormSelectField<T>({
   );
 
   return (
-    <EditFormField isFirst={isFirst}>
+    <EditFormField>
       <Box sx={{ flexGrow: 1 }}>
         <Select
           value={selectedItem !== null ? getValue(selectedItem) : ''}

@@ -6,10 +6,9 @@ import { EditFormField } from './EditFormField';
 export const EditFormInputField: React.FunctionComponent<{
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  isFirst?: boolean;
-}> = ({ value, onChange, isFirst = false }) => {
+}> = ({ value, onChange }) => {
   return (
-    <EditFormField isFirst={isFirst}>
+    <EditFormField>
       <Input value={value} onChange={onChange} />
     </EditFormField>
   );

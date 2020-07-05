@@ -16,7 +16,6 @@ export function TodoEditFormTagsField({
   return (
     <EditFormChecklistField
       checkedItems={tags ?? []}
-      isFirst
       items={categoryTags}
       rightElement={!tags ? <Badge text="preserved" /> : null}
       onClick={onToggleTag}

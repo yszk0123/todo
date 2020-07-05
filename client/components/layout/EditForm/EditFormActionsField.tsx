@@ -28,8 +28,7 @@ const EditFormButton: React.FunctionComponent<{
 
 export const EditFormActionsField: React.FunctionComponent<{
   actions: EditFormAction[];
-  isFirst?: boolean;
-}> = ({ actions, isFirst = false }) => {
+}> = ({ actions }) => {
   if (actions.length === 0) {
     return null;
   }
@@ -37,7 +36,7 @@ export const EditFormActionsField: React.FunctionComponent<{
   const lastIndex = actions.length - 1;
 
   return (
-    <EditFormField isFirst={isFirst}>
+    <EditFormField>
       {actions.map((action, i) => {
         return (
           <EditFormButton

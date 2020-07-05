@@ -17,8 +17,7 @@ function convertIntoDateString(value: Date | null): string {
 export const EditFormDateTimeInputField: React.FunctionComponent<{
   value: Date | null;
   onChange: (value: Date | null) => void;
-  isFirst?: boolean;
-}> = ({ value, onChange, isFirst = false }) => {
+}> = ({ value, onChange }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
@@ -31,7 +30,7 @@ export const EditFormDateTimeInputField: React.FunctionComponent<{
   const dateString = React.useMemo(() => convertIntoDateString(value), [value]);
 
   return (
-    <EditFormField isFirst={isFirst}>
+    <EditFormField>
       <Input type="datetime-local" value={dateString} onChange={handleChange} />
     </EditFormField>
   );

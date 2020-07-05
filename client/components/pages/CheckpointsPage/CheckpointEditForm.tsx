@@ -39,7 +39,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormInputField isFirst value={name ?? ''} onChange={onChangeName} />
+      <EditFormInputField value={name ?? ''} onChange={onChangeName} />
       <EditFormDateTimeInputField value={endAt} onChange={onChangeEndAt} />
       <EditFormActionsField actions={actions} />
     </EditForm>

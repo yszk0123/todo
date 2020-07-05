@@ -3,19 +3,15 @@ import { Box } from 'rebass';
 
 import { preventDefault } from '../../../handlers/preventDefault';
 import { stopPropagation } from '../../../handlers/stopPropagation';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
 
-type Props = {
-  isFirst?: boolean;
-};
+type Props = EmptyProps;
 
-export const EditForm: React.FunctionComponent<Props> = ({
-  isFirst = false,
-  children,
-}) => {
+export const EditForm: React.FunctionComponent<Props> = ({ children }) => {
   return (
     <Box
       as="form"
-      sx={{ boxShadow: 1, p: 2, mt: isFirst ? 0 : 2 }}
+      sx={{ boxShadow: 1, pt: 2, mb: 2 }}
       onClick={stopPropagation}
       onSubmit={preventDefault}
     >

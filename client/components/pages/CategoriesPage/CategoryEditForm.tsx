@@ -31,7 +31,7 @@ export const CategoryEditForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormInputField isFirst value={name} onChange={onChangeName} />
+      <EditFormInputField value={name} onChange={onChangeName} />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );

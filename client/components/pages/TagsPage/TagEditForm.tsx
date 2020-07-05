@@ -51,7 +51,6 @@ export const TagEditForm: React.FunctionComponent<{
     <EditForm>
       <EditFormChecklistField
         checkedItems={tagCategories}
-        isFirst
         items={categories}
         onClick={onToggleCategory}
       />

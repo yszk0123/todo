@@ -2,11 +2,10 @@ import React from 'react';
 import { Box, Flex } from 'rebass';
 
 export const EditFormField: React.FunctionComponent<{
-  isFirst: boolean;
   rightElement?: JSX.Element | null;
-}> = ({ isFirst = false, rightElement, children }) => {
+}> = ({ rightElement, children }) => {
   return (
-    <Flex alignItems="center" mt={isFirst ? 0 : 2}>
+    <Flex alignItems="center" mb={2}>
       {children}
       {rightElement != null ? (
         <Box ml={2} sx={{ flexShrink: 0 }}>

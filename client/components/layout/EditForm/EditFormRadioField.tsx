@@ -36,16 +36,14 @@ export function EditFormRadioField<T extends string>({
   items,
   onClick,
   rightElement,
-  isFirst = false,
 }: {
   selectedItem: T | null;
   items: T[];
   onClick: (item: T) => void;
   rightElement?: JSX.Element | null;
-  isFirst?: boolean;
 }): JSX.Element {
   return (
-    <EditFormField isFirst={isFirst} rightElement={rightElement}>
+    <EditFormField rightElement={rightElement}>
       {items.map((item, i) => {
         return (
           <EditFormRadioFieldItem
