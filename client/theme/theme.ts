@@ -11,7 +11,7 @@ export const theme = {
     muted: '#f8f8f8',
     gray: '#555',
     warning: '#f44',
-    highlight: '#07c',
+    highlight: 'hsla(205, 100%, 40%, 0.125)',
     dark: 'rgba(0, 10, 20, 0.2)',
   },
   fonts: {
