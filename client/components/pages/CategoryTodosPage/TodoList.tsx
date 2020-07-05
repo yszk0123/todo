@@ -50,8 +50,7 @@ export const TodoList: React.FunctionComponent<{
 
         return (
           <List
-            isFirst={i === 0}
-            key={i}
+            key={`${header.name}-${i}`}
             leftElement={header.name ? <Note text={header.name} /> : null}
             rightElement={
               header.endAt ? <DateTimeText value={header.endAt} /> : null

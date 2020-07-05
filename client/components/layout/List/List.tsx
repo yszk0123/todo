@@ -4,7 +4,6 @@ import { Box, Flex } from 'rebass';
 import { stopPropagation } from '../../../handlers/stopPropagation';
 
 type Props = {
-  isFirst?: boolean;
   leftElement?: JSX.Element | null;
   rightElement?: JSX.Element | null;
 };
@@ -12,15 +11,14 @@ type Props = {
 export const List: React.FunctionComponent<Props> = ({
   leftElement,
   rightElement,
-  isFirst = false,
   children,
 }) => {
   const hadHeader = !!leftElement || !!rightElement;
-  const extraMarginTop = isFirst ? 2 : 0;
 
   return (
     <Box
-      mt={(hadHeader ? 3 : 1) + extraMarginTop}
+      mb={2}
+      mt={hadHeader ? 3 : 1}
       pt={hadHeader ? 2 : 0}
       sx={{ boxShadow: hadHeader ? 1 : undefined, position: 'relative' }}
       onClick={stopPropagation}
