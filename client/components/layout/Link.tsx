@@ -2,6 +2,8 @@ import NextLink from 'next/link';
 import React from 'react';
 import { Link as RebassLink } from 'rebass';
 
+import { stopPropagation } from '../../handlers/stopPropagation';
+
 export const Link: React.FunctionComponent<{
   href: string;
   as: string;
@@ -9,7 +11,7 @@ export const Link: React.FunctionComponent<{
 }> = ({ href, as, text }) => {
   return (
     <NextLink as={as} href={href} passHref>
-      <RebassLink>{text}</RebassLink>
+      <RebassLink onClick={stopPropagation}>{text}</RebassLink>
     </NextLink>
   );
 };
