@@ -5,7 +5,16 @@ export const EditFormField: React.FunctionComponent<{
   rightElement?: JSX.Element | null;
 }> = ({ rightElement, children }) => {
   return (
-    <Flex alignItems="center" mb={2}>
+    <Flex
+      alignItems="center"
+      flexWrap="wrap"
+      mb={1}
+      pb={1}
+      sx={{
+        borderBottom: '1px dotted lightgray',
+        ':last-child': { borderBottom: 'none' },
+      }}
+    >
       {children}
       {rightElement != null ? (
         <Box ml={2} sx={{ flexShrink: 0 }}>

@@ -2,6 +2,8 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 
+import { ListText } from '../../layout/List';
+
 function linkifyComponentDecorator(
   decoratedHref: string,
   decoratedText: string,
@@ -41,11 +43,13 @@ export const TodoListText: React.FunctionComponent<{
   text: string;
 }> = React.memo(({ text }) => {
   return (
-    <Linkify
-      componentDecorator={linkifyComponentDecorator}
-      textDecorator={linkifyTextDecorator}
-    >
-      {text}
-    </Linkify>
+    <ListText>
+      <Linkify
+        componentDecorator={linkifyComponentDecorator}
+        textDecorator={linkifyTextDecorator}
+      >
+        {text}
+      </Linkify>
+    </ListText>
   );
 });

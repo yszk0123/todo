@@ -27,7 +27,11 @@ export function ListItem<T>({
       color={isActive ? 'highlightText' : undefined}
       flex="1 1 auto"
       p={2}
-      sx={{ cursor: 'pointer' }}
+      sx={{
+        cursor: 'pointer',
+        borderBottom: '1px dotted lightgray',
+        ':last-child': { borderBottom: 'none' },
+      }}
       onClick={handleClick}
     >
       {leftElement != null && (
