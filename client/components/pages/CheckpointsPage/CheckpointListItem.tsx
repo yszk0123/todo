@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { DateTimeText } from '../../layout/DateTimeText';
 import { ListItem } from '../../layout/List';
+import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 
 export const CheckpointListItem: React.FunctionComponent<{
   isActive: boolean;
@@ -14,7 +14,7 @@ export const CheckpointListItem: React.FunctionComponent<{
       isActive={isActive}
       item={checkpoint}
       mainElement={checkpoint.name ?? ''}
-      rightElement={<DateTimeText value={checkpoint.endAt} />}
+      rightElement={<RelativeDateTimeText value={checkpoint.endAt} />}
       onClick={onClick}
     />
   );
