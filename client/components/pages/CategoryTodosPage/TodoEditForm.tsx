@@ -77,6 +77,7 @@ const NoneForm: React.FunctionComponent<{
         getDisplayName={getDisplayNameFromCheckpoint}
         getValue={getValueFromCheckpoint}
         items={checkpoints}
+        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
         selectedItem={checkpoint}
         onChange={onSelectCheckpoint}
       />
@@ -147,6 +148,7 @@ const SingleForm: React.FunctionComponent<{
         getDisplayName={getDisplayNameFromCheckpoint}
         getValue={getValueFromCheckpoint}
         items={checkpoints}
+        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
         selectedItem={checkpoint}
         onChange={onSelectCheckpoint}
       />
@@ -208,6 +210,7 @@ const MultiForm: React.FunctionComponent<{
         getDisplayName={getDisplayNameFromCheckpoint}
         getValue={getValueFromCheckpoint}
         items={checkpoints}
+        rightElement={!checkpoint ? <Badge text="preserved" /> : null}
         selectedItem={checkpoint}
         onChange={onSelectCheckpoint}
       />
