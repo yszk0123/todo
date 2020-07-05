@@ -10,7 +10,19 @@ export const Navigation: React.FunctionComponent<{
   avatarUrl: string | null;
 }> = ({ hasSession, username, avatarUrl }) => {
   return (
-    <Flex alignItems="center" bg="black" color="white" height={48} px={2}>
+    <Flex
+      alignItems="center"
+      bg="black"
+      color="white"
+      height={48}
+      px={2}
+      sx={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        boxShadow: 1,
+      }}
+    >
       <NavigationLink href="/" text="Todo" />
       <Flex overflowX="auto">
         <Flex flexShrink={0}>
