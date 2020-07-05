@@ -21,19 +21,20 @@ export type StatusBarItem =
 
 const StatusBarItemView: React.FunctionComponent<{
   item: StatusBarItem;
-  isFirst: boolean;
-}> = ({ item, isFirst }) => {
+}> = ({ item }) => {
   switch (item.type) {
     case StatusBarItemType.TEXT: {
-      return <Text mr={isFirst ? 2 : 0}>{item.content}</Text>;
+      return <Text mx={1}>{item.content}</Text>;
     }
     case StatusBarItemType.LINK: {
       return (
-        <Link
-          as={item.content.as}
-          href={item.content.href}
-          text={item.content.text}
-        />
+        <Box mx={2}>
+          <Link
+            as={item.content.as}
+            href={item.content.href}
+            text={item.content.text}
+          />
+        </Box>
       );
     }
   }
@@ -53,7 +54,7 @@ export const StatusBar: React.FunctionComponent<{
         }}
       >
         {left.filter(isNotNull).map((item, i) => {
-          return <StatusBarItemView isFirst={i === 0} item={item} key={i} />;
+          return <StatusBarItemView item={item} key={i} />;
         })}
       </Flex>
       <Flex
@@ -65,7 +66,7 @@ export const StatusBar: React.FunctionComponent<{
         }}
       >
         {right.filter(isNotNull).map((item, i) => {
-          return <StatusBarItemView isFirst={i === 0} item={item} key={i} />;
+          return <StatusBarItemView item={item} key={i} />;
         })}
       </Flex>
     </Box>

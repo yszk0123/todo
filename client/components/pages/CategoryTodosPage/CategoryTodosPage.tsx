@@ -214,6 +214,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const categoryName = data.category?.name ?? null;
   const todos = data.category?.todos ?? [];
   const categoryTags = data.category?.tags ?? [];
+  const categories = data.categories ?? [];
   const count = selectedTodoIds.length;
   const selectMode =
     count === 0
@@ -230,6 +231,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         </Head>
       )}
       <TodoStatusBar
+        categories={categories}
         categoryId={categoryId}
         categoryName={categoryName}
         count={todos.length}

@@ -1,13 +1,15 @@
 import React from 'react';
 
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { ID } from '../../../viewModels/ID';
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
 export const TodoStatusBar: React.FunctionComponent<{
   categoryId: ID;
   categoryName: string | null;
+  categories: RootCategoryFragment[];
   count: number;
-}> = ({ categoryId, categoryName, count }) => {
+}> = ({ categoryId, categoryName, categories, count }) => {
   return (
     <StatusBar
       left={[
@@ -19,6 +21,16 @@ export const TodoStatusBar: React.FunctionComponent<{
             text: 'See report',
           },
         },
+        ...categories.map((category) => {
+          return {
+            type: StatusBarItemType.LINK as const,
+            content: {
+              href: '/categories/[categoryId]/todos',
+              as: `/categories/${category.id}/todos`,
+              text: category.name,
+            },
+          };
+        }),
       ]}
       right={[
         categoryName !== null

@@ -12,7 +12,11 @@ export function TodoEditFormTagsField({
   tags: CategoryTagFragment[] | null;
   categoryTags: CategoryTagFragment[];
   onToggleTag: (tag: CategoryTagFragment) => void;
-}): JSX.Element {
+}): JSX.Element | null {
+  if (categoryTags.length === 0) {
+    return null;
+  }
+
   return (
     <EditFormChecklistField
       checkedItems={tags ?? []}

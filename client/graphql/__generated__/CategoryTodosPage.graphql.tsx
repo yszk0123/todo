@@ -3,10 +3,12 @@ import * as Types from './baseTypes';
 import { CategoryTodoFragment } from '../fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../fragments/__generated__/CategoryTag.graphql';
 import { RootCheckpointFragment } from '../fragments/__generated__/RootCheckpoint.graphql';
+import { RootCategoryFragment } from '../fragments/__generated__/RootCategory.graphql';
 import gql from 'graphql-tag';
 import { CategoryTodoFragmentDoc } from '../fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragmentDoc } from '../fragments/__generated__/CategoryTag.graphql';
 import { RootCheckpointFragmentDoc } from '../fragments/__generated__/RootCheckpoint.graphql';
+import { RootCategoryFragmentDoc } from '../fragments/__generated__/RootCategory.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
@@ -33,6 +35,9 @@ export type CategoryTodosPageQuery = (
   )>, checkpoints?: Types.Maybe<Array<(
     { __typename?: 'Checkpoint' }
     & RootCheckpointFragment
+  )>>, categories?: Types.Maybe<Array<(
+    { __typename?: 'Category' }
+    & RootCategoryFragment
   )>> }
 );
 
@@ -117,10 +122,14 @@ export const CategoryTodosPageDocument = gql`
   checkpoints {
     ...RootCheckpoint
   }
+  categories {
+    ...RootCategory
+  }
 }
     ${CategoryTodoFragmentDoc}
 ${CategoryTagFragmentDoc}
-${RootCheckpointFragmentDoc}`;
+${RootCheckpointFragmentDoc}
+${RootCategoryFragmentDoc}`;
 
 /**
  * __useCategoryTodosPageQuery__
