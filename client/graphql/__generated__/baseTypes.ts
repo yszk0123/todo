@@ -646,6 +646,7 @@ export type Query = {
   category?: Maybe<Category>;
   checkpoints?: Maybe<Array<Checkpoint>>;
   me?: Maybe<User>;
+  stats?: Maybe<Stats>;
   tag?: Maybe<Tag>;
   tags?: Maybe<Array<Tag>>;
   todos?: Maybe<Array<Todo>>;
@@ -659,6 +660,14 @@ export type QueryCategoryArgs = {
 
 export type QueryTagArgs = {
   id: Scalars['ID'];
+};
+
+export type Stats = {
+  __typename?: 'Stats';
+  categoryCount?: Maybe<Scalars['Int']>;
+  checkpointCount?: Maybe<Scalars['Int']>;
+  tagCount?: Maybe<Scalars['Int']>;
+  todoCount?: Maybe<Scalars['Int']>;
 };
 
 export type StringFilter = {

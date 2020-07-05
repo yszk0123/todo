@@ -544,9 +544,17 @@ type Query {
   category(id: ID!): Category
   checkpoints: [Checkpoint!]
   me: User
+  stats: Stats
   tag(id: ID!): Tag
   tags: [Tag!]
   todos: [Todo!]
+}
+
+type Stats {
+  categoryCount: Int
+  checkpointCount: Int
+  tagCount: Int
+  todoCount: Int
 }
 
 input StringFilter {

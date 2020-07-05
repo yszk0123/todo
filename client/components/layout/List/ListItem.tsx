@@ -2,22 +2,22 @@ import React from 'react';
 import { Box, Flex, Text } from 'rebass';
 
 export function ListItem<T>({
-  isActive,
+  isActive = false,
   item,
   leftElement,
   mainElement,
   onClick,
   rightElement,
 }: {
-  isActive: boolean;
+  isActive?: boolean;
   item: T;
   leftElement?: JSX.Element | null;
   mainElement: JSX.Element | string;
-  onClick: (item: T) => void;
+  onClick?: (item: T) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   const handleClick = React.useCallback(() => {
-    onClick(item);
+    onClick?.(item);
   }, [item, onClick]);
 
   return (

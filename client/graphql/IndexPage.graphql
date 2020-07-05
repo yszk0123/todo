@@ -1,0 +1,12 @@
+query IndexPage {
+  me {
+    id
+    name
+  }
+  stats {
+    categoryCount
+    checkpointCount
+    tagCount
+    todoCount
+  }
+}

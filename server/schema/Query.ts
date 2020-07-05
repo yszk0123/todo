@@ -9,6 +9,13 @@ schema.queryType({
       },
     });
 
+    t.field('stats', {
+      type: 'Stats',
+      resolve() {
+        return {};
+      },
+    });
+
     t.field('category', {
       type: 'Category',
       args: {

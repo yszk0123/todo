@@ -7,3 +7,4 @@ import './Category';
 import './Todo';
 import './Tag';
 import './Checkpoint';
+import './Stats';
