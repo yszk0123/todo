@@ -13,17 +13,17 @@ export const List: React.FunctionComponent<Props> = ({
   rightElement,
   children,
 }) => {
-  const hadHeader = !!leftElement || !!rightElement;
+  const hasHeader = !!leftElement || !!rightElement;
 
   return (
     <Box
       mb={2}
-      mt={hadHeader ? 3 : 1}
-      pt={hadHeader ? 2 : 0}
-      sx={{ boxShadow: hadHeader ? 1 : undefined, position: 'relative' }}
+      mt={hasHeader ? 3 : 1}
+      pt={hasHeader ? 2 : 0}
+      sx={{ boxShadow: hasHeader ? 1 : undefined, position: 'relative' }}
       onClick={stopPropagation}
     >
-      {hadHeader && (
+      {hasHeader && (
         <Flex
           color="gray"
           fontSize={2}
