@@ -85,9 +85,12 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const handleUpdateOneCheckpoint = React.useCallback(() => {
     if (!currentCheckpointId) return;
     updateOneCheckpoint({
-      variables: { data: { name }, where: { id: currentCheckpointId } },
+      variables: {
+        data: { name, endAt: endAt ?? new Date() },
+        where: { id: currentCheckpointId },
+      },
     });
-  }, [name, updateOneCheckpoint, currentCheckpointId]);
+  }, [currentCheckpointId, updateOneCheckpoint, name, endAt]);
 
   const handleArchiveOneCheckpoint = React.useCallback(() => {
     if (!currentCheckpointId) return;
