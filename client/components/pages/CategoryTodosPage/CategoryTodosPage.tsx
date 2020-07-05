@@ -166,6 +166,19 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     updateTodosById({ variables: { input } });
   }, [selectedTodoIds, tags, text, status, checkpoint, updateTodosById]);
 
+  const handleToggleStatus = React.useCallback(
+    (todo: CategoryTodoFragment) => {
+      const newStatus =
+        todo.status === TodoStatus.Done ? TodoStatus.Todo : TodoStatus.Done;
+      const input: UpdateTodosByIdInput = {
+        ids: [todo.id],
+        status: newStatus,
+      };
+      updateTodosById({ variables: { input } });
+    },
+    [updateTodosById]
+  );
+
   const handleArchiveTodosById = React.useCallback(() => {
     if (selectedTodoIds.length === 0) return;
     const input: UpdateTodosByIdInput = {
@@ -240,6 +253,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         selectedTodoIds={selectedTodoIds}
         todos={todos}
         onClick={handleSelectOneTodo}
+        onClickStatus={handleToggleStatus}
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm

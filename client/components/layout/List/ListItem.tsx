@@ -33,6 +33,7 @@ export function ListItem<T>({
         borderColor: 'muted',
         ':last-child': { borderBottom: 'none' },
       }}
+      variant="listItem"
       onClick={handleClick}
     >
       {leftElement != null && (

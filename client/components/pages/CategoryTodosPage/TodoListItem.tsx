@@ -14,7 +14,8 @@ export const TodoListItem: React.FunctionComponent<{
   todo: CategoryTodoFragment;
   onClick: (todo: CategoryTodoFragment) => void;
   onClickToggle: (todo: CategoryTodoFragment) => void;
-}> = ({ isSelected, todo, onClick, onClickToggle }) => {
+  onClickStatus: (todo: CategoryTodoFragment) => void;
+}> = ({ isSelected, todo, onClick, onClickToggle, onClickStatus }) => {
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -23,6 +24,9 @@ export const TodoListItem: React.FunctionComponent<{
     },
     [todo, onClickToggle]
   );
+  const handleClickStatus = React.useCallback(() => {
+    onClickStatus(todo);
+  }, [todo, onClickStatus]);
 
   return (
     <ListItem
@@ -33,7 +37,7 @@ export const TodoListItem: React.FunctionComponent<{
           <Box onClick={handleClickToggle}>
             <Checkbox checked={isSelected} readOnly />
           </Box>
-          <TodoListStatus status={todo.status} />
+          <TodoListStatus status={todo.status} onClick={handleClickStatus} />
         </>
       }
       mainElement={<TodoListText text={todo.text} />}
