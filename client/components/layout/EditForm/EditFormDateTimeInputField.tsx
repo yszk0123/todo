@@ -11,7 +11,7 @@ function parseDate(input: string): Date | null {
 function convertIntoDateString(value: Date | null): string {
   return value === null
     ? ''
-    : format(value, 'yyyy-MM-dd=HH:mm').replace('=', 'T');
+    : format(new Date(value), 'yyyy-MM-dd=HH:mm').replace('=', 'T');
 }
 
 export const EditFormDateTimeInputField: React.FunctionComponent<{
