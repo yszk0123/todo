@@ -6,18 +6,18 @@ export const LoadingIndicator = () => {
     <Box>
       <AnimatedCircle
         color="primary"
-        w={10}
-        r={200}
         duration={1500}
+        r={200}
         sx={{ position: 'absolute', left: '50%', top: '50%' }}
+        w={10}
       />
       <AnimatedCircle
         color="secondary"
-        w={10}
-        r={220}
         delay={600}
         duration={763}
+        r={220}
         sx={{ position: 'absolute', left: '50%', top: '50%' }}
+        w={10}
       />
     </Box>
   );

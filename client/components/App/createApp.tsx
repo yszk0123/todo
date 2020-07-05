@@ -1,12 +1,13 @@
-import React from 'react';
-import Head from 'next/head';
-// @ts-ignore
-import { Provider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'emotion-theming';
-import { PageContainer } from './PageContainer';
-import { theme } from '../../theme/theme';
+// @ts-ignore
+import { Provider } from 'next-auth/client';
+import Head from 'next/head';
+import React from 'react';
+
 import { createApolloClient } from '../../apollo/createApolloClient';
+import { theme } from '../../theme/theme';
+import { PageContainer } from './PageContainer';
 
 type PageProps = {
   session: unknown;
@@ -36,8 +37,8 @@ export function createApp(): React.FunctionComponent<Props> {
             <Head>
               <title>Todo</title>
               <meta
-                name="viewport"
                 content="initial-scale=1.0, width=device-width"
+                name="viewport"
               />
             </Head>
             <PageContainer>

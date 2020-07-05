@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'rebass';
+
 import { EditFormField } from './EditFormField';
 
 export type EditFormAction = {
@@ -15,10 +16,10 @@ const EditFormButton: React.FunctionComponent<{
 }> = ({ label, onClick, isFirst, isPrimary }) => {
   return (
     <Button
+      sx={{ flexGrow: isPrimary ? 1 : undefined, ml: isFirst ? 0 : 2 }}
       type={isPrimary ? 'submit' : 'button'}
       variant={isPrimary ? 'primary' : 'outline'}
       onClick={onClick}
-      sx={{ flexGrow: isPrimary ? 1 : undefined, ml: isFirst ? 0 : 2 }}
     >
       {label}
     </Button>
@@ -40,11 +41,11 @@ export const EditFormActionsField: React.FunctionComponent<{
       {actions.map((action, i) => {
         return (
           <EditFormButton
+            isFirst={i === 0}
+            isPrimary={i === lastIndex}
             key={i}
             label={action.label}
             onClick={action.onClick}
-            isFirst={i === 0}
-            isPrimary={i === lastIndex}
           />
         );
       })}

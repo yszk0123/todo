@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
 export const CategoryStatusBar: React.FunctionComponent<{ count: number }> = ({

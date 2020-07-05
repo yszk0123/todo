@@ -1,4 +1,4 @@
-import { User, Account } from '@prisma/client';
+import { Account, User } from '@prisma/client';
 
 export type Token = {
   user: User;

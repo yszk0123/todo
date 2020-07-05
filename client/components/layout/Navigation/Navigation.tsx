@@ -1,5 +1,6 @@
 import React from 'react';
-import { Flex, Text, Box } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
+
 import { Avatar } from './Avatar';
 import { NavigationLink } from './NavigationLink';
 
@@ -9,7 +10,7 @@ export const Navigation: React.FunctionComponent<{
   avatarUrl: string | null;
 }> = ({ hasSession, username, avatarUrl }) => {
   return (
-    <Flex px={2} color="white" bg="black" alignItems="center">
+    <Flex alignItems="center" bg="black" color="white" px={2}>
       <NavigationLink href="/" text="Todo" />
       <Box>
         <NavigationLink href="/categories" text="Categories" />
@@ -17,7 +18,7 @@ export const Navigation: React.FunctionComponent<{
       </Box>
       <Box mx="auto" />
       {username && <Text p={2}>{username}</Text>}
-      {avatarUrl && <Avatar url={avatarUrl} alt={username || 'avatar'} />}
+      {avatarUrl && <Avatar alt={username || 'avatar'} url={avatarUrl} />}
       <Box p={2}>
         {hasSession ? (
           <NavigationLink href="/api/auth/signout" text="Sign out" />

@@ -1,5 +1,6 @@
-import React from 'react';
 import { Input } from '@rebass/forms';
+import React from 'react';
+
 import { EditFormField } from './EditFormField';
 
 export const EditFormInputField: React.FunctionComponent<{

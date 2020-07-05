@@ -1,6 +1,6 @@
 import {
-  CategoryTodosReportPageTodoFragment,
   CategoryTodosReportPageTagFragment,
+  CategoryTodosReportPageTodoFragment,
 } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
 import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
 

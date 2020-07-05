@@ -1,6 +1,7 @@
+import { Label, Radio } from '@rebass/forms';
 import React from 'react';
 import { Flex } from 'rebass';
-import { Label, Radio } from '@rebass/forms';
+
 import { EditFormField } from './EditFormField';
 
 function EditFormRadioFieldItem<T>({
@@ -16,7 +17,7 @@ function EditFormRadioFieldItem<T>({
 }): JSX.Element {
   const handleClick = React.useCallback(() => {
     onClick(item);
-  }, [onClick]);
+  }, [item, onClick]);
 
   return (
     <Flex alignItems="center" sx={{ flexGrow: 1 }}>
@@ -46,10 +47,10 @@ export function EditFormRadioField<T extends string>({
       {items.map((item, i) => {
         return (
           <EditFormRadioFieldItem
-            key={i}
-            label={item}
             isChecked={item === selectedItem}
             item={item}
+            key={i}
+            label={item}
             onClick={onClick}
           />
         );

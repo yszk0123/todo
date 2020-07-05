@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box } from 'rebass';
+import { Box, Flex } from 'rebass';
 
 export const EditFormField: React.FunctionComponent<{
   isFirst: boolean;

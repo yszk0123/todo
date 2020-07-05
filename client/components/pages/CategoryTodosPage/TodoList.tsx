@@ -1,8 +1,9 @@
 import React from 'react';
-import { List } from '../../layout/List';
+
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
-import { TodoListItem } from './TodoListItem';
 import { ID } from '../../../viewModels/ID';
+import { List } from '../../layout/List';
+import { TodoListItem } from './TodoListItem';
 
 export const TodoList: React.FunctionComponent<{
   todos: CategoryTodoFragment[];
@@ -17,9 +18,9 @@ export const TodoList: React.FunctionComponent<{
 
         return (
           <TodoListItem
+            isSelected={isSelected}
             key={todo.id}
             todo={todo}
-            isSelected={isSelected}
             onClick={onClick}
             onClickToggle={onClickToggle}
           />

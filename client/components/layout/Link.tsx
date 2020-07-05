@@ -1,5 +1,5 @@
-import React from 'react';
 import NextLink from 'next/link';
+import React from 'react';
 import { Link as RebassLink } from 'rebass';
 
 export const Link: React.FunctionComponent<{
@@ -8,7 +8,7 @@ export const Link: React.FunctionComponent<{
   text: string;
 }> = ({ href, as, text }) => {
   return (
-    <NextLink href={href} as={as} passHref>
+    <NextLink as={as} href={href} passHref>
       <RebassLink>{text}</RebassLink>
     </NextLink>
   );

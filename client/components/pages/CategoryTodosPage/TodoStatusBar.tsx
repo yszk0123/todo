@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ID } from '../../../viewModels/ID';
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 

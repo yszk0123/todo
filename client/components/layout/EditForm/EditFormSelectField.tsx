@@ -1,6 +1,7 @@
+import { Select } from '@rebass/forms';
 import React from 'react';
 import { Box } from 'rebass';
-import { Select } from '@rebass/forms';
+
 import { EditFormField } from './EditFormField';
 
 export function EditFormSelectField<T extends string>({

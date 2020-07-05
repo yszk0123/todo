@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex } from 'rebass';
+
 import { LoadingIndicator } from './LoadingIndicator';
 import { Navigation } from './Navigation';
 
@@ -15,11 +16,11 @@ export const Page: React.FunctionComponent<{
   }
 
   return (
-    <Flex minHeight="100vh" flexDirection="column">
+    <Flex flexDirection="column" minHeight="100vh">
       <Navigation
+        avatarUrl={avatarUrl}
         hasSession={hasSession}
         username={username}
-        avatarUrl={avatarUrl}
       />
       {hasSession && <Flex flexGrow={1}>{content}</Flex>}
     </Flex>

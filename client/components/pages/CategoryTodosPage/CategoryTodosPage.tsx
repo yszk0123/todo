@@ -1,26 +1,27 @@
+import Head from 'next/head';
 import React from 'react';
+
+import {
+  DeleteTodosByIdInput,
+  TodoCreateInput,
+  TodoStatus,
+  UpdateTodosByIdInput,
+} from '../../../graphql/__generated__/baseTypes';
 import {
   useCategoryTodosPageQuery,
   useCreateOneTodoMutation,
   useDeleteTodosByIdMutation,
   useUpdateTodosByIdMutation,
 } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
-import {
-  TodoStatus,
-  TodoCreateInput,
-  UpdateTodosByIdInput,
-  DeleteTodosByIdInput,
-} from '../../../graphql/__generated__/baseTypes';
-import { ContentWrapper } from '../../layout/ContentWrapper';
-import { TodoStatusBar } from './TodoStatusBar';
-import { TodoList } from './TodoList';
-import { TodoEditForm } from './TodoEditForm';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ID } from '../../../viewModels/ID';
-import Head from 'next/head';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import { ContentWrapper } from '../../layout/ContentWrapper';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { TodoEditForm } from './TodoEditForm';
+import { TodoList } from './TodoList';
+import { TodoStatusBar } from './TodoStatusBar';
 
 function first<T>(values: T[]): T | undefined {
   return values[0];
@@ -114,7 +115,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     const input: DeleteTodosByIdInput = { ids: selectedTodoIds };
     deselect();
     deleteTodosById({ variables: { input } });
-  }, [data, text, deselect, deleteTodosById, selectedTodoIds]);
+  }, [deselect, deleteTodosById, selectedTodoIds]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     const count = selectedTodoIds.length;
@@ -127,7 +128,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       status,
     };
     updateTodosById({ variables: { input } });
-  }, [data, text, status, updateTodosById, selectedTodoIds, tags]);
+  }, [text, status, updateTodosById, selectedTodoIds, tags]);
 
   const handleArchiveTodosById = React.useCallback(() => {
     if (selectedTodoIds.length === 0) return;
@@ -186,25 +187,25 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         count={todos.length}
       />
       <TodoList
-        todos={todos}
         selectedTodoIds={selectedTodoIds}
+        todos={todos}
         onClick={handleSelectOneTodo}
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm
-        text={text}
-        tags={tags ?? []}
-        isTagsChanged={tags !== null}
-        status={status}
         categoryTags={categoryTags}
+        isTagsChanged={tags !== null}
         selectMode={selectMode}
+        status={status}
+        tags={tags ?? []}
+        text={text}
+        onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
-        onUpdateOneTodo={handleUpdateTodosById}
         onDeleteOneTodo={handleDeleteTodosById}
-        onArchiveTodo={handleArchiveTodosById}
-        onToggleTag={handleToggleTag}
         onSelectStatus={handleSelectStatus}
+        onToggleTag={handleToggleTag}
+        onUpdateOneTodo={handleUpdateTodosById}
       />
     </ContentWrapper>
   );

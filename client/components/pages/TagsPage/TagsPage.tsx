@@ -1,26 +1,28 @@
 import React from 'react';
-import { ContentWrapper } from '../../layout/ContentWrapper';
+
 import {
-  useTagsPageQuery,
+  Color,
+  TagCreateInput,
+  TagUpdateInput,
+  TagWhereUniqueInput,
+} from '../../../graphql/__generated__/baseTypes';
+import {
   useCreateOneTagMutation,
   useDeleteOneTagMutation,
+  useTagsPageQuery,
   useUpdateOneTagMutation,
 } from '../../../graphql/__generated__/TagsPage.graphql';
+import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
+import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
+import { ID } from '../../../viewModels/ID';
+import { ContentWrapper } from '../../layout/ContentWrapper';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
-import {
-  TagCreateInput,
-  TagWhereUniqueInput,
-  TagUpdateInput,
-  Color,
-} from '../../../graphql/__generated__/baseTypes';
 import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
 import { TagStatusBar } from './TagStatusBar';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
-import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
-import { ID } from '../../../viewModels/ID';
 
-export const TagsPage: React.FunctionComponent<{}> = () => {
+export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
@@ -87,7 +89,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     const where: TagWhereUniqueInput = { id: currentTagId };
     deselect();
     deleteOneTag({ variables: { where } });
-  }, [data, name, deselect, deleteOneTag, currentTagId]);
+  }, [deselect, deleteOneTag, currentTagId]);
 
   const handleUpdateOneTag = React.useCallback(() => {
     if (!currentTagId) return;
@@ -99,7 +101,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     };
     const where: TagWhereUniqueInput = { id: currentTagId };
     updateOneTag({ variables: { data: newData, where } });
-  }, [data, name, color, updateOneTag, currentTagId, tagCategories]);
+  }, [name, color, updateOneTag, currentTagId, tagCategories]);
 
   const handleToggleTagCategory = React.useCallback(
     (tag: CategoryVM) => {
@@ -135,22 +137,22 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     <ContentWrapper onClick={handleDeselectTag}>
       <TagStatusBar count={tags.length} />
       <TagList
+        currentTagId={currentTagId}
         tags={tags}
         onClick={handleSelectTag}
-        currentTagId={currentTagId}
       />
       <TagEditForm
-        name={name}
-        color={color}
         categories={categories}
-        tagCategories={tagCategories}
+        color={color}
         isSelected={isSelected}
-        onChangeName={handleChangeName}
+        name={name}
+        tagCategories={tagCategories}
         onChangeColor={handleChangeColor}
+        onChangeName={handleChangeName}
         onCreateOneTag={handleCreateOneTag}
-        onUpdateOneTag={handleUpdateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
         onToggleCategory={handleToggleTagCategory}
+        onUpdateOneTag={handleUpdateOneTag}
       />
     </ContentWrapper>
   );

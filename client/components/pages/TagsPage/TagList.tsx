@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
-import { TagListItem } from './TagListItem';
 import { ID } from '../../../viewModels/ID';
 import { List } from '../../layout/List';
+import { TagListItem } from './TagListItem';
 
 export const TagList: React.FunctionComponent<{
   tags: RootTagFragment[];
@@ -14,9 +15,9 @@ export const TagList: React.FunctionComponent<{
       {tags.map((tag) => {
         return (
           <TagListItem
+            isActive={tag.id === currentTagId}
             key={tag.id}
             tag={tag}
-            isActive={tag.id === currentTagId}
             onClick={onClick}
           />
         );

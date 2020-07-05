@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ListItem } from '../../layout/List';
 
@@ -11,8 +12,8 @@ export const TagListItem: React.FunctionComponent<{
     <ListItem
       isActive={isActive}
       item={tag}
-      onClick={onClick}
       mainElement={tag.name}
+      onClick={onClick}
     />
   );
 };

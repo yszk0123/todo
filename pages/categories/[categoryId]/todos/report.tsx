@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import React from 'react';
 import { useRouter } from 'next/router';
+import React from 'react';
+
 import { CategoryTodosReportPage } from '../../../../client/components/pages/CategoryTodosReportPage';
 
 export default () => {

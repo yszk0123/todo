@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
-import { CategoryListItem } from './CategoryListItem';
 import { ID } from '../../../viewModels/ID';
 import { List } from '../../layout/List';
+import { CategoryListItem } from './CategoryListItem';
 
 export const CategoryList: React.FunctionComponent<{
   categories: RootCategoryFragment[];
@@ -14,9 +15,9 @@ export const CategoryList: React.FunctionComponent<{
       {categories.map((category) => {
         return (
           <CategoryListItem
-            key={category.id}
             category={category}
             isActive={category.id === currentCategoryId}
+            key={category.id}
             onClick={onClick}
           />
         );

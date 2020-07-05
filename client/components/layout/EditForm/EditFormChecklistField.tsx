@@ -1,6 +1,7 @@
 import React from 'react';
-import { Checklist } from '../Checklist';
+
 import { DisplayableVM } from '../../../viewModels/DisplayableVM';
+import { Checklist } from '../Checklist';
 import { EditFormField } from './EditFormField';
 
 export function EditFormChecklistField<T extends DisplayableVM>({
@@ -18,7 +19,7 @@ export function EditFormChecklistField<T extends DisplayableVM>({
 }): JSX.Element {
   return (
     <EditFormField isFirst={isFirst} rightElement={rightElement}>
-      <Checklist items={items} checkedItems={checkedItems} onClick={onClick} />
+      <Checklist checkedItems={checkedItems} items={items} onClick={onClick} />
     </EditFormField>
   );
 }

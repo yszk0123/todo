@@ -1,6 +1,9 @@
 import React from 'react';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { SelectMode } from '../../../viewModels/SelectMode';
+import { Badge } from '../../layout/Badge';
 import {
   EditForm,
   EditFormAction,
@@ -9,8 +12,6 @@ import {
   EditFormInputField,
   EditFormRadioField,
 } from '../../layout/EditForm';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { Badge } from '../../layout/Badge';
 
 const statuses: TodoStatus[] = [
   TodoStatus.Todo,
@@ -53,14 +54,14 @@ const NoneForm: React.FunctionComponent<{
   return (
     <EditForm>
       <EditFormChecklistField
+        checkedItems={tags}
         isFirst
         items={categoryTags}
-        checkedItems={tags}
         onClick={onToggleTag}
       />
       <EditFormRadioField
-        selectedItem={status}
         items={statuses}
+        selectedItem={status}
         onClick={onSelectStatus}
       />
       <EditFormInputField value={text} onChange={handleChangeText} />
@@ -109,14 +110,14 @@ const SingleForm: React.FunctionComponent<{
   return (
     <EditForm>
       <EditFormChecklistField
+        checkedItems={tags}
         isFirst
         items={categoryTags}
-        checkedItems={tags}
         onClick={onToggleTag}
       />
       <EditFormRadioField
-        selectedItem={status}
         items={statuses}
+        selectedItem={status}
         onClick={onSelectStatus}
       />
       <EditFormInputField value={text} onChange={handleChangeText} />
@@ -155,15 +156,15 @@ const MultiForm: React.FunctionComponent<{
   return (
     <EditForm>
       <EditFormChecklistField
+        checkedItems={tags}
         isFirst
         items={categoryTags}
-        checkedItems={tags}
-        onClick={onToggleTag}
         rightElement={!isTagsChanged ? <Badge text="preserved" /> : null}
+        onClick={onToggleTag}
       />
       <EditFormRadioField
-        selectedItem={status}
         items={statuses}
+        selectedItem={status}
         onClick={onSelectStatus}
       />
       <EditFormActionsField actions={actions} />
@@ -204,45 +205,45 @@ export const TodoEditForm: React.FunctionComponent<{
     case SelectMode.NONE: {
       return (
         <NoneForm
-          text={text}
-          tags={tags}
-          status={status}
           categoryTags={categoryTags}
+          status={status}
+          tags={tags}
+          text={text}
           onChangeText={onChangeText}
           onCreateOneTodo={onCreateOneTodo}
-          onToggleTag={onToggleTag}
           onSelectStatus={onSelectStatus}
+          onToggleTag={onToggleTag}
         />
       );
     }
     case SelectMode.SINGLE: {
       return (
         <SingleForm
-          text={text}
-          tags={tags}
-          status={status}
           categoryTags={categoryTags}
-          onChangeText={onChangeText}
-          onUpdateOneTodo={onUpdateOneTodo}
-          onDeleteOneTodo={onDeleteOneTodo}
+          status={status}
+          tags={tags}
+          text={text}
           onArchiveTodo={onArchiveTodo}
-          onToggleTag={onToggleTag}
+          onChangeText={onChangeText}
+          onDeleteOneTodo={onDeleteOneTodo}
           onSelectStatus={onSelectStatus}
+          onToggleTag={onToggleTag}
+          onUpdateOneTodo={onUpdateOneTodo}
         />
       );
     }
     case SelectMode.MULTI: {
       return (
         <MultiForm
-          tags={tags}
-          status={status}
           categoryTags={categoryTags}
           isTagsChanged={isTagsChanged}
-          onUpdateOneTodo={onUpdateOneTodo}
-          onDeleteOneTodo={onDeleteOneTodo}
+          status={status}
+          tags={tags}
           onArchiveTodo={onArchiveTodo}
-          onToggleTag={onToggleTag}
+          onDeleteOneTodo={onDeleteOneTodo}
           onSelectStatus={onSelectStatus}
+          onToggleTag={onToggleTag}
+          onUpdateOneTodo={onUpdateOneTodo}
         />
       );
     }

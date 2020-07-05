@@ -1,6 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import introspectionResult from '../graphql/__generated__/introspectionResult';
+
 import { isSSR } from '../components/helpers/isSSR';
+import introspectionResult from '../graphql/__generated__/introspectionResult';
 
 export function createApolloClient() {
   const ssr = isSSR();

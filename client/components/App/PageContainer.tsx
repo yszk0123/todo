@@ -1,9 +1,13 @@
-import React from 'react';
 import { useSession } from 'next-auth/client';
+import React from 'react';
+
 import { useIndexPageQuery } from '../../graphql/__generated__/IndexPage.graphql';
+import { EmptyProps } from '../../viewModels/EmptyProps';
 import { Page } from '../layout/Page';
 
-export const PageContainer: React.FunctionComponent<{}> = ({ children }) => {
+export const PageContainer: React.FunctionComponent<EmptyProps> = ({
+  children,
+}) => {
   const [session, isSessionLoading] = useSession();
   const { loading: isQueryLoading, data } = useIndexPageQuery();
   const hasSession = !!session;
@@ -14,11 +18,11 @@ export const PageContainer: React.FunctionComponent<{}> = ({ children }) => {
 
   return (
     <Page
-      hasSession={hasSession}
-      username={username}
       avatarUrl={avatarUrl}
-      isLoading={isLoading}
       content={children}
+      hasSession={hasSession}
+      isLoading={isLoading}
+      username={username}
     />
   );
 };

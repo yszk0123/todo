@@ -1,24 +1,26 @@
 import React from 'react';
-import { ContentWrapper } from '../../layout/ContentWrapper';
+
+import {
+  CategoryCreateInput,
+  CategoryUpdateInput,
+  CategoryWhereUniqueInput,
+} from '../../../graphql/__generated__/baseTypes';
 import {
   useCategoriesPageQuery,
   useCreateOneCategoryMutation,
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
 } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { LoadingIndicator } from '../../layout/LoadingIndicator';
-import {
-  CategoryCreateInput,
-  CategoryWhereUniqueInput,
-  CategoryUpdateInput,
-} from '../../../graphql/__generated__/baseTypes';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
+import { ID } from '../../../viewModels/ID';
+import { ContentWrapper } from '../../layout/ContentWrapper';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
-import { ID } from '../../../viewModels/ID';
 
-export const CategoriesPage: React.FunctionComponent<{}> = () => {
+export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useCategoriesPageQuery({
     fetchPolicy: 'cache-and-network',
   });
@@ -78,14 +80,14 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     deselect();
     deleteOneCategory({ variables: { where } });
-  }, [data, name, deselect, deleteOneCategory, currentCategoryId]);
+  }, [deselect, deleteOneCategory, currentCategoryId]);
 
   const handleUpdateOneCategory = React.useCallback(() => {
     if (!currentCategoryId) return;
     const newData: CategoryUpdateInput = { name };
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     updateOneCategory({ variables: { data: newData, where } });
-  }, [data, name, updateOneCategory, currentCategoryId]);
+  }, [name, updateOneCategory, currentCategoryId]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,12 +112,12 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
         onClick={handleSelectCategory}
       />
       <CategoryEditForm
-        name={name}
         isSelected={isSelected}
+        name={name}
         onChangeName={handleChangeName}
         onCreateOneCategory={handleCreateOneCategory}
-        onUpdateOneCategory={handleUpdateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
+        onUpdateOneCategory={handleUpdateOneCategory}
       />
     </ContentWrapper>
   );

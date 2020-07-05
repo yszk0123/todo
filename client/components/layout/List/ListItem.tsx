@@ -1,7 +1,5 @@
 import React from 'react';
-// @ts-ignore
-import Linkify from 'react-linkify';
-import { Flex, Box, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 
 export function ListItem<T>({
   isActive,
@@ -24,11 +22,11 @@ export function ListItem<T>({
 
   return (
     <Flex
-      flex="1 1 auto"
       alignItems="center"
-      p={2}
       bg={isActive ? 'highlight' : undefined}
       color={isActive ? 'highlightText' : undefined}
+      flex="1 1 auto"
+      p={2}
       sx={{ cursor: 'pointer' }}
       onClick={handleClick}
     >
@@ -45,7 +43,7 @@ export function ListItem<T>({
         )}
       </Box>
       {rightElement != null && (
-        <Flex ml={2} flexShrink={0}>
+        <Flex flexShrink={0} ml={2}>
           {rightElement}
         </Flex>
       )}
