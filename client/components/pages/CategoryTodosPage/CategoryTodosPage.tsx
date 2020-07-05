@@ -114,7 +114,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     const input: DeleteTodosByIdInput = { ids: selectedTodoIds };
     deselect();
     deleteTodosById({ variables: { input } });
-  }, [data, text, deselect, deleteTodosById, selectedTodoIds]);
+  }, [deselect, deleteTodosById, selectedTodoIds]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     const count = selectedTodoIds.length;
@@ -127,7 +127,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
       status,
     };
     updateTodosById({ variables: { input } });
-  }, [data, text, status, updateTodosById, selectedTodoIds, tags]);
+  }, [text, status, updateTodosById, selectedTodoIds, tags]);
 
   const handleArchiveTodosById = React.useCallback(() => {
     if (selectedTodoIds.length === 0) return;

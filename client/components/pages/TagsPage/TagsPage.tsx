@@ -19,8 +19,9 @@ import { TagStatusBar } from './TagStatusBar';
 import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
 import { ID } from '../../../viewModels/ID';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
 
-export const TagsPage: React.FunctionComponent<{}> = () => {
+export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
@@ -87,7 +88,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     const where: TagWhereUniqueInput = { id: currentTagId };
     deselect();
     deleteOneTag({ variables: { where } });
-  }, [data, name, deselect, deleteOneTag, currentTagId]);
+  }, [deselect, deleteOneTag, currentTagId]);
 
   const handleUpdateOneTag = React.useCallback(() => {
     if (!currentTagId) return;
@@ -99,7 +100,7 @@ export const TagsPage: React.FunctionComponent<{}> = () => {
     };
     const where: TagWhereUniqueInput = { id: currentTagId };
     updateOneTag({ variables: { data: newData, where } });
-  }, [data, name, color, updateOneTag, currentTagId, tagCategories]);
+  }, [name, color, updateOneTag, currentTagId, tagCategories]);
 
   const handleToggleTagCategory = React.useCallback(
     (tag: CategoryVM) => {

@@ -16,7 +16,7 @@ function EditFormRadioFieldItem<T>({
 }): JSX.Element {
   const handleClick = React.useCallback(() => {
     onClick(item);
-  }, [onClick]);
+  }, [item, onClick]);
 
   return (
     <Flex alignItems="center" sx={{ flexGrow: 1 }}>

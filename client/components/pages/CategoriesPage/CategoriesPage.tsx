@@ -17,8 +17,9 @@ import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
 import { ID } from '../../../viewModels/ID';
+import { EmptyProps } from '../../../viewModels/EmptyProps';
 
-export const CategoriesPage: React.FunctionComponent<{}> = () => {
+export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useCategoriesPageQuery({
     fetchPolicy: 'cache-and-network',
   });
@@ -78,14 +79,14 @@ export const CategoriesPage: React.FunctionComponent<{}> = () => {
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     deselect();
     deleteOneCategory({ variables: { where } });
-  }, [data, name, deselect, deleteOneCategory, currentCategoryId]);
+  }, [deselect, deleteOneCategory, currentCategoryId]);
 
   const handleUpdateOneCategory = React.useCallback(() => {
     if (!currentCategoryId) return;
     const newData: CategoryUpdateInput = { name };
     const where: CategoryWhereUniqueInput = { id: currentCategoryId };
     updateOneCategory({ variables: { data: newData, where } });
-  }, [data, name, updateOneCategory, currentCategoryId]);
+  }, [name, updateOneCategory, currentCategoryId]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

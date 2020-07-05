@@ -13,6 +13,7 @@ export type Token = {
   account: Account;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getJWT(req: any): Promise<Token> {
   const token = (await jwt.getJwt({ req, secret })) as Token;
   return token;

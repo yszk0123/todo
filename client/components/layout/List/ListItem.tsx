@@ -1,6 +1,4 @@
 import React from 'react';
-// @ts-ignore
-import Linkify from 'react-linkify';
 import { Flex, Box, Text } from 'rebass';
 
 export function ListItem<T>({

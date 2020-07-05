@@ -8,7 +8,7 @@ function linkifyComponentDecorator(
   key: number
 ): React.ReactNode {
   return (
-    <a href={decoratedHref} rel="noopener" target="_blank" key={key}>
+    <a href={decoratedHref} rel="noreferrer" target="_blank" key={key}>
       {decoratedText}
     </a>
   );
@@ -20,7 +20,7 @@ function linkifyTextDecorator(text: string): string {
     .replace(/\?.*$/, '')
     .replace(/#.*$/, '')
     .replace(
-      /^github.com\/[^\/]+\/([^\/]+)\/(?:pull|issue)\/([0-9]+)$/,
+      /^github.com\/[^/]+\/([^/]+)\/(?:pull|issue)\/([0-9]+)$/,
       '$1 #$2'
     );
 

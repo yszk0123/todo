@@ -11,6 +11,7 @@ interface Profile {
 }
 
 export function createPrismaAdapter({ client }: { client: PrismaClient }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function debug(...args: any[]) {
     if (process.env.NODE_ENV === 'development') console.log(...args);
   }
