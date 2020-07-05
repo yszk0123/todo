@@ -124,19 +124,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
             ? { connect: { id: checkpoint.id } }
             : undefined,
       };
-      deselect();
       createOneTodo({ variables: { input } });
     }
-  }, [
-    data?.me,
-    tags,
-    categoryId,
-    text,
-    status,
-    checkpoint,
-    deselect,
-    createOneTodo,
-  ]);
+  }, [data?.me, tags, categoryId, text, status, checkpoint, createOneTodo]);
 
   const handleDeleteTodosById = React.useCallback(() => {
     const count = selectedTodoIds.length;
