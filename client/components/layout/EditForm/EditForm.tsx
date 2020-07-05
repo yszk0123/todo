@@ -11,7 +11,14 @@ export const EditForm: React.FunctionComponent<Props> = ({ children }) => {
   return (
     <Box
       as="form"
-      sx={{ boxShadow: 1, p: 2, mb: 2 }}
+      sx={{
+        border: '1px solid',
+        borderColor: 'primary',
+        borderRadius: 4,
+        boxShadow: 1,
+        p: 2,
+        mb: 2,
+      }}
       onClick={stopPropagation}
       onSubmit={preventDefault}
     >

@@ -3,18 +3,21 @@ import { Box } from 'rebass';
 
 export const Badge: React.FunctionComponent<{
   text: string;
-}> = ({ text }) => {
+  color?: string;
+}> = ({ text, color = 'gray' }) => {
   return (
     <Box
       sx={{
         color: 'white',
-        bg: 'gray',
+        bg: color,
         display: 'inline-block',
         whiteSpace: 'nowrap',
         px: 2,
         py: 1,
         fontSize: 10,
         borderRadius: 9999,
+        border: '1px solid',
+        borderColor: 'dark',
       }}
     >
       {text}

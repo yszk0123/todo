@@ -6,11 +6,13 @@ import { stopPropagation } from '../../../handlers/stopPropagation';
 type Props = {
   leftElement?: JSX.Element | null;
   rightElement?: JSX.Element | null;
+  variant?: string;
 };
 
 export const List: React.FunctionComponent<Props> = ({
   leftElement,
   rightElement,
+  variant = 'gray',
   children,
 }) => {
   const hasHeader = !!leftElement || !!rightElement;
@@ -19,8 +21,13 @@ export const List: React.FunctionComponent<Props> = ({
     <Box
       mb={2}
       mt={hasHeader ? 3 : 1}
-      pt={hasHeader ? 2 : 0}
-      sx={{ boxShadow: hasHeader ? 1 : undefined, position: 'relative' }}
+      sx={{
+        border: hasHeader ? '1px solid' : undefined,
+        borderColor: hasHeader ? variant : undefined,
+        borderRadius: hasHeader ? 4 : undefined,
+        boxShadow: hasHeader ? 1 : undefined,
+        position: 'relative',
+      }}
       onClick={stopPropagation}
     >
       {hasHeader && (
@@ -37,8 +44,16 @@ export const List: React.FunctionComponent<Props> = ({
           sx={{ position: 'absolute', top: -2 }}
           width={1}
         >
-          {!!leftElement && <Box ml={2}>{leftElement}</Box>}
-          {!!rightElement && <Box mr={2}>{rightElement}</Box>}
+          {!!leftElement && (
+            <Box bg="background" ml={2} px={1}>
+              {leftElement}
+            </Box>
+          )}
+          {!!rightElement && (
+            <Box bg="background" mr={2} px={1}>
+              {rightElement}
+            </Box>
+          )}
         </Flex>
       )}
       {children}

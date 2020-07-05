@@ -29,7 +29,8 @@ export function ListItem<T>({
       p={2}
       sx={{
         cursor: 'pointer',
-        borderBottom: '1px dotted lightgray',
+        borderBottom: '1px dotted',
+        borderColor: 'muted',
         ':last-child': { borderBottom: 'none' },
       }}
       onClick={handleClick}

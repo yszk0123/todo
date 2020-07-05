@@ -8,9 +8,15 @@ import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 import { TodoListItem } from './TodoListItem';
 
 type Group = {
-  header: { name: string | null; endAt: Date | null };
+  header: { name: string | null; endAt: Date | null; isOld: boolean };
   todos: CategoryTodoFragment[];
 };
+
+function isOld(dateString: Date): boolean {
+  const currentDate = new Date();
+  const date = new Date(dateString);
+  return date < currentDate;
+}
 
 function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
   const groupsById: Record<string, Group> = {};
@@ -21,7 +27,8 @@ function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
     if (!group) {
       const name = todo.checkpoint?.name ?? null;
       const endAt = todo.checkpoint?.endAt ?? null;
-      group = { header: { name, endAt }, todos: [] };
+      const old = isOld(endAt);
+      group = { header: { name, endAt, isOld: old }, todos: [] };
     }
     group.todos.push(todo);
     groupsById[key] = group;
@@ -57,6 +64,7 @@ export const TodoList: React.FunctionComponent<{
                 <RelativeDateTimeText value={header.endAt} />
               ) : null
             }
+            variant={header.isOld ? 'warning' : undefined}
           >
             {todos.map((todo) => {
               const isSelected = selectedTodoIds.includes(todo.id);

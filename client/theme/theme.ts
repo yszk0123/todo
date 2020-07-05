@@ -8,10 +8,12 @@ export const theme = {
     background: '#fff',
     primary: '#07c',
     secondary: '#30c',
-    muted: '#f6f6f9',
+    muted: '#aaa',
     gray: '#555',
+    warning: '#f44',
     highlightText: '#fff',
-    highlight: '#07c',
+    highlight: '#0c7',
+    dark: 'rgba(0, 10, 20, 0.3)',
   },
   fonts: {
     body: 'Roboto, sans-serif',
@@ -126,14 +128,6 @@ export const theme = {
         cursor: 'pointer',
         opacity: 0.8,
       },
-    },
-  },
-  forms: {
-    input: {
-      fontSize: 18,
-    },
-    textarea: {
-      fontSize: 18,
     },
   },
   styles: {
