@@ -42,6 +42,21 @@ schema.queryType({
       },
     });
 
+    t.list.field('checkpoints', {
+      type: 'Checkpoint',
+      resolve(_root, _args, ctx) {
+        if (!ctx.user?.id) {
+          return null;
+        }
+
+        return ctx.db.checkpoint.findMany({
+          where: {
+            ownerId: ctx.user.id,
+          },
+        });
+      },
+    });
+
     t.list.field('todos', {
       type: 'Todo',
       resolve(_root, _args, ctx) {

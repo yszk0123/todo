@@ -304,6 +304,158 @@ input CategoryWhereUniqueInput {
   id: String
 }
 
+type Checkpoint {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String!
+  name: String
+  ownerId: String!
+}
+
+input CheckpointCreateInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  owner: UserCreateOneWithoutCheckpointsInput!
+  todos: TodoCreateManyWithoutCheckpointInput
+}
+
+input CheckpointCreateManyWithoutOwnerInput {
+  connect: [CheckpointWhereUniqueInput!]
+  create: [CheckpointCreateWithoutOwnerInput!]
+}
+
+input CheckpointCreateOneWithoutTodosInput {
+  connect: CheckpointWhereUniqueInput
+  create: CheckpointCreateWithoutTodosInput
+}
+
+input CheckpointCreateWithoutOwnerInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  todos: TodoCreateManyWithoutCheckpointInput
+}
+
+input CheckpointCreateWithoutTodosInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  owner: UserCreateOneWithoutCheckpointsInput!
+}
+
+input CheckpointFilter {
+  every: CheckpointWhereInput
+  none: CheckpointWhereInput
+  some: CheckpointWhereInput
+}
+
+input CheckpointScalarWhereInput {
+  AND: [CheckpointScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  endAt: DateTimeFilter
+  id: UUIDFilter
+  name: NullableStringFilter
+  NOT: [CheckpointScalarWhereInput!]
+  OR: [CheckpointScalarWhereInput!]
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+
+input CheckpointUpdateInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCheckpointsInput
+  todos: TodoUpdateManyWithoutCheckpointInput
+}
+
+input CheckpointUpdateManyDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+}
+
+input CheckpointUpdateManyWithoutOwnerInput {
+  connect: [CheckpointWhereUniqueInput!]
+  create: [CheckpointCreateWithoutOwnerInput!]
+  delete: [CheckpointWhereUniqueInput!]
+  deleteMany: [CheckpointScalarWhereInput!]
+  disconnect: [CheckpointWhereUniqueInput!]
+  set: [CheckpointWhereUniqueInput!]
+  update: [CheckpointUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [CheckpointUpdateManyWithWhereNestedInput!]
+  upsert: [CheckpointUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+
+input CheckpointUpdateManyWithWhereNestedInput {
+  data: CheckpointUpdateManyDataInput!
+  where: CheckpointScalarWhereInput!
+}
+
+input CheckpointUpdateOneWithoutTodosInput {
+  connect: CheckpointWhereUniqueInput
+  create: CheckpointCreateWithoutTodosInput
+  delete: Boolean
+  disconnect: Boolean
+  update: CheckpointUpdateWithoutTodosDataInput
+  upsert: CheckpointUpsertWithoutTodosInput
+}
+
+input CheckpointUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  todos: TodoUpdateManyWithoutCheckpointInput
+}
+
+input CheckpointUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCheckpointsInput
+}
+
+input CheckpointUpdateWithWhereUniqueWithoutOwnerInput {
+  data: CheckpointUpdateWithoutOwnerDataInput!
+  where: CheckpointWhereUniqueInput!
+}
+
+input CheckpointUpsertWithoutTodosInput {
+  create: CheckpointCreateWithoutTodosInput!
+  update: CheckpointUpdateWithoutTodosDataInput!
+}
+
+input CheckpointUpsertWithWhereUniqueWithoutOwnerInput {
+  create: CheckpointCreateWithoutOwnerInput!
+  update: CheckpointUpdateWithoutOwnerDataInput!
+  where: CheckpointWhereUniqueInput!
+}
+
+input CheckpointWhereInput {
+  AND: [CheckpointWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  endAt: DateTimeFilter
+  id: UUIDFilter
+  name: NullableStringFilter
+  NOT: [CheckpointWhereInput!]
+  OR: [CheckpointWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+
+input CheckpointWhereUniqueInput {
+  id: String
+}
+
 enum Color {
   BLUE
   DEFAULT
@@ -342,13 +494,16 @@ scalar Json
 
 type Mutation {
   createOneCategory(data: CategoryCreateInput!): Category!
+  createOneCheckpoint(data: CheckpointCreateInput!): Checkpoint!
   createOneTag(data: TagCreateInput!): Tag!
   createOneTodo(data: TodoCreateInput!): Todo!
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
+  deleteOneCheckpoint(where: CheckpointWhereUniqueInput!): Checkpoint
   deleteOneTag(where: TagWhereUniqueInput!): Tag
   deleteTodo(data: DeleteTodoInput!): Todo
   deleteTodosById(data: DeleteTodosByIdInput!): [ID!]
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateOneCheckpoint(data: CheckpointUpdateInput!, where: CheckpointWhereUniqueInput!): Checkpoint
   updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateTodo(data: UpdateTodoInput!): Todo
   updateTodosById(data: UpdateTodosByIdInput!): [Todo!]
@@ -387,6 +542,7 @@ enum OrderByArg {
 type Query {
   categories: [Category!]
   category(id: ID!): Category
+  checkpoints: [Checkpoint!]
   me: User
   tag(id: ID!): Tag
   tags: [Tag!]
@@ -636,6 +792,8 @@ type Todo {
   archivedAt: DateTime
   category: Category!
   categoryId: String!
+  checkpoint: Checkpoint
+  checkpointId: String
   createdAt: DateTime!
   id: String!
   owner: User!
@@ -648,6 +806,7 @@ type Todo {
 input TodoCreateInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
@@ -659,6 +818,11 @@ input TodoCreateInput {
 input TodoCreateManyWithoutCategoryInput {
   connect: [TodoWhereUniqueInput!]
   create: [TodoCreateWithoutCategoryInput!]
+}
+
+input TodoCreateManyWithoutCheckpointInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCheckpointInput!]
 }
 
 input TodoCreateManyWithoutOwnerInput {
@@ -673,6 +837,18 @@ input TodoCreateManyWithoutTagsInput {
 
 input TodoCreateWithoutCategoryInput {
   archivedAt: DateTime
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutCheckpointInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
@@ -684,6 +860,7 @@ input TodoCreateWithoutCategoryInput {
 input TodoCreateWithoutOwnerInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
   createdAt: DateTime
   id: String
   status: TodoStatus
@@ -694,6 +871,7 @@ input TodoCreateWithoutOwnerInput {
 input TodoCreateWithoutTagsInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
@@ -710,6 +888,7 @@ input TodoFilter {
 input TodoOrderByInput {
   archivedAt: OrderByArg
   categoryId: OrderByArg
+  checkpointId: OrderByArg
   createdAt: OrderByArg
   id: OrderByArg
   ownerId: OrderByArg
@@ -721,6 +900,7 @@ input TodoScalarWhereInput {
   AND: [TodoScalarWhereInput!]
   archivedAt: NullableDateTimeFilter
   categoryId: StringFilter
+  checkpointId: NullableStringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [TodoScalarWhereInput!]
@@ -758,6 +938,18 @@ input TodoUpdateManyWithoutCategoryInput {
   upsert: [TodoUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
+input TodoUpdateManyWithoutCheckpointInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCheckpointInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutCheckpointInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutCheckpointInput!]
+}
+
 input TodoUpdateManyWithoutOwnerInput {
   connect: [TodoWhereUniqueInput!]
   create: [TodoCreateWithoutOwnerInput!]
@@ -789,6 +981,18 @@ input TodoUpdateManyWithWhereNestedInput {
 
 input TodoUpdateWithoutCategoryDataInput {
   archivedAt: DateTime
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+
+input TodoUpdateWithoutCheckpointDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
   createdAt: DateTime
   id: String
   owner: UserUpdateOneRequiredWithoutTodosInput
@@ -800,6 +1004,7 @@ input TodoUpdateWithoutCategoryDataInput {
 input TodoUpdateWithoutOwnerDataInput {
   archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
   createdAt: DateTime
   id: String
   status: TodoStatus
@@ -810,6 +1015,7 @@ input TodoUpdateWithoutOwnerDataInput {
 input TodoUpdateWithoutTagsDataInput {
   archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
   createdAt: DateTime
   id: String
   owner: UserUpdateOneRequiredWithoutTodosInput
@@ -819,6 +1025,11 @@ input TodoUpdateWithoutTagsDataInput {
 
 input TodoUpdateWithWhereUniqueWithoutCategoryInput {
   data: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpdateWithWhereUniqueWithoutCheckpointInput {
+  data: TodoUpdateWithoutCheckpointDataInput!
   where: TodoWhereUniqueInput!
 }
 
@@ -835,6 +1046,12 @@ input TodoUpdateWithWhereUniqueWithoutTagsInput {
 input TodoUpsertWithWhereUniqueWithoutCategoryInput {
   create: TodoCreateWithoutCategoryInput!
   update: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithWhereUniqueWithoutCheckpointInput {
+  create: TodoCreateWithoutCheckpointInput!
+  update: TodoUpdateWithoutCheckpointDataInput!
   where: TodoWhereUniqueInput!
 }
 
@@ -855,6 +1072,8 @@ input TodoWhereInput {
   archivedAt: NullableDateTimeFilter
   category: CategoryWhereInput
   categoryId: StringFilter
+  checkpoint: CheckpointWhereInput
+  checkpointId: NullableStringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [TodoWhereInput!]
@@ -899,6 +1118,11 @@ input UserCreateOneWithoutCategoriesInput {
   create: UserCreateWithoutCategoriesInput
 }
 
+input UserCreateOneWithoutCheckpointsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCheckpointsInput
+}
+
 input UserCreateOneWithoutTagsInput {
   connect: UserWhereUniqueInput
   create: UserCreateWithoutTagsInput
@@ -912,6 +1136,19 @@ input UserCreateOneWithoutTodosInput {
 input UserCreateWithoutCategoriesInput {
   accounts: AccountCreateManyWithoutUserInput
   avatarUrl: String
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  tags: TagCreateManyWithoutOwnerInput
+  todos: TodoCreateManyWithoutOwnerInput
+}
+
+input UserCreateWithoutCheckpointsInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
   id: String
@@ -924,6 +1161,7 @@ input UserCreateWithoutTagsInput {
   accounts: AccountCreateManyWithoutUserInput
   avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
   id: String
@@ -935,6 +1173,7 @@ input UserCreateWithoutTodosInput {
   accounts: AccountCreateManyWithoutUserInput
   avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
   id: String
@@ -947,6 +1186,13 @@ input UserUpdateOneRequiredWithoutCategoriesInput {
   create: UserCreateWithoutCategoriesInput
   update: UserUpdateWithoutCategoriesDataInput
   upsert: UserUpsertWithoutCategoriesInput
+}
+
+input UserUpdateOneRequiredWithoutCheckpointsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCheckpointsInput
+  update: UserUpdateWithoutCheckpointsDataInput
+  upsert: UserUpsertWithoutCheckpointsInput
 }
 
 input UserUpdateOneRequiredWithoutTagsInput {
@@ -966,6 +1212,19 @@ input UserUpdateOneRequiredWithoutTodosInput {
 input UserUpdateWithoutCategoriesDataInput {
   accounts: AccountUpdateManyWithoutUserInput
   avatarUrl: String
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String
+  tags: TagUpdateManyWithoutOwnerInput
+  todos: TodoUpdateManyWithoutOwnerInput
+}
+
+input UserUpdateWithoutCheckpointsDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
   id: String
@@ -978,6 +1237,7 @@ input UserUpdateWithoutTagsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
   avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
   id: String
@@ -989,6 +1249,7 @@ input UserUpdateWithoutTodosDataInput {
   accounts: AccountUpdateManyWithoutUserInput
   avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
   id: String
@@ -999,6 +1260,11 @@ input UserUpdateWithoutTodosDataInput {
 input UserUpsertWithoutCategoriesInput {
   create: UserCreateWithoutCategoriesInput!
   update: UserUpdateWithoutCategoriesDataInput!
+}
+
+input UserUpsertWithoutCheckpointsInput {
+  create: UserCreateWithoutCheckpointsInput!
+  update: UserUpdateWithoutCheckpointsDataInput!
 }
 
 input UserUpsertWithoutTagsInput {
@@ -1016,6 +1282,7 @@ input UserWhereInput {
   AND: [UserWhereInput!]
   avatarUrl: NullableStringFilter
   categories: CategoryFilter
+  checkpoints: CheckpointFilter
   createdAt: DateTimeFilter
   email: StringFilter
   id: UUIDFilter
