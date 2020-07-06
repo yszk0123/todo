@@ -69,6 +69,17 @@ export const theme = {
       fontWeight: 'body',
     },
   },
+  forms: {
+    input: {
+      fontSize: 18,
+    },
+    select: {
+      fontSize: 18,
+    },
+    textarea: {
+      fontSize: 18,
+    },
+  },
   variants: {
     avatar: {
       width: 'avatar',
