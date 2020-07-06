@@ -1,34 +1,38 @@
+import { useApolloClient } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
 
-import {
-  DeleteTodosByIdInput,
-  TodoCreateInput,
-  TodoStatus,
-  UpdateTodosByIdInput,
-} from '../../../graphql/__generated__/baseTypes';
-import {
-  useCategoryTodosPageQuery,
-  useCreateOneTodoMutation,
-  useDeleteTodosByIdMutation,
-  useUpdateTodosByIdMutation,
-} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
+import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
+import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import { useCategoryTodosPageQuery } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import {
+  todoEditFormInitialState,
+  todoEditFormReducer,
+  todoEditFormReset,
+  todoEditFormSelectMany,
+  todoEditFormSelectOne,
+  todoEditFormSet,
+  todoEditFormToggleTag,
+} from '../../../state/TodoEditFormState';
+import { TodoUsecase } from '../../../usecases/TodoUsecase';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import isDocumentVisible from '../../helpers/isDocumentVisible';
+import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
 
-function first<T>(values: T[]): T | undefined {
+export function first<T>(values: T[]): T | undefined {
   return values[0];
 }
 
-function getNextStatus(status: TodoStatus): TodoStatus {
+export function getNextStatus(status: TodoStatus): TodoStatus {
   switch (status) {
     case TodoStatus.Todo:
       return TodoStatus.InProgress;
@@ -42,7 +46,7 @@ function getNextStatus(status: TodoStatus): TodoStatus {
 }
 
 // FIXME
-const DUMMY_CHECKPOINT: RootCheckpointFragment = {
+export const DUMMY_CHECKPOINT: RootCheckpointFragment = {
   id: '__DUMMY__',
   name: 'RESET',
   endAt: null,
@@ -59,160 +63,75 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     variables: { categoryId },
     fetchPolicy: 'cache-and-network',
   });
-  const handleCompleted = React.useCallback(() => {
-    refetch();
-  }, [refetch]);
-  const [createOneTodo] = useCreateOneTodoMutation({
-    onCompleted: handleCompleted,
-  });
-  const [updateTodosById] = useUpdateTodosByIdMutation({
-    onCompleted: handleCompleted,
-  });
-  const [deleteTodosById] = useDeleteTodosByIdMutation({
-    onCompleted: handleCompleted,
-  });
-  const [text, setText] = React.useState('');
-  const [selectedTodoIds, setSelectedTodoIds] = React.useState<ID[]>([]);
-  const [tags, setTags] = React.useState<CategoryTagFragment[] | null>(null);
-  const [status, setStatus] = React.useState<TodoStatus | null>(null);
-  const [
-    checkpoint,
-    setCheckpoint,
-  ] = React.useState<RootCheckpointFragment | null>(null);
-
-  const deselect = React.useCallback(() => {
-    setSelectedTodoIds([]);
-    setText('');
-    setTags(null);
-    setStatus(null);
-    setCheckpoint(null);
-  }, []);
+  const client = useApolloClient();
+  const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
+  const [todoEditFormState, dispatch] = React.useReducer(
+    todoEditFormReducer,
+    todoEditFormInitialState
+  );
+  const { checkpoint, selectedTodoIds, status, tags, text } = todoEditFormState;
+  const userId = data?.me?.id;
+  const [now, setNow] = React.useState(() => Date.now());
 
   const handleSelectOneTodo = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      if (selectedTodoIds.length === 1 && first(selectedTodoIds) === todo.id) {
-        deselect();
-        return;
-      }
-
-      setSelectedTodoIds([todo.id]);
-      setText(todo.text);
-      setTags(todo.tags);
-      setStatus(todo.status);
-      setCheckpoint(todo.checkpoint ?? null);
+      dispatch(todoEditFormSelectOne(todo));
     },
-    [selectedTodoIds, deselect]
+    []
   );
 
   const handleSelectManyTodo = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      const isSelected = !!selectedTodoIds.includes(todo.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedTodoIds.filter((id) => id !== todo.id)
-        : [...selectedTodoIds, todo.id];
-      setSelectedTodoIds(newSelectedTodoIds);
-      const isSingle = newSelectedTodoIds.length === 1;
-      setTags(isSingle ? todo.tags : null);
-      setStatus(isSingle ? todo.status : null);
-      setCheckpoint(isSingle ? todo.checkpoint ?? null : null);
+      dispatch(todoEditFormSelectMany(todo));
     },
-    [selectedTodoIds]
+    []
   );
 
   const handleDeselectTodo = React.useCallback(() => {
-    deselect();
-  }, [deselect]);
+    dispatch(todoEditFormReset());
+  }, []);
 
-  const handleCreateOneTodo = React.useCallback(() => {
-    if (data?.me) {
-      const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
-      const input: TodoCreateInput = {
-        owner: { connect: { id: data.me.id } },
-        category: { connect: { id: categoryId } },
-        tags: newTags ? { connect: newTags } : undefined,
-        text,
-        status: status ?? TodoStatus.Todo,
-        checkpoint:
-          checkpoint && checkpoint !== DUMMY_CHECKPOINT
-            ? { connect: { id: checkpoint.id } }
-            : undefined,
-      };
-      createOneTodo({ variables: { input } });
-    }
-  }, [data?.me, tags, categoryId, text, status, checkpoint, createOneTodo]);
+  const handleCreateOneTodo = React.useCallback(async () => {
+    if (!userId) return;
+    await todoUsecase.createOneTodo(userId, categoryId, todoEditFormState);
+    await refetch();
+  }, [categoryId, refetch, todoEditFormState, todoUsecase, userId]);
 
-  const handleDeleteTodosById = React.useCallback(() => {
-    const count = selectedTodoIds.length;
-    if (count === 0) return;
-    if (!confirm(`Delete ${count} items?`)) return;
-    const input: DeleteTodosByIdInput = { ids: selectedTodoIds };
-    deselect();
-    deleteTodosById({ variables: { input } });
-  }, [deselect, deleteTodosById, selectedTodoIds]);
+  const handleDeleteTodosById = React.useCallback(async () => {
+    await todoUsecase.deleteTodosById(selectedTodoIds);
+    await refetch();
+  }, [refetch, selectedTodoIds, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
-    const count = selectedTodoIds.length;
-    if (count === 0) return;
-    const tagIds = tags ? tags.map((tag) => tag.id) : undefined;
-    const input: UpdateTodosByIdInput = {
-      ids: selectedTodoIds,
-      text: count === 1 ? text : undefined,
-      tags: tagIds,
-      status: status ? status : undefined,
-      checkpointId:
-        checkpoint === DUMMY_CHECKPOINT
-          ? null
-          : checkpoint
-          ? checkpoint.id
-          : undefined,
-    };
-    updateTodosById({ variables: { input } });
-  }, [selectedTodoIds, tags, text, status, checkpoint, updateTodosById]);
+    todoUsecase.updateTodosById(todoEditFormState);
+  }, [todoEditFormState, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      const newStatus = getNextStatus(todo.status);
-      const input: UpdateTodosByIdInput = {
-        ids: [todo.id],
-        status: newStatus,
-      };
-      updateTodosById({ variables: { input } });
+      todoUsecase.toggleStatus(todo);
     },
-    [updateTodosById]
+    [todoUsecase]
   );
 
   const handleArchiveTodosById = React.useCallback(() => {
-    if (selectedTodoIds.length === 0) return;
-    const input: UpdateTodosByIdInput = {
-      ids: selectedTodoIds,
-      archivedAt: new Date(),
-    };
-    updateTodosById({ variables: { input } });
-  }, [selectedTodoIds, updateTodosById]);
+    todoUsecase.archiveTodosById(selectedTodoIds);
+  }, [selectedTodoIds, todoUsecase]);
 
-  const handleToggleTag = React.useCallback(
-    (tag: CategoryTagFragment) => {
-      const oldTags = tags ?? [];
-      const has = oldTags.find((t) => t.id === tag.id);
-      const newTags = has
-        ? oldTags.filter((t) => t.id !== tag.id)
-        : [...oldTags, tag];
-      setTags(newTags);
-    },
-    [tags]
-  );
+  const handleToggleTag = React.useCallback((tag: CategoryTagFragment) => {
+    dispatch(todoEditFormToggleTag(tag));
+  }, []);
 
   const handleChangeText = React.useCallback((text: string) => {
-    setText(text);
+    dispatch(todoEditFormSet({ text }));
   }, []);
 
   const handleSelectStatus = React.useCallback((status: TodoStatus) => {
-    setStatus(status);
+    dispatch(todoEditFormSet({ status }));
   }, []);
 
   const handleSelectCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      setCheckpoint(checkpoint);
+      dispatch(todoEditFormSet({ checkpoint }));
     },
     []
   );
@@ -222,9 +141,16 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     [data?.checkpoints]
   );
 
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+      setNow(Date.now());
+    }
+  }, UPDATE_INTERVAL);
+
   React.useEffect(
     () => {
-      deselect();
+      dispatch(todoEditFormReset());
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [categoryId]
@@ -260,6 +186,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         count={todos.length}
       />
       <TodoList
+        now={now}
         selectedTodoIds={selectedTodoIds}
         todos={todos}
         onClick={handleSelectOneTodo}

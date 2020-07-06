@@ -3,9 +3,9 @@ import React from 'react';
 import { Flex, Text } from 'rebass';
 
 import { preventDefault } from '../../../handlers/preventDefault';
-import { DisplayableVM } from '../../../viewModels/DisplayableVM';
+import { Displayable } from '../../../viewModels/Displayable';
 
-export function ChecklistItem<T extends DisplayableVM>({
+export function ChecklistItem<T extends Displayable>({
   isChecked,
   isFirst,
   item,

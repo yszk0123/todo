@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { DisplayableVM } from '../../../viewModels/DisplayableVM';
+import { Displayable } from '../../../viewModels/Displayable';
 import { Checklist } from '../Checklist';
 import { EditFormField } from './EditFormField';
 
-export function EditFormChecklistField<T extends DisplayableVM>({
+export function EditFormChecklistField<T extends Displayable>({
   checkedItems,
   items,
   onClick,

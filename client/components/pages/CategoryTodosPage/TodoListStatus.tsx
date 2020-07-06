@@ -3,7 +3,7 @@ import React from 'react';
 import { Flex, Text } from 'rebass';
 
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { printTodoStatus } from '../../../viewModels/TodoStatusVM';
+import { printTodoStatus } from '../../../viewModels/TodoStatus';
 
 export const TodoListStatus: React.FunctionComponent<{
   onClick: () => void;

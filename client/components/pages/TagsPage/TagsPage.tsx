@@ -12,8 +12,8 @@ import {
   useTagsPageQuery,
   useUpdateOneTagMutation,
 } from '../../../graphql/__generated__/TagsPage.graphql';
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
@@ -40,7 +40,9 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   });
   const [name, setName] = React.useState('');
   const [color, setColor] = React.useState<Color>(Color.Default);
-  const [tagCategories, setTagCategories] = React.useState<CategoryVM[]>([]);
+  const [tagCategories, setTagCategories] = React.useState<
+    RootCategoryFragment[]
+  >([]);
   const [currentTagId, setCurrentTagId] = React.useState<ID | null>(null);
   const isSelected = !!currentTagId;
 
@@ -104,7 +106,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   }, [name, color, updateOneTag, currentTagId, tagCategories]);
 
   const handleToggleTagCategory = React.useCallback(
-    (tag: CategoryVM) => {
+    (tag: RootCategoryFragment) => {
       const has = tagCategories.find((t) => t.id === tag.id);
       const newCategories = has
         ? tagCategories.filter((t) => t.id !== tag.id)

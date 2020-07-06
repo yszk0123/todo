@@ -1,11 +1,11 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
-import { DisplayableVM } from '../../../viewModels/DisplayableVM';
+import { Displayable } from '../../../viewModels/Displayable';
 import { createLookupTable } from '../../helpers/createLookupTable';
 import { ChecklistItem } from './ChecklistItem';
 
-export function Checklist<T extends DisplayableVM>({
+export function Checklist<T extends Displayable>({
   checkedItems,
   items,
   onClick,

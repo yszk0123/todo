@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { CheckpointCreateInput } from '../../../graphql/__generated__/baseTypes';
 import {
   useCheckpointsPageQuery,
@@ -10,6 +11,8 @@ import {
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
+import isDocumentVisible from '../../helpers/isDocumentVisible';
+import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { CheckpointEditForm } from './CheckpointEditForm';
@@ -39,6 +42,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     setCurrentCheckpointId,
   ] = React.useState<ID | null>(null);
   const isSelected = !!currentCheckpointId;
+  const [now, setNow] = React.useState(() => Date.now());
 
   const deselect = React.useCallback(() => {
     setCurrentCheckpointId(null);
@@ -112,6 +116,13 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     setEndAt(endAt);
   }, []);
 
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+      setNow(Date.now());
+    }
+  }, UPDATE_INTERVAL);
+
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
   }
@@ -124,6 +135,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       <CheckpointList
         checkpoints={checkpoints}
         currentCheckpointId={currentCheckpointId}
+        now={now}
         onClick={handleSelectCheckpoint}
       />
       <CheckpointEditForm
