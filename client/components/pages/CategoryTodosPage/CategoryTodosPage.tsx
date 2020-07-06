@@ -2,6 +2,7 @@ import { useApolloClient } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
 
+import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { useCategoryTodosPageQuery } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
@@ -26,8 +27,6 @@ import { PageContent } from '../../layout/PageContent';
 import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
-
-const REFETCH_INTERVAL = 30000;
 
 export function first<T>(values: T[]): T | undefined {
   return values[0];
@@ -72,6 +71,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   );
   const { checkpoint, selectedTodoIds, status, tags, text } = todoEditFormState;
   const userId = data?.me?.id;
+  const [now, setNow] = React.useState(() => Date.now());
 
   const handleSelectOneTodo = React.useCallback(
     (todo: CategoryTodoFragment) => {
@@ -144,8 +144,9 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   useInterval(() => {
     if (isDocumentVisible()) {
       refetch();
+      setNow(Date.now());
     }
-  }, REFETCH_INTERVAL);
+  }, UPDATE_INTERVAL);
 
   React.useEffect(
     () => {
@@ -185,6 +186,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
         count={todos.length}
       />
       <TodoList
+        now={now}
         selectedTodoIds={selectedTodoIds}
         todos={todos}
         onClick={handleSelectOneTodo}

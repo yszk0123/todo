@@ -9,14 +9,14 @@ import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 import { TodoListItem } from './TodoListItem';
 
 type Group = {
-  header: { endAt: Date | null; isOld: boolean; name: string | null };
+  header: { endAt: Date | null; name: string | null };
   todos: CategoryTodoFragment[];
 };
 
-function isOld(dateString: Date): boolean {
-  const currentDate = new Date();
-  const date = new Date(dateString);
-  return date < currentDate;
+function isPast(dateString: Date | null, now: number): boolean {
+  if (dateString === null) return false;
+  const date = +new Date(dateString);
+  return date < now;
 }
 
 const statusToIndex = {
@@ -53,8 +53,7 @@ function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
     if (!group) {
       const name = todo.checkpoint?.name ?? null;
       const endAt = todo.checkpoint?.endAt ?? null;
-      const old = isOld(endAt);
-      group = { header: { name, endAt, isOld: old }, todos: [] };
+      group = { header: { name, endAt }, todos: [] };
     }
     group.todos.push(todo);
     groupsById[key] = group;
@@ -68,12 +67,20 @@ function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
 }
 
 export const TodoList: React.FunctionComponent<{
+  now: number;
   onClick: (item: CategoryTodoFragment) => void;
   onClickStatus: (todo: CategoryTodoFragment) => void;
   onClickToggle: (item: CategoryTodoFragment) => void;
   selectedTodoIds: ID[];
   todos: CategoryTodoFragment[];
-}> = ({ onClick, onClickStatus, onClickToggle, selectedTodoIds, todos }) => {
+}> = ({
+  now,
+  onClick,
+  onClickStatus,
+  onClickToggle,
+  selectedTodoIds,
+  todos,
+}) => {
   const groups = React.useMemo(() => groupByCheckpoint(todos), [todos]);
 
   return (
@@ -81,6 +88,7 @@ export const TodoList: React.FunctionComponent<{
       {groups.map((group, i) => {
         const header = group.header;
         const todos = group.todos;
+        const past = isPast(header.endAt, now);
 
         return (
           <List
@@ -88,10 +96,10 @@ export const TodoList: React.FunctionComponent<{
             leftElement={header.name ? <Note text={header.name} /> : null}
             rightElement={
               header.endAt ? (
-                <RelativeDateTimeText value={header.endAt} />
+                <RelativeDateTimeText now={now} value={header.endAt} />
               ) : null
             }
-            variant={header.isOld ? 'warning' : undefined}
+            variant={past ? 'warning' : undefined}
           >
             {todos.map((todo) => {
               const isSelected = selectedTodoIds.includes(todo.id);

@@ -18,8 +18,9 @@ function sortCheckpoints(
 export const CheckpointList: React.FunctionComponent<{
   checkpoints: RootCheckpointFragment[];
   currentCheckpointId: ID | null;
+  now: number;
   onClick: (checkpoint: RootCheckpointFragment) => void;
-}> = ({ checkpoints, currentCheckpointId, onClick }) => {
+}> = ({ checkpoints, currentCheckpointId, now, onClick }) => {
   const sortedCheckpoints = React.useMemo(() => sortCheckpoints(checkpoints), [
     checkpoints,
   ]);
@@ -32,6 +33,7 @@ export const CheckpointList: React.FunctionComponent<{
             checkpoint={checkpoint}
             isActive={checkpoint.id === currentCheckpointId}
             key={checkpoint.id}
+            now={now}
             onClick={onClick}
           />
         );
