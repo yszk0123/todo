@@ -1,9 +1,9 @@
-import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { ID } from '../../../viewModels/ID';
-import { first } from './CategoryTodosPage';
+import { first } from '../components/pages/CategoryTodosPage/CategoryTodosPage';
+import { TodoStatus } from '../graphql/__generated__/baseTypes';
+import { CategoryTagFragment } from '../graphql/fragments/__generated__/CategoryTag.graphql';
+import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { RootCheckpointFragment } from '../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { ID } from '../viewModels/ID';
 
 export type TodoEditFormState = {
   checkpoint: RootCheckpointFragment | null;

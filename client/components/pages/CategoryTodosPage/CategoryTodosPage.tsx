@@ -7,12 +7,6 @@ import { useCategoryTodosPageQuery } from '../../../graphql/__generated__/Catego
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { TodoUsecase } from '../../../usecases/TodoUsecase';
-import { ID } from '../../../viewModels/ID';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { LoadingIndicator } from '../../layout/LoadingIndicator';
-import { PageContent } from '../../layout/PageContent';
-import { TodoEditForm } from './TodoEditForm';
 import {
   todoEditFormInitialState,
   todoEditFormReducer,
@@ -21,7 +15,13 @@ import {
   todoEditFormSelectOne,
   todoEditFormSet,
   todoEditFormToggleTag,
-} from './TodoEditFormState';
+} from '../../../state/TodoEditFormState';
+import { TodoUsecase } from '../../../usecases/TodoUsecase';
+import { ID } from '../../../viewModels/ID';
+import { SelectMode } from '../../../viewModels/SelectMode';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
+import { PageContent } from '../../layout/PageContent';
+import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
 

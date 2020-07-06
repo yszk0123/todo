@@ -4,11 +4,6 @@ import {
   DUMMY_CHECKPOINT,
   getNextStatus,
 } from '../components/pages/CategoryTodosPage/CategoryTodosPage';
-import {
-  TodoEditFormAction,
-  todoEditFormReset,
-  TodoEditFormState,
-} from '../components/pages/CategoryTodosPage/TodoEditFormState';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import {
   CreateOneTodoDocument,
@@ -19,6 +14,11 @@ import {
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/CategoryTodosPage.graphql';
 import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+import {
+  TodoEditFormAction,
+  todoEditFormReset,
+  TodoEditFormState,
+} from '../state/TodoEditFormState';
 import { ID } from '../viewModels/ID';
 
 export class TodoUsecase {
