@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Color } from '../../graphql/__generated__/baseTypes';
-import { getColorCode } from '../helpers/getColorCode';
+import { getColorCode } from '../../viewModels/Color';
 import { Badge } from './Badge';
 
 export const ColorBadge: React.FunctionComponent<{
