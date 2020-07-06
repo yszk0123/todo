@@ -19,11 +19,15 @@ import {
 import { TodoUsecase } from '../../../usecases/TodoUsecase';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import isDocumentVisible from '../../helpers/isDocumentVisible';
+import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
+
+const REFETCH_INTERVAL = 30000;
 
 export function first<T>(values: T[]): T | undefined {
   return values[0];
@@ -136,6 +140,12 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     () => [DUMMY_CHECKPOINT, ...(data?.checkpoints ?? [])],
     [data?.checkpoints]
   );
+
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+    }
+  }, REFETCH_INTERVAL);
 
   React.useEffect(
     () => {
