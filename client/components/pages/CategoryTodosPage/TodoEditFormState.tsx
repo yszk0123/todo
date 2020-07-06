@@ -5,7 +5,7 @@ import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__
 import { ID } from '../../../viewModels/ID';
 import { first } from './CategoryTodosPage';
 
-type TodoEditFormState = {
+export type TodoEditFormState = {
   checkpoint: RootCheckpointFragment | null;
   selectedTodoIds: ID[];
   status: TodoStatus | null;
@@ -22,7 +22,7 @@ enum TodoEditFormActionType {
   TOGGLE_TAG = 'TOGGLE_TAG',
 }
 
-type TodoEditFormAction =
+export type TodoEditFormAction =
   | {
       type: TodoEditFormActionType.RESET;
     }
