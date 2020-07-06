@@ -52,6 +52,173 @@ type Props = {
   categoryId: ID;
 };
 
+type TodoEditFormState = {
+  checkpoint: RootCheckpointFragment | null;
+  selectedTodoIds: ID[];
+  status: TodoStatus | null;
+  tags: CategoryTagFragment[] | null;
+  text: string;
+};
+
+enum TodoEditFormActionType {
+  RESET = 'RESET',
+  SELECT = 'SELECT',
+  SELECT_MANY = 'SELECT_MANY',
+  SELECT_ONE = 'SELECT_ONE',
+  SET = 'SET',
+  TOGGLE_TAG = 'TOGGLE_TAG',
+}
+type TodoEditFormAction =
+  | {
+      type: TodoEditFormActionType.RESET;
+    }
+  | {
+      payload: { state: Partial<TodoEditFormState> };
+      type: TodoEditFormActionType.SET;
+    }
+  | {
+      payload: { todo: CategoryTodoFragment };
+      type: TodoEditFormActionType.SELECT;
+    }
+  | {
+      payload: { todo: CategoryTodoFragment };
+      type: TodoEditFormActionType.SELECT_ONE;
+    }
+  | {
+      payload: { todo: CategoryTodoFragment };
+      type: TodoEditFormActionType.SELECT_MANY;
+    }
+  | {
+      payload: { tag: CategoryTagFragment };
+      type: TodoEditFormActionType.TOGGLE_TAG;
+    };
+
+function todoEditFormReset(): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.RESET,
+  };
+}
+
+function todoEditFormSelectOne(todo: CategoryTodoFragment): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.SELECT_ONE,
+    payload: { todo },
+  };
+}
+
+function todoEditFormSelectMany(
+  todo: CategoryTodoFragment
+): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.SELECT_MANY,
+    payload: { todo },
+  };
+}
+
+function todoEditFormToggleTag(tag: CategoryTagFragment): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.TOGGLE_TAG,
+    payload: { tag },
+  };
+}
+
+function todoEditFormSet(
+  state: Partial<TodoEditFormState>
+): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.SET,
+    payload: { state },
+  };
+}
+
+const todoEditFormInitialState: TodoEditFormState = {
+  checkpoint: null,
+  selectedTodoIds: [],
+  status: null,
+  tags: null,
+  text: '',
+};
+
+function todoEditFormReducer(
+  state: TodoEditFormState,
+  action: TodoEditFormAction
+): TodoEditFormState {
+  switch (action.type) {
+    case TodoEditFormActionType.RESET: {
+      return todoEditFormInitialState;
+    }
+    case TodoEditFormActionType.SET: {
+      return {
+        ...state,
+        ...action.payload.state,
+      };
+    }
+    case TodoEditFormActionType.SELECT_ONE: {
+      const { selectedTodoIds } = state;
+      const { todo } = action.payload;
+
+      const isMatch =
+        selectedTodoIds.length === 1 && first(selectedTodoIds) === todo.id;
+      if (isMatch) {
+        return todoEditFormInitialState;
+      }
+
+      return {
+        ...state,
+        checkpoint: todo.checkpoint ?? null,
+        selectedTodoIds: [todo.id],
+        status: todo.status,
+        tags: todo.tags,
+        text: todo.text,
+      };
+    }
+    case TodoEditFormActionType.SELECT_MANY: {
+      const { selectedTodoIds } = state;
+      const { todo } = action.payload;
+
+      const isSelected = !!selectedTodoIds.includes(todo.id);
+      const newSelectedTodoIds = isSelected
+        ? selectedTodoIds.filter((id) => id !== todo.id)
+        : [...selectedTodoIds, todo.id];
+      const isSingle = newSelectedTodoIds.length === 1;
+      if (isSingle) {
+        return {
+          ...state,
+          checkpoint: todo.checkpoint ?? null,
+          selectedTodoIds: newSelectedTodoIds,
+          status: todo.status,
+          tags: todo.tags,
+          text: todo.text,
+        };
+      } else {
+        return {
+          ...state,
+          checkpoint: null,
+          selectedTodoIds: newSelectedTodoIds,
+          status: null,
+          tags: null,
+          text: '',
+        };
+      }
+    }
+    case TodoEditFormActionType.TOGGLE_TAG: {
+      const { tag } = action.payload;
+      const oldTags = state.tags ?? [];
+      const has = oldTags.find((t) => t.id === tag.id);
+      const newTags = has
+        ? oldTags.filter((t) => t.id !== tag.id)
+        : [...oldTags, tag];
+      return {
+        ...state,
+        tags: newTags,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
@@ -71,52 +238,28 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const [deleteTodosById] = useDeleteTodosByIdMutation({
     onCompleted: handleCompleted,
   });
-  const [text, setText] = React.useState('');
-  const [selectedTodoIds, setSelectedTodoIds] = React.useState<ID[]>([]);
-  const [tags, setTags] = React.useState<CategoryTagFragment[] | null>(null);
-  const [status, setStatus] = React.useState<TodoStatus | null>(null);
+
   const [
-    checkpoint,
-    setCheckpoint,
-  ] = React.useState<RootCheckpointFragment | null>(null);
+    { checkpoint, selectedTodoIds, status, tags, text },
+    dispatch,
+  ] = React.useReducer(todoEditFormReducer, todoEditFormInitialState);
 
   const deselect = React.useCallback(() => {
-    setSelectedTodoIds([]);
-    setText('');
-    setTags(null);
-    setStatus(null);
-    setCheckpoint(null);
+    dispatch(todoEditFormReset());
   }, []);
 
   const handleSelectOneTodo = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      if (selectedTodoIds.length === 1 && first(selectedTodoIds) === todo.id) {
-        deselect();
-        return;
-      }
-
-      setSelectedTodoIds([todo.id]);
-      setText(todo.text);
-      setTags(todo.tags);
-      setStatus(todo.status);
-      setCheckpoint(todo.checkpoint ?? null);
+      dispatch(todoEditFormSelectOne(todo));
     },
-    [selectedTodoIds, deselect]
+    []
   );
 
   const handleSelectManyTodo = React.useCallback(
     (todo: CategoryTodoFragment) => {
-      const isSelected = !!selectedTodoIds.includes(todo.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedTodoIds.filter((id) => id !== todo.id)
-        : [...selectedTodoIds, todo.id];
-      setSelectedTodoIds(newSelectedTodoIds);
-      const isSingle = newSelectedTodoIds.length === 1;
-      setTags(isSingle ? todo.tags : null);
-      setStatus(isSingle ? todo.status : null);
-      setCheckpoint(isSingle ? todo.checkpoint ?? null : null);
+      dispatch(todoEditFormSelectMany(todo));
     },
-    [selectedTodoIds]
+    []
   );
 
   const handleDeselectTodo = React.useCallback(() => {
@@ -190,29 +333,21 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     updateTodosById({ variables: { input } });
   }, [selectedTodoIds, updateTodosById]);
 
-  const handleToggleTag = React.useCallback(
-    (tag: CategoryTagFragment) => {
-      const oldTags = tags ?? [];
-      const has = oldTags.find((t) => t.id === tag.id);
-      const newTags = has
-        ? oldTags.filter((t) => t.id !== tag.id)
-        : [...oldTags, tag];
-      setTags(newTags);
-    },
-    [tags]
-  );
+  const handleToggleTag = React.useCallback((tag: CategoryTagFragment) => {
+    dispatch(todoEditFormToggleTag(tag));
+  }, []);
 
   const handleChangeText = React.useCallback((text: string) => {
-    setText(text);
+    dispatch(todoEditFormSet({ text }));
   }, []);
 
   const handleSelectStatus = React.useCallback((status: TodoStatus) => {
-    setStatus(status);
+    dispatch(todoEditFormSet({ status }));
   }, []);
 
   const handleSelectCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      setCheckpoint(checkpoint);
+      dispatch(todoEditFormSet({ checkpoint }));
     },
     []
   );
