@@ -64,11 +64,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     fetchPolicy: 'cache-and-network',
   });
   const client = useApolloClient();
-  const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
   const [todoEditFormState, dispatch] = React.useReducer(
     todoEditFormReducer,
     todoEditFormInitialState
   );
+  const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
   const { checkpoint, selectedTodoIds, status, tags, text } = todoEditFormState;
   const userId = data?.me?.id;
   const [now, setNow] = React.useState(() => Date.now());
