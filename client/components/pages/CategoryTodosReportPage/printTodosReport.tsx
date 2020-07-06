@@ -3,7 +3,7 @@ import {
   CategoryTodosReportPageTagFragment,
   CategoryTodosReportPageTodoFragment,
 } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
-import { printTodoStatus } from '../../helpers/printTodoStatus';
+import { printTodoStatus } from '../../../viewModels/TodoStatus';
 import { simplifyURL } from '../../helpers/simplifyURL';
 
 const statusToIndex = {

@@ -1,4 +1,4 @@
-import { TodoStatus } from '../../graphql/__generated__/baseTypes';
+import { TodoStatus } from '../graphql/__generated__/baseTypes';
 
 export function printTodoStatus(status: TodoStatus) {
   switch (status) {
