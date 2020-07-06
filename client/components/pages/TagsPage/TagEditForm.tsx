@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Color } from '../../../graphql/__generated__/baseTypes';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { identity } from '../../helpers/identity';
 import { ColorBox } from '../../layout/ColorBox';
 import {
@@ -16,7 +16,7 @@ import {
 const colors = Object.values(Color);
 
 export const TagEditForm: React.FunctionComponent<{
-  categories: CategoryVM[];
+  categories: RootCategoryFragment[];
   color: Color;
   isSelected: boolean;
   name: string;
@@ -24,9 +24,9 @@ export const TagEditForm: React.FunctionComponent<{
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneTag: () => void;
   onDeleteOneTag: () => void;
-  onToggleCategory: (category: CategoryVM) => void;
+  onToggleCategory: (category: RootCategoryFragment) => void;
   onUpdateOneTag: () => void;
-  tagCategories: CategoryVM[];
+  tagCategories: RootCategoryFragment[];
 }> = ({
   categories,
   color,

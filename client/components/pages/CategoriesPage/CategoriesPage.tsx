@@ -7,7 +7,7 @@ import {
   useDeleteOneCategoryMutation,
   useUpdateOneCategoryMutation,
 } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { CategoryVM } from '../../../viewModels/CategoryVM';
+import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
@@ -44,7 +44,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   }, []);
 
   const handleSelectCategory = React.useCallback(
-    (category: CategoryVM) => {
+    (category: RootCategoryFragment) => {
       if (category.id !== currentCategoryId) {
         setCurrentCategoryId(category.id);
         setName(category.name);
