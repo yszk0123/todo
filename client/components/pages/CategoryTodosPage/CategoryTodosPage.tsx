@@ -113,9 +113,10 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
     [todoUsecase]
   );
 
-  const handleArchiveTodosById = React.useCallback(() => {
-    todoUsecase.archiveTodosById(selectedTodoIds);
-  }, [selectedTodoIds, todoUsecase]);
+  const handleArchiveTodosById = React.useCallback(async () => {
+    await todoUsecase.archiveTodosById(selectedTodoIds);
+    await refetch();
+  }, [refetch, selectedTodoIds, todoUsecase]);
 
   const handleToggleTag = React.useCallback((tag: CategoryTagFragment) => {
     dispatch(todoEditFormToggleTag(tag));
