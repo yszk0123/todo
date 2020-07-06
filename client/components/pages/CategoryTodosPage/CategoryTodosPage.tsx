@@ -7,6 +7,7 @@ import { useCategoryTodosPageQuery } from '../../../graphql/__generated__/Catego
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { TodoUsecase } from '../../../usecases/TodoUsecase';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
@@ -23,7 +24,6 @@ import {
 } from './TodoEditFormState';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
-import { TodoUsecase } from './TodoUsecase';
 
 export function first<T>(values: T[]): T | undefined {
   return values[0];

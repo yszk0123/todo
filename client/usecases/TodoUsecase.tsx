@@ -1,6 +1,15 @@
 import { ApolloClient } from '@apollo/client';
 
-import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import {
+  DUMMY_CHECKPOINT,
+  getNextStatus,
+} from '../components/pages/CategoryTodosPage/CategoryTodosPage';
+import {
+  TodoEditFormAction,
+  todoEditFormReset,
+  TodoEditFormState,
+} from '../components/pages/CategoryTodosPage/TodoEditFormState';
+import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -8,15 +17,9 @@ import {
   DeleteTodosByIdMutationVariables,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
-} from '../../../graphql/__generated__/CategoryTodosPage.graphql';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
-import { ID } from '../../../viewModels/ID';
-import { DUMMY_CHECKPOINT, getNextStatus } from './CategoryTodosPage';
-import {
-  TodoEditFormAction,
-  todoEditFormReset,
-  TodoEditFormState,
-} from './TodoEditFormState';
+} from '../graphql/__generated__/CategoryTodosPage.graphql';
+import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { ID } from '../viewModels/ID';
 
 export class TodoUsecase {
   constructor(
