@@ -6,14 +6,14 @@ export function getColorCode(color: Color): string {
     case Color.Default:
       return defaultTagColor;
     case Color.Blue:
-      return 'blue';
+      return 'navy';
     case Color.Green:
       return 'green';
     case Color.Purple:
       return 'purple';
     case Color.Red:
-      return 'red';
+      return 'orangered';
     case Color.Yellow:
-      return 'yellow';
+      return 'goldenrod';
   }
 }
