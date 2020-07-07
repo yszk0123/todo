@@ -3,6 +3,7 @@ import { Checkbox } from '@rebass/forms';
 import React from 'react';
 import { Box } from 'rebass';
 
+import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { ListItem } from '../../layout/List';
 import { TodoListStatus } from './TodoListStatus';
@@ -28,9 +29,12 @@ export const TodoListItem: React.FunctionComponent<{
     onClickStatus(todo);
   }, [todo, onClickStatus]);
 
+  const isDone = todo.status === TodoStatus.Done;
+
   return (
     <ListItem
       isActive={isSelected}
+      isDim={isDone}
       item={todo}
       leftElement={
         <>
