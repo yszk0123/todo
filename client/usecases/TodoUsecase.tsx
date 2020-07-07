@@ -17,6 +17,7 @@ import { CategoryTodoFragment } from '../graphql/fragments/__generated__/Categor
 import {
   TodoEditFormAction,
   todoEditFormReset,
+  todoEditFormSet,
   TodoEditFormState,
 } from '../state/TodoEditFormState';
 import { ID } from '../viewModels/ID';
@@ -34,6 +35,8 @@ export class TodoUsecase {
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
+
+    this.dispatch(todoEditFormSet({ text: '' }));
 
     await this.client.mutate<unknown, CreateOneTodoMutationVariables>({
       mutation: CreateOneTodoDocument,
