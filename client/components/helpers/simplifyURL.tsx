@@ -2,7 +2,7 @@ export function simplifyURL(text: string): string {
   const simplifiedText = text.replace(/\?.*$/, '').replace(/#.*$/, '');
 
   const github = simplifiedText.replace(
-    /^https?:\/\/github.com\/[^/]+\/([^/]+)\/(?:pull|issue)\/([0-9]+)$/,
+    /^https?:\/\/github.com\/[^/]+\/([^/]+)\/(?:pull|issue)s?\/([0-9]+)$/,
     '$1 #$2'
   );
   if (github !== simplifiedText) {
