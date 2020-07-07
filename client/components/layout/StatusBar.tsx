@@ -45,7 +45,7 @@ export const StatusBar: React.FunctionComponent<{
   right?: (StatusBarItem | null)[];
 }> = ({ left = [], right = [] }) => {
   return (
-    <Box fontSize={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Flex fontSize={2} justifyContent="space-between" mb={2}>
       <Flex
         overflowX="auto"
         sx={{
@@ -76,6 +76,6 @@ export const StatusBar: React.FunctionComponent<{
           })}
         </Flex>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
