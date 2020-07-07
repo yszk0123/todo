@@ -29,7 +29,7 @@ export function ListItem<T>({
       flex="1 1 auto"
       p={2}
       sx={{
-        opacity: isDim ? 0.5 : undefined,
+        opacity: isDim ? 0.3 : undefined,
         cursor: 'pointer',
         borderBottom: '1px dotted',
         borderColor: 'gray',

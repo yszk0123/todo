@@ -12,7 +12,7 @@ export const theme = {
     gray: '#555',
     warning: '#f44',
     highlight: 'hsla(205, 100%, 40%, 0.125)',
-    dark: 'rgba(0, 10, 20, 0.2)',
+    dark: 'rgba(0, 10, 20, 0.1)',
   },
   fonts: {
     body: 'Roboto, sans-serif',
