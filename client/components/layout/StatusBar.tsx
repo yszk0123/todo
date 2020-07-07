@@ -45,15 +45,8 @@ export const StatusBar: React.FunctionComponent<{
   right?: (StatusBarItem | null)[];
 }> = ({ left = [], right = [] }) => {
   return (
-    <Flex fontSize={2} justifyContent="space-between" mb={2}>
-      <Flex
-        overflowX="auto"
-        sx={{
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          color: 'gray',
-        }}
-      >
+    <Flex color="gray" fontSize={2} justifyContent="space-between" mb={2}>
+      <Flex alignItems="center" justifyContent="flex-start" overflowX="auto">
         <Flex flexShrink={0}>
           {left.filter(isNotNull).map((item, i) => {
             return <StatusBarItemView item={item} key={i} />;
@@ -61,14 +54,11 @@ export const StatusBar: React.FunctionComponent<{
         </Flex>
       </Flex>
       <Flex
+        alignItems="center"
+        flexGrow={1}
         flexShrink={0}
+        justifyContent="flex-end"
         overflowX="auto"
-        sx={{
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          color: 'gray',
-        }}
       >
         <Flex flexShrink={0}>
           {right.filter(isNotNull).map((item, i) => {

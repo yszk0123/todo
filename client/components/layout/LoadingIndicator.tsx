@@ -53,7 +53,7 @@ const AnimatedCircle = ({
           opacity: 1,
         },
       },
-    };
+    } as const;
   }, [props.sx, delay, duration]);
 
   return <Circle {...props} sx={sx} />;

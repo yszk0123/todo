@@ -20,7 +20,7 @@ function EditFormRadioFieldItem<T>({
   }, [item, onClick]);
 
   return (
-    <Flex alignItems="center" sx={{ flexGrow: 1 }}>
+    <Flex alignItems="center" flexGrow={1}>
       <Label onClick={handleClick}>
         <Flex alignItems="center">
           <Radio checked={isChecked} readOnly />
