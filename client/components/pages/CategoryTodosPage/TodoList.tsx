@@ -60,8 +60,8 @@ function groupByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
   });
 
   return Object.values(groupsById).sort((a, b) => {
-    const d1 = a.header.endAt ? new Date(a.header.endAt).getTime() : 0;
-    const d2 = b.header.endAt ? new Date(b.header.endAt).getTime() : 0;
+    const d1 = a.header.endAt ? new Date(a.header.endAt).getTime() : Infinity;
+    const d2 = b.header.endAt ? new Date(b.header.endAt).getTime() : Infinity;
     return d1 - d2;
   });
 }
