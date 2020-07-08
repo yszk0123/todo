@@ -1,21 +1,21 @@
+import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
-import {
-  Color,
-  TagCreateInput,
-  TagUpdateInput,
-  TagWhereUniqueInput,
-} from '../../../graphql/__generated__/baseTypes';
-import {
-  useCreateOneTagMutation,
-  useDeleteOneTagMutation,
-  useTagsPageQuery,
-  useUpdateOneTagMutation,
-} from '../../../graphql/__generated__/TagsPage.graphql';
+import { Color } from '../../../graphql/__generated__/baseTypes';
+import { useTagsPageQuery } from '../../../graphql/__generated__/TagsPage.graphql';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { RootTagFragment } from '../../../graphql/fragments/__generated__/RootTag.graphql';
+import {
+  tagEditFormInitialState,
+  tagEditFormReducer,
+  tagEditFormReset,
+  tagEditFormSelectOne,
+  tagEditFormSet,
+  tagEditFormToggleCategory,
+} from '../../../state/TagEditFormState';
+import { TagUsecase } from '../../../usecases/TagUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { ID } from '../../../viewModels/ID';
+import { SelectMode } from '../../../viewModels/SelectMode';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TagEditForm } from './TagEditForm';
@@ -26,107 +26,70 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
-  const handleCompleted = React.useCallback(() => {
-    refetch();
-  }, [refetch]);
-  const [createOneTag] = useCreateOneTagMutation({
-    onCompleted: handleCompleted,
-  });
-  const [deleteOneTag] = useDeleteOneTagMutation({
-    onCompleted: handleCompleted,
-  });
-  const [updateOneTag] = useUpdateOneTagMutation({
-    onCompleted: handleCompleted,
-  });
-  const [name, setName] = React.useState('');
-  const [color, setColor] = React.useState<Color>(Color.Default);
-  const [tagCategories, setTagCategories] = React.useState<
-    RootCategoryFragment[]
-  >([]);
-  const [currentTagId, setCurrentTagId] = React.useState<ID | null>(null);
-  const isSelected = !!currentTagId;
 
-  const deselect = React.useCallback(() => {
-    setCurrentTagId(null);
-    setName('');
-    setColor(Color.Default);
-    setTagCategories([]);
+  const client = useApolloClient();
+  const [tagEditFormState, dispatch] = React.useReducer(
+    tagEditFormReducer,
+    tagEditFormInitialState
+  );
+  const [tagUsecase] = React.useState(() => new TagUsecase(client, dispatch));
+
+  const userId = data?.me?.id;
+  const count = tagEditFormState.selectedTagIds.length;
+  const selectMode =
+    count === 0
+      ? SelectMode.NONE
+      : count === 1
+      ? SelectMode.SINGLE
+      : SelectMode.MULTI;
+
+  const handleSelectOneTag = React.useCallback((tag: RootTagFragment) => {
+    dispatch(tagEditFormSelectOne(tag));
   }, []);
 
-  const handleSelectTag = React.useCallback(
-    (tag: RootTagFragment) => {
-      if (tag.id !== currentTagId) {
-        setCurrentTagId(tag.id);
-        setName(tag.name);
-        setTagCategories(tag.categories);
-        setColor(tag.color ?? '');
-      } else {
-        deselect();
-      }
-    },
-    [currentTagId, deselect]
-  );
-
   const handleDeselectTag = React.useCallback(() => {
-    deselect();
-  }, [deselect]);
+    dispatch(tagEditFormReset());
+  }, []);
 
-  const handleCreateOneTag = React.useCallback(() => {
-    if (data?.me) {
-      const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
-      const newData: TagCreateInput = {
-        owner: { connect: { id: data.me.id } },
-        name,
-        color,
-        categories: { connect: categoriesToConnect },
-      };
-      deselect();
-      createOneTag({ variables: { data: newData } });
-    }
-  }, [data, name, color, deselect, createOneTag, tagCategories]);
+  const handleCreateOneTag = React.useCallback(async () => {
+    if (!userId) return;
+    await tagUsecase.createOneTag(userId, tagEditFormState);
+    await refetch();
+  }, [userId, tagUsecase, tagEditFormState, refetch]);
 
-  const handleDeleteOneTag = React.useCallback(() => {
-    if (!currentTagId) return;
-    if (!confirm('Delete?')) return;
-    const where: TagWhereUniqueInput = { id: currentTagId };
-    deselect();
-    deleteOneTag({ variables: { where } });
-  }, [deselect, deleteOneTag, currentTagId]);
+  const handleDeleteOneTag = React.useCallback(async () => {
+    await tagUsecase.deleteOneTag(tagEditFormState.selectedTagIds);
+    await refetch();
+  }, [tagUsecase, tagEditFormState.selectedTagIds, refetch]);
 
-  const handleUpdateOneTag = React.useCallback(() => {
-    if (!currentTagId) return;
-    const categoriesToConnect = tagCategories.map((c) => ({ id: c.id }));
-    const newData: TagUpdateInput = {
-      name,
-      color,
-      categories: { connect: categoriesToConnect },
-    };
-    const where: TagWhereUniqueInput = { id: currentTagId };
-    updateOneTag({ variables: { data: newData, where } });
-  }, [name, color, updateOneTag, currentTagId, tagCategories]);
+  const handleUpdateOneTag = React.useCallback(async () => {
+    await tagUsecase.updateOneTag(tagEditFormState);
+  }, [tagUsecase, tagEditFormState]);
+
+  // FIXME: Implement
+  // const handleArchiveOneTag = React.useCallback(async () => {
+  //   await tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
+  //   await refetch();
+  // }, [tagUsecase, tagEditFormState.selectedTagIds, refetch]);
 
   const handleToggleTagCategory = React.useCallback(
-    (tag: RootCategoryFragment) => {
-      const has = tagCategories.find((t) => t.id === tag.id);
-      const newCategories = has
-        ? tagCategories.filter((t) => t.id !== tag.id)
-        : [...tagCategories, tag];
-      setTagCategories(newCategories);
+    (category: RootCategoryFragment) => {
+      dispatch(tagEditFormToggleCategory(category));
     },
-    [tagCategories]
+    []
   );
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.currentTarget.value;
-      setName(name);
+      dispatch(tagEditFormSet({ name }));
     },
     []
   );
 
   const handleChangeColor = React.useCallback((color: Color | null) => {
     if (color) {
-      setColor(color);
+      dispatch(tagEditFormSet({ color }));
     }
   }, []);
 
@@ -134,8 +97,11 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const { color, name, selectedTagIds, tagCategories } = tagEditFormState;
   const tags = data.tags ?? [];
-  const categories = data.categories ?? [];
+  const rootCategories = data.categories ?? [];
+  const currentTagId = selectedTagIds[0] ?? null;
+  const isSelected = selectMode === SelectMode.SINGLE;
 
   return (
     <PageContent onClick={handleDeselectTag}>
@@ -143,10 +109,10 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       <TagList
         currentTagId={currentTagId}
         tags={tags}
-        onClick={handleSelectTag}
+        onClick={handleSelectOneTag}
       />
       <TagEditForm
-        categories={categories}
+        categories={rootCategories}
         color={color}
         isSelected={isSelected}
         name={name}
