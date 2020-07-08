@@ -1,9 +1,5 @@
 import { ApolloClient } from '@apollo/client';
 
-import {
-  DUMMY_CHECKPOINT,
-  getNextStatus,
-} from '../components/pages/CategoryTodosPage/CategoryTodosPage';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import {
   CreateOneTodoDocument,
@@ -20,8 +16,22 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../state/TodoEditFormState';
+import { DUMMY_CHECKPOINT } from '../viewModels/Checkpoint';
 import { toDateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';
+
+function getNextStatus(status: TodoStatus): TodoStatus {
+  switch (status) {
+    case TodoStatus.Todo:
+      return TodoStatus.InProgress;
+    case TodoStatus.InProgress:
+      return TodoStatus.Done;
+    case TodoStatus.Waiting:
+      return TodoStatus.InProgress;
+    case TodoStatus.Done:
+      return TodoStatus.Todo;
+  }
+}
 
 export class TodoUsecase {
   constructor(

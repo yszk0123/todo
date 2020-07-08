@@ -18,7 +18,7 @@ import {
   todoEditFormToggleTag,
 } from '../../../state/TodoEditFormState';
 import { TodoUsecase } from '../../../usecases/TodoUsecase';
-import { toDateTime } from '../../../viewModels/DateTime';
+import { DUMMY_CHECKPOINT } from '../../../viewModels/Checkpoint';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
 import isDocumentVisible from '../../helpers/isDocumentVisible';
@@ -28,26 +28,6 @@ import { PageContent } from '../../layout/PageContent';
 import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
-
-export function getNextStatus(status: TodoStatus): TodoStatus {
-  switch (status) {
-    case TodoStatus.Todo:
-      return TodoStatus.InProgress;
-    case TodoStatus.InProgress:
-      return TodoStatus.Done;
-    case TodoStatus.Waiting:
-      return TodoStatus.InProgress;
-    case TodoStatus.Done:
-      return TodoStatus.Todo;
-  }
-}
-
-// FIXME
-export const DUMMY_CHECKPOINT: RootCheckpointFragment = {
-  id: '__DUMMY__',
-  name: 'RESET',
-  endAt: toDateTime('2000-01-01'),
-};
 
 type Props = {
   categoryId: ID;
