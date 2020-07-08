@@ -552,14 +552,14 @@ enum OrderByArg {
 }
 
 type Query {
-  categories: [Category!]
-  category(id: ID!): Category
-  checkpoints: [Checkpoint!]
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, where: CategoryWhereInput): [Category!]!
+  category(where: CategoryWhereUniqueInput!): Category
+  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, where: CheckpointWhereInput): [Checkpoint!]!
   me: User
   stats: Stats
-  tag(id: ID!): Tag
-  tags: [Tag!]
-  todos: [Todo!]
+  tag(where: TagWhereUniqueInput!): Tag
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, where: TagWhereInput): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, where: TodoWhereInput): [Todo!]!
 }
 
 type Stats {

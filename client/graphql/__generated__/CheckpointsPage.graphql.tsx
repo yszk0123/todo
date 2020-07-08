@@ -14,10 +14,10 @@ export type CheckpointsPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
-  )>, checkpoints?: Types.Maybe<Array<(
+  )>, checkpoints: Array<(
     { __typename?: 'Checkpoint' }
     & RootCheckpointFragment
-  )>> }
+  )> }
 );
 
 export type CreateOneCheckpointMutationVariables = Types.Exact<{

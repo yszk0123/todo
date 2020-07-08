@@ -16,101 +16,120 @@ schema.queryType({
       },
     });
 
-    t.field('category', {
-      type: 'Category',
-      args: {
-        id: schema.idArg({ required: true }),
+    t.crud.categories({
+      filtering: true,
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
       },
-      resolve(_root, args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return [];
 
-        return ctx.db.category.findOne({
+        const newArgs: typeof args = {
+          ...args,
           where: {
-            id: args.id,
-          },
-        });
-      },
-    });
-
-    t.list.field('categories', {
-      type: 'Category',
-      resolve(_root, _args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
-
-        return ctx.db.category.findMany({
-          where: {
-            ownerId: ctx.user.id,
-          },
-        });
-      },
-    });
-
-    t.list.field('checkpoints', {
-      type: 'Checkpoint',
-      resolve(_root, _args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
-
-        return ctx.db.checkpoint.findMany({
-          where: {
-            ownerId: ctx.user.id,
+            ...args.where,
+            ownerId: { equals: ctx.user.id },
             // FIXME: Set from client
             archivedAt: { equals: null },
           },
-        });
+        };
+        return originalResolve(root, newArgs, ctx, info);
       },
     });
 
-    t.list.field('todos', {
-      type: 'Todo',
-      resolve(_root, _args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
+    t.crud.category({
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return null;
 
-        return ctx.db.todo.findMany({
+        const newArgs: typeof args = {
+          ...args,
           where: {
-            ownerId: ctx.user.id,
+            ...args.where,
+            id: ctx.user.id,
           },
-        });
+        };
+        return originalResolve(root, newArgs, ctx, info);
       },
     });
 
-    t.field('tag', {
-      type: 'Tag',
-      args: {
-        id: schema.idArg({ required: true }),
+    t.crud.checkpoints({
+      filtering: true,
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
       },
-      resolve(_root, args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
-
-        return ctx.db.tag.findOne({
+      resolve(root, args, ctx, info, originalResolve) {
+        const newArgs: typeof args = {
+          ...args,
           where: {
-            id: args.id,
+            ownerId: { equals: ctx.user?.id },
+            // FIXME: Set from client
+            archivedAt: { equals: null },
           },
-        });
+        };
+        return originalResolve(root, newArgs, ctx, info);
       },
     });
 
-    t.list.field('tags', {
-      type: 'Tag',
-      resolve(_root, _args, ctx) {
-        if (!ctx.user?.id) {
-          return null;
-        }
+    t.crud.todos({
+      filtering: true,
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return [];
 
-        return ctx.db.tag.findMany({
+        const newArgs: typeof args = {
+          ...args,
           where: {
-            ownerId: ctx.user.id,
+            ...args.where,
+            ownerId: { equals: ctx.user.id },
+            // FIXME: Set from client
+            archivedAt: { equals: null },
           },
-        });
+        };
+        return originalResolve(root, newArgs, ctx, info);
+      },
+    });
+
+    t.crud.tag({
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return null;
+
+        const newArgs: typeof args = {
+          ...args,
+          where: {
+            ...args.where,
+            id: ctx.user.id,
+          },
+        };
+        return originalResolve(root, newArgs, ctx, info);
+      },
+    });
+
+    t.crud.tags({
+      filtering: true,
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return [];
+
+        const newArgs: typeof args = {
+          ...args,
+          where: {
+            ...args.where,
+            ownerId: { equals: ctx.user.id },
+            // FIXME: Set from client
+            archivedAt: { equals: null },
+          },
+        };
+        return originalResolve(root, newArgs, ctx, info);
       },
     });
   },

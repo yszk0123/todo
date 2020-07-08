@@ -1,8 +1,8 @@
-query CategoryTodosPage($categoryId: ID!) {
+query CategoryTodosPage($where: CategoryWhereUniqueInput!) {
   me {
     id
   }
-  category(id: $categoryId) {
+  category(where: $where) {
     id
     name
     todos(where: { archivedAt: { equals: null } }) {

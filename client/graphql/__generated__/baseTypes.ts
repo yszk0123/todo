@@ -654,24 +654,60 @@ export enum OrderByArg {
 
 export type Query = {
   __typename?: 'Query';
-  categories?: Maybe<Array<Category>>;
+  categories: Array<Category>;
   category?: Maybe<Category>;
-  checkpoints?: Maybe<Array<Checkpoint>>;
+  checkpoints: Array<Checkpoint>;
   me?: Maybe<User>;
   stats?: Maybe<Stats>;
   tag?: Maybe<Tag>;
-  tags?: Maybe<Array<Tag>>;
-  todos?: Maybe<Array<Todo>>;
+  tags: Array<Tag>;
+  todos: Array<Todo>;
+};
+
+
+export type QueryCategoriesArgs = {
+  after?: Maybe<CategoryWhereUniqueInput>;
+  before?: Maybe<CategoryWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<CategoryWhereInput>;
 };
 
 
 export type QueryCategoryArgs = {
-  id: Scalars['ID'];
+  where: CategoryWhereUniqueInput;
+};
+
+
+export type QueryCheckpointsArgs = {
+  after?: Maybe<CheckpointWhereUniqueInput>;
+  before?: Maybe<CheckpointWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<CheckpointWhereInput>;
 };
 
 
 export type QueryTagArgs = {
-  id: Scalars['ID'];
+  where: TagWhereUniqueInput;
+};
+
+
+export type QueryTagsArgs = {
+  after?: Maybe<TagWhereUniqueInput>;
+  before?: Maybe<TagWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<TagWhereInput>;
+};
+
+
+export type QueryTodosArgs = {
+  after?: Maybe<TodoWhereUniqueInput>;
+  before?: Maybe<TodoWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<TodoWhereInput>;
 };
 
 export type Stats = {

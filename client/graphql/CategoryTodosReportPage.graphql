@@ -1,5 +1,5 @@
-query CategoryTodosReportPage($categoryId: ID!) {
-  category(id: $categoryId) {
+query CategoryTodosReportPage($where: CategoryWhereUniqueInput!) {
+  category(where: $where) {
     id
     name
     todos(where: { archivedAt: { equals: null } }) {

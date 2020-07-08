@@ -13,7 +13,7 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type CategoryTodosPageQueryVariables = Types.Exact<{
-  categoryId: Types.Scalars['ID'];
+  where: Types.CategoryWhereUniqueInput;
 }>;
 
 
@@ -32,13 +32,13 @@ export type CategoryTodosPageQuery = (
       { __typename?: 'Tag' }
       & CategoryTagFragment
     )> }
-  )>, checkpoints?: Types.Maybe<Array<(
+  )>, checkpoints: Array<(
     { __typename?: 'Checkpoint' }
     & RootCheckpointFragment
-  )>>, categories?: Types.Maybe<Array<(
+  )>, categories: Array<(
     { __typename?: 'Category' }
     & RootCategoryFragment
-  )>> }
+  )> }
 );
 
 export type CreateOneTodoMutationVariables = Types.Exact<{
@@ -105,11 +105,11 @@ export type UpdateTodosByIdMutation = (
 
 
 export const CategoryTodosPageDocument = gql`
-    query CategoryTodosPage($categoryId: ID!) {
+    query CategoryTodosPage($where: CategoryWhereUniqueInput!) {
   me {
     id
   }
-  category(id: $categoryId) {
+  category(where: $where) {
     id
     name
     todos(where: {archivedAt: {equals: null}}) {
@@ -143,7 +143,7 @@ ${RootCategoryFragmentDoc}`;
  * @example
  * const { data, loading, error } = useCategoryTodosPageQuery({
  *   variables: {
- *      categoryId: // value for 'categoryId'
+ *      where: // value for 'where'
  *   },
  * });
  */

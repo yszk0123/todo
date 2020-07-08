@@ -37,7 +37,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
   const { data, loading, refetch } = useCategoryTodosPageQuery({
-    variables: { categoryId },
+    variables: { where: { id: categoryId } },
     fetchPolicy: 'cache-and-network',
   });
   const client = useApolloClient();

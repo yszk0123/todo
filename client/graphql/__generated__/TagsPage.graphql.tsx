@@ -12,13 +12,13 @@ export type TagsPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
-  )>, tags?: Types.Maybe<Array<(
+  )>, tags: Array<(
     { __typename?: 'Tag' }
     & TagsTagFragment
-  )>>, categories?: Types.Maybe<Array<(
+  )>, categories: Array<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
-  )>> }
+  )> }
 );
 
 export type CreateOneTagMutationVariables = Types.Exact<{

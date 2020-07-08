@@ -14,10 +14,10 @@ export type CategoriesPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
-  )>, categories?: Types.Maybe<Array<(
+  )>, categories: Array<(
     { __typename?: 'Category' }
     & RootCategoryFragment
-  )>> }
+  )> }
 );
 
 export type CreateOneCategoryMutationVariables = Types.Exact<{

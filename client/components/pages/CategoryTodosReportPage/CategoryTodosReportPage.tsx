@@ -13,7 +13,7 @@ export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
   const { data, loading } = useCategoryTodosReportPageQuery({
-    variables: { categoryId },
+    variables: { where: { id: categoryId } },
   });
 
   if (loading || !data) {
