@@ -41,12 +41,12 @@ export type CategoryTodosPageQuery = (
   )> }
 );
 
-export type TodosPageRefetchQueryVariables = Types.Exact<{
+export type TodosQueryVariables = Types.Exact<{
   categoryId: Types.Scalars['String'];
 }>;
 
 
-export type TodosPageRefetchQuery = (
+export type TodosQuery = (
   { __typename?: 'Query' }
   & { todos: Array<(
     { __typename?: 'Todo' }
@@ -173,8 +173,8 @@ export type CategoryTodosPageQueryResult = ApolloReactCommon.QueryResult<Categor
 export function refetchCategoryTodosPageQuery(variables?: CategoryTodosPageQueryVariables) {
       return { query: CategoryTodosPageDocument, variables: variables }
     }
-export const TodosPageRefetchDocument = gql`
-    query TodosPageRefetch($categoryId: String!) {
+export const TodosDocument = gql`
+    query Todos($categoryId: String!) {
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
     ...CategoryTodo
   }
@@ -182,32 +182,32 @@ export const TodosPageRefetchDocument = gql`
     ${CategoryTodoFragmentDoc}`;
 
 /**
- * __useTodosPageRefetchQuery__
+ * __useTodosQuery__
  *
- * To run a query within a React component, call `useTodosPageRefetchQuery` and pass it any options that fit your needs.
- * When your component renders, `useTodosPageRefetchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useTodosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTodosQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useTodosPageRefetchQuery({
+ * const { data, loading, error } = useTodosQuery({
  *   variables: {
  *      categoryId: // value for 'categoryId'
  *   },
  * });
  */
-export function useTodosPageRefetchQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodosPageRefetchQuery, TodosPageRefetchQueryVariables>) {
-        return ApolloReactHooks.useQuery<TodosPageRefetchQuery, TodosPageRefetchQueryVariables>(TodosPageRefetchDocument, baseOptions);
+export function useTodosQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodosQuery, TodosQueryVariables>) {
+        return ApolloReactHooks.useQuery<TodosQuery, TodosQueryVariables>(TodosDocument, baseOptions);
       }
-export function useTodosPageRefetchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodosPageRefetchQuery, TodosPageRefetchQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<TodosPageRefetchQuery, TodosPageRefetchQueryVariables>(TodosPageRefetchDocument, baseOptions);
+export function useTodosLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodosQuery, TodosQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TodosQuery, TodosQueryVariables>(TodosDocument, baseOptions);
         }
-export type TodosPageRefetchQueryHookResult = ReturnType<typeof useTodosPageRefetchQuery>;
-export type TodosPageRefetchLazyQueryHookResult = ReturnType<typeof useTodosPageRefetchLazyQuery>;
-export type TodosPageRefetchQueryResult = ApolloReactCommon.QueryResult<TodosPageRefetchQuery, TodosPageRefetchQueryVariables>;
-export function refetchTodosPageRefetchQuery(variables?: TodosPageRefetchQueryVariables) {
-      return { query: TodosPageRefetchDocument, variables: variables }
+export type TodosQueryHookResult = ReturnType<typeof useTodosQuery>;
+export type TodosLazyQueryHookResult = ReturnType<typeof useTodosLazyQuery>;
+export type TodosQueryResult = ApolloReactCommon.QueryResult<TodosQuery, TodosQueryVariables>;
+export function refetchTodosQuery(variables?: TodosQueryVariables) {
+      return { query: TodosDocument, variables: variables }
     }
 export const CreateOneTodoDocument = gql`
     mutation CreateOneTodo($input: TodoCreateInput!) {

@@ -22,7 +22,7 @@ query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
   }
 }
 
-query TodosPageRefetch($categoryId: String!) {
+query Todos($categoryId: String!) {
   todos(
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
