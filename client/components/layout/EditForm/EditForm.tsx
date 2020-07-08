@@ -16,7 +16,9 @@ export const EditForm: React.FunctionComponent<Props> = ({ children }) => {
         borderColor: 'primary',
         borderRadius: 4,
         boxShadow: 1,
-        p: 2,
+        px: 2,
+        pt: 3,
+        pb: 2,
         mb: 2,
       }}
       onClick={stopPropagation}
