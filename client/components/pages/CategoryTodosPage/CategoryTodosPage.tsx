@@ -71,13 +71,11 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const handleCreateOneTodo = React.useCallback(async () => {
     if (!userId) return;
     await todoUsecase.createOneTodo(userId, categoryId, todoEditFormState);
-    await refetch();
-  }, [categoryId, refetch, todoEditFormState, todoUsecase, userId]);
+  }, [categoryId, todoEditFormState, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(async () => {
-    await todoUsecase.deleteTodosById(selectedTodoIds);
-    await refetch();
-  }, [refetch, selectedTodoIds, todoUsecase]);
+    await todoUsecase.deleteTodosById(categoryId, selectedTodoIds);
+  }, [categoryId, selectedTodoIds, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState);
@@ -91,9 +89,8 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   );
 
   const handleArchiveTodosById = React.useCallback(async () => {
-    await todoUsecase.archiveTodosById(selectedTodoIds);
-    await refetch();
-  }, [refetch, selectedTodoIds, todoUsecase]);
+    await todoUsecase.archiveTodosById(categoryId, selectedTodoIds);
+  }, [categoryId, selectedTodoIds, todoUsecase]);
 
   const handleToggleTag = React.useCallback((tag: CategoryTagFragment) => {
     dispatch(todoEditFormToggleTag(tag));

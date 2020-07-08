@@ -6,6 +6,7 @@ import {
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
+  refetchTodosPageRefetchQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/CategoryTodosPage.graphql';
@@ -64,6 +65,7 @@ export class TodoUsecase {
               : undefined,
         },
       },
+      refetchQueries: [refetchTodosPageRefetchQuery({ categoryId })],
     });
   }
 
@@ -100,7 +102,7 @@ export class TodoUsecase {
     });
   }
 
-  async deleteTodosById(todoIds: ID[]) {
+  async deleteTodosById(categoryId: ID, todoIds: ID[]) {
     const count = todoIds.length;
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
@@ -108,6 +110,7 @@ export class TodoUsecase {
     await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
+      refetchQueries: [refetchTodosPageRefetchQuery({ categoryId })],
     });
   }
 
@@ -125,7 +128,7 @@ export class TodoUsecase {
     });
   }
 
-  async archiveTodosById(todoIds: ID[]) {
+  async archiveTodosById(categoryId: ID, todoIds: ID[]) {
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
       mutation: UpdateTodosByIdDocument,
       variables: {
@@ -134,6 +137,7 @@ export class TodoUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
+      refetchQueries: [refetchTodosPageRefetchQuery({ categoryId })],
     });
   }
 }

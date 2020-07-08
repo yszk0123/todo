@@ -22,6 +22,14 @@ query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
   }
 }
 
+query TodosPageRefetch($categoryId: String!) {
+  todos(
+    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
+  ) {
+    ...CategoryTodo
+  }
+}
+
 mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
     ...CategoryTodo
