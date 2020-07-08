@@ -69,6 +69,8 @@ export class TodoUsecase {
 
     const tagIds = tags ? tags.map((tag) => tag.id) : undefined;
 
+    this.dispatch(todoEditFormSet({ selectedTodoIds: [] }));
+
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
       mutation: UpdateTodosByIdDocument,
       variables: {
