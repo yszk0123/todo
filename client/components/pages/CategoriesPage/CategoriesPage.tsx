@@ -1,15 +1,18 @@
+import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
-import { CategoryCreateInput } from '../../../graphql/__generated__/baseTypes';
-import {
-  useCategoriesPageQuery,
-  useCreateOneCategoryMutation,
-  useDeleteOneCategoryMutation,
-  useUpdateOneCategoryMutation,
-} from '../../../graphql/__generated__/CategoriesPage.graphql';
+import { useCategoriesPageQuery } from '../../../graphql/__generated__/CategoriesPage.graphql';
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import {
+  categoryEditFormInitialState,
+  categoryEditFormReducer,
+  categoryEditFormReset,
+  categoryEditFormSelectOne,
+  categoryEditFormSet,
+} from '../../../state/CategoryEditFormState';
+import { CategoryUsecase } from '../../../usecases/CategoryUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { ID } from '../../../viewModels/ID';
+import { SelectMode } from '../../../viewModels/SelectMode';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { CategoryEditForm } from './CategoryEditForm';
@@ -20,74 +23,64 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useCategoriesPageQuery({
     fetchPolicy: 'cache-and-network',
   });
-  const handleCompleted = React.useCallback(() => {
-    refetch();
-  }, [refetch]);
-  const [createOneCategory] = useCreateOneCategoryMutation({
-    onCompleted: handleCompleted,
-  });
-  const [deleteOneCategory] = useDeleteOneCategoryMutation({
-    onCompleted: handleCompleted,
-  });
-  const [updateOneCategory] = useUpdateOneCategoryMutation({
-    onCompleted: handleCompleted,
-  });
-  const [name, setName] = React.useState('');
-  const [currentCategoryId, setCurrentCategoryId] = React.useState<ID | null>(
-    null
+  const client = useApolloClient();
+  const [categoryEditFormState, dispatch] = React.useReducer(
+    categoryEditFormReducer,
+    categoryEditFormInitialState
   );
-  const isSelected = !!currentCategoryId;
+  const [categoryUsecase] = React.useState(
+    () => new CategoryUsecase(client, dispatch)
+  );
 
-  const deselect = React.useCallback(() => {
-    setCurrentCategoryId(null);
-    setName('');
-  }, []);
+  const userId = data?.me?.id;
+  const count = categoryEditFormState.selectedCategoryIds.length;
+  const selectMode =
+    count === 0
+      ? SelectMode.NONE
+      : count === 1
+      ? SelectMode.SINGLE
+      : SelectMode.MULTI;
 
-  const handleSelectCategory = React.useCallback(
+  const handleSelectOneCategory = React.useCallback(
     (category: RootCategoryFragment) => {
-      if (category.id !== currentCategoryId) {
-        setCurrentCategoryId(category.id);
-        setName(category.name);
-      } else {
-        deselect();
-      }
+      dispatch(categoryEditFormSelectOne(category));
     },
-    [currentCategoryId, deselect]
+    []
   );
 
   const handleDeselectCategory = React.useCallback(() => {
-    deselect();
-  }, [deselect]);
+    dispatch(categoryEditFormReset());
+  }, []);
 
-  const handleCreateOneCategory = React.useCallback(() => {
-    if (data?.me) {
-      const newData: CategoryCreateInput = {
-        owner: { connect: { id: data.me.id } },
-        name,
-      };
-      deselect();
-      createOneCategory({ variables: { data: newData } });
-    }
-  }, [data, name, deselect, createOneCategory]);
+  const handleCreateOneCategory = React.useCallback(async () => {
+    if (!userId) return;
+    await categoryUsecase.createOneCategory(userId, categoryEditFormState);
+    await refetch();
+  }, [userId, categoryUsecase, categoryEditFormState, refetch]);
 
-  const handleDeleteOneCategory = React.useCallback(() => {
-    if (!currentCategoryId) return;
-    if (!confirm('Delete?')) return;
-    deselect();
-    deleteOneCategory({ variables: { where: { id: currentCategoryId } } });
-  }, [deselect, deleteOneCategory, currentCategoryId]);
+  const handleDeleteOneCategory = React.useCallback(async () => {
+    await categoryUsecase.deleteOneCategory(
+      categoryEditFormState.selectedCategoryIds
+    );
+    await refetch();
+  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds, refetch]);
 
-  const handleUpdateOneCategory = React.useCallback(() => {
-    if (!currentCategoryId) return;
-    updateOneCategory({
-      variables: { data: { name }, where: { id: currentCategoryId } },
-    });
-  }, [name, updateOneCategory, currentCategoryId]);
+  const handleUpdateOneCategory = React.useCallback(async () => {
+    await categoryUsecase.updateOneCategory(categoryEditFormState);
+  }, [categoryUsecase, categoryEditFormState]);
+
+  // FIXME: Implement
+  // const handleArchiveOneCategory = React.useCallback(async () => {
+  //   await categoryUsecase.archiveOneCategory(
+  //     categoryEditFormState.selectedCategoryIds
+  //   );
+  //   await refetch();
+  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds, refetch]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.currentTarget.value;
-      setName(name);
+      dispatch(categoryEditFormSet({ name }));
     },
     []
   );
@@ -96,7 +89,10 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const { name, selectedCategoryIds } = categoryEditFormState;
   const categories = data.categories ?? [];
+  const currentCategoryId = selectedCategoryIds[0] ?? null;
+  const isSelected = selectMode === SelectMode.SINGLE;
 
   return (
     <PageContent onClick={handleDeselectCategory}>
@@ -104,7 +100,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       <CategoryList
         categories={categories}
         currentCategoryId={currentCategoryId}
-        onClick={handleSelectCategory}
+        onClick={handleSelectOneCategory}
       />
       <CategoryEditForm
         isSelected={isSelected}
