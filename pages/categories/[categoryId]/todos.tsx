@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { CategoryTodosPage } from '../../../client/components/pages/CategoryTodosPage';
+import { TodosPage } from '../../../client/components/pages/TodosPage';
 
 export default () => {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default () => {
       <Head>
         <title>Todo</title>
       </Head>
-      <CategoryTodosPage categoryId={categoryId} />
+      <TodosPage categoryId={categoryId} />
     </>
   );
 };

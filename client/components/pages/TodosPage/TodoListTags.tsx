@@ -2,7 +2,7 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/TodoTag.graphql';
 import { ColorBadge } from '../../layout/ColorBadge';
 
 export const TodoListTags: React.FunctionComponent<{

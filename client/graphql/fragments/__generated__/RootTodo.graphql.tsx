@@ -1,10 +1,10 @@
 import * as Types from '../../__generated__/baseTypes';
 
-import { CategoryTagFragment } from './CategoryTag.graphql';
+import { CategoryTagFragment } from './TodoTag.graphql';
 import gql from 'graphql-tag';
-import { CategoryTagFragmentDoc } from './CategoryTag.graphql';
+import { CategoryTagFragmentDoc } from './TodoTag.graphql';
 
-export type CategoryTodoFragment = (
+export type RootTodoFragment = (
   { __typename?: 'Todo' }
   & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
   & { tags: Array<(
@@ -16,8 +16,8 @@ export type CategoryTodoFragment = (
   )> }
 );
 
-export const CategoryTodoFragmentDoc = gql`
-    fragment CategoryTodo on Todo {
+export const RootTodoFragmentDoc = gql`
+    fragment RootTodo on Todo {
   id
   text
   categoryId

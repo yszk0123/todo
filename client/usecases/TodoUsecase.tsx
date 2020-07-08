@@ -9,8 +9,8 @@ import {
   refetchTodosQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
-} from '../graphql/__generated__/CategoryTodosPage.graphql';
-import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+} from '../graphql/__generated__/TodosPage.graphql';
+import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
 import {
   TodoEditFormAction,
   todoEditFormReset,
@@ -114,7 +114,7 @@ export class TodoUsecase {
     });
   }
 
-  async toggleStatus(todo: CategoryTodoFragment) {
+  async toggleStatus(todo: RootTodoFragment) {
     const newStatus = getNextStatus(todo.status);
 
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({

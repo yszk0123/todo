@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/CategoryTag.graphql';
+import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/TodoTag.graphql';
 import { Badge } from '../../../layout/Badge';
 import { EditFormChecklistField } from '../../../layout/EditForm';
 

@@ -1,4 +1,4 @@
-query CategoryTodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
+query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
   category(where: { id: $categoryId }) {
     id
     name
@@ -6,23 +6,23 @@ query CategoryTodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
   todos(
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
-    ...CategoryTodosReportPageTodo
+    ...TodosReportPageTodo
   }
   tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
-    ...CategoryTodosReportPageTag
+    ...TodosReportPageTag
   }
 }
 
-fragment CategoryTodosReportPageTodo on Todo {
+fragment TodosReportPageTodo on Todo {
   id
   text
   tags {
-    ...CategoryTodosReportPageTag
+    ...TodosReportPageTag
   }
   status
 }
 
-fragment CategoryTodosReportPageTag on Tag {
+fragment TodosReportPageTag on Tag {
   id
   name
 }

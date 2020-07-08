@@ -1,15 +1,15 @@
 import React from 'react';
 
 import {
-  CategoryTodosReportPageTagFragment,
-  CategoryTodosReportPageTodoFragment,
-} from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
+  TodosReportPageTagFragment,
+  TodosReportPageTodoFragment,
+} from '../../../graphql/__generated__/TodosReportPage.graphql';
 import { ReportArea } from '../../layout/ReportArea';
 import { printTodosReport } from './printTodosReport';
 
-export const CategoryTodosReport: React.FunctionComponent<{
-  tags: CategoryTodosReportPageTagFragment[];
-  todos: CategoryTodosReportPageTodoFragment[];
+export const TodosReport: React.FunctionComponent<{
+  tags: TodosReportPageTagFragment[];
+  todos: TodosReportPageTodoFragment[];
 }> = ({ tags, todos }) => {
   const output = React.useMemo(() => printTodosReport(todos, tags), [
     todos,

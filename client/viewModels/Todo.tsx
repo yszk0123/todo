@@ -1,10 +1,10 @@
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
-import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
 type Group = {
   header: { endAt: DateTime | null; name: string | null };
-  todos: CategoryTodoFragment[];
+  todos: RootTodoFragment[];
 };
 
 export function isPast(dateString: DateTime | null, now: number): boolean {
@@ -28,8 +28,8 @@ function getTime(text: string): number {
 }
 
 function sortTodosByContent(
-  todos: CategoryTodoFragment[]
-): CategoryTodoFragment[] {
+  todos: RootTodoFragment[]
+): RootTodoFragment[] {
   return [...todos].sort((a, b) => {
     const time = getTime(a.text) - getTime(b.text);
     if (time !== 0) return time;
@@ -38,7 +38,7 @@ function sortTodosByContent(
   });
 }
 
-export function groupTodoByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
+export function groupTodoByCheckpoint(todos: RootTodoFragment[]): Group[] {
   const groupsById: Record<string, Group> = {};
 
   sortTodosByContent(todos).forEach((todo) => {

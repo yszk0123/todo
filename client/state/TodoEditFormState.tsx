@@ -1,8 +1,8 @@
 import { first } from '../components/helpers/first';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
-import { CategoryTagFragment } from '../graphql/fragments/__generated__/CategoryTag.graphql';
-import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
 import { RootCheckpointFragment } from '../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragment } from '../graphql/fragments/__generated__/TodoTag.graphql';
 import { ID } from '../viewModels/ID';
 
 export type TodoEditFormState = {
@@ -31,15 +31,15 @@ export type TodoEditFormAction =
       type: TodoEditFormActionType.SET;
     }
   | {
-      payload: { todo: CategoryTodoFragment };
+      payload: { todo: RootTodoFragment };
       type: TodoEditFormActionType.SELECT;
     }
   | {
-      payload: { todo: CategoryTodoFragment };
+      payload: { todo: RootTodoFragment };
       type: TodoEditFormActionType.SELECT_ONE;
     }
   | {
-      payload: { todo: CategoryTodoFragment };
+      payload: { todo: RootTodoFragment };
       type: TodoEditFormActionType.SELECT_MANY;
     }
   | {
@@ -54,7 +54,7 @@ export function todoEditFormReset(): TodoEditFormAction {
 }
 
 export function todoEditFormSelectOne(
-  todo: CategoryTodoFragment
+  todo: RootTodoFragment
 ): TodoEditFormAction {
   return {
     type: TodoEditFormActionType.SELECT_ONE,
@@ -63,7 +63,7 @@ export function todoEditFormSelectOne(
 }
 
 export function todoEditFormSelectMany(
-  todo: CategoryTodoFragment
+  todo: RootTodoFragment
 ): TodoEditFormAction {
   return {
     type: TodoEditFormActionType.SELECT_MANY,

@@ -4,7 +4,7 @@ import React from 'react';
 import { Box } from 'rebass';
 
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
 import { ListItem } from '../../layout/List';
 import { TodoListStatus } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
@@ -12,10 +12,10 @@ import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
   isSelected: boolean;
-  onClick: (todo: CategoryTodoFragment) => void;
-  onClickStatus: (todo: CategoryTodoFragment) => void;
-  onClickToggle: (todo: CategoryTodoFragment) => void;
-  todo: CategoryTodoFragment;
+  onClick: (todo: RootTodoFragment) => void;
+  onClickStatus: (todo: RootTodoFragment) => void;
+  onClickToggle: (todo: RootTodoFragment) => void;
+  todo: RootTodoFragment;
 }> = ({ isSelected, onClick, onClickStatus, onClickToggle, todo }) => {
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {

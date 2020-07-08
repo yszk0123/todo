@@ -1,24 +1,24 @@
 import * as Types from './baseTypes';
 
-import { CategoryTodoFragment } from '../fragments/__generated__/CategoryTodo.graphql';
-import { CategoryTagFragment } from '../fragments/__generated__/CategoryTag.graphql';
+import { RootTodoFragment } from '../fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragment } from '../fragments/__generated__/TodoTag.graphql';
 import { RootCheckpointFragment } from '../fragments/__generated__/RootCheckpoint.graphql';
 import { RootCategoryFragment } from '../fragments/__generated__/RootCategory.graphql';
 import gql from 'graphql-tag';
-import { CategoryTodoFragmentDoc } from '../fragments/__generated__/CategoryTodo.graphql';
-import { CategoryTagFragmentDoc } from '../fragments/__generated__/CategoryTag.graphql';
+import { RootTodoFragmentDoc } from '../fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragmentDoc } from '../fragments/__generated__/TodoTag.graphql';
 import { RootCheckpointFragmentDoc } from '../fragments/__generated__/RootCheckpoint.graphql';
 import { RootCategoryFragmentDoc } from '../fragments/__generated__/RootCategory.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
-export type CategoryTodosPageQueryVariables = Types.Exact<{
+export type TodosPageQueryVariables = Types.Exact<{
   categoryId: Types.Scalars['String'];
   categoryUUID: Types.Scalars['UUID'];
 }>;
 
 
-export type CategoryTodosPageQuery = (
+export type TodosPageQuery = (
   { __typename?: 'Query' }
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
@@ -28,7 +28,7 @@ export type CategoryTodosPageQuery = (
     & Pick<Types.Category, 'id' | 'name'>
   )>, todos: Array<(
     { __typename?: 'Todo' }
-    & CategoryTodoFragment
+    & RootTodoFragment
   )>, tags: Array<(
     { __typename?: 'Tag' }
     & CategoryTagFragment
@@ -50,7 +50,7 @@ export type TodosQuery = (
   { __typename?: 'Query' }
   & { todos: Array<(
     { __typename?: 'Todo' }
-    & CategoryTodoFragment
+    & RootTodoFragment
   )> }
 );
 
@@ -63,7 +63,7 @@ export type CreateOneTodoMutation = (
   { __typename?: 'Mutation' }
   & { createOneTodo: (
     { __typename?: 'Todo' }
-    & CategoryTodoFragment
+    & RootTodoFragment
   ) }
 );
 
@@ -89,7 +89,7 @@ export type UpdateTodoMutation = (
   { __typename?: 'Mutation' }
   & { updateTodo?: Types.Maybe<(
     { __typename?: 'Todo' }
-    & CategoryTodoFragment
+    & RootTodoFragment
   )> }
 );
 
@@ -112,13 +112,13 @@ export type UpdateTodosByIdMutation = (
   { __typename?: 'Mutation' }
   & { updateTodosById?: Types.Maybe<Array<(
     { __typename?: 'Todo' }
-    & CategoryTodoFragment
+    & RootTodoFragment
   )>> }
 );
 
 
-export const CategoryTodosPageDocument = gql`
-    query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
+export const TodosPageDocument = gql`
+    query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
   me {
     id
   }
@@ -127,7 +127,7 @@ export const CategoryTodosPageDocument = gql`
     name
   }
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
-    ...CategoryTodo
+    ...RootTodo
   }
   tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
     ...CategoryTag
@@ -139,47 +139,47 @@ export const CategoryTodosPageDocument = gql`
     ...RootCategory
   }
 }
-    ${CategoryTodoFragmentDoc}
+    ${RootTodoFragmentDoc}
 ${CategoryTagFragmentDoc}
 ${RootCheckpointFragmentDoc}
 ${RootCategoryFragmentDoc}`;
 
 /**
- * __useCategoryTodosPageQuery__
+ * __useTodosPageQuery__
  *
- * To run a query within a React component, call `useCategoryTodosPageQuery` and pass it any options that fit your needs.
- * When your component renders, `useCategoryTodosPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useTodosPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTodosPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCategoryTodosPageQuery({
+ * const { data, loading, error } = useTodosPageQuery({
  *   variables: {
  *      categoryId: // value for 'categoryId'
  *      categoryUUID: // value for 'categoryUUID'
  *   },
  * });
  */
-export function useCategoryTodosPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CategoryTodosPageQuery, CategoryTodosPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<CategoryTodosPageQuery, CategoryTodosPageQueryVariables>(CategoryTodosPageDocument, baseOptions);
+export function useTodosPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
+        return ApolloReactHooks.useQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
       }
-export function useCategoryTodosPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CategoryTodosPageQuery, CategoryTodosPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<CategoryTodosPageQuery, CategoryTodosPageQueryVariables>(CategoryTodosPageDocument, baseOptions);
+export function useTodosPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
         }
-export type CategoryTodosPageQueryHookResult = ReturnType<typeof useCategoryTodosPageQuery>;
-export type CategoryTodosPageLazyQueryHookResult = ReturnType<typeof useCategoryTodosPageLazyQuery>;
-export type CategoryTodosPageQueryResult = ApolloReactCommon.QueryResult<CategoryTodosPageQuery, CategoryTodosPageQueryVariables>;
-export function refetchCategoryTodosPageQuery(variables?: CategoryTodosPageQueryVariables) {
-      return { query: CategoryTodosPageDocument, variables: variables }
+export type TodosPageQueryHookResult = ReturnType<typeof useTodosPageQuery>;
+export type TodosPageLazyQueryHookResult = ReturnType<typeof useTodosPageLazyQuery>;
+export type TodosPageQueryResult = ApolloReactCommon.QueryResult<TodosPageQuery, TodosPageQueryVariables>;
+export function refetchTodosPageQuery(variables?: TodosPageQueryVariables) {
+      return { query: TodosPageDocument, variables: variables }
     }
 export const TodosDocument = gql`
     query Todos($categoryId: String!) {
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
-    ${CategoryTodoFragmentDoc}`;
+    ${RootTodoFragmentDoc}`;
 
 /**
  * __useTodosQuery__
@@ -212,10 +212,10 @@ export function refetchTodosQuery(variables?: TodosQueryVariables) {
 export const CreateOneTodoDocument = gql`
     mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
-    ${CategoryTodoFragmentDoc}`;
+    ${RootTodoFragmentDoc}`;
 export type CreateOneTodoMutationFn = ApolloReactCommon.MutationFunction<CreateOneTodoMutation, CreateOneTodoMutationVariables>;
 
 /**
@@ -277,10 +277,10 @@ export type DeleteTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<De
 export const UpdateTodoDocument = gql`
     mutation UpdateTodo($input: UpdateTodoInput!) {
   updateTodo(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
-    ${CategoryTodoFragmentDoc}`;
+    ${RootTodoFragmentDoc}`;
 export type UpdateTodoMutationFn = ApolloReactCommon.MutationFunction<UpdateTodoMutation, UpdateTodoMutationVariables>;
 
 /**
@@ -339,10 +339,10 @@ export type DeleteTodosByIdMutationOptions = ApolloReactCommon.BaseMutationOptio
 export const UpdateTodosByIdDocument = gql`
     mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
   updateTodosById(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
-    ${CategoryTodoFragmentDoc}`;
+    ${RootTodoFragmentDoc}`;
 export type UpdateTodosByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>;
 
 /**

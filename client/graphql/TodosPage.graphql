@@ -1,4 +1,4 @@
-query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
+query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
   me {
     id
   }
@@ -9,7 +9,7 @@ query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
   todos(
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
-    ...CategoryTodo
+    ...RootTodo
   }
   tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
     ...CategoryTag
@@ -26,13 +26,13 @@ query Todos($categoryId: String!) {
   todos(
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
 
 mutation CreateOneTodo($input: TodoCreateInput!) {
   createOneTodo(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
 
@@ -45,7 +45,7 @@ mutation DeleteTodo($input: DeleteTodoInput!) {
 
 mutation UpdateTodo($input: UpdateTodoInput!) {
   updateTodo(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }
 
@@ -55,6 +55,6 @@ mutation DeleteTodosById($input: DeleteTodosByIdInput!) {
 
 mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
   updateTodosById(data: $input) {
-    ...CategoryTodo
+    ...RootTodo
   }
 }

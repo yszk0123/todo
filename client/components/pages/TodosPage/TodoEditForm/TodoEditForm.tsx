@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { TodoStatus } from '../../../../graphql/__generated__/baseTypes';
-import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/CategoryTag.graphql';
 import { RootCheckpointFragment } from '../../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/TodoTag.graphql';
 import { SelectMode } from '../../../../viewModels/SelectMode';
 import {
   EditForm,

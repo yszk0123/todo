@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { useCategoryTodosReportPageQuery } from '../../../graphql/__generated__/CategoryTodosReportPage.graphql';
+import { useTodosReportPageQuery } from '../../../graphql/__generated__/TodosReportPage.graphql';
 import { ID } from '../../../viewModels/ID';
 import { PageContent } from '../../layout/PageContent';
-import { CategoryTodosReport } from './CategoryTodosReport';
+import { TodosReport } from './TodosReport';
 
 type Props = {
   categoryId: ID;
 };
 
-export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
+export const TodosReportPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { data, loading } = useCategoryTodosReportPageQuery({
+  const { data, loading } = useTodosReportPageQuery({
     variables: { categoryId, categoryUUID: categoryId },
   });
 
@@ -25,7 +25,7 @@ export const CategoryTodosReportPage: React.FunctionComponent<Props> = ({
 
   return (
     <PageContent>
-      <CategoryTodosReport tags={tags} todos={todos} />
+      <TodosReport tags={tags} todos={todos} />
     </PageContent>
   );
 };

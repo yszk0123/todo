@@ -1,4 +1,4 @@
-fragment CategoryTodo on Todo {
+fragment RootTodo on Todo {
   id
   text
   categoryId

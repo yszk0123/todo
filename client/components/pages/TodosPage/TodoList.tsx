@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
 import { ID } from '../../../viewModels/ID';
 import { groupTodoByCheckpoint, isPast } from '../../../viewModels/Todo';
 import { List } from '../../layout/List';
@@ -10,11 +10,11 @@ import { TodoListItem } from './TodoListItem';
 
 export const TodoList: React.FunctionComponent<{
   now: number;
-  onClick: (item: CategoryTodoFragment) => void;
-  onClickStatus: (todo: CategoryTodoFragment) => void;
-  onClickToggle: (item: CategoryTodoFragment) => void;
+  onClick: (item: RootTodoFragment) => void;
+  onClickStatus: (todo: RootTodoFragment) => void;
+  onClickToggle: (item: RootTodoFragment) => void;
   selectedTodoIds: ID[];
-  todos: CategoryTodoFragment[];
+  todos: RootTodoFragment[];
 }> = ({
   now,
   onClick,

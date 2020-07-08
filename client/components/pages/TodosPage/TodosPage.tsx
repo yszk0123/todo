@@ -4,10 +4,10 @@ import React from 'react';
 
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { useCategoryTodosPageQuery } from '../../../graphql/__generated__/CategoryTodosPage.graphql';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/CategoryTag.graphql';
-import { CategoryTodoFragment } from '../../../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { useTodosPageQuery } from '../../../graphql/__generated__/TodosPage.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/TodoTag.graphql';
 import {
   todoEditFormInitialState,
   todoEditFormReducer,
@@ -33,10 +33,8 @@ type Props = {
   categoryId: ID;
 };
 
-export const CategoryTodosPage: React.FunctionComponent<Props> = ({
-  categoryId,
-}) => {
-  const { data, loading, refetch } = useCategoryTodosPageQuery({
+export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
+  const { data, loading, refetch } = useTodosPageQuery({
     variables: { categoryId, categoryUUID: categoryId },
     fetchPolicy: 'cache-and-network',
   });
@@ -50,19 +48,13 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   const userId = data?.me?.id;
   const [now, setNow] = React.useState(() => Date.now());
 
-  const handleSelectOneTodo = React.useCallback(
-    (todo: CategoryTodoFragment) => {
-      dispatch(todoEditFormSelectOne(todo));
-    },
-    []
-  );
+  const handleSelectOneTodo = React.useCallback((todo: RootTodoFragment) => {
+    dispatch(todoEditFormSelectOne(todo));
+  }, []);
 
-  const handleSelectManyTodo = React.useCallback(
-    (todo: CategoryTodoFragment) => {
-      dispatch(todoEditFormSelectMany(todo));
-    },
-    []
-  );
+  const handleSelectManyTodo = React.useCallback((todo: RootTodoFragment) => {
+    dispatch(todoEditFormSelectMany(todo));
+  }, []);
 
   const handleDeselectTodo = React.useCallback(() => {
     dispatch(todoEditFormReset());
@@ -82,7 +74,7 @@ export const CategoryTodosPage: React.FunctionComponent<Props> = ({
   }, [todoEditFormState, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
-    (todo: CategoryTodoFragment) => {
+    (todo: RootTodoFragment) => {
       todoUsecase.toggleStatus(todo);
     },
     [todoUsecase]
