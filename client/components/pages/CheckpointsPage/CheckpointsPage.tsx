@@ -9,6 +9,7 @@ import {
   useUpdateOneCheckpointMutation,
 } from '../../../graphql/__generated__/CheckpointsPage.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { DateTime, toDateTime } from '../../../viewModels/DateTime';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { ID } from '../../../viewModels/ID';
 import isDocumentVisible from '../../helpers/isDocumentVisible';
@@ -36,7 +37,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     onCompleted: handleCompleted,
   });
   const [name, setName] = React.useState<string | null>(null);
-  const [endAt, setEndAt] = React.useState<Date | null>(null);
+  const [endAt, setEndAt] = React.useState<DateTime | null>(null);
   const [
     currentCheckpointId,
     setCurrentCheckpointId,
@@ -72,7 +73,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       const newData: CheckpointCreateInput = {
         owner: { connect: { id: data.me.id } },
         name,
-        endAt: endAt ?? new Date(),
+        endAt: toDateTime(endAt ?? new Date()),
       };
       deselect();
       createOneCheckpoint({ variables: { data: newData } });
@@ -90,7 +91,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     if (!currentCheckpointId) return;
     updateOneCheckpoint({
       variables: {
-        data: { name, endAt: endAt ?? new Date() },
+        data: { name, endAt: toDateTime(endAt ?? new Date()) },
         where: { id: currentCheckpointId },
       },
     });
@@ -98,7 +99,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleArchiveOneCheckpoint = React.useCallback(() => {
     if (!currentCheckpointId) return;
-    const archivedAt = new Date();
+    const archivedAt = toDateTime(new Date());
     updateOneCheckpoint({
       variables: { data: { archivedAt }, where: { id: currentCheckpointId } },
     });
@@ -112,7 +113,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     []
   );
 
-  const handleChangeEndAt = React.useCallback((endAt: Date | null) => {
+  const handleChangeEndAt = React.useCallback((endAt: DateTime | null) => {
     setEndAt(endAt);
   }, []);
 

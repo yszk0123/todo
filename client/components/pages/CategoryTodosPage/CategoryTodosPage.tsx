@@ -18,6 +18,7 @@ import {
   todoEditFormToggleTag,
 } from '../../../state/TodoEditFormState';
 import { TodoUsecase } from '../../../usecases/TodoUsecase';
+import { toDateTime } from '../../../viewModels/DateTime';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
 import isDocumentVisible from '../../helpers/isDocumentVisible';
@@ -49,7 +50,7 @@ export function getNextStatus(status: TodoStatus): TodoStatus {
 export const DUMMY_CHECKPOINT: RootCheckpointFragment = {
   id: '__DUMMY__',
   name: 'RESET',
-  endAt: null,
+  endAt: toDateTime('2000-01-01'),
 };
 
 type Props = {

@@ -23,3 +23,6 @@ config:
   withHooks: true
   withRefetchFn: true
   reactApolloVersion: 3
+  scalars:
+    # https://github.com/sindresorhus/type-fest/blob/78019f42ea888b0cdceb41a4a78163868de57555/source/opaque.d.ts#L65
+    DateTime: "string & {readonly __opaque__: 'DateTime'}"

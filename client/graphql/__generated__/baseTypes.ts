@@ -8,7 +8,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** Use JavaScript Date object for date/time fields. */
-  DateTime: any;
+  DateTime: string & {readonly __opaque__: 'DateTime'};
   UUID: any;
   /** The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   Json: any;

@@ -1,14 +1,15 @@
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';
+import { DateTime, parseDateTime } from './DateTime';
 
 type Group = {
-  header: { endAt: Date | null; name: string | null };
+  header: { endAt: DateTime | null; name: string | null };
   todos: CategoryTodoFragment[];
 };
 
-export function isPast(dateString: Date | null, now: number): boolean {
+export function isPast(dateString: DateTime | null, now: number): boolean {
   if (dateString === null) return false;
-  const date = +new Date(dateString);
+  const date = +parseDateTime(dateString);
   return date < now;
 }
 
@@ -53,8 +54,12 @@ export function groupTodoByCheckpoint(todos: CategoryTodoFragment[]): Group[] {
   });
 
   return Object.values(groupsById).sort((a, b) => {
-    const d1 = a.header.endAt ? new Date(a.header.endAt).getTime() : Infinity;
-    const d2 = b.header.endAt ? new Date(b.header.endAt).getTime() : Infinity;
+    const d1 = a.header.endAt
+      ? parseDateTime(a.header.endAt).getTime()
+      : Infinity;
+    const d2 = b.header.endAt
+      ? parseDateTime(b.header.endAt).getTime()
+      : Infinity;
     return d1 - d2;
   });
 }

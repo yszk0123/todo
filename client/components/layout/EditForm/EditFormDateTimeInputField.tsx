@@ -2,21 +2,26 @@ import { Input } from '@rebass/forms';
 import { format } from 'date-fns';
 import React from 'react';
 
+import {
+  DateTime,
+  parseDateTime,
+  toDateTime,
+} from '../../../viewModels/DateTime';
 import { EditFormField } from './EditFormField';
 
-function parseDate(input: string): Date | null {
-  return input !== '' ? new Date(input) : null;
+function parseDate(input: string): DateTime | null {
+  return input !== '' ? toDateTime(input) : null;
 }
 
-function convertIntoDateString(value: Date | null): string {
+function convertIntoDateString(value: DateTime | null): string {
   return value === null
     ? ''
-    : format(new Date(value), 'yyyy-MM-dd=HH:mm').replace('=', 'T');
+    : format(parseDateTime(value), 'yyyy-MM-dd=HH:mm').replace('=', 'T');
 }
 
 export const EditFormDateTimeInputField: React.FunctionComponent<{
-  onChange: (value: Date | null) => void;
-  value: Date | null;
+  onChange: (value: DateTime | null) => void;
+  value: DateTime | null;
 }> = ({ onChange, value }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

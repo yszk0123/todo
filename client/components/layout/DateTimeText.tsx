@@ -2,12 +2,14 @@ import { format } from 'date-fns';
 import React from 'react';
 import { Text } from 'rebass';
 
-function formatDate(date: Date): string {
-  return format(new Date(date), 'yyyy/MM/dd HH:mm');
+import { DateTime, parseDateTime } from '../../viewModels/DateTime';
+
+function formatDate(date: DateTime): string {
+  return format(parseDateTime(date), 'yyyy/MM/dd HH:mm');
 }
 
 export const DateTimeText: React.FunctionComponent<{
-  value: Date;
+  value: DateTime;
 }> = ({ value }) => {
   const text = React.useMemo(() => formatDate(value), [value]);
 

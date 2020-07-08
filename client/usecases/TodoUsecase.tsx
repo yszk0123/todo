@@ -20,6 +20,7 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../state/TodoEditFormState';
+import { toDateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';
 
 export class TodoUsecase {
@@ -118,7 +119,7 @@ export class TodoUsecase {
       variables: {
         input: {
           ids: todoIds,
-          archivedAt: new Date(),
+          archivedAt: toDateTime(new Date()),
         },
       },
     });

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DateTime } from '../../../viewModels/DateTime';
 import {
   EditForm,
   EditFormAction,
@@ -9,11 +10,11 @@ import {
 } from '../../layout/EditForm';
 
 export const CheckpointEditForm: React.FunctionComponent<{
-  endAt: Date | null;
+  endAt: DateTime | null;
   isSelected: boolean;
   name: string | null;
   onArchiveOneCheckpoint: () => void;
-  onChangeEndAt: (endAt: Date | null) => void;
+  onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneCheckpoint: () => void;
   onDeleteOneCheckpoint: () => void;
