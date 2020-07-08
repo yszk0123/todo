@@ -1,4 +1,4 @@
-import { first } from '../components/pages/CategoryTodosPage/CategoryTodosPage';
+import { first } from '../components/helpers/first';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import { CategoryTagFragment } from '../graphql/fragments/__generated__/CategoryTag.graphql';
 import { CategoryTodoFragment } from '../graphql/fragments/__generated__/CategoryTodo.graphql';

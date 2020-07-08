@@ -29,10 +29,6 @@ import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
 
-export function first<T>(values: T[]): T | undefined {
-  return values[0];
-}
-
 export function getNextStatus(status: TodoStatus): TodoStatus {
   switch (status) {
     case TodoStatus.Todo:
