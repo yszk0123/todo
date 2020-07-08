@@ -64,13 +64,19 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       userId,
       checkpointEditFormState
     );
-  }, [userId, checkpointUsecase, checkpointEditFormState]);
+    await refetch();
+  }, [userId, checkpointUsecase, checkpointEditFormState, refetch]);
 
   const handleDeleteOneCheckpoint = React.useCallback(async () => {
     await checkpointUsecase.deleteOneCheckpoint(
       checkpointEditFormState.selectedCheckpointIds
     );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
+    await refetch();
+  }, [
+    checkpointUsecase,
+    checkpointEditFormState.selectedCheckpointIds,
+    refetch,
+  ]);
 
   const handleUpdateOneCheckpoint = React.useCallback(async () => {
     await checkpointUsecase.updateOneCheckpoint(checkpointEditFormState);
@@ -80,7 +86,12 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     await checkpointUsecase.archiveOneCheckpoint(
       checkpointEditFormState.selectedCheckpointIds
     );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
+    await refetch();
+  }, [
+    checkpointUsecase,
+    checkpointEditFormState.selectedCheckpointIds,
+    refetch,
+  ]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +116,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     return loading ? <LoadingIndicator /> : null;
   }
 
-  const { endAt, selectedCheckpointIds } = checkpointEditFormState;
+  const { endAt, name, selectedCheckpointIds } = checkpointEditFormState;
   const checkpoints = data.checkpoints ?? [];
   const currentCheckpointId = selectedCheckpointIds[0] ?? null;
   const isSelected = selectMode === SelectMode.SINGLE;
