@@ -5,7 +5,8 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type CategoryTodosReportPageQueryVariables = Types.Exact<{
-  where: Types.CategoryWhereUniqueInput;
+  categoryId: Types.Scalars['String'];
+  categoryUUID: Types.Scalars['UUID'];
 }>;
 
 
@@ -14,13 +15,12 @@ export type CategoryTodosReportPageQuery = (
   & { category?: Types.Maybe<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
-    & { todos: Array<(
-      { __typename?: 'Todo' }
-      & CategoryTodosReportPageTodoFragment
-    )>, tags: Array<(
-      { __typename?: 'Tag' }
-      & CategoryTodosReportPageTagFragment
-    )> }
+  )>, todos: Array<(
+    { __typename?: 'Todo' }
+    & CategoryTodosReportPageTodoFragment
+  )>, tags: Array<(
+    { __typename?: 'Tag' }
+    & CategoryTodosReportPageTagFragment
   )> }
 );
 
@@ -55,16 +55,16 @@ export const CategoryTodosReportPageTodoFragmentDoc = gql`
 }
     ${CategoryTodosReportPageTagFragmentDoc}`;
 export const CategoryTodosReportPageDocument = gql`
-    query CategoryTodosReportPage($where: CategoryWhereUniqueInput!) {
-  category(where: $where) {
+    query CategoryTodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
+  category(where: {id: $categoryId}) {
     id
     name
-    todos(where: {archivedAt: {equals: null}}) {
-      ...CategoryTodosReportPageTodo
-    }
-    tags {
-      ...CategoryTodosReportPageTag
-    }
+  }
+  todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
+    ...CategoryTodosReportPageTodo
+  }
+  tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
+    ...CategoryTodosReportPageTag
   }
 }
     ${CategoryTodosReportPageTodoFragmentDoc}
@@ -82,7 +82,8 @@ ${CategoryTodosReportPageTagFragmentDoc}`;
  * @example
  * const { data, loading, error } = useCategoryTodosReportPageQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      categoryId: // value for 'categoryId'
+ *      categoryUUID: // value for 'categoryUUID'
  *   },
  * });
  */

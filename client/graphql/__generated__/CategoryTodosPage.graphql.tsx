@@ -13,7 +13,8 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type CategoryTodosPageQueryVariables = Types.Exact<{
-  where: Types.CategoryWhereUniqueInput;
+  categoryId: Types.Scalars['String'];
+  categoryUUID: Types.Scalars['UUID'];
 }>;
 
 
@@ -25,13 +26,12 @@ export type CategoryTodosPageQuery = (
   )>, category?: Types.Maybe<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
-    & { todos: Array<(
-      { __typename?: 'Todo' }
-      & CategoryTodoFragment
-    )>, tags: Array<(
-      { __typename?: 'Tag' }
-      & CategoryTagFragment
-    )> }
+  )>, todos: Array<(
+    { __typename?: 'Todo' }
+    & CategoryTodoFragment
+  )>, tags: Array<(
+    { __typename?: 'Tag' }
+    & CategoryTagFragment
   )>, checkpoints: Array<(
     { __typename?: 'Checkpoint' }
     & RootCheckpointFragment
@@ -105,19 +105,19 @@ export type UpdateTodosByIdMutation = (
 
 
 export const CategoryTodosPageDocument = gql`
-    query CategoryTodosPage($where: CategoryWhereUniqueInput!) {
+    query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
   me {
     id
   }
-  category(where: $where) {
+  category(where: {id: $categoryId}) {
     id
     name
-    todos(where: {archivedAt: {equals: null}}) {
-      ...CategoryTodo
-    }
-    tags(orderBy: {name: asc}) {
-      ...CategoryTag
-    }
+  }
+  todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
+    ...CategoryTodo
+  }
+  tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
+    ...CategoryTag
   }
   checkpoints {
     ...RootCheckpoint
@@ -143,7 +143,8 @@ ${RootCategoryFragmentDoc}`;
  * @example
  * const { data, loading, error } = useCategoryTodosPageQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      categoryId: // value for 'categoryId'
+ *      categoryUUID: // value for 'categoryUUID'
  *   },
  * });
  */

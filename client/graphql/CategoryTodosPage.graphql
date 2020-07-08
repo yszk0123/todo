@@ -1,16 +1,18 @@
-query CategoryTodosPage($where: CategoryWhereUniqueInput!) {
+query CategoryTodosPage($categoryId: String!, $categoryUUID: UUID!) {
   me {
     id
   }
-  category(where: $where) {
+  category(where: { id: $categoryId }) {
     id
     name
-    todos(where: { archivedAt: { equals: null } }) {
-      ...CategoryTodo
-    }
-    tags(orderBy: { name: asc }) {
-      ...CategoryTag
-    }
+  }
+  todos(
+    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
+  ) {
+    ...CategoryTodo
+  }
+  tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
+    ...CategoryTag
   }
   checkpoints {
     ...RootCheckpoint

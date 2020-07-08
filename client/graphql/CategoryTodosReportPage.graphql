@@ -1,13 +1,15 @@
-query CategoryTodosReportPage($where: CategoryWhereUniqueInput!) {
-  category(where: $where) {
+query CategoryTodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
+  category(where: { id: $categoryId }) {
     id
     name
-    todos(where: { archivedAt: { equals: null } }) {
-      ...CategoryTodosReportPageTodo
-    }
-    tags {
-      ...CategoryTodosReportPageTag
-    }
+  }
+  todos(
+    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
+  ) {
+    ...CategoryTodosReportPageTodo
+  }
+  tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
+    ...CategoryTodosReportPageTag
   }
 }
 
