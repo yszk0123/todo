@@ -8,6 +8,7 @@
 - yarn 1.22
 - node 12+
 - direnv
+- docker
 
 ### Environment Variables
 
@@ -30,5 +31,6 @@ $ yarn install
 ### Build
 
 ```sh
+$ docker-compose up
 $ yarn dev
 ```
