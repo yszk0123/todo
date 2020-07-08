@@ -111,6 +111,7 @@ input AccountWhereUniqueInput {
 }
 
 type Category {
+  archivedAt: DateTime
   createdAt: DateTime!
   id: String!
   name: String!
@@ -120,6 +121,7 @@ type Category {
 }
 
 input CategoryCreateInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String!
@@ -144,6 +146,7 @@ input CategoryCreateOneWithoutTodosInput {
 }
 
 input CategoryCreateWithoutOwnerInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String!
@@ -152,6 +155,7 @@ input CategoryCreateWithoutOwnerInput {
 }
 
 input CategoryCreateWithoutTagsInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String!
@@ -160,6 +164,7 @@ input CategoryCreateWithoutTagsInput {
 }
 
 input CategoryCreateWithoutTodosInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String!
@@ -175,6 +180,7 @@ input CategoryFilter {
 
 input CategoryScalarWhereInput {
   AND: [CategoryScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   name: StringFilter
@@ -186,6 +192,7 @@ input CategoryScalarWhereInput {
 }
 
 input CategoryUpdateInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String
@@ -195,6 +202,7 @@ input CategoryUpdateInput {
 }
 
 input CategoryUpdateManyDataInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String
@@ -237,6 +245,7 @@ input CategoryUpdateOneRequiredWithoutTodosInput {
 }
 
 input CategoryUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String
@@ -245,6 +254,7 @@ input CategoryUpdateWithoutOwnerDataInput {
 }
 
 input CategoryUpdateWithoutTagsDataInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String
@@ -253,6 +263,7 @@ input CategoryUpdateWithoutTagsDataInput {
 }
 
 input CategoryUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
   createdAt: DateTime
   id: String
   name: String
@@ -289,6 +300,7 @@ input CategoryUpsertWithWhereUniqueWithoutTagsInput {
 
 input CategoryWhereInput {
   AND: [CategoryWhereInput!]
+  archivedAt: NullableDateTimeFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   name: StringFilter
@@ -572,6 +584,7 @@ input StringFilter {
 }
 
 type Tag {
+  archivedAt: DateTime
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
   color: Color!
   createdAt: DateTime!
@@ -582,6 +595,7 @@ type Tag {
 }
 
 input TagCreateInput {
+  archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -607,6 +621,7 @@ input TagCreateManyWithoutTodosInput {
 }
 
 input TagCreateWithoutCategoriesInput {
+  archivedAt: DateTime
   color: Color
   createdAt: DateTime
   id: String
@@ -616,6 +631,7 @@ input TagCreateWithoutCategoriesInput {
 }
 
 input TagCreateWithoutOwnerInput {
+  archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -625,6 +641,7 @@ input TagCreateWithoutOwnerInput {
 }
 
 input TagCreateWithoutTodosInput {
+  archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -640,6 +657,7 @@ input TagFilter {
 }
 
 input TagOrderByInput {
+  archivedAt: OrderByArg
   color: OrderByArg
   createdAt: OrderByArg
   id: OrderByArg
@@ -649,6 +667,7 @@ input TagOrderByInput {
 
 input TagScalarWhereInput {
   AND: [TagScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
   categories: CategoryFilter
   color: Color
   createdAt: DateTimeFilter
@@ -661,6 +680,7 @@ input TagScalarWhereInput {
 }
 
 input TagUpdateInput {
+  archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -671,6 +691,7 @@ input TagUpdateInput {
 }
 
 input TagUpdateManyDataInput {
+  archivedAt: DateTime
   color: Color
   createdAt: DateTime
   id: String
@@ -719,6 +740,7 @@ input TagUpdateManyWithWhereNestedInput {
 }
 
 input TagUpdateWithoutCategoriesDataInput {
+  archivedAt: DateTime
   color: Color
   createdAt: DateTime
   id: String
@@ -728,6 +750,7 @@ input TagUpdateWithoutCategoriesDataInput {
 }
 
 input TagUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -737,6 +760,7 @@ input TagUpdateWithoutOwnerDataInput {
 }
 
 input TagUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
   color: Color
   createdAt: DateTime
@@ -780,6 +804,7 @@ input TagUpsertWithWhereUniqueWithoutTodosInput {
 
 input TagWhereInput {
   AND: [TagWhereInput!]
+  archivedAt: NullableDateTimeFilter
   categories: CategoryFilter
   color: Color
   createdAt: DateTimeFilter
