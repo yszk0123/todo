@@ -1,17 +1,20 @@
+import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
-import { CheckpointCreateInput } from '../../../graphql/__generated__/baseTypes';
-import {
-  useCheckpointsPageQuery,
-  useCreateOneCheckpointMutation,
-  useDeleteOneCheckpointMutation,
-  useUpdateOneCheckpointMutation,
-} from '../../../graphql/__generated__/CheckpointsPage.graphql';
+import { useCheckpointsPageQuery } from '../../../graphql/__generated__/CheckpointsPage.graphql';
 import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { DateTime, toDateTime } from '../../../viewModels/DateTime';
+import {
+  checkpointEditFormInitialState,
+  checkpointEditFormReducer,
+  checkpointEditFormReset,
+  checkpointEditFormSelectOne,
+  checkpointEditFormSet,
+} from '../../../state/CheckpointEditFormState';
+import { CheckpointUsecase } from '../../../usecases/CheckpointUsecase';
+import { DateTime } from '../../../viewModels/DateTime';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { ID } from '../../../viewModels/ID';
+import { SelectMode } from '../../../viewModels/SelectMode';
 import isDocumentVisible from '../../helpers/isDocumentVisible';
 import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
@@ -24,97 +27,71 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const { data, loading, refetch } = useCheckpointsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
-  const handleCompleted = React.useCallback(() => {
-    refetch();
-  }, [refetch]);
-  const [createOneCheckpoint] = useCreateOneCheckpointMutation({
-    onCompleted: handleCompleted,
-  });
-  const [deleteOneCheckpoint] = useDeleteOneCheckpointMutation({
-    onCompleted: handleCompleted,
-  });
-  const [updateOneCheckpoint] = useUpdateOneCheckpointMutation({
-    onCompleted: handleCompleted,
-  });
-  const [name, setName] = React.useState<string | null>(null);
-  const [endAt, setEndAt] = React.useState<DateTime | null>(null);
-  const [
-    currentCheckpointId,
-    setCurrentCheckpointId,
-  ] = React.useState<ID | null>(null);
-  const isSelected = !!currentCheckpointId;
+
+  const client = useApolloClient();
+  const [checkpointEditFormState, dispatch] = React.useReducer(
+    checkpointEditFormReducer,
+    checkpointEditFormInitialState
+  );
+  const [checkpointUsecase] = React.useState(
+    () => new CheckpointUsecase(client, dispatch)
+  );
+
+  const userId = data?.me?.id;
+  const count = checkpointEditFormState.selectedCheckpointIds.length;
+  const selectMode =
+    count === 0
+      ? SelectMode.NONE
+      : count === 1
+      ? SelectMode.SINGLE
+      : SelectMode.MULTI;
   const [now, setNow] = React.useState(() => Date.now());
 
-  const deselect = React.useCallback(() => {
-    setCurrentCheckpointId(null);
-    setName('');
-    setEndAt(null);
-  }, []);
-
-  const handleSelectCheckpoint = React.useCallback(
+  const handleSelectOneCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment) => {
-      if (checkpoint.id !== currentCheckpointId) {
-        setCurrentCheckpointId(checkpoint.id);
-        setName(checkpoint.name ?? null);
-        setEndAt(checkpoint.endAt);
-      } else {
-        deselect();
-      }
+      dispatch(checkpointEditFormSelectOne(checkpoint));
     },
-    [currentCheckpointId, deselect]
+    []
   );
 
   const handleDeselectCheckpoint = React.useCallback(() => {
-    deselect();
-  }, [deselect]);
+    dispatch(checkpointEditFormReset());
+  }, []);
 
-  const handleCreateOneCheckpoint = React.useCallback(() => {
-    if (data?.me) {
-      const newData: CheckpointCreateInput = {
-        owner: { connect: { id: data.me.id } },
-        name,
-        endAt: toDateTime(endAt ?? new Date()),
-      };
-      deselect();
-      createOneCheckpoint({ variables: { data: newData } });
-    }
-  }, [data?.me, name, endAt, deselect, createOneCheckpoint]);
+  const handleCreateOneCheckpoint = React.useCallback(async () => {
+    if (!userId) return;
+    await checkpointUsecase.createOneCheckpoint(
+      userId,
+      checkpointEditFormState
+    );
+  }, [userId, checkpointUsecase, checkpointEditFormState]);
 
-  const handleDeleteOneCheckpoint = React.useCallback(() => {
-    if (!currentCheckpointId) return;
-    if (!confirm('Delete?')) return;
-    deselect();
-    deleteOneCheckpoint({ variables: { where: { id: currentCheckpointId } } });
-  }, [deselect, deleteOneCheckpoint, currentCheckpointId]);
+  const handleDeleteOneCheckpoint = React.useCallback(async () => {
+    await checkpointUsecase.deleteOneCheckpoint(
+      checkpointEditFormState.selectedCheckpointIds
+    );
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
-  const handleUpdateOneCheckpoint = React.useCallback(() => {
-    if (!currentCheckpointId) return;
-    updateOneCheckpoint({
-      variables: {
-        data: { name, endAt: toDateTime(endAt ?? new Date()) },
-        where: { id: currentCheckpointId },
-      },
-    });
-  }, [currentCheckpointId, updateOneCheckpoint, name, endAt]);
+  const handleUpdateOneCheckpoint = React.useCallback(async () => {
+    await checkpointUsecase.updateOneCheckpoint(checkpointEditFormState);
+  }, [checkpointUsecase, checkpointEditFormState]);
 
-  const handleArchiveOneCheckpoint = React.useCallback(() => {
-    if (!currentCheckpointId) return;
-    const archivedAt = toDateTime(new Date());
-    updateOneCheckpoint({
-      variables: { data: { archivedAt }, where: { id: currentCheckpointId } },
-    });
-  }, [updateOneCheckpoint, currentCheckpointId]);
+  const handleArchiveOneCheckpoint = React.useCallback(async () => {
+    await checkpointUsecase.archiveOneCheckpoint(
+      checkpointEditFormState.selectedCheckpointIds
+    );
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.currentTarget.value;
-      setName(name);
+      dispatch(checkpointEditFormSet({ name }));
     },
     []
   );
 
   const handleChangeEndAt = React.useCallback((endAt: DateTime | null) => {
-    setEndAt(endAt);
+    dispatch(checkpointEditFormSet({ endAt }));
   }, []);
 
   useInterval(() => {
@@ -128,7 +105,10 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const { endAt, selectedCheckpointIds } = checkpointEditFormState;
   const checkpoints = data.checkpoints ?? [];
+  const currentCheckpointId = selectedCheckpointIds[0] ?? null;
+  const isSelected = selectMode === SelectMode.SINGLE;
 
   return (
     <PageContent onClick={handleDeselectCheckpoint}>
@@ -137,7 +117,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         checkpoints={checkpoints}
         currentCheckpointId={currentCheckpointId}
         now={now}
-        onClick={handleSelectCheckpoint}
+        onClick={handleSelectOneCheckpoint}
       />
       <CheckpointEditForm
         endAt={endAt}
