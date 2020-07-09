@@ -1,4 +1,6 @@
 node_modules/
+public/sw.js
+public/workbox-*.js
 .next/
 .tmp_build/
 .nexus/

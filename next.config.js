@@ -6,5 +6,7 @@ module.exports = withPWA({
   pwa: {
     // eslint-disable-next-line no-undef
     disable: process.env.NODE_ENV === 'development',
+
+    dest: 'public',
   },
 });

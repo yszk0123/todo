@@ -36,10 +36,6 @@ export function createApp(): React.FunctionComponent<Props> {
           <Provider session={session}>
             <Head>
               <title>Todo</title>
-              <meta
-                content="initial-scale=1.0, width=device-width"
-                name="viewport"
-              />
             </Head>
             <PageContainer>
               <Component {...pageProps} />
