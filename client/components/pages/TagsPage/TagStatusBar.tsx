@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdLabel } from 'react-icons/md';
 
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
@@ -7,7 +8,10 @@ export const TagStatusBar: React.FunctionComponent<{ count: number }> = ({
 }) => {
   return (
     <StatusBar
-      right={[{ type: StatusBarItemType.TEXT, content: `${count} tags` }]}
+      right={[
+        { type: StatusBarItemType.TEXT, content: `${count} tags` },
+        { type: StatusBarItemType.FLEX, content: <MdLabel /> },
+      ]}
     />
   );
 };

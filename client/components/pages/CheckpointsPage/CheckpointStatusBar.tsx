@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdPlace } from 'react-icons/md';
 
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 
@@ -9,6 +10,7 @@ export const CheckpointStatusBar: React.FunctionComponent<{
     <StatusBar
       right={[
         { type: StatusBarItemType.TEXT, content: `${count} checkpoints` },
+        { type: StatusBarItemType.FLEX, content: <MdPlace /> },
       ]}
     />
   );
