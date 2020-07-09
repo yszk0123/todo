@@ -6,6 +6,7 @@ import { Link } from './Link';
 
 export enum StatusBarItemType {
   TEXT,
+  FLEX,
   LINK,
 }
 
@@ -13,6 +14,10 @@ export type StatusBarItem =
   | {
       content: string;
       type: StatusBarItemType.TEXT;
+    }
+  | {
+      content: React.ReactNode;
+      type: StatusBarItemType.FLEX;
     }
   | {
       content: { as: string; href: string; text: string };
@@ -25,6 +30,13 @@ const StatusBarItemView: React.FunctionComponent<{
   switch (item.type) {
     case StatusBarItemType.TEXT: {
       return <Text mx={1}>{item.content}</Text>;
+    }
+    case StatusBarItemType.FLEX: {
+      return (
+        <Flex alignItems="center" mx={1}>
+          {item.content}
+        </Flex>
+      );
     }
     case StatusBarItemType.LINK: {
       return (

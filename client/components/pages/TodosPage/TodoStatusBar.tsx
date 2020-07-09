@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdCheck } from 'react-icons/md';
 
 import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
 import { ID } from '../../../viewModels/ID';
@@ -36,7 +37,14 @@ export const TodoStatusBar: React.FunctionComponent<{
         categoryName !== null
           ? { type: StatusBarItemType.TEXT, content: categoryName }
           : null,
-        { type: StatusBarItemType.TEXT, content: `${count} todos` },
+        {
+          type: StatusBarItemType.TEXT,
+          content: `${count} todos`,
+        },
+        {
+          type: StatusBarItemType.FLEX,
+          content: <MdCheck />,
+        },
       ]}
     />
   );
