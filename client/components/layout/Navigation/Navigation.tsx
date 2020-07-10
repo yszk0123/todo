@@ -36,9 +36,17 @@ export const Navigation: React.FunctionComponent<{
       {avatarUrl && <Avatar alt={username || 'avatar'} url={avatarUrl} />}
       <Box p={2}>
         {hasSession ? (
-          <NavigationLink href="/api/auth/signout" text="Sign out" />
+          <NavigationLink
+            href="/api/auth/signout"
+            prefetch={false}
+            text="Sign out"
+          />
         ) : (
-          <NavigationLink href="/api/auth/signin" text="Sign in" />
+          <NavigationLink
+            href="/api/auth/signin"
+            prefetch={false}
+            text="Sign in"
+          />
         )}
       </Box>
     </Flex>

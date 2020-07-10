@@ -5,10 +5,11 @@ import { Link as RebassLink, Text } from 'rebass';
 export const NavigationLink: React.FunctionComponent<{
   as?: string;
   href: string;
+  prefetch?: boolean;
   text: string;
-}> = ({ as, href, text }) => {
+}> = ({ as, href, prefetch, text }) => {
   return (
-    <NextLink as={as} href={href} passHref>
+    <NextLink as={as} href={href} passHref prefetch={prefetch}>
       <RebassLink mr={1} variant="nav">
         <Text fontWeight="bold">{text}</Text>
       </RebassLink>
