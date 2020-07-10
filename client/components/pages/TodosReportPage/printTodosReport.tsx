@@ -14,7 +14,7 @@ const statusToIndex = {
 };
 
 const TIME_RE = /^(\d{2}:\d{2})[-~]/;
-const TIME_WHOLE_RE = /^(\d{2}:\d{2}[-~])(.*)$/;
+const TIME_WHOLE_RE = /^(\d{2}:\d{2}[-~])\s*(.*)$/;
 
 const IGNORE_RE = /^\* /;
 
