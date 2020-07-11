@@ -4,6 +4,17 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
+export type GetCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesQuery = (
+  { __typename?: 'Query' }
+  & { categories: Array<(
+    { __typename?: 'Category' }
+    & RootCategoryFragment
+  )> }
+);
+
 export type CreateOneCategoryMutationVariables = Types.Exact<{
   data: Types.CategoryCreateInput;
 }>;
@@ -55,6 +66,41 @@ export const RootCategoryFragmentDoc = gql`
   name
 }
     `;
+export const GetCategoriesDocument = gql`
+    query GetCategories {
+  categories {
+    ...RootCategory
+  }
+}
+    ${RootCategoryFragmentDoc}`;
+
+/**
+ * __useGetCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCategoriesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, baseOptions);
+      }
+export function useGetCategoriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, baseOptions);
+        }
+export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
+export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
+export type GetCategoriesQueryResult = ApolloReactCommon.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export function refetchGetCategoriesQuery(variables?: GetCategoriesQueryVariables) {
+      return { query: GetCategoriesDocument, variables: variables }
+    }
 export const CreateOneCategoryDocument = gql`
     mutation CreateOneCategory($data: CategoryCreateInput!) {
   createOneCategory(data: $data) {

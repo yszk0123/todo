@@ -5,6 +5,7 @@ import {
   CreateOneCategoryMutationVariables,
   DeleteOneCategoryDocument,
   DeleteOneCategoryMutationVariables,
+  refetchGetCategoriesQuery,
   UpdateOneCategoryDocument,
   UpdateOneCategoryMutationVariables,
 } from '../graphql/__generated__/Category.graphql';
@@ -38,6 +39,7 @@ export class CategoryUsecase {
           name,
         },
       },
+      refetchQueries: [refetchGetCategoriesQuery()],
     });
   }
 
@@ -75,6 +77,7 @@ export class CategoryUsecase {
     await this.client.mutate<unknown, DeleteOneCategoryMutationVariables>({
       mutation: DeleteOneCategoryDocument,
       variables: { where: { id: categoryId } },
+      refetchQueries: [refetchGetCategoriesQuery()],
     });
   }
 
@@ -93,6 +96,7 @@ export class CategoryUsecase {
           // archivedAt: toDateTime(new Date()),
         },
       },
+      refetchQueries: [refetchGetCategoriesQuery()],
     });
   }
 }

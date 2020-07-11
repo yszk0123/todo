@@ -1,3 +1,9 @@
+query GetCategories {
+  categories {
+    ...RootCategory
+  }
+}
+
 mutation CreateOneCategory($data: CategoryCreateInput!) {
   createOneCategory(data: $data) {
     ...RootCategory

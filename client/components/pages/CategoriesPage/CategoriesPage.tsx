@@ -20,7 +20,7 @@ import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
 
 export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading, refetch } = useCategoriesPageQuery({
+  const { data, loading } = useCategoriesPageQuery({
     fetchPolicy: 'cache-and-network',
   });
   const client = useApolloClient();
@@ -55,15 +55,13 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   const handleCreateOneCategory = React.useCallback(async () => {
     if (!userId) return;
     await categoryUsecase.createOneCategory(userId, categoryEditFormState);
-    await refetch();
-  }, [userId, categoryUsecase, categoryEditFormState, refetch]);
+  }, [userId, categoryUsecase, categoryEditFormState]);
 
   const handleDeleteOneCategory = React.useCallback(async () => {
     await categoryUsecase.deleteOneCategory(
       categoryEditFormState.selectedCategoryIds
     );
-    await refetch();
-  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds, refetch]);
+  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
 
   const handleUpdateOneCategory = React.useCallback(async () => {
     await categoryUsecase.updateOneCategory(categoryEditFormState);
@@ -74,8 +72,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   //   await categoryUsecase.archiveOneCategory(
   //     categoryEditFormState.selectedCategoryIds
   //   );
-  //   await refetch();
-  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds, refetch]);
+  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
