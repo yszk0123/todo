@@ -6,7 +6,6 @@ import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
 import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { TodoTagFragment } from '../../../graphql/__generated__/Todo.graphql';
-import { useTypedSelector } from '../../../redux/useTypedSelector';
 import {
   todoEditFormReset,
   todoEditFormSelectMany,
@@ -30,9 +29,7 @@ type Props = {
 
 export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const dispatch = useDispatch();
-  const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
   const todoUsecase = useTodoUsecase();
-
   const {
     categories,
     categoryName,
@@ -42,9 +39,10 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     isSyncing,
     now,
     selectMode,
+    todoEditFormState,
     todos,
     userId,
-  } = useTodosPageState(categoryId, todoEditFormState);
+  } = useTodosPageState(categoryId);
 
   const handleSelectOneTodo = React.useCallback(
     (todo: RootTodoFragment) => {
