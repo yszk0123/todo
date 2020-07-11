@@ -80,7 +80,7 @@ export const checkpointEditFormInitialState: CheckpointEditFormState = {
 };
 
 export function checkpointEditFormReducer(
-  state: CheckpointEditFormState,
+  state: CheckpointEditFormState = checkpointEditFormInitialState,
   action: CheckpointEditFormAction
 ): CheckpointEditFormState {
   switch (action.type) {
