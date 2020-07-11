@@ -1,3 +1,4 @@
+import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { first } from '../../shared/helpers/first';
@@ -9,6 +10,7 @@ import {
 } from '../graphql/__generated__/Todo.graphql';
 
 export type TodoEditFormState = {
+  category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
   selectedTodoIds: ID[];
   status: TodoStatus | null;
@@ -93,6 +95,7 @@ export function todoEditFormSet(
 }
 
 export const todoEditFormInitialState: TodoEditFormState = {
+  category: null,
   checkpoint: null,
   selectedTodoIds: [],
   status: null,
@@ -126,6 +129,7 @@ export function todoEditFormReducer(
 
       return {
         ...state,
+        category: todo.category,
         checkpoint: todo.checkpoint ?? null,
         selectedTodoIds: [todo.id],
         status: todo.status,
@@ -142,6 +146,7 @@ export function todoEditFormReducer(
       if (isSingle) {
         return {
           ...state,
+          category: todo.category,
           checkpoint: todo.checkpoint ?? null,
           selectedTodoIds: newSelectedTodoIds,
           status: todo.status,
@@ -151,6 +156,7 @@ export function todoEditFormReducer(
       } else {
         return {
           ...state,
+          category: null,
           checkpoint: null,
           selectedTodoIds: newSelectedTodoIds,
           status: null,
