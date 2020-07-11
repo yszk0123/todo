@@ -29,7 +29,7 @@ export const TagsPageDocument = gql`
   me {
     id
   }
-  tags {
+  tags(where: {archivedAt: {equals: null}}) {
     ...RootTag
   }
   categories {

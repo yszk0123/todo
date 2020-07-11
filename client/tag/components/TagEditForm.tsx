@@ -20,6 +20,7 @@ export const TagEditForm: React.FunctionComponent<{
   color: Color;
   isSelected: boolean;
   name: string;
+  onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneTag: () => void;
@@ -32,6 +33,7 @@ export const TagEditForm: React.FunctionComponent<{
   color,
   isSelected,
   name,
+  onArchiveOneTag,
   onChangeColor,
   onChangeName,
   onCreateOneTag,
@@ -43,6 +45,7 @@ export const TagEditForm: React.FunctionComponent<{
   const actions: EditFormAction[] = isSelected
     ? [
         { label: 'Delete', onClick: onDeleteOneTag },
+        { label: 'Archive', onClick: onArchiveOneTag },
         { label: 'Update', onClick: onUpdateOneTag },
       ]
     : [{ label: 'Create', onClick: onCreateOneTag }];

@@ -1,5 +1,6 @@
 import { ApolloClient } from '@apollo/client';
 
+import { toDateTime } from '../../viewModels/DateTime';
 import { ID } from '../../viewModels/ID';
 import {
   TagEditFormAction,
@@ -95,8 +96,7 @@ export class TagUsecase {
           id: tagId,
         },
         data: {
-          // FIXME: Implement
-          // archivedAt: toDateTime(new Date()),
+          archivedAt: toDateTime(new Date()),
         },
       },
       refetchQueries: [refetchGetTagsQuery()],
