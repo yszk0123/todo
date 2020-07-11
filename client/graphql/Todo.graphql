@@ -34,3 +34,19 @@ mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
     ...RootTodo
   }
 }
+
+fragment RootTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    ...CategoryTag
+  }
+  status
+  archivedAt
+  checkpoint {
+    id
+    name
+    endAt
+  }
+}

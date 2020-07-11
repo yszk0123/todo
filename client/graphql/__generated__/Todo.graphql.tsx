@@ -1,8 +1,8 @@
 import * as Types from './baseTypes';
 
-import { RootTodoFragment } from '../fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragment } from '../fragments/__generated__/TodoTag.graphql';
 import gql from 'graphql-tag';
-import { RootTodoFragmentDoc } from '../fragments/__generated__/RootTodo.graphql';
+import { CategoryTagFragmentDoc } from '../fragments/__generated__/TodoTag.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
@@ -81,7 +81,35 @@ export type UpdateTodosByIdMutation = (
   )>> }
 );
 
+export type RootTodoFragment = (
+  { __typename?: 'Todo' }
+  & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
+  & { tags: Array<(
+    { __typename?: 'Tag' }
+    & CategoryTagFragment
+  )>, checkpoint?: Types.Maybe<(
+    { __typename?: 'Checkpoint' }
+    & Pick<Types.Checkpoint, 'id' | 'name' | 'endAt'>
+  )> }
+);
 
+export const RootTodoFragmentDoc = gql`
+    fragment RootTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    ...CategoryTag
+  }
+  status
+  archivedAt
+  checkpoint {
+    id
+    name
+    endAt
+  }
+}
+    ${CategoryTagFragmentDoc}`;
 export const GetTodosDocument = gql`
     query GetTodos($categoryId: String!) {
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {

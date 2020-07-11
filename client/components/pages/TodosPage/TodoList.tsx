@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { ID } from '../../../viewModels/ID';
 import { groupTodoByCheckpoint, isPast } from '../../../viewModels/Todo';
 import { List } from '../../layout/List';

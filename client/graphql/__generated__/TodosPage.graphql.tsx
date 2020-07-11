@@ -1,11 +1,11 @@
 import * as Types from './baseTypes';
 
-import { RootTodoFragment } from '../fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragment } from './Todo.graphql';
 import { CategoryTagFragment } from '../fragments/__generated__/TodoTag.graphql';
 import { RootCheckpointFragment } from '../fragments/__generated__/RootCheckpoint.graphql';
 import { RootCategoryFragment } from '../fragments/__generated__/RootCategory.graphql';
 import gql from 'graphql-tag';
-import { RootTodoFragmentDoc } from '../fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragmentDoc } from './Todo.graphql';
 import { CategoryTagFragmentDoc } from '../fragments/__generated__/TodoTag.graphql';
 import { RootCheckpointFragmentDoc } from '../fragments/__generated__/RootCheckpoint.graphql';
 import { RootCategoryFragmentDoc } from '../fragments/__generated__/RootCategory.graphql';

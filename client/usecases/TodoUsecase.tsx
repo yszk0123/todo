@@ -10,7 +10,7 @@ import {
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
-import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodoEditFormAction,
   todoEditFormReset,
