@@ -5,32 +5,45 @@ import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.g
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
-import { ID } from '../../viewModels/ID';
 import { SelectMode } from '../../viewModels/SelectMode';
+import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   TodosPageQueryVariables,
   useTodosPageQuery,
 } from '../graphql/__generated__/TodosPage.graphql';
 
-function getQueryVariables(categoryId: ID | null): TodosPageQueryVariables {
+function getQueryVariables(
+  todoSearchFormValue: TodoSearchFormValue | null
+): TodosPageQueryVariables {
   return {
     todoInput: {
-      categoryId: categoryId ? { equals: categoryId } : undefined,
+      categoryId: todoSearchFormValue?.category?.id
+        ? { equals: todoSearchFormValue?.category?.id }
+        : undefined,
       archivedAt: { equals: null },
+      status: todoSearchFormValue?.status ?? undefined,
+      tags: todoSearchFormValue?.tags
+        ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
+        : undefined,
+      text: todoSearchFormValue?.text
+        ? {
+            contains: todoSearchFormValue.text,
+          }
+        : undefined,
     },
     tagInput: {
-      categories: categoryId
-        ? { some: { id: { equals: categoryId } } }
+      categories: todoSearchFormValue?.category?.id
+        ? { some: { id: { equals: todoSearchFormValue?.category?.id } } }
         : undefined,
       archivedAt: { equals: null },
     },
   };
 }
 
-export function useTodosPageState(categoryId: ID | null) {
-  const variables = React.useMemo(() => getQueryVariables(categoryId), [
-    categoryId,
-  ]);
+export function useTodosPageState() {
+  const todoSearchFormState = useTypedSelector((state) => state.todoSearchForm);
+  const current = todoSearchFormState.current;
+  const variables = React.useMemo(() => getQueryVariables(current), [current]);
   const { data, loading, refetch } = useTodosPageQuery({
     variables,
     fetchPolicy: 'cache-and-network',
@@ -51,16 +64,18 @@ export function useTodosPageState(categoryId: ID | null) {
 
   return {
     categories: data?.categories ?? [],
-    categoryName: null, // FIXME
+    category: current?.category ?? null,
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
-    isCategoryNameShown: categoryId === null,
+    isCategoryNameShown: current?.category?.id == null,
     isLoading: !data && loading,
     isSyncing: pageData?.page?.isSyncing ?? false,
     now,
     todoEditFormState,
     todos: data?.todos ?? [],
     userId: data?.me?.id ?? null,
+    todoSearchFormCurrent: todoSearchFormState.current,
+    todoSearchFormDraft: todoSearchFormState.draft,
     selectMode:
       count === 0
         ? SelectMode.NONE

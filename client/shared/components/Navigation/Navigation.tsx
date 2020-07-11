@@ -26,9 +26,10 @@ export const Navigation: React.FunctionComponent<{
       <NavigationLink href="/" text="Todo" />
       <Flex overflowX="auto">
         <Flex flexShrink={0}>
-          <NavigationLink href="/categories" text="Categories" />
-          <NavigationLink href="/tags" text="Tags" />
-          <NavigationLink href="/checkpoints" text="Checkpoints" />
+          <NavigationLink href="/todos" text="Todo" />
+          <NavigationLink href="/checkpoints" text="Checkpoint" />
+          <NavigationLink href="/categories" text="Category" />
+          <NavigationLink href="/tags" text="Tag" />
         </Flex>
       </Flex>
       <Box mx="auto" />

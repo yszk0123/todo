@@ -7,7 +7,6 @@ import {
   StatusBar,
   StatusBarItemType,
 } from '../../shared/components/StatusBar';
-import { ID } from '../../viewModels/ID';
 
 const animation = {
   animationName: 'rotation',
@@ -40,48 +39,51 @@ const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
 
 export const TodoStatusBar: React.FunctionComponent<{
   categories: RootCategoryFragment[];
-  categoryId: ID | null;
-  categoryName: string | null;
+  category: RootCategoryFragment | null;
   count: number;
   isSyncing: boolean;
-}> = ({ categories, categoryId, categoryName, count, isSyncing }) => {
+  onClickCategory: (category: RootCategoryFragment | null) => void;
+}> = ({ categories, category, count, isSyncing, onClickCategory }) => {
   return (
     <StatusBar
       left={[
-        ...(categoryId
+        {
+          type: StatusBarItemType.BUTTON as const,
+          content: {
+            label: 'All',
+            onClick: () => onClickCategory(null),
+          },
+        },
+        ...categories.map((c) => {
+          return category === null || c.id !== category.id
+            ? {
+                type: StatusBarItemType.BUTTON as const,
+                content: {
+                  label: c.name,
+                  onClick: () => onClickCategory(c),
+                },
+              }
+            : {
+                type: StatusBarItemType.TEXT as const,
+                content: c.name,
+              };
+        }),
+        ...(category
           ? [
               {
                 type: StatusBarItemType.LINK as const,
                 content: {
                   href: '/categories/[categoryId]/todos/report',
-                  as: `/categories/${categoryId}/todos/report`,
+                  as: `/categories/${category.id}/todos/report`,
                   text: 'See report',
                 },
               },
             ]
           : []),
-        {
-          type: StatusBarItemType.LINK as const,
-          content: {
-            href: '/todos',
-            as: '/todos',
-            text: 'All',
-          },
-        },
-        ...categories.map((category) => {
-          return {
-            type: StatusBarItemType.LINK as const,
-            content: {
-              href: '/categories/[categoryId]/todos',
-              as: `/categories/${category.id}/todos`,
-              text: category.name,
-            },
-          };
-        }),
       ]}
       right={[
-        categoryName !== null
-          ? { type: StatusBarItemType.TEXT, content: categoryName }
+        category !== null
+          ? { type: StatusBarItemType.TEXT, content: category.name }
           : null,
         {
           type: StatusBarItemType.TEXT,

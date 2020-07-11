@@ -14,6 +14,7 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../ducks/TodoEditFormDucks';
+import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -39,11 +40,24 @@ function getNextStatus(status: TodoStatus): TodoStatus {
   }
 }
 
-function getQueryVariables(categoryId: ID | null): GetTodosQueryVariables {
+function getQueryVariables(
+  todoSearchFormValue: TodoSearchFormValue | null
+): GetTodosQueryVariables {
   return {
     input: {
-      categoryId: categoryId ? { equals: categoryId } : undefined,
+      categoryId: todoSearchFormValue?.category?.id
+        ? { equals: todoSearchFormValue?.category?.id }
+        : undefined,
       archivedAt: { equals: null },
+      status: todoSearchFormValue?.status ?? undefined,
+      tags: todoSearchFormValue?.tags
+        ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
+        : undefined,
+      text: todoSearchFormValue?.text
+        ? {
+            contains: todoSearchFormValue.text,
+          }
+        : undefined,
     },
   };
 }
@@ -56,13 +70,12 @@ export class TodoUsecase {
 
   async createOneTodo(
     userId: string,
-    categoryId: string | null,
-    todoEditFormState: TodoEditFormState
+    todoEditFormState: TodoEditFormState,
+    todoSearchFormValue: TodoSearchFormValue | null
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
-    const categoryIdToCreate =
-      categoryId ?? todoEditFormState.category?.id ?? null;
+    const categoryIdToCreate = todoEditFormState.category?.id ?? null;
     if (categoryIdToCreate === null) {
       alert('CategoryId required');
       return;
@@ -85,7 +98,9 @@ export class TodoUsecase {
               : undefined,
         },
       },
-      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
+      refetchQueries: [
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
+      ],
     });
   }
 
@@ -126,7 +141,10 @@ export class TodoUsecase {
     this.writeIsSyncing(false);
   }
 
-  async deleteTodosById(categoryId: ID | null, todoIds: ID[]) {
+  async deleteTodosById(
+    todoIds: ID[],
+    todoSearchFormValue: TodoSearchFormValue | null
+  ) {
     const count = todoIds.length;
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
@@ -134,7 +152,9 @@ export class TodoUsecase {
     await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
-      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
+      refetchQueries: [
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
+      ],
     });
   }
 
@@ -152,7 +172,10 @@ export class TodoUsecase {
     });
   }
 
-  async archiveTodosById(categoryId: ID | null, todoIds: ID[]) {
+  async archiveTodosById(
+    todoIds: ID[],
+    todoSearchFormValue: TodoSearchFormValue | null
+  ) {
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
       mutation: UpdateTodosByIdDocument,
       variables: {
@@ -161,7 +184,9 @@ export class TodoUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
-      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
+      refetchQueries: [
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
+      ],
     });
   }
 

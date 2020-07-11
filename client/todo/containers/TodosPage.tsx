@@ -8,9 +8,10 @@ import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { DUMMY_CHECKPOINT } from '../../viewModels/Checkpoint';
-import { ID } from '../../viewModels/ID';
+import { EmptyProps } from '../../viewModels/EmptyProps';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoList } from '../components/TodoList';
+import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
   todoEditFormReset,
@@ -19,21 +20,23 @@ import {
   todoEditFormSet,
   todoEditFormToggleTag,
 } from '../ducks/TodoEditFormDucks';
+import {
+  todoSearchFormCommit,
+  todoSearchFormReset,
+  todoSearchFormSet,
+  todoSearchFormToggleTag,
+} from '../ducks/TodoSearchFormDucks';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
 
-type Props = {
-  categoryId: ID | null;
-};
-
-export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
+export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const dispatch = useDispatch();
   const todoUsecase = useTodoUsecase();
   const {
     categories,
-    categoryName,
+    category,
     categoryTags,
     checkpoints,
     isCategoryNameShown,
@@ -42,9 +45,11 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     now,
     selectMode,
     todoEditFormState,
+    todoSearchFormCurrent,
+    todoSearchFormDraft,
     todos,
     userId,
-  } = useTodosPageState(categoryId);
+  } = useTodosPageState();
 
   const handleSelectOneTodo = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -66,12 +71,15 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
-    todoUsecase.createOneTodo(userId, categoryId, todoEditFormState);
-  }, [categoryId, todoEditFormState, todoUsecase, userId]);
+    todoUsecase.createOneTodo(userId, todoEditFormState, todoSearchFormCurrent);
+  }, [todoEditFormState, todoSearchFormCurrent, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(() => {
-    todoUsecase.deleteTodosById(categoryId, todoEditFormState.selectedTodoIds);
-  }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
+    todoUsecase.deleteTodosById(
+      todoEditFormState.selectedTodoIds,
+      todoSearchFormCurrent
+    );
+  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState);
@@ -85,8 +93,11 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   );
 
   const handleArchiveTodosById = React.useCallback(() => {
-    todoUsecase.archiveTodosById(categoryId, todoEditFormState.selectedTodoIds);
-  }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
+    todoUsecase.archiveTodosById(
+      todoEditFormState.selectedTodoIds,
+      todoSearchFormCurrent
+    );
+  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
 
   const handleToggleTag = React.useCallback(
     (tag: TodoTagFragment) => {
@@ -101,6 +112,14 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     },
     [dispatch]
   );
+
+  const handleSearchReset = React.useCallback(() => {
+    dispatch(todoSearchFormReset());
+  }, [dispatch]);
+
+  const handleSearchCommit = React.useCallback(() => {
+    dispatch(todoSearchFormCommit());
+  }, [dispatch]);
 
   const handleSelectStatus = React.useCallback(
     (status: TodoStatus) => {
@@ -123,6 +142,42 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     [dispatch]
   );
 
+  const handleToggleSearchTag = React.useCallback(
+    (tag: TodoTagFragment) => {
+      dispatch(todoSearchFormToggleTag(tag));
+    },
+    [dispatch]
+  );
+
+  const handleChangeSearchText = React.useCallback(
+    (text: string) => {
+      dispatch(todoSearchFormSet({ text }));
+    },
+    [dispatch]
+  );
+
+  const handleSelectSearchStatus = React.useCallback(
+    (status: TodoStatus) => {
+      dispatch(todoSearchFormSet({ status }));
+    },
+    [dispatch]
+  );
+
+  const handleSelectSearchCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      dispatch(todoSearchFormSet({ checkpoint }));
+    },
+    [dispatch]
+  );
+
+  const handleSelectSearchCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      dispatch(todoSearchFormSet({ category }));
+      dispatch(todoSearchFormCommit());
+    },
+    [dispatch]
+  );
+
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
@@ -133,7 +188,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       dispatch(todoEditFormReset());
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [categoryId]
+    [todoSearchFormCurrent]
   );
 
   if (isLoading) {
@@ -142,17 +197,17 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
 
   return (
     <PageContent onClick={handleDeselectTodo}>
-      {categoryName && (
+      {category !== null && (
         <Head>
-          <title>{categoryName}</title>
+          <title>{category.name}</title>
         </Head>
       )}
       <TodoStatusBar
         categories={categories}
-        categoryId={categoryId}
-        categoryName={categoryName}
+        category={category}
         count={todos.length}
         isSyncing={isSyncing}
+        onClickCategory={handleSelectSearchCategory}
       />
       <TodoList
         isCategoryNameShown={isCategoryNameShown}
@@ -178,6 +233,17 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         onSelectStatus={handleSelectStatus}
         onToggleTag={handleToggleTag}
         onUpdateOneTodo={handleUpdateTodosById}
+      />
+      <TodoSearchForm
+        categoryTags={categoryTags}
+        checkpoints={checkpointsWithDummy}
+        todoSearchFormValue={todoSearchFormDraft}
+        onChangeText={handleChangeSearchText}
+        onCommit={handleSearchCommit}
+        onReset={handleSearchReset}
+        onSelectCheckpoint={handleSelectSearchCheckpoint}
+        onSelectStatus={handleSelectSearchStatus}
+        onToggleTag={handleToggleSearchTag}
       />
     </PageContent>
   );
