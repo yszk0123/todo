@@ -26,7 +26,7 @@ export const CheckpointsPageDocument = gql`
   me {
     id
   }
-  checkpoints {
+  checkpoints(where: {archivedAt: {equals: null}}) {
     ...RootCheckpoint
   }
 }
