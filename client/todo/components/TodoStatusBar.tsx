@@ -42,7 +42,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   category: RootCategoryFragment | null;
   count: number;
   isSyncing: boolean;
-  onClickCategory: (category: RootCategoryFragment) => void;
+  onClickCategory: (category: RootCategoryFragment | null) => void;
 }> = ({ categories, category, count, isSyncing, onClickCategory }) => {
   return (
     <StatusBar
@@ -59,6 +59,13 @@ export const TodoStatusBar: React.FunctionComponent<{
               },
             ]
           : []),
+        {
+          type: StatusBarItemType.BUTTON as const,
+          content: {
+            label: 'All',
+            onClick: () => onClickCategory(null),
+          },
+        },
         ...categories.map((c) => {
           return category === null || c.id !== category.id
             ? {
