@@ -1,5 +1,5 @@
 query GetTags {
-  tags {
+  tags(where: { archivedAt: { equals: null } }) {
     ...RootTag
   }
 }

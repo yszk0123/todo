@@ -77,7 +77,7 @@ export const RootTagFragmentDoc = gql`
     `;
 export const GetTagsDocument = gql`
     query GetTags {
-  tags {
+  tags(where: {archivedAt: {equals: null}}) {
     ...RootTag
   }
 }

@@ -69,7 +69,7 @@ export const RootCheckpointFragmentDoc = gql`
     `;
 export const GetCheckpointDocument = gql`
     query GetCheckpoint {
-  checkpoints {
+  checkpoints(where: {archivedAt: {equals: null}}) {
     ...RootCheckpoint
   }
 }

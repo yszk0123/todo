@@ -1,5 +1,5 @@
 query GetCheckpoint {
-  checkpoints {
+  checkpoints(where: { archivedAt: { equals: null } }) {
     ...RootCheckpoint
   }
 }
