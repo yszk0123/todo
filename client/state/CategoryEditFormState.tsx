@@ -77,7 +77,7 @@ export const categoryEditFormInitialState: CategoryEditFormState = {
 };
 
 export function categoryEditFormReducer(
-  state: CategoryEditFormState,
+  state: CategoryEditFormState = categoryEditFormInitialState,
   action: CategoryEditFormAction
 ): CategoryEditFormState {
   switch (action.type) {

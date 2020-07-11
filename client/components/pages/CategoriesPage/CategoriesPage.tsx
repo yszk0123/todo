@@ -1,59 +1,43 @@
-import { useApolloClient } from '@apollo/client';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
-import { useCategoriesPageQuery } from '../../../graphql/__generated__/CategoriesPage.graphql';
 import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import {
-  categoryEditFormInitialState,
-  categoryEditFormReducer,
   categoryEditFormReset,
   categoryEditFormSelectOne,
   categoryEditFormSet,
 } from '../../../state/CategoryEditFormState';
-import { CategoryUsecase } from '../../../usecases/CategoryUsecase';
+import { useCategoryUsecase } from '../../../usecases/useCategoryUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { isDocumentVisible } from '../../helpers/isDocumentVisible';
-import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { CategoryEditForm } from './CategoryEditForm';
 import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
+import { useCategoriesPageState } from './useCategoriesPageState';
 
 export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading, refetch } = useCategoriesPageQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-  const client = useApolloClient();
-  const [categoryEditFormState, dispatch] = React.useReducer(
-    categoryEditFormReducer,
-    categoryEditFormInitialState
-  );
-  const [categoryUsecase] = React.useState(
-    () => new CategoryUsecase(client, dispatch)
-  );
-
-  const userId = data?.me?.id;
-  const count = categoryEditFormState.selectedCategoryIds.length;
-  const selectMode =
-    count === 0
-      ? SelectMode.NONE
-      : count === 1
-      ? SelectMode.SINGLE
-      : SelectMode.MULTI;
+  const categoryUsecase = useCategoryUsecase();
+  const dispatch = useDispatch();
+  const {
+    categories,
+    categoryEditFormState,
+    currentCategoryId,
+    isLoading,
+    isSelected,
+    userId,
+  } = useCategoriesPageState();
 
   const handleSelectOneCategory = React.useCallback(
     (category: RootCategoryFragment) => {
       dispatch(categoryEditFormSelectOne(category));
     },
-    []
+    [dispatch]
   );
 
   const handleDeselectCategory = React.useCallback(() => {
     dispatch(categoryEditFormReset());
-  }, []);
+  }, [dispatch]);
 
   const handleCreateOneCategory = React.useCallback(async () => {
     if (!userId) return;
@@ -82,23 +66,12 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       const name = event.currentTarget.value;
       dispatch(categoryEditFormSet({ name }));
     },
-    []
+    [dispatch]
   );
 
-  useInterval(() => {
-    if (isDocumentVisible()) {
-      refetch();
-    }
-  }, UPDATE_INTERVAL);
-
-  if (!data) {
-    return loading ? <LoadingIndicator /> : null;
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
-
-  const { name, selectedCategoryIds } = categoryEditFormState;
-  const categories = data.categories ?? [];
-  const currentCategoryId = selectedCategoryIds[0] ?? null;
-  const isSelected = selectMode === SelectMode.SINGLE;
 
   return (
     <PageContent onClick={handleDeselectCategory}>
@@ -110,7 +83,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <CategoryEditForm
         isSelected={isSelected}
-        name={name}
+        name={categoryEditFormState.name}
         onChangeName={handleChangeName}
         onCreateOneCategory={handleCreateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
