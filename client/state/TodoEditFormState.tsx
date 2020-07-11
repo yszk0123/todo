@@ -16,12 +16,12 @@ export type TodoEditFormState = {
 };
 
 enum TodoEditFormActionType {
-  RESET = 'RESET',
-  SELECT = 'SELECT',
-  SELECT_MANY = 'SELECT_MANY',
-  SELECT_ONE = 'SELECT_ONE',
-  SET = 'SET',
-  TOGGLE_TAG = 'TOGGLE_TAG',
+  RESET = 'todoEditForm/RESET',
+  SELECT = 'todoEditForm/SELECT',
+  SELECT_MANY = 'todoEditForm/SELECT_MANY',
+  SELECT_ONE = 'todoEditForm/SELECT_ONE',
+  SET = 'todoEditForm/SET',
+  TOGGLE_TAG = 'todoEditForm/TOGGLE_TAG',
 }
 
 export type TodoEditFormAction =
@@ -100,7 +100,7 @@ export const todoEditFormInitialState: TodoEditFormState = {
 };
 
 export function todoEditFormReducer(
-  state: TodoEditFormState,
+  state: TodoEditFormState = todoEditFormInitialState,
   action: TodoEditFormAction
 ): TodoEditFormState {
   switch (action.type) {

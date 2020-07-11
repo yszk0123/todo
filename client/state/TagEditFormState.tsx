@@ -12,12 +12,12 @@ export type TagEditFormState = {
 };
 
 enum TagEditFormActionType {
-  RESET = 'RESET',
-  SELECT = 'SELECT',
-  SELECT_MANY = 'SELECT_MANY',
-  SELECT_ONE = 'SELECT_ONE',
-  SET = 'SET',
-  TOGGLE_CATEGORY = 'TOGGLE_CATEGORY',
+  RESET = 'tagEditForm/RESET',
+  SELECT = 'tagEditForm/SELECT',
+  SELECT_MANY = 'tagEditForm/SELECT_MANY',
+  SELECT_ONE = 'tagEditForm/SELECT_ONE',
+  SET = 'tagEditForm/SET',
+  TOGGLE_CATEGORY = 'tagEditForm/TOGGLE_CATEGORY',
 }
 
 export type TagEditFormAction =
@@ -91,7 +91,7 @@ export const tagEditFormInitialState: TagEditFormState = {
 };
 
 export function tagEditFormReducer(
-  state: TagEditFormState,
+  state: TagEditFormState = tagEditFormInitialState,
   action: TagEditFormAction
 ): TagEditFormState {
   switch (action.type) {

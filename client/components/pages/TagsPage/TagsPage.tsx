@@ -1,58 +1,47 @@
-import { useApolloClient } from '@apollo/client';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { RootTagFragment } from '../../../graphql/__generated__/Tag.graphql';
-import { useTagsPageQuery } from '../../../graphql/__generated__/TagsPage.graphql';
 import {
-  tagEditFormInitialState,
-  tagEditFormReducer,
   tagEditFormReset,
   tagEditFormSelectOne,
   tagEditFormSet,
   tagEditFormToggleCategory,
 } from '../../../state/TagEditFormState';
-import { TagUsecase } from '../../../usecases/TagUsecase';
+import { useTagUsecase } from '../../../usecases/useTagUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { SelectMode } from '../../../viewModels/SelectMode';
-import { isDocumentVisible } from '../../helpers/isDocumentVisible';
-import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TagEditForm } from './TagEditForm';
 import { TagList } from './TagList';
 import { TagStatusBar } from './TagStatusBar';
+import { useTagsPageState } from './useTagsPageState';
 
 export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading, refetch } = useTagsPageQuery({
-    fetchPolicy: 'cache-and-network',
-  });
+  const tagUsecase = useTagUsecase();
+  const dispatch = useDispatch();
+  const {
+    currentTagId,
+    isLoading,
+    isSelected,
+    rootCategories,
+    tagEditFormState,
+    tags,
+    userId,
+  } = useTagsPageState();
 
-  const client = useApolloClient();
-  const [tagEditFormState, dispatch] = React.useReducer(
-    tagEditFormReducer,
-    tagEditFormInitialState
+  const handleSelectOneTag = React.useCallback(
+    (tag: RootTagFragment) => {
+      dispatch(tagEditFormSelectOne(tag));
+    },
+    [dispatch]
   );
-  const [tagUsecase] = React.useState(() => new TagUsecase(client, dispatch));
-
-  const userId = data?.me?.id;
-  const count = tagEditFormState.selectedTagIds.length;
-  const selectMode =
-    count === 0
-      ? SelectMode.NONE
-      : count === 1
-      ? SelectMode.SINGLE
-      : SelectMode.MULTI;
-
-  const handleSelectOneTag = React.useCallback((tag: RootTagFragment) => {
-    dispatch(tagEditFormSelectOne(tag));
-  }, []);
 
   const handleDeselectTag = React.useCallback(() => {
     dispatch(tagEditFormReset());
-  }, []);
+  }, [dispatch]);
 
   const handleCreateOneTag = React.useCallback(async () => {
     if (!userId) return;
@@ -76,7 +65,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     (category: RootCategoryFragment) => {
       dispatch(tagEditFormToggleCategory(category));
     },
-    []
+    [dispatch]
   );
 
   const handleChangeName = React.useCallback(
@@ -84,30 +73,21 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       const name = event.currentTarget.value;
       dispatch(tagEditFormSet({ name }));
     },
-    []
+    [dispatch]
   );
 
-  const handleChangeColor = React.useCallback((color: Color | null) => {
-    if (color) {
-      dispatch(tagEditFormSet({ color }));
-    }
-  }, []);
+  const handleChangeColor = React.useCallback(
+    (color: Color | null) => {
+      if (color) {
+        dispatch(tagEditFormSet({ color }));
+      }
+    },
+    [dispatch]
+  );
 
-  useInterval(() => {
-    if (isDocumentVisible()) {
-      refetch();
-    }
-  }, UPDATE_INTERVAL);
-
-  if (!data) {
-    return loading ? <LoadingIndicator /> : null;
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
-
-  const { color, name, selectedTagIds, tagCategories } = tagEditFormState;
-  const tags = data.tags ?? [];
-  const rootCategories = data.categories ?? [];
-  const currentTagId = selectedTagIds[0] ?? null;
-  const isSelected = selectMode === SelectMode.SINGLE;
 
   return (
     <PageContent onClick={handleDeselectTag}>
@@ -119,10 +99,10 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <TagEditForm
         categories={rootCategories}
-        color={color}
+        color={tagEditFormState.color}
         isSelected={isSelected}
         name={name}
-        tagCategories={tagCategories}
+        tagCategories={tagEditFormState.tagCategories}
         onChangeColor={handleChangeColor}
         onChangeName={handleChangeName}
         onCreateOneTag={handleCreateOneTag}

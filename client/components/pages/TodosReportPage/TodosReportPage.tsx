@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { useTodosReportPageQuery } from '../../../graphql/__generated__/TodosReportPage.graphql';
 import { ID } from '../../../viewModels/ID';
+import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TodosReport } from './TodosReport';
+import { useTodosReportPageState } from './useTodosReportPageState';
 
 type Props = {
   categoryId: ID;
@@ -12,16 +13,11 @@ type Props = {
 export const TodosReportPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { data, loading } = useTodosReportPageQuery({
-    variables: { categoryId, categoryUUID: categoryId },
-  });
+  const { isLoading, tags, todos } = useTodosReportPageState(categoryId);
 
-  if (loading || !data) {
-    return null;
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
-
-  const todos = data.todos ?? [];
-  const tags = data.tags ?? [];
 
   return (
     <PageContent>

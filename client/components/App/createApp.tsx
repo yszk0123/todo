@@ -1,11 +1,13 @@
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'emotion-theming';
 // @ts-ignore
-import { Provider } from 'next-auth/client';
+import { Provider as NextAuthProvider } from 'next-auth/client';
 import Head from 'next/head';
 import React from 'react';
+import { Provider as ReactReduxProvider } from 'react-redux';
 
 import { createApolloClient } from '../../apollo/createApolloClient';
+import { createReduxStore } from '../../redux/createReduxStore';
 import { theme } from '../../theme/theme';
 import { PageContainer } from './PageContainer';
 
@@ -23,6 +25,7 @@ type Props = {
 
 export function createApp(): React.FunctionComponent<Props> {
   const client = createApolloClient();
+  const store = createReduxStore();
 
   const App: React.FunctionComponent<Props> = ({
     Component,
@@ -33,14 +36,16 @@ export function createApp(): React.FunctionComponent<Props> {
     return (
       <ThemeProvider theme={theme}>
         <ApolloProvider client={client}>
-          <Provider session={session}>
-            <Head>
-              <title>Todo</title>
-            </Head>
-            <PageContainer>
-              <Component {...pageProps} />
-            </PageContainer>
-          </Provider>
+          <NextAuthProvider session={session}>
+            <ReactReduxProvider store={store}>
+              <Head>
+                <title>Todo</title>
+              </Head>
+              <PageContainer>
+                <Component {...pageProps} />
+              </PageContainer>
+            </ReactReduxProvider>
+          </NextAuthProvider>
         </ApolloProvider>
       </ThemeProvider>
     );
