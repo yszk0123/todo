@@ -4,6 +4,17 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
+export type GetTagsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetTagsQuery = (
+  { __typename?: 'Query' }
+  & { tags: Array<(
+    { __typename?: 'Tag' }
+    & RootTagFragment
+  )> }
+);
+
 export type CreateOneTagMutationVariables = Types.Exact<{
   data: Types.TagCreateInput;
 }>;
@@ -64,6 +75,41 @@ export const RootTagFragmentDoc = gql`
   }
 }
     `;
+export const GetTagsDocument = gql`
+    query GetTags {
+  tags {
+    ...RootTag
+  }
+}
+    ${RootTagFragmentDoc}`;
+
+/**
+ * __useGetTagsQuery__
+ *
+ * To run a query within a React component, call `useGetTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTagsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
+      }
+export function useGetTagsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
+        }
+export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
+export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
+export type GetTagsQueryResult = ApolloReactCommon.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
+export function refetchGetTagsQuery(variables?: GetTagsQueryVariables) {
+      return { query: GetTagsDocument, variables: variables }
+    }
 export const CreateOneTagDocument = gql`
     mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {

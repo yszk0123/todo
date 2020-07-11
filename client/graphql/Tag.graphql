@@ -1,3 +1,9 @@
+query GetTags {
+  tags {
+    ...RootTag
+  }
+}
+
 mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {
     ...RootTag

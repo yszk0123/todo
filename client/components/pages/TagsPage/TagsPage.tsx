@@ -23,7 +23,7 @@ import { TagList } from './TagList';
 import { TagStatusBar } from './TagStatusBar';
 
 export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading, refetch } = useTagsPageQuery({
+  const { data, loading } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
 
@@ -54,13 +54,11 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const handleCreateOneTag = React.useCallback(async () => {
     if (!userId) return;
     await tagUsecase.createOneTag(userId, tagEditFormState);
-    await refetch();
-  }, [userId, tagUsecase, tagEditFormState, refetch]);
+  }, [userId, tagUsecase, tagEditFormState]);
 
   const handleDeleteOneTag = React.useCallback(async () => {
     await tagUsecase.deleteOneTag(tagEditFormState.selectedTagIds);
-    await refetch();
-  }, [tagUsecase, tagEditFormState.selectedTagIds, refetch]);
+  }, [tagUsecase, tagEditFormState.selectedTagIds]);
 
   const handleUpdateOneTag = React.useCallback(async () => {
     await tagUsecase.updateOneTag(tagEditFormState);
@@ -69,8 +67,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   // FIXME: Implement
   // const handleArchiveOneTag = React.useCallback(async () => {
   //   await tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
-  //   await refetch();
-  // }, [tagUsecase, tagEditFormState.selectedTagIds, refetch]);
+  // }, [tagUsecase, tagEditFormState.selectedTagIds]);
 
   const handleToggleTagCategory = React.useCallback(
     (category: RootCategoryFragment) => {

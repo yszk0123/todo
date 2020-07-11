@@ -5,6 +5,7 @@ import {
   CreateOneTagMutationVariables,
   DeleteOneTagDocument,
   DeleteOneTagMutationVariables,
+  refetchGetTagsQuery,
   UpdateOneTagDocument,
   UpdateOneTagMutationVariables,
 } from '../graphql/__generated__/Tag.graphql';
@@ -37,6 +38,7 @@ export class TagUsecase {
           categories: { connect: tagCategories.map((c) => ({ id: c.id })) },
         },
       },
+      refetchQueries: [refetchGetTagsQuery()],
     });
   }
 
@@ -78,6 +80,7 @@ export class TagUsecase {
     await this.client.mutate<unknown, DeleteOneTagMutationVariables>({
       mutation: DeleteOneTagDocument,
       variables: { where: { id: tagId } },
+      refetchQueries: [refetchGetTagsQuery()],
     });
   }
 
@@ -96,6 +99,7 @@ export class TagUsecase {
           // archivedAt: toDateTime(new Date()),
         },
       },
+      refetchQueries: [refetchGetTagsQuery()],
     });
   }
 }
