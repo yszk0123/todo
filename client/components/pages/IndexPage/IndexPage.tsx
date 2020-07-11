@@ -2,9 +2,13 @@
 import React from 'react';
 
 import { EmptyProps } from '../../../viewModels/EmptyProps';
-import { List, ListItem, ListText } from '../../layout/List';
+import { List } from '../../layout/List';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
+import { CategoryCountListItem } from './CategoryCountListItem';
+import { CheckpointCountListItem } from './CheckpointCountListItem';
+import { TagCountListItem } from './TagCountListItem';
+import { TodoCountListItem } from './TodoCountListItem';
 import { useIndexPageState } from './useIndexPageState';
 
 export const IndexPage: React.FunctionComponent<EmptyProps> = () => {
@@ -31,71 +35,3 @@ export const IndexPage: React.FunctionComponent<EmptyProps> = () => {
     </PageContent>
   );
 };
-
-function CategoryCountListItem({
-  count,
-}: {
-  count: number | null;
-}): JSX.Element | null {
-  if (count === null) {
-    return null;
-  }
-
-  return (
-    <ListItem
-      item={null}
-      mainElement={<ListText>{`${count} categories`}</ListText>}
-    />
-  );
-}
-
-function TagCountListItem({
-  count,
-}: {
-  count: number | null;
-}): JSX.Element | null {
-  if (count === null) {
-    return null;
-  }
-
-  return (
-    <ListItem
-      item={null}
-      mainElement={<ListText>{`${count} tags`}</ListText>}
-    />
-  );
-}
-
-function TodoCountListItem({
-  count,
-}: {
-  count: number | null;
-}): JSX.Element | null {
-  if (count === null) {
-    return null;
-  }
-
-  return (
-    <ListItem
-      item={null}
-      mainElement={<ListText>{`${count} todos`}</ListText>}
-    />
-  );
-}
-
-function CheckpointCountListItem({
-  count,
-}: {
-  count: number | null;
-}): JSX.Element | null {
-  if (count === null) {
-    return null;
-  }
-
-  return (
-    <ListItem
-      item={null}
-      mainElement={<ListText>{`${count} checkpoints`}</ListText>}
-    />
-  );
-}
