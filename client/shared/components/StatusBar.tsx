@@ -45,7 +45,7 @@ const StatusBarItemView: React.FunctionComponent<{
     }
     case StatusBarItemType.LINK: {
       return (
-        <Box mx={2}>
+        <Box mx={1}>
           <Link
             as={item.content.as}
             href={item.content.href}
@@ -56,9 +56,15 @@ const StatusBarItemView: React.FunctionComponent<{
     }
     case StatusBarItemType.BUTTON: {
       return (
-        <Box mx={2} onClick={item.content.onClick}>
+        <Flex
+          alignItems="center"
+          mx={1}
+          sx={{ cursor: 'pointer' }}
+          variant="link"
+          onClick={item.content.onClick}
+        >
           <Text>{item.content.label}</Text>
-        </Box>
+        </Flex>
       );
     }
   }
@@ -71,7 +77,7 @@ export const StatusBar: React.FunctionComponent<{
   return (
     <Flex color="gray" fontSize={2} justifyContent="space-between" mb={2}>
       <Flex alignItems="center" justifyContent="flex-start" overflowX="auto">
-        <Flex flexShrink={0}>
+        <Flex alignItems="center" flexShrink={0}>
           {left.filter(isNotNull).map((item, i) => {
             return <StatusBarItemView item={item} key={i} />;
           })}
@@ -84,7 +90,7 @@ export const StatusBar: React.FunctionComponent<{
         justifyContent="flex-end"
         overflowX="auto"
       >
-        <Flex flexShrink={0}>
+        <Flex alignItems="center" flexShrink={0}>
           {right.filter(isNotNull).map((item, i) => {
             return <StatusBarItemView item={item} key={i} />;
           })}

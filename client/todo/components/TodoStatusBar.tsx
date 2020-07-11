@@ -60,7 +60,7 @@ export const TodoStatusBar: React.FunctionComponent<{
             ]
           : []),
         ...categories.map((c) => {
-          return category && c.id !== category.id
+          return category === null || c.id !== category.id
             ? {
                 type: StatusBarItemType.BUTTON as const,
                 content: {
