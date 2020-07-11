@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
@@ -24,7 +25,7 @@ import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
 
 type Props = {
-  categoryId: ID;
+  categoryId: ID | null;
 };
 
 export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
@@ -35,6 +36,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     categoryName,
     categoryTags,
     checkpoints,
+    isCategoryNameShown,
     isLoading,
     isSyncing,
     now,
@@ -114,6 +116,13 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     [dispatch]
   );
 
+  const handleSelectCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      dispatch(todoEditFormSet({ category }));
+    },
+    [dispatch]
+  );
+
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
@@ -146,6 +155,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         isSyncing={isSyncing}
       />
       <TodoList
+        isCategoryNameShown={isCategoryNameShown}
         now={now}
         selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
@@ -154,17 +164,16 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm
+        categories={categories}
         categoryTags={categoryTags}
-        checkpoint={todoEditFormState.checkpoint}
         checkpoints={checkpointsWithDummy}
         selectMode={selectMode}
-        status={todoEditFormState.status}
-        tags={todoEditFormState.tags}
-        text={todoEditFormState.text}
+        todoEditFormState={todoEditFormState}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
         onDeleteOneTodo={handleDeleteTodosById}
+        onSelectCategory={handleSelectCategory}
         onSelectCheckpoint={handleSelectCheckpoint}
         onSelectStatus={handleSelectStatus}
         onToggleTag={handleToggleTag}

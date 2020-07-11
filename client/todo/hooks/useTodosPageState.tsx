@@ -7,11 +7,32 @@ import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
 import { ID } from '../../viewModels/ID';
 import { SelectMode } from '../../viewModels/SelectMode';
-import { useTodosPageQuery } from '../graphql/__generated__/TodosPage.graphql';
+import {
+  TodosPageQueryVariables,
+  useTodosPageQuery,
+} from '../graphql/__generated__/TodosPage.graphql';
 
-export function useTodosPageState(categoryId: ID) {
+function getQueryVariables(categoryId: ID | null): TodosPageQueryVariables {
+  return {
+    todoInput: {
+      categoryId: categoryId ? { equals: categoryId } : undefined,
+      archivedAt: { equals: null },
+    },
+    tagInput: {
+      categories: categoryId
+        ? { some: { id: { equals: categoryId } } }
+        : undefined,
+      archivedAt: { equals: null },
+    },
+  };
+}
+
+export function useTodosPageState(categoryId: ID | null) {
+  const variables = React.useMemo(() => getQueryVariables(categoryId), [
+    categoryId,
+  ]);
   const { data, loading, refetch } = useTodosPageQuery({
-    variables: { categoryId, categoryUUID: categoryId },
+    variables,
     fetchPolicy: 'cache-and-network',
   });
   const { data: pageData } = usePageIsSyncingQuery();
@@ -30,9 +51,10 @@ export function useTodosPageState(categoryId: ID) {
 
   return {
     categories: data?.categories ?? [],
-    categoryName: data?.category?.name ?? null,
+    categoryName: null, // FIXME
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
+    isCategoryNameShown: categoryId === null,
     isLoading: !data && loading,
     isSyncing: pageData?.page?.isSyncing ?? false,
     now,

@@ -1,7 +1,5 @@
-query GetTodos($categoryId: String!) {
-  todos(
-    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
-  ) {
+query GetTodos($input: TodoWhereInput!) {
+  todos(where: $input) {
     ...RootTodo
   }
 }
@@ -44,6 +42,10 @@ fragment RootTodo on Todo {
   }
   status
   archivedAt
+  category {
+    id
+    name
+  }
   checkpoint {
     id
     name

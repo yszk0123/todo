@@ -5,7 +5,7 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type GetTodosQueryVariables = Types.Exact<{
-  categoryId: Types.Scalars['String'];
+  input: Types.TodoWhereInput;
 }>;
 
 
@@ -85,7 +85,10 @@ export type RootTodoFragment = (
   & { tags: Array<(
     { __typename?: 'Tag' }
     & TodoTagFragment
-  )>, checkpoint?: Types.Maybe<(
+  )>, category: (
+    { __typename?: 'Category' }
+    & Pick<Types.Category, 'id' | 'name'>
+  ), checkpoint?: Types.Maybe<(
     { __typename?: 'Checkpoint' }
     & Pick<Types.Checkpoint, 'id' | 'name' | 'endAt'>
   )> }
@@ -113,6 +116,10 @@ export const RootTodoFragmentDoc = gql`
   }
   status
   archivedAt
+  category {
+    id
+    name
+  }
   checkpoint {
     id
     name
@@ -121,8 +128,8 @@ export const RootTodoFragmentDoc = gql`
 }
     ${TodoTagFragmentDoc}`;
 export const GetTodosDocument = gql`
-    query GetTodos($categoryId: String!) {
-  todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
+    query GetTodos($input: TodoWhereInput!) {
+  todos(where: $input) {
     ...RootTodo
   }
 }
@@ -140,7 +147,7 @@ export const GetTodosDocument = gql`
  * @example
  * const { data, loading, error } = useGetTodosQuery({
  *   variables: {
- *      categoryId: // value for 'categoryId'
+ *      input: // value for 'input'
  *   },
  * });
  */

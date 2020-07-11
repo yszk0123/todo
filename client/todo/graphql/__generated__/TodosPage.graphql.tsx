@@ -11,8 +11,8 @@ import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
 export type TodosPageQueryVariables = Types.Exact<{
-  categoryId: Types.Scalars['String'];
-  categoryUUID: Types.Scalars['UUID'];
+  todoInput: Types.TodoWhereInput;
+  tagInput: Types.TagWhereInput;
 }>;
 
 
@@ -21,9 +21,6 @@ export type TodosPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
-  )>, category?: Types.Maybe<(
-    { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
   )>, todos: Array<(
     { __typename?: 'Todo' }
     & RootTodoFragment
@@ -41,18 +38,14 @@ export type TodosPageQuery = (
 
 
 export const TodosPageDocument = gql`
-    query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
+    query TodosPage($todoInput: TodoWhereInput!, $tagInput: TagWhereInput!) {
   me {
     id
   }
-  category(where: {id: $categoryId}) {
-    id
-    name
-  }
-  todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
+  todos(where: $todoInput) {
     ...RootTodo
   }
-  tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
+  tags(where: $tagInput) {
     ...TodoTag
   }
   checkpoints {
@@ -79,8 +72,8 @@ ${RootCategoryFragmentDoc}`;
  * @example
  * const { data, loading, error } = useTodosPageQuery({
  *   variables: {
- *      categoryId: // value for 'categoryId'
- *      categoryUUID: // value for 'categoryUUID'
+ *      todoInput: // value for 'todoInput'
+ *      tagInput: // value for 'tagInput'
  *   },
  * });
  */

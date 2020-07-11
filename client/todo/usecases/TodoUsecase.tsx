@@ -19,6 +19,7 @@ import {
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
+  GetTodosQueryVariables,
   refetchGetTodosQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
@@ -38,6 +39,15 @@ function getNextStatus(status: TodoStatus): TodoStatus {
   }
 }
 
+function getQueryVariables(categoryId: ID | null): GetTodosQueryVariables {
+  return {
+    input: {
+      categoryId: categoryId ? { equals: categoryId } : undefined,
+      archivedAt: { equals: null },
+    },
+  };
+}
+
 export class TodoUsecase {
   constructor(
     private client: ApolloClient<unknown>,
@@ -46,11 +56,17 @@ export class TodoUsecase {
 
   async createOneTodo(
     userId: string,
-    categoryId: string,
+    categoryId: string | null,
     todoEditFormState: TodoEditFormState
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
+    const categoryIdToCreate =
+      categoryId ?? todoEditFormState.category?.id ?? null;
+    if (categoryIdToCreate === null) {
+      alert('CategoryId required');
+      return;
+    }
 
     this.dispatch(todoEditFormSet({ text: '' }));
 
@@ -59,7 +75,7 @@ export class TodoUsecase {
       variables: {
         input: {
           owner: { connect: { id: userId } },
-          category: { connect: { id: categoryId } },
+          category: { connect: { id: categoryIdToCreate } },
           tags: newTags ? { connect: newTags } : undefined,
           text,
           status: status ?? TodoStatus.Todo,
@@ -69,7 +85,7 @@ export class TodoUsecase {
               : undefined,
         },
       },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 
@@ -110,7 +126,7 @@ export class TodoUsecase {
     this.writeIsSyncing(false);
   }
 
-  async deleteTodosById(categoryId: ID, todoIds: ID[]) {
+  async deleteTodosById(categoryId: ID | null, todoIds: ID[]) {
     const count = todoIds.length;
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
@@ -118,7 +134,7 @@ export class TodoUsecase {
     await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 
@@ -136,7 +152,7 @@ export class TodoUsecase {
     });
   }
 
-  async archiveTodosById(categoryId: ID, todoIds: ID[]) {
+  async archiveTodosById(categoryId: ID | null, todoIds: ID[]) {
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
       mutation: UpdateTodosByIdDocument,
       variables: {
@@ -145,7 +161,7 @@ export class TodoUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 

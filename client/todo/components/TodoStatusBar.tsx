@@ -40,7 +40,7 @@ const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
 
 export const TodoStatusBar: React.FunctionComponent<{
   categories: RootCategoryFragment[];
-  categoryId: ID;
+  categoryId: ID | null;
   categoryName: string | null;
   count: number;
   isSyncing: boolean;
@@ -48,12 +48,24 @@ export const TodoStatusBar: React.FunctionComponent<{
   return (
     <StatusBar
       left={[
+        ...(categoryId
+          ? [
+              {
+                type: StatusBarItemType.LINK as const,
+                content: {
+                  href: '/categories/[categoryId]/todos/report',
+                  as: `/categories/${categoryId}/todos/report`,
+                  text: 'See report',
+                },
+              },
+            ]
+          : []),
         {
-          type: StatusBarItemType.LINK,
+          type: StatusBarItemType.LINK as const,
           content: {
-            href: '/categories/[categoryId]/todos/report',
-            as: `/categories/${categoryId}/todos/report`,
-            text: 'See report',
+            href: '/todos',
+            as: '/todos',
+            text: 'All',
           },
         },
         ...categories.map((category) => {
