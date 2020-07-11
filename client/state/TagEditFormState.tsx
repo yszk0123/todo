@@ -91,7 +91,7 @@ export const tagEditFormInitialState: TagEditFormState = {
 };
 
 export function tagEditFormReducer(
-  state: TagEditFormState,
+  state: TagEditFormState = tagEditFormInitialState,
   action: TagEditFormAction
 ): TagEditFormState {
   switch (action.type) {
