@@ -166,12 +166,8 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       <TodoEditForm
         categories={categories}
         categoryTags={categoryTags}
-        checkpoint={todoEditFormState.checkpoint}
         checkpoints={checkpointsWithDummy}
         selectMode={selectMode}
-        status={todoEditFormState.status}
-        tags={todoEditFormState.tags}
-        text={todoEditFormState.text}
         todoEditFormState={todoEditFormState}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
