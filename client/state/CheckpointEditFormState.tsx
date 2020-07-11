@@ -1,5 +1,6 @@
 import { first } from '../components/helpers/first';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
+import { toggle } from '../helpers/toggle';
 import { DateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';
 
@@ -115,10 +116,7 @@ export function checkpointEditFormReducer(
       const { selectedCheckpointIds } = state;
       const { checkpoint } = action.payload;
 
-      const isSelected = !!selectedCheckpointIds.includes(checkpoint.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedCheckpointIds.filter((id) => id !== checkpoint.id)
-        : [...selectedCheckpointIds, checkpoint.id];
+      const newSelectedTodoIds = toggle(selectedCheckpointIds, checkpoint.id);
       const isSingle = newSelectedTodoIds.length === 1;
       if (isSingle) {
         return {

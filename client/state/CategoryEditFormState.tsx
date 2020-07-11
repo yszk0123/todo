@@ -1,5 +1,6 @@
 import { first } from '../components/helpers/first';
 import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
+import { toggle } from '../helpers/toggle';
 import { ID } from '../viewModels/ID';
 
 export type CategoryEditFormState = {
@@ -111,10 +112,7 @@ export function categoryEditFormReducer(
       const { selectedCategoryIds } = state;
       const { category } = action.payload;
 
-      const isSelected = !!selectedCategoryIds.includes(category.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedCategoryIds.filter((id) => id !== category.id)
-        : [...selectedCategoryIds, category.id];
+      const newSelectedTodoIds = toggle(selectedCategoryIds, category.id);
       const isSingle = newSelectedTodoIds.length === 1;
       if (isSingle) {
         return {

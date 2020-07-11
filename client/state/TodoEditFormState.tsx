@@ -5,6 +5,7 @@ import {
   RootTodoFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
+import { toggle, toggleWith } from '../helpers/toggle';
 import { ID } from '../viewModels/ID';
 
 export type TodoEditFormState = {
@@ -136,10 +137,7 @@ export function todoEditFormReducer(
       const { selectedTodoIds } = state;
       const { todo } = action.payload;
 
-      const isSelected = !!selectedTodoIds.includes(todo.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedTodoIds.filter((id) => id !== todo.id)
-        : [...selectedTodoIds, todo.id];
+      const newSelectedTodoIds = toggle(selectedTodoIds, todo.id);
       const isSingle = newSelectedTodoIds.length === 1;
       if (isSingle) {
         return {
@@ -164,10 +162,7 @@ export function todoEditFormReducer(
     case TodoEditFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
       const oldTags = state.tags ?? [];
-      const has = oldTags.find((t) => t.id === tag.id);
-      const newTags = has
-        ? oldTags.filter((t) => t.id !== tag.id)
-        : [...oldTags, tag];
+      const newTags = toggleWith(oldTags, tag, (t) => t.id);
       return {
         ...state,
         tags: newTags,

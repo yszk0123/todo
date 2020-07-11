@@ -2,6 +2,7 @@ import { first } from '../components/helpers/first';
 import { Color } from '../graphql/__generated__/baseTypes';
 import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
+import { toggle, toggleWith } from '../helpers/toggle';
 import { ID } from '../viewModels/ID';
 
 export type TagEditFormState = {
@@ -126,10 +127,7 @@ export function tagEditFormReducer(
       const { selectedTagIds } = state;
       const { tag } = action.payload;
 
-      const isSelected = !!selectedTagIds.includes(tag.id);
-      const newSelectedTodoIds = isSelected
-        ? selectedTagIds.filter((id) => id !== tag.id)
-        : [...selectedTagIds, tag.id];
+      const newSelectedTodoIds = toggle(selectedTagIds, tag.id);
       const isSingle = newSelectedTodoIds.length === 1;
       if (isSingle) {
         return {
@@ -149,10 +147,7 @@ export function tagEditFormReducer(
     case TagEditFormActionType.TOGGLE_CATEGORY: {
       const { tagCategories } = state;
       const { category } = action.payload;
-      const has = tagCategories.find((t) => t.id === category.id);
-      const newCategories = has
-        ? tagCategories.filter((t) => t.id !== category.id)
-        : [...tagCategories, category];
+      const newCategories = toggleWith(tagCategories, category, (c) => c.id);
       return {
         ...state,
         tagCategories: newCategories,
