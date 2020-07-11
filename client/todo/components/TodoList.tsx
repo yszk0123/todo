@@ -9,6 +9,7 @@ import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import { TodoListItem } from './TodoListItem';
 
 export const TodoList: React.FunctionComponent<{
+  isCategoryNameShown: boolean;
   now: number;
   onClick: (item: RootTodoFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
@@ -16,6 +17,7 @@ export const TodoList: React.FunctionComponent<{
   selectedTodoIds: ID[];
   todos: RootTodoFragment[];
 }> = ({
+  isCategoryNameShown,
   now,
   onClick,
   onClickStatus,
@@ -48,6 +50,7 @@ export const TodoList: React.FunctionComponent<{
 
               return (
                 <TodoListItem
+                  isCategoryNameShown={isCategoryNameShown}
                   isSelected={isSelected}
                   key={todo.id}
                   todo={todo}

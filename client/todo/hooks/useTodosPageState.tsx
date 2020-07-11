@@ -54,6 +54,7 @@ export function useTodosPageState(categoryId: ID | null) {
     categoryName: null, // FIXME
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
+    isCategoryNameShown: categoryId === null,
     isLoading: !data && loading,
     isSyncing: pageData?.page?.isSyncing ?? false,
     now,

@@ -3,6 +3,7 @@ import { Checkbox } from '@rebass/forms';
 import React from 'react';
 import { Box } from 'rebass';
 
+import { Label } from '../../shared/components/Label';
 import { ListItem } from '../../shared/components/List';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
@@ -11,12 +12,20 @@ import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
+  isCategoryNameShown: boolean;
   isSelected: boolean;
   onClick: (todo: RootTodoFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
   todo: RootTodoFragment;
-}> = ({ isSelected, onClick, onClickStatus, onClickToggle, todo }) => {
+}> = ({
+  isCategoryNameShown,
+  isSelected,
+  onClick,
+  onClickStatus,
+  onClickToggle,
+  todo,
+}) => {
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -45,7 +54,16 @@ export const TodoListItem: React.FunctionComponent<{
         </>
       }
       mainElement={<TodoListText text={todo.text} />}
-      rightElement={<TodoListTags tags={todo.tags} />}
+      rightElement={
+        <>
+          <TodoListTags tags={todo.tags} />
+          {isCategoryNameShown && (
+            <Box ml={1}>
+              <Label text={todo.category.name} />
+            </Box>
+          )}
+        </>
+      }
       onClick={onClick}
     ></ListItem>
   );

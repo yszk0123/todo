@@ -35,6 +35,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     categoryName,
     categoryTags,
     checkpoints,
+    isCategoryNameShown,
     isLoading,
     isSyncing,
     now,
@@ -146,6 +147,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         isSyncing={isSyncing}
       />
       <TodoList
+        isCategoryNameShown={isCategoryNameShown}
         now={now}
         selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
