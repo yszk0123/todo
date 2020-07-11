@@ -1,6 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
+import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { RootTagFragment } from '../../../graphql/__generated__/Tag.graphql';
@@ -16,6 +17,8 @@ import {
 import { TagUsecase } from '../../../usecases/TagUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import { isDocumentVisible } from '../../helpers/isDocumentVisible';
+import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { TagEditForm } from './TagEditForm';
@@ -23,7 +26,7 @@ import { TagList } from './TagList';
 import { TagStatusBar } from './TagStatusBar';
 
 export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading } = useTagsPageQuery({
+  const { data, loading, refetch } = useTagsPageQuery({
     fetchPolicy: 'cache-and-network',
   });
 
@@ -89,6 +92,12 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       dispatch(tagEditFormSet({ color }));
     }
   }, []);
+
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+    }
+  }, UPDATE_INTERVAL);
 
   if (!data) {
     return loading ? <LoadingIndicator /> : null;

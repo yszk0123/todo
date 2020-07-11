@@ -1,6 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
+import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { useCategoriesPageQuery } from '../../../graphql/__generated__/CategoriesPage.graphql';
 import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import {
@@ -13,6 +14,8 @@ import {
 import { CategoryUsecase } from '../../../usecases/CategoryUsecase';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { SelectMode } from '../../../viewModels/SelectMode';
+import { isDocumentVisible } from '../../helpers/isDocumentVisible';
+import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
 import { CategoryEditForm } from './CategoryEditForm';
@@ -20,7 +23,7 @@ import { CategoryList } from './CategoryList';
 import { CategoryStatusBar } from './CategoryStatusBar';
 
 export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading } = useCategoriesPageQuery({
+  const { data, loading, refetch } = useCategoriesPageQuery({
     fetchPolicy: 'cache-and-network',
   });
   const client = useApolloClient();
@@ -81,6 +84,12 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     },
     []
   );
+
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+    }
+  }, UPDATE_INTERVAL);
 
   if (!data) {
     return loading ? <LoadingIndicator /> : null;
