@@ -1,3 +1,9 @@
+query GetCheckpoint {
+  checkpoints {
+    ...RootCheckpoint
+  }
+}
+
 mutation CreateOneCheckpoint($data: CheckpointCreateInput!) {
   createOneCheckpoint(data: $data) {
     ...RootCheckpoint

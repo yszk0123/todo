@@ -5,6 +5,7 @@ import {
   CreateOneCheckpointMutationVariables,
   DeleteOneCheckpointDocument,
   DeleteOneCheckpointMutationVariables,
+  refetchGetCheckpointQuery,
   UpdateOneCheckpointDocument,
   UpdateOneCheckpointMutationVariables,
 } from '../graphql/__generated__/Checkpoint.graphql';
@@ -44,6 +45,7 @@ export class CheckpointUsecase {
           endAt: endAt ?? null,
         },
       },
+      refetchQueries: [refetchGetCheckpointQuery()],
     });
   }
 
@@ -83,6 +85,7 @@ export class CheckpointUsecase {
     await this.client.mutate<unknown, DeleteOneCheckpointMutationVariables>({
       mutation: DeleteOneCheckpointDocument,
       variables: { where: { id: checkpointId } },
+      refetchQueries: [refetchGetCheckpointQuery()],
     });
   }
 
@@ -100,6 +103,7 @@ export class CheckpointUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
+      refetchQueries: [refetchGetCheckpointQuery()],
     });
   }
 }

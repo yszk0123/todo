@@ -64,19 +64,13 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       userId,
       checkpointEditFormState
     );
-    await refetch();
-  }, [userId, checkpointUsecase, checkpointEditFormState, refetch]);
+  }, [userId, checkpointUsecase, checkpointEditFormState]);
 
   const handleDeleteOneCheckpoint = React.useCallback(async () => {
     await checkpointUsecase.deleteOneCheckpoint(
       checkpointEditFormState.selectedCheckpointIds
     );
-    await refetch();
-  }, [
-    checkpointUsecase,
-    checkpointEditFormState.selectedCheckpointIds,
-    refetch,
-  ]);
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
   const handleUpdateOneCheckpoint = React.useCallback(async () => {
     await checkpointUsecase.updateOneCheckpoint(checkpointEditFormState);
@@ -86,12 +80,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     await checkpointUsecase.archiveOneCheckpoint(
       checkpointEditFormState.selectedCheckpointIds
     );
-    await refetch();
-  }, [
-    checkpointUsecase,
-    checkpointEditFormState.selectedCheckpointIds,
-    refetch,
-  ]);
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
   const handleChangeName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

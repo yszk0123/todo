@@ -4,6 +4,17 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
+export type GetCheckpointQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type GetCheckpointQuery = (
+  { __typename?: 'Query' }
+  & { checkpoints: Array<(
+    { __typename?: 'Checkpoint' }
+    & RootCheckpointFragment
+  )> }
+);
+
 export type CreateOneCheckpointMutationVariables = Types.Exact<{
   data: Types.CheckpointCreateInput;
 }>;
@@ -56,6 +67,41 @@ export const RootCheckpointFragmentDoc = gql`
   endAt
 }
     `;
+export const GetCheckpointDocument = gql`
+    query GetCheckpoint {
+  checkpoints {
+    ...RootCheckpoint
+  }
+}
+    ${RootCheckpointFragmentDoc}`;
+
+/**
+ * __useGetCheckpointQuery__
+ *
+ * To run a query within a React component, call `useGetCheckpointQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCheckpointQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCheckpointQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCheckpointQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
+      }
+export function useGetCheckpointLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
+        }
+export type GetCheckpointQueryHookResult = ReturnType<typeof useGetCheckpointQuery>;
+export type GetCheckpointLazyQueryHookResult = ReturnType<typeof useGetCheckpointLazyQuery>;
+export type GetCheckpointQueryResult = ApolloReactCommon.QueryResult<GetCheckpointQuery, GetCheckpointQueryVariables>;
+export function refetchGetCheckpointQuery(variables?: GetCheckpointQueryVariables) {
+      return { query: GetCheckpointDocument, variables: variables }
+    }
 export const CreateOneCheckpointDocument = gql`
     mutation CreateOneCheckpoint($data: CheckpointCreateInput!) {
   createOneCheckpoint(data: $data) {
