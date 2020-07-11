@@ -1,4 +1,3 @@
-import { useApolloClient } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -19,7 +18,7 @@ import {
   TodoEditFormState,
   todoEditFormToggleTag,
 } from '../../../state/TodoEditFormState';
-import { TodoUsecase } from '../../../usecases/TodoUsecase';
+import { useTodoUsecase } from '../../../usecases/useTodoUsecase';
 import { DUMMY_CHECKPOINT } from '../../../viewModels/Checkpoint';
 import { ID } from '../../../viewModels/ID';
 import { SelectMode } from '../../../viewModels/SelectMode';
@@ -76,10 +75,9 @@ type Props = {
 };
 
 export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
-  const client = useApolloClient();
   const dispatch = useDispatch();
   const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
-  const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
+  const todoUsecase = useTodoUsecase();
 
   const {
     categories,
