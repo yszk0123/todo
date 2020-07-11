@@ -1,1 +1,1 @@
-export { CategoriesPage } from './CategoriesPage';
+export { CategoriesPage } from './containers/CategoriesPage';

@@ -1,1 +1,1 @@
-export { CheckpointsPage } from './CheckpointsPage';
+export { CheckpointsPage } from './containers/CheckpointsPage';

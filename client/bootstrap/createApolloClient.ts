@@ -5,7 +5,7 @@ import {
   PageIsSyncingDocument,
   PageIsSyncingQuery,
 } from '../graphql/__generated__/Page.graphql';
-import { isSSR } from '../views/helpers/isSSR';
+import { isSSR } from '../helpers/isSSR';
 
 export function createApolloClient() {
   const ssr = isSSR();

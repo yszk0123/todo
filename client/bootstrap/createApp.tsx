@@ -6,7 +6,7 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider as ReactReduxProvider } from 'react-redux';
 
-import { PageContainer } from '../views/pageContainers/PageContainer';
+import { PageContainer } from '../views/containers/PageContainer';
 import { theme } from '../views/theme/theme';
 import { createApolloClient } from './createApolloClient';
 import { createReduxStore } from './createReduxStore';
