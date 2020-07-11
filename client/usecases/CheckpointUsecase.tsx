@@ -14,7 +14,7 @@ import {
   checkpointEditFormReset,
   checkpointEditFormSet,
   CheckpointEditFormState,
-} from '../models/CheckpointEditFormState';
+} from '../models/CheckpointEditFormStateDucks';
 import { toDateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';
 

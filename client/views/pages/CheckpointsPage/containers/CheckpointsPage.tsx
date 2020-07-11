@@ -6,7 +6,7 @@ import {
   checkpointEditFormReset,
   checkpointEditFormSelectOne,
   checkpointEditFormSet,
-} from '../../../../models/CheckpointEditFormState';
+} from '../../../../models/CheckpointEditFormStateDucks';
 import { useCheckpointUsecase } from '../../../../usecases/useCheckpointUsecase';
 import { DateTime } from '../../../../viewModels/DateTime';
 import { EmptyProps } from '../../../../viewModels/EmptyProps';

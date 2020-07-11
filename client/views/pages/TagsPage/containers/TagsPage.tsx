@@ -9,7 +9,7 @@ import {
   tagEditFormSelectOne,
   tagEditFormSet,
   tagEditFormToggleCategory,
-} from '../../../../models/TagEditFormState';
+} from '../../../../models/TagEditFormDucks';
 import { useTagUsecase } from '../../../../usecases/useTagUsecase';
 import { EmptyProps } from '../../../../viewModels/EmptyProps';
 import { LoadingIndicator } from '../../../components/LoadingIndicator';

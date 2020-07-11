@@ -6,7 +6,7 @@ import {
   categoryEditFormReset,
   categoryEditFormSelectOne,
   categoryEditFormSet,
-} from '../../../../models/CategoryEditFormState';
+} from '../../../../models/CategoryEditFormDucks';
 import { useCategoryUsecase } from '../../../../usecases/useCategoryUsecase';
 import { EmptyProps } from '../../../../viewModels/EmptyProps';
 import { LoadingIndicator } from '../../../components/LoadingIndicator';

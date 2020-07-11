@@ -20,7 +20,7 @@ import {
   todoEditFormReset,
   todoEditFormSet,
   TodoEditFormState,
-} from '../models/TodoEditFormState';
+} from '../models/TodoEditFormDucks';
 import { DUMMY_CHECKPOINT } from '../viewModels/Checkpoint';
 import { toDateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';

@@ -14,7 +14,7 @@ import {
   categoryEditFormReset,
   categoryEditFormSet,
   CategoryEditFormState,
-} from '../models/CategoryEditFormState';
+} from '../models/CategoryEditFormDucks';
 import { ID } from '../viewModels/ID';
 
 export class CategoryUsecase {

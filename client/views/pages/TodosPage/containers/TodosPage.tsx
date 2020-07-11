@@ -12,7 +12,7 @@ import {
   todoEditFormSelectOne,
   todoEditFormSet,
   todoEditFormToggleTag,
-} from '../../../../models/TodoEditFormState';
+} from '../../../../models/TodoEditFormDucks';
 import { useTodoUsecase } from '../../../../usecases/useTodoUsecase';
 import { DUMMY_CHECKPOINT } from '../../../../viewModels/Checkpoint';
 import { ID } from '../../../../viewModels/ID';

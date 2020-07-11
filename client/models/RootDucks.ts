@@ -3,13 +3,13 @@ import { combineReducers } from 'redux';
 import {
   categoryEditFormReducer,
   CategoryEditFormState,
-} from './CategoryEditFormState';
+} from './CategoryEditFormDucks';
 import {
   checkpointEditFormReducer,
   CheckpointEditFormState,
-} from './CheckpointEditFormState';
-import { tagEditFormReducer, TagEditFormState } from './TagEditFormState';
-import { todoEditFormReducer, TodoEditFormState } from './TodoEditFormState';
+} from './CheckpointEditFormStateDucks';
+import { tagEditFormReducer, TagEditFormState } from './TagEditFormDucks';
+import { todoEditFormReducer, TodoEditFormState } from './TodoEditFormDucks';
 
 export type RootState = {
   categoryEditForm: CategoryEditFormState;
