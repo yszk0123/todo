@@ -2,12 +2,12 @@ import * as Types from './baseTypes';
 
 import { RootTodoFragment } from './Todo.graphql';
 import { CategoryTagFragment } from '../fragments/__generated__/TodoTag.graphql';
-import { RootCheckpointFragment } from '../fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from './Checkpoint.graphql';
 import { RootCategoryFragment } from '../fragments/__generated__/RootCategory.graphql';
 import gql from 'graphql-tag';
 import { RootTodoFragmentDoc } from './Todo.graphql';
 import { CategoryTagFragmentDoc } from '../fragments/__generated__/TodoTag.graphql';
-import { RootCheckpointFragmentDoc } from '../fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragmentDoc } from './Checkpoint.graphql';
 import { RootCategoryFragmentDoc } from '../fragments/__generated__/RootCategory.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';

@@ -1,7 +1,7 @@
 import { first } from '../components/helpers/first';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
+import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
-import { RootCheckpointFragment } from '../graphql/fragments/__generated__/RootCheckpoint.graphql';
 import { CategoryTagFragment } from '../graphql/fragments/__generated__/TodoTag.graphql';
 import { ID } from '../viewModels/ID';
 

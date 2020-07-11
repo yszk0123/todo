@@ -3,7 +3,7 @@ import React from 'react';
 
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { useCheckpointsPageQuery } from '../../../graphql/__generated__/CheckpointsPage.graphql';
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
 import {
   checkpointEditFormInitialState,
   checkpointEditFormReducer,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
 import { ListItem } from '../../layout/List';
 import { RelativeDateTimeText } from '../../layout/RelativeDateTimeText';
 

@@ -1,4 +1,4 @@
-import { RootCheckpointFragment } from '../../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../../graphql/__generated__/Checkpoint.graphql';
 
 export function getDisplayNameFromCheckpoint(
   checkpoint: RootCheckpointFragment

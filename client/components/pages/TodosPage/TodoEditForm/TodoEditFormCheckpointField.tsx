@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootCheckpointFragment } from '../../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../../graphql/__generated__/Checkpoint.graphql';
 import { Badge } from '../../../layout/Badge';
 import { EditFormSelectField } from '../../../layout/EditForm';
 import { getDisplayNameFromCheckpoint } from './getDisplayNameFromCheckpoint';

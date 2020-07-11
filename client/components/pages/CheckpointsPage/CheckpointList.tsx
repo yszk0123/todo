@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
 import { ID } from '../../../viewModels/ID';
 import { List } from '../../layout/List';
 import { CheckpointListItem } from './CheckpointListItem';

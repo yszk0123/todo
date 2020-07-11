@@ -6,24 +6,3 @@ query CheckpointsPage {
     ...RootCheckpoint
   }
 }
-
-mutation CreateOneCheckpoint($data: CheckpointCreateInput!) {
-  createOneCheckpoint(data: $data) {
-    ...RootCheckpoint
-  }
-}
-
-mutation UpdateOneCheckpoint(
-  $data: CheckpointUpdateInput!
-  $where: CheckpointWhereUniqueInput!
-) {
-  updateOneCheckpoint(data: $data, where: $where) {
-    ...RootCheckpoint
-  }
-}
-
-mutation DeleteOneCheckpoint($where: CheckpointWhereUniqueInput!) {
-  deleteOneCheckpoint(where: $where) {
-    id
-  }
-}

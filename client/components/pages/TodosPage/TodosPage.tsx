@@ -6,7 +6,7 @@ import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { useTodosPageQuery } from '../../../graphql/__generated__/TodosPage.graphql';
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
 import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/TodoTag.graphql';
 import {
   todoEditFormInitialState,
