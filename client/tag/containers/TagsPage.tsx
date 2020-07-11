@@ -52,6 +52,10 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     await tagUsecase.deleteOneTag(tagEditFormState.selectedTagIds);
   }, [tagUsecase, tagEditFormState.selectedTagIds]);
 
+  const handleArchiveOneTag = React.useCallback(async () => {
+    await tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
+  }, [tagUsecase, tagEditFormState.selectedTagIds]);
+
   const handleUpdateOneTag = React.useCallback(async () => {
     await tagUsecase.updateOneTag(tagEditFormState);
   }, [tagUsecase, tagEditFormState]);
@@ -103,6 +107,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         isSelected={isSelected}
         name={name}
         tagCategories={tagEditFormState.tagCategories}
+        onArchiveOneTag={handleArchiveOneTag}
         onChangeColor={handleChangeColor}
         onChangeName={handleChangeName}
         onCreateOneTag={handleCreateOneTag}
