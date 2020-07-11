@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/TodoTag.graphql';
+import { TodoTagFragment } from '../../../../graphql/__generated__/Todo.graphql';
 import { Badge } from '../../../layout/Badge';
 import { EditFormChecklistField } from '../../../layout/EditForm';
 
@@ -9,9 +9,9 @@ export function TodoEditFormTagsField({
   onToggleTag,
   tags,
 }: {
-  categoryTags: CategoryTagFragment[];
-  onToggleTag: (tag: CategoryTagFragment) => void;
-  tags: CategoryTagFragment[] | null;
+  categoryTags: TodoTagFragment[];
+  onToggleTag: (tag: TodoTagFragment) => void;
+  tags: TodoTagFragment[] | null;
 }): JSX.Element | null {
   if (categoryTags.length === 0) {
     return null;

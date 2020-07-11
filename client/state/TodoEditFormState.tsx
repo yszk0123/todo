@@ -1,15 +1,17 @@
 import { first } from '../components/helpers/first';
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
-import { CategoryTagFragment } from '../graphql/fragments/__generated__/TodoTag.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../graphql/__generated__/Todo.graphql';
 import { ID } from '../viewModels/ID';
 
 export type TodoEditFormState = {
   checkpoint: RootCheckpointFragment | null;
   selectedTodoIds: ID[];
   status: TodoStatus | null;
-  tags: CategoryTagFragment[] | null;
+  tags: TodoTagFragment[] | null;
   text: string;
 };
 
@@ -43,7 +45,7 @@ export type TodoEditFormAction =
       type: TodoEditFormActionType.SELECT_MANY;
     }
   | {
-      payload: { tag: CategoryTagFragment };
+      payload: { tag: TodoTagFragment };
       type: TodoEditFormActionType.TOGGLE_TAG;
     };
 
@@ -72,7 +74,7 @@ export function todoEditFormSelectMany(
 }
 
 export function todoEditFormToggleTag(
-  tag: CategoryTagFragment
+  tag: TodoTagFragment
 ): TodoEditFormAction {
   return {
     type: TodoEditFormActionType.TOGGLE_TAG,

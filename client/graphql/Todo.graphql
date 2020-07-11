@@ -40,7 +40,7 @@ fragment RootTodo on Todo {
   text
   categoryId
   tags {
-    ...CategoryTag
+    ...TodoTag
   }
   status
   archivedAt
@@ -49,4 +49,10 @@ fragment RootTodo on Todo {
     name
     endAt
   }
+}
+
+fragment TodoTag on Tag {
+  id
+  name
+  color
 }

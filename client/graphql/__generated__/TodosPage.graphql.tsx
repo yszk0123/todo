@@ -1,12 +1,10 @@
 import * as Types from './baseTypes';
 
-import { RootTodoFragment } from './Todo.graphql';
-import { CategoryTagFragment } from '../fragments/__generated__/TodoTag.graphql';
+import { RootTodoFragment, TodoTagFragment } from './Todo.graphql';
 import { RootCheckpointFragment } from './Checkpoint.graphql';
 import { RootCategoryFragment } from './Category.graphql';
 import gql from 'graphql-tag';
-import { RootTodoFragmentDoc } from './Todo.graphql';
-import { CategoryTagFragmentDoc } from '../fragments/__generated__/TodoTag.graphql';
+import { RootTodoFragmentDoc, TodoTagFragmentDoc } from './Todo.graphql';
 import { RootCheckpointFragmentDoc } from './Checkpoint.graphql';
 import { RootCategoryFragmentDoc } from './Category.graphql';
 import * as ApolloReactCommon from '@apollo/client';
@@ -31,7 +29,7 @@ export type TodosPageQuery = (
     & RootTodoFragment
   )>, tags: Array<(
     { __typename?: 'Tag' }
-    & CategoryTagFragment
+    & TodoTagFragment
   )>, checkpoints: Array<(
     { __typename?: 'Checkpoint' }
     & RootCheckpointFragment
@@ -55,7 +53,7 @@ export const TodosPageDocument = gql`
     ...RootTodo
   }
   tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
-    ...CategoryTag
+    ...TodoTag
   }
   checkpoints {
     ...RootCheckpoint
@@ -65,7 +63,7 @@ export const TodosPageDocument = gql`
   }
 }
     ${RootTodoFragmentDoc}
-${CategoryTagFragmentDoc}
+${TodoTagFragmentDoc}
 ${RootCheckpointFragmentDoc}
 ${RootCategoryFragmentDoc}`;
 
