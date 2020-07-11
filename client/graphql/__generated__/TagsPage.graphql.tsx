@@ -1,8 +1,8 @@
 import * as Types from './baseTypes';
 
-import { TagsTagFragment } from './Tag.graphql';
+import { RootTagFragment } from './Tag.graphql';
 import gql from 'graphql-tag';
-import { TagsTagFragmentDoc } from './Tag.graphql';
+import { RootTagFragmentDoc } from './Tag.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
@@ -16,7 +16,7 @@ export type TagsPageQuery = (
     & Pick<Types.User, 'id'>
   )>, tags: Array<(
     { __typename?: 'Tag' }
-    & TagsTagFragment
+    & RootTagFragment
   )>, categories: Array<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
@@ -30,14 +30,14 @@ export const TagsPageDocument = gql`
     id
   }
   tags {
-    ...TagsTag
+    ...RootTag
   }
   categories {
     id
     name
   }
 }
-    ${TagsTagFragmentDoc}`;
+    ${RootTagFragmentDoc}`;
 
 /**
  * __useTagsPageQuery__

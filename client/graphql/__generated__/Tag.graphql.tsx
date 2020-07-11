@@ -13,7 +13,7 @@ export type CreateOneTagMutation = (
   { __typename?: 'Mutation' }
   & { createOneTag: (
     { __typename?: 'Tag' }
-    & TagsTagFragment
+    & RootTagFragment
   ) }
 );
 
@@ -27,7 +27,7 @@ export type UpdateOneTagMutation = (
   { __typename?: 'Mutation' }
   & { updateOneTag?: Types.Maybe<(
     { __typename?: 'Tag' }
-    & TagsTagFragment
+    & RootTagFragment
   )> }
 );
 
@@ -44,15 +44,6 @@ export type DeleteOneTagMutation = (
   )> }
 );
 
-export type TagsTagFragment = (
-  { __typename?: 'Tag' }
-  & Pick<Types.Tag, 'id' | 'name' | 'color'>
-  & { categories: Array<(
-    { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
-  )> }
-);
-
 export type RootTagFragment = (
   { __typename?: 'Tag' }
   & Pick<Types.Tag, 'id' | 'name' | 'color'>
@@ -62,17 +53,6 @@ export type RootTagFragment = (
   )> }
 );
 
-export const TagsTagFragmentDoc = gql`
-    fragment TagsTag on Tag {
-  id
-  name
-  color
-  categories {
-    id
-    name
-  }
-}
-    `;
 export const RootTagFragmentDoc = gql`
     fragment RootTag on Tag {
   id
@@ -87,10 +67,10 @@ export const RootTagFragmentDoc = gql`
 export const CreateOneTagDocument = gql`
     mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {
-    ...TagsTag
+    ...RootTag
   }
 }
-    ${TagsTagFragmentDoc}`;
+    ${RootTagFragmentDoc}`;
 export type CreateOneTagMutationFn = ApolloReactCommon.MutationFunction<CreateOneTagMutation, CreateOneTagMutationVariables>;
 
 /**
@@ -119,10 +99,10 @@ export type CreateOneTagMutationOptions = ApolloReactCommon.BaseMutationOptions<
 export const UpdateOneTagDocument = gql`
     mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
-    ...TagsTag
+    ...RootTag
   }
 }
-    ${TagsTagFragmentDoc}`;
+    ${RootTagFragmentDoc}`;
 export type UpdateOneTagMutationFn = ApolloReactCommon.MutationFunction<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
 
 /**

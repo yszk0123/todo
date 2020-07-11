@@ -1,28 +1,18 @@
 mutation CreateOneTag($data: TagCreateInput!) {
   createOneTag(data: $data) {
-    ...TagsTag
+    ...RootTag
   }
 }
 
 mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
-    ...TagsTag
+    ...RootTag
   }
 }
 
 mutation DeleteOneTag($where: TagWhereUniqueInput!) {
   deleteOneTag(where: $where) {
     id
-  }
-}
-
-fragment TagsTag on Tag {
-  id
-  name
-  color
-  categories {
-    id
-    name
   }
 }
 
