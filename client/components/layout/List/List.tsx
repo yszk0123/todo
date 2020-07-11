@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-import { stopPropagation } from '../../../handlers/stopPropagation';
+import { stopPropagation } from '../../helpers/stopPropagation';
 
 type Props = {
   leftElement?: JSX.Element | null;
