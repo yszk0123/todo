@@ -11,11 +11,11 @@ export type CheckpointEditFormState = {
 };
 
 enum CheckpointEditFormActionType {
-  RESET = 'RESET',
-  SELECT = 'SELECT',
-  SELECT_MANY = 'SELECT_MANY',
-  SELECT_ONE = 'SELECT_ONE',
-  SET = 'SET',
+  RESET = 'checkpointEditForm/RESET',
+  SELECT = 'checkpointEditForm/SELECT',
+  SELECT_MANY = 'checkpointEditForm/SELECT_MANY',
+  SELECT_ONE = 'checkpointEditForm/SELECT_ONE',
+  SET = 'checkpointEditForm/SET',
 }
 
 export type CheckpointEditFormAction =

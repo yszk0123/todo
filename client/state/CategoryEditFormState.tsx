@@ -9,11 +9,11 @@ export type CategoryEditFormState = {
 };
 
 enum CategoryEditFormActionType {
-  RESET = 'RESET',
-  SELECT = 'SELECT',
-  SELECT_MANY = 'SELECT_MANY',
-  SELECT_ONE = 'SELECT_ONE',
-  SET = 'SET',
+  RESET = 'categoryEditForm/RESET',
+  SELECT = 'categoryEditForm/SELECT',
+  SELECT_MANY = 'categoryEditForm/SELECT_MANY',
+  SELECT_ONE = 'categoryEditForm/SELECT_ONE',
+  SET = 'categoryEditForm/SET',
 }
 
 export type CategoryEditFormAction =
