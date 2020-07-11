@@ -1,5 +1,5 @@
-import { TodoStatus } from '../graphql/__generated__/baseTypes';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import { TodoStatus } from '../shared/graphql/__generated__/baseTypes';
+import { RootTodoFragment } from '../todo/graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
 type Group = {

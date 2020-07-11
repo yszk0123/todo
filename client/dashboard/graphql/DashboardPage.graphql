@@ -1,0 +1,12 @@
+query DashboardPage {
+  me {
+    id
+    name
+  }
+  stats {
+    categoryCount
+    checkpointCount
+    tagCount
+    todoCount
+  }
+}

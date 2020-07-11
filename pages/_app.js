@@ -1,6 +1,6 @@
 import 'normalize.css';
 
-import { createApp } from '../client/components/App';
+import { createApp } from '../client/bootstrap';
 
 const App = createApp();
 

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import { CheckpointsPage } from '../client/components/pages/CheckpointsPage';
+import { CheckpointsPage } from '../client/checkpoint';
 
 export default () => {
   return (
