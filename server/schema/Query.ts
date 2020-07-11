@@ -1,5 +1,7 @@
 import { schema } from 'nexus';
 
+const TODO_LIMIT = 100;
+
 schema.queryType({
   definition(t) {
     t.field('me', {
@@ -89,6 +91,7 @@ schema.queryType({
             // FIXME: Set from client
             archivedAt: { equals: null },
           },
+          first: TODO_LIMIT,
         };
         return originalResolve(root, newArgs, ctx, info);
       },
