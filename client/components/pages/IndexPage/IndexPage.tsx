@@ -1,25 +1,24 @@
 // FIXME: Use layout components instead of using rebass directly
 import React from 'react';
 
-import { useIndexPageQuery } from '../../../graphql/__generated__/IndexPage.graphql';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { List, ListItem, ListText } from '../../layout/List';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
+import { useIndexPageState } from './useIndexPageState';
 
 export const IndexPage: React.FunctionComponent<EmptyProps> = () => {
-  const { data, loading } = useIndexPageQuery({
-    fetchPolicy: 'cache-and-network',
-  });
+  const {
+    categoryCount,
+    checkpointCount,
+    isLoading,
+    tagCount,
+    todoCount,
+  } = useIndexPageState();
 
-  if (!data) {
-    return loading ? <LoadingIndicator /> : null;
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
-
-  const categoryCount = data.stats?.categoryCount ?? null;
-  const tagCount = data.stats?.tagCount ?? null;
-  const todoCount = data.stats?.todoCount ?? null;
-  const checkpointCount = data.stats?.checkpointCount ?? null;
 
   return (
     <PageContent>
