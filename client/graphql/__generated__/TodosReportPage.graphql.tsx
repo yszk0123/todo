@@ -1,10 +1,10 @@
 import * as Types from './baseTypes';
 
-import { RootTodoForReportFragment } from '../fragments/__generated__/RootTodoForReport.graphql';
-import { RootTagForReportFragment } from '../fragments/__generated__/RootTagForReport.graphql';
+import { RootTodoForReportFragment } from './TodoForReport.graphql';
+import { RootTagForReportFragment } from './TagForReport.graphql';
 import gql from 'graphql-tag';
-import { RootTodoForReportFragmentDoc } from '../fragments/__generated__/RootTodoForReport.graphql';
-import { RootTagForReportFragmentDoc } from '../fragments/__generated__/RootTagForReport.graphql';
+import { RootTodoForReportFragmentDoc } from './TodoForReport.graphql';
+import { RootTagForReportFragmentDoc } from './TagForReport.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 

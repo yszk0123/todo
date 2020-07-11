@@ -1,8 +1,8 @@
-import * as Types from '../../__generated__/baseTypes';
+import * as Types from './baseTypes';
 
-import { RootTagForReportFragment } from './RootTagForReport.graphql';
+import { RootTagForReportFragment } from './TagForReport.graphql';
 import gql from 'graphql-tag';
-import { RootTagForReportFragmentDoc } from './RootTagForReport.graphql';
+import { RootTagForReportFragmentDoc } from './TagForReport.graphql';
 
 export type RootTodoForReportFragment = (
   { __typename?: 'Todo' }
