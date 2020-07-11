@@ -206,6 +206,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         category={category}
         count={todos.length}
         isSyncing={isSyncing}
+        onClickCategory={handleSelectSearchCategory}
       />
       <TodoList
         isCategoryNameShown={isCategoryNameShown}
@@ -233,14 +234,12 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onUpdateOneTodo={handleUpdateTodosById}
       />
       <TodoSearchForm
-        categories={categories}
         categoryTags={categoryTags}
         checkpoints={checkpointsWithDummy}
         todoSearchFormValue={todoSearchFormDraft}
         onChangeText={handleChangeSearchText}
         onCommit={handleSearchCommit}
         onReset={handleSearchReset}
-        onSelectCategory={handleSelectSearchCategory}
         onSelectCheckpoint={handleSelectSearchCheckpoint}
         onSelectStatus={handleSelectSearchStatus}
         onToggleTag={handleToggleSearchTag}

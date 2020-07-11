@@ -8,6 +8,7 @@ export enum StatusBarItemType {
   TEXT,
   FLEX,
   LINK,
+  BUTTON,
 }
 
 export type StatusBarItem =
@@ -18,6 +19,10 @@ export type StatusBarItem =
   | {
       content: React.ReactNode;
       type: StatusBarItemType.FLEX;
+    }
+  | {
+      content: { label: string; onClick: () => void };
+      type: StatusBarItemType.BUTTON;
     }
   | {
       content: { as: string; href: string; text: string };
@@ -46,6 +51,13 @@ const StatusBarItemView: React.FunctionComponent<{
             href={item.content.href}
             text={item.content.text}
           />
+        </Box>
+      );
+    }
+    case StatusBarItemType.BUTTON: {
+      return (
+        <Box mx={2} onClick={item.content.onClick}>
+          <Text>{item.content.label}</Text>
         </Box>
       );
     }
