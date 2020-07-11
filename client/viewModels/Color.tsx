@@ -1,5 +1,5 @@
-import { Color } from '../graphql/__generated__/baseTypes';
-import { defaultTagColor } from '../views/theme/theme';
+import { Color } from '../shared/graphql/__generated__/baseTypes';
+import { defaultTagColor } from '../shared/theme/theme';
 
 export { Color };
 

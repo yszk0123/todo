@@ -1,21 +1,21 @@
 schema:
   - ./server/schema.graphql
   - ./client/schema.graphql
-documents: ./client/graphql/**/*.graphql
+documents: ./client/*/graphql/*.graphql
 generates:
   apollo.graphql:
     plugins:
       - schema-ast
     config:
       includeDirectives: true
-  client/graphql/__generated__/introspectionResult.ts:
+  client/shared/graphql/__generated__/introspectionResult.ts:
     plugins:
       - fragment-matcher
     config:
       useExplicitTyping: true
-  client/graphql/__generated__/baseTypes.ts:
+  client/shared/graphql/__generated__/baseTypes.ts:
     - typescript
-  client/graphql/:
+  client/shared/graphql/:
     preset: near-operation-file
     presetConfig:
       extension: .graphql.tsx

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { TodosPage } from '../../../client/views/pages/TodosPage';
+import { TodosPage } from '../../../client/todo';
 
 export default () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
-import introspectionResult from '../graphql/__generated__/introspectionResult';
+import introspectionResult from '../shared/graphql/__generated__/introspectionResult';
 import {
   PageIsSyncingDocument,
   PageIsSyncingQuery,
-} from '../graphql/__generated__/Page.graphql';
-import { isSSR } from '../helpers/isSSR';
+} from '../shared/graphql/__generated__/Page.graphql';
+import { isSSR } from '../shared/helpers/isSSR';
 
 export function createApolloClient() {
   const ssr = isSSR();

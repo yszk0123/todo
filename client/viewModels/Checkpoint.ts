@@ -1,4 +1,4 @@
-import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
+import { RootCheckpointFragment } from '../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { toDateTime } from './DateTime';
 
 // FIXME

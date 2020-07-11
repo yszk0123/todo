@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import { TagsPage } from '../client/views/pages/TagsPage';
+import { TagsPage } from '../client/tag';
 
 export default () => {
   return (
