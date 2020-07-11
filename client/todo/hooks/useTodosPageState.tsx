@@ -67,7 +67,7 @@ export function useTodosPageState() {
     category: current?.category ?? null,
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
-    isCategoryNameShown: current?.category?.id === null,
+    isCategoryNameShown: current?.category?.id == null,
     isLoading: !data && loading,
     isSyncing: pageData?.page?.isSyncing ?? false,
     now,
