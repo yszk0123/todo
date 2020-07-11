@@ -4,7 +4,7 @@ import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 
-export type TodoSearchFormState = {
+export type TodoSearchFormValue = {
   category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
   status: TodoStatus | null;
@@ -12,7 +12,13 @@ export type TodoSearchFormState = {
   text: string;
 };
 
+export type TodoSearchFormState = {
+  current: TodoSearchFormValue | null;
+  draft: TodoSearchFormValue;
+};
+
 enum TodoSearchFormActionType {
+  COMMIT = 'todoSearchForm/COMMIT',
   RESET = 'todoSearchForm/RESET',
   SET = 'todoSearchForm/SET',
   TOGGLE_TAG = 'todoSearchForm/TOGGLE_TAG',
@@ -23,8 +29,11 @@ export type TodoSearchFormAction =
       type: TodoSearchFormActionType.RESET;
     }
   | {
-      payload: { state: Partial<TodoSearchFormState> };
+      payload: { draft: Partial<TodoSearchFormValue> };
       type: TodoSearchFormActionType.SET;
+    }
+  | {
+      type: TodoSearchFormActionType.COMMIT;
     }
   | {
       payload: { tag: TodoTagFragment };
@@ -47,20 +56,29 @@ export function todoSearchFormToggleTag(
 }
 
 export function todoSearchFormSet(
-  state: Partial<TodoSearchFormState>
+  draft: Partial<TodoSearchFormValue>
 ): TodoSearchFormAction {
   return {
     type: TodoSearchFormActionType.SET,
-    payload: { state },
+    payload: { draft },
+  };
+}
+
+export function todoSearchFormCommit(): TodoSearchFormAction {
+  return {
+    type: TodoSearchFormActionType.COMMIT,
   };
 }
 
 export const todoSearchFormInitialState: TodoSearchFormState = {
-  category: null,
-  checkpoint: null,
-  status: null,
-  tags: null,
-  text: '',
+  current: null,
+  draft: {
+    category: null,
+    checkpoint: null,
+    status: null,
+    tags: null,
+    text: '',
+  },
 };
 
 export function todoSearchFormReducer(
@@ -74,16 +92,28 @@ export function todoSearchFormReducer(
     case TodoSearchFormActionType.SET: {
       return {
         ...state,
-        ...action.payload.state,
+        draft: {
+          ...state.draft,
+          ...action.payload.draft,
+        },
+      };
+    }
+    case TodoSearchFormActionType.COMMIT: {
+      return {
+        ...state,
+        current: state.draft,
       };
     }
     case TodoSearchFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
-      const oldTags = state.tags ?? [];
+      const oldTags = state.draft.tags ?? [];
       const newTags = toggleWith(oldTags, tag, (t) => t.id);
       return {
         ...state,
-        tags: newTags,
+        draft: {
+          ...state.draft,
+          tags: newTags,
+        },
       };
     }
     default: {

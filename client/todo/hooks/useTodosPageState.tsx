@@ -7,16 +7,29 @@ import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
 import { ID } from '../../viewModels/ID';
 import { SelectMode } from '../../viewModels/SelectMode';
+import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   TodosPageQueryVariables,
   useTodosPageQuery,
 } from '../graphql/__generated__/TodosPage.graphql';
 
-function getQueryVariables(categoryId: ID | null): TodosPageQueryVariables {
+function getQueryVariables(
+  categoryId: ID | null,
+  todoSearchFormValue: TodoSearchFormValue | null
+): TodosPageQueryVariables {
   return {
     todoInput: {
       categoryId: categoryId ? { equals: categoryId } : undefined,
       archivedAt: { equals: null },
+      status: todoSearchFormValue?.status ?? undefined,
+      tags: todoSearchFormValue?.tags
+        ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
+        : undefined,
+      text: todoSearchFormValue?.text
+        ? {
+            contains: todoSearchFormValue.text,
+          }
+        : undefined,
     },
     tagInput: {
       categories: categoryId
@@ -28,9 +41,12 @@ function getQueryVariables(categoryId: ID | null): TodosPageQueryVariables {
 }
 
 export function useTodosPageState(categoryId: ID | null) {
-  const variables = React.useMemo(() => getQueryVariables(categoryId), [
-    categoryId,
-  ]);
+  const todoSearchFormState = useTypedSelector((state) => state.todoSearchForm);
+  const current = todoSearchFormState.current;
+  const variables = React.useMemo(
+    () => getQueryVariables(categoryId, current),
+    [categoryId, current]
+  );
   const { data, loading, refetch } = useTodosPageQuery({
     variables,
     fetchPolicy: 'cache-and-network',
@@ -61,6 +77,8 @@ export function useTodosPageState(categoryId: ID | null) {
     todoEditFormState,
     todos: data?.todos ?? [],
     userId: data?.me?.id ?? null,
+    todoSearchFormCurrent: todoSearchFormState.current,
+    todoSearchFormDraft: todoSearchFormState.draft,
     selectMode:
       count === 0
         ? SelectMode.NONE

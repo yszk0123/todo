@@ -16,12 +16,17 @@ import {
   todoEditFormReducer,
   TodoEditFormState,
 } from '../../todo/ducks/TodoEditFormDucks';
+import {
+  todoSearchFormReducer,
+  TodoSearchFormState,
+} from '../../todo/ducks/TodoSearchFormDucks';
 
 export type RootState = {
   categoryEditForm: CategoryEditFormState;
   checkpointEditForm: CheckpointEditFormState;
   tagEditForm: TagEditFormState;
   todoEditForm: TodoEditFormState;
+  todoSearchForm: TodoSearchFormState;
 };
 
 export const rootReducer = combineReducers<RootState>({
@@ -29,4 +34,5 @@ export const rootReducer = combineReducers<RootState>({
   categoryEditForm: categoryEditFormReducer,
   tagEditForm: tagEditFormReducer,
   todoEditForm: todoEditFormReducer,
+  todoSearchForm: todoSearchFormReducer,
 });
