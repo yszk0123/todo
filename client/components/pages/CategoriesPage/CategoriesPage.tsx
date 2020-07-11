@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
 import { useCategoriesPageQuery } from '../../../graphql/__generated__/CategoriesPage.graphql';
-import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import {
   categoryEditFormInitialState,
   categoryEditFormReducer,

@@ -1,0 +1,25 @@
+mutation CreateOneCategory($data: CategoryCreateInput!) {
+  createOneCategory(data: $data) {
+    ...RootCategory
+  }
+}
+
+mutation UpdateOneCategory(
+  $data: CategoryUpdateInput!
+  $where: CategoryWhereUniqueInput!
+) {
+  updateOneCategory(data: $data, where: $where) {
+    ...RootCategory
+  }
+}
+
+mutation DeleteOneCategory($where: CategoryWhereUniqueInput!) {
+  deleteOneCategory(where: $where) {
+    id
+  }
+}
+
+fragment RootCategory on Category {
+  id
+  name
+}

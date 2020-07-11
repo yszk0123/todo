@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Color } from '../../../graphql/__generated__/baseTypes';
-import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { identity } from '../../helpers/identity';
 import { ColorBox } from '../../layout/ColorBox';
 import {

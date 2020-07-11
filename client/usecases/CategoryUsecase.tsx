@@ -7,7 +7,7 @@ import {
   DeleteOneCategoryMutationVariables,
   UpdateOneCategoryDocument,
   UpdateOneCategoryMutationVariables,
-} from '../graphql/__generated__/CategoriesPage.graphql';
+} from '../graphql/__generated__/Category.graphql';
 import {
   CategoryEditFormAction,
   categoryEditFormReset,

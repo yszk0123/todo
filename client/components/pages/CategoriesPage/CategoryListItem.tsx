@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { ListItem } from '../../layout/List';
 import { GoToTodoLink } from './GoToTodoLink';
 

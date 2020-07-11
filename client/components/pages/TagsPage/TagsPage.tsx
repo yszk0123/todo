@@ -4,7 +4,7 @@ import React from 'react';
 import { Color } from '../../../graphql/__generated__/baseTypes';
 import { RootTagFragment } from '../../../graphql/__generated__/Tag.graphql';
 import { useTagsPageQuery } from '../../../graphql/__generated__/TagsPage.graphql';
-import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import {
   tagEditFormInitialState,
   tagEditFormReducer,
