@@ -1,6 +1,13 @@
-schema: api.graphql
+schema:
+  - ./server/schema.graphql
+  - ./client/schema.graphql
 documents: ./client/graphql/**/*.graphql
 generates:
+  apollo.graphql:
+    plugins:
+      - schema-ast
+    config:
+      includeDirectives: true
   client/graphql/__generated__/introspectionResult.ts:
     plugins:
       - fragment-matcher

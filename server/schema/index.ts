@@ -1,4 +1,5 @@
 import './context';
+import './settings';
 import './use';
 import './Query';
 import './Mutation';

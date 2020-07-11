@@ -18,7 +18,10 @@ export type TodosPageQueryVariables = Types.Exact<{
 
 export type TodosPageQuery = (
   { __typename?: 'Query' }
-  & { me?: Types.Maybe<(
+  & { page?: Types.Maybe<(
+    { __typename?: 'Page' }
+    & Pick<Types.Page, 'isSyncing'>
+  )>, me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
   )>, category?: Types.Maybe<(
@@ -42,6 +45,9 @@ export type TodosPageQuery = (
 
 export const TodosPageDocument = gql`
     query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
+  page @client {
+    isSyncing @client
+  }
   me {
     id
   }

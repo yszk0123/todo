@@ -652,12 +652,18 @@ export enum OrderByArg {
   Desc = 'desc'
 }
 
+export type Page = {
+  __typename?: 'Page';
+  isSyncing?: Maybe<Scalars['Boolean']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   categories: Array<Category>;
   category?: Maybe<Category>;
   checkpoints: Array<Checkpoint>;
   me?: Maybe<User>;
+  page?: Maybe<Page>;
   stats?: Maybe<Stats>;
   tag?: Maybe<Tag>;
   tags: Array<Tag>;

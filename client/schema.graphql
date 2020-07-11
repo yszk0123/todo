@@ -1,0 +1,7 @@
+type Query {
+  page: Page
+}
+
+type Page {
+  isSyncing: Boolean
+}

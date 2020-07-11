@@ -1,4 +1,8 @@
 query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
+  page @client {
+    isSyncing @client
+  }
+
   me {
     id
   }

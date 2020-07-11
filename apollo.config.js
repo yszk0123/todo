@@ -12,7 +12,7 @@ module.exports = {
     addTypename: true,
     service: {
       name: 'todo',
-      localSchemaFile: './api.graphql',
+      localSchemaFile: './apollo.graphql',
     },
   },
 };
