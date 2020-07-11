@@ -1,0 +1,9 @@
+query GetPage {
+  page @client {
+    ...RootPage
+  }
+}
+
+fragment RootPage on Page {
+  isSyncing
+}

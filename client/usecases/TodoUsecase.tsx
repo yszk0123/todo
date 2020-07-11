@@ -2,6 +2,10 @@ import { ApolloClient } from '@apollo/client';
 
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import {
+  GetPageDocument,
+  GetPageQuery,
+} from '../graphql/__generated__/Page.graphql';
+import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
@@ -83,6 +87,8 @@ export class TodoUsecase {
 
     this.dispatch(todoEditFormSet({ selectedTodoIds: [] }));
 
+    this.writeIsSyncing(true);
+
     await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
       mutation: UpdateTodosByIdDocument,
       variables: {
@@ -100,6 +106,8 @@ export class TodoUsecase {
         },
       },
     });
+
+    this.writeIsSyncing(false);
   }
 
   async deleteTodosById(categoryId: ID, todoIds: ID[]) {
@@ -138,6 +146,13 @@ export class TodoUsecase {
         },
       },
       refetchQueries: [refetchGetTodosQuery({ categoryId })],
+    });
+  }
+
+  private writeIsSyncing(isSyncing: boolean) {
+    this.client.writeQuery<GetPageQuery>({
+      query: GetPageDocument,
+      data: { page: { __typename: 'Page', isSyncing } },
     });
   }
 }
