@@ -16,6 +16,7 @@ import {
   todoEditFormSelectMany,
   todoEditFormSelectOne,
   todoEditFormSet,
+  TodoEditFormState,
   todoEditFormToggleTag,
 } from '../../../state/TodoEditFormState';
 import { TodoUsecase } from '../../../usecases/TodoUsecase';
@@ -30,25 +31,70 @@ import { TodoEditForm } from './TodoEditForm';
 import { TodoList } from './TodoList';
 import { TodoStatusBar } from './TodoStatusBar';
 
-type Props = {
-  categoryId: ID;
-};
-
-export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
+function useTodosPageState(
+  categoryId: ID,
+  todoEditFormState: TodoEditFormState
+) {
   const { data, loading, refetch } = useTodosPageQuery({
     variables: { categoryId, categoryUUID: categoryId },
     fetchPolicy: 'cache-and-network',
   });
   const { data: pageData } = usePageIsSyncingQuery();
+
+  const [now, setNow] = React.useState(() => Date.now());
+
+  useInterval(() => {
+    if (isDocumentVisible()) {
+      refetch();
+      setNow(Date.now());
+    }
+  }, UPDATE_INTERVAL);
+
+  const count = todoEditFormState.selectedTodoIds.length;
+
+  return {
+    categories: data?.categories ?? [],
+    categoryName: data?.category?.name ?? null,
+    categoryTags: data?.tags ?? [],
+    checkpoints: data?.checkpoints ?? [],
+    isLoading: loading,
+    isSyncing: pageData?.page?.isSyncing ?? false,
+    now,
+    todos: data?.todos ?? [],
+    userId: data?.me?.id ?? null,
+    selectMode:
+      count === 0
+        ? SelectMode.NONE
+        : count === 1
+        ? SelectMode.SINGLE
+        : SelectMode.MULTI,
+  };
+}
+
+type Props = {
+  categoryId: ID;
+};
+
+export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const client = useApolloClient();
   const [todoEditFormState, dispatch] = React.useReducer(
     todoEditFormReducer,
     todoEditFormInitialState
   );
   const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
-  const { checkpoint, selectedTodoIds, status, tags, text } = todoEditFormState;
-  const userId = data?.me?.id;
-  const [now, setNow] = React.useState(() => Date.now());
+
+  const {
+    categories,
+    categoryName,
+    categoryTags,
+    checkpoints,
+    isLoading,
+    isSyncing,
+    now,
+    selectMode,
+    todos,
+    userId,
+  } = useTodosPageState(categoryId, todoEditFormState);
 
   const handleSelectOneTodo = React.useCallback((todo: RootTodoFragment) => {
     dispatch(todoEditFormSelectOne(todo));
@@ -68,8 +114,11 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   }, [categoryId, todoEditFormState, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(async () => {
-    await todoUsecase.deleteTodosById(categoryId, selectedTodoIds);
-  }, [categoryId, selectedTodoIds, todoUsecase]);
+    await todoUsecase.deleteTodosById(
+      categoryId,
+      todoEditFormState.selectedTodoIds
+    );
+  }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState);
@@ -83,8 +132,11 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   );
 
   const handleArchiveTodosById = React.useCallback(async () => {
-    await todoUsecase.archiveTodosById(categoryId, selectedTodoIds);
-  }, [categoryId, selectedTodoIds, todoUsecase]);
+    await todoUsecase.archiveTodosById(
+      categoryId,
+      todoEditFormState.selectedTodoIds
+    );
+  }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
 
   const handleToggleTag = React.useCallback((tag: TodoTagFragment) => {
     dispatch(todoEditFormToggleTag(tag));
@@ -106,16 +158,9 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   );
 
   const checkpointsWithDummy = React.useMemo(
-    () => [DUMMY_CHECKPOINT, ...(data?.checkpoints ?? [])],
-    [data?.checkpoints]
+    () => [DUMMY_CHECKPOINT, ...checkpoints],
+    [checkpoints]
   );
-
-  useInterval(() => {
-    if (isDocumentVisible()) {
-      refetch();
-      setNow(Date.now());
-    }
-  }, UPDATE_INTERVAL);
 
   React.useEffect(
     () => {
@@ -125,22 +170,9 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     [categoryId]
   );
 
-  if (!data) {
-    return loading ? <LoadingIndicator /> : null;
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
-
-  const isSyncing = pageData?.page?.isSyncing ?? false;
-  const categoryName = data.category?.name ?? null;
-  const todos = data.todos ?? [];
-  const categoryTags = data.tags ?? [];
-  const categories = data.categories ?? [];
-  const count = selectedTodoIds.length;
-  const selectMode =
-    count === 0
-      ? SelectMode.NONE
-      : count === 1
-      ? SelectMode.SINGLE
-      : SelectMode.MULTI;
 
   return (
     <PageContent onClick={handleDeselectTodo}>
@@ -158,7 +190,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       />
       <TodoList
         now={now}
-        selectedTodoIds={selectedTodoIds}
+        selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
         onClick={handleSelectOneTodo}
         onClickStatus={handleToggleStatus}
@@ -166,12 +198,12 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
       />
       <TodoEditForm
         categoryTags={categoryTags}
-        checkpoint={checkpoint}
+        checkpoint={todoEditFormState.checkpoint}
         checkpoints={checkpointsWithDummy}
         selectMode={selectMode}
-        status={status}
-        tags={tags}
-        text={text}
+        status={todoEditFormState.status}
+        tags={todoEditFormState.tags}
+        text={todoEditFormState.text}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
         onCreateOneTodo={handleCreateOneTodo}
