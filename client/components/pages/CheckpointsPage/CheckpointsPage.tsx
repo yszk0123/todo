@@ -15,7 +15,7 @@ import { CheckpointUsecase } from '../../../usecases/CheckpointUsecase';
 import { DateTime } from '../../../viewModels/DateTime';
 import { EmptyProps } from '../../../viewModels/EmptyProps';
 import { SelectMode } from '../../../viewModels/SelectMode';
-import isDocumentVisible from '../../helpers/isDocumentVisible';
+import { isDocumentVisible } from '../../helpers/isDocumentVisible';
 import { useInterval } from '../../helpers/useInterval';
 import { LoadingIndicator } from '../../layout/LoadingIndicator';
 import { PageContent } from '../../layout/PageContent';
