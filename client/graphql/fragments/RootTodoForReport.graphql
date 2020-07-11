@@ -1,0 +1,8 @@
+fragment RootTodoForReport on Todo {
+  id
+  text
+  tags {
+    ...RootTagForReport
+  }
+  status
+}

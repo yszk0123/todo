@@ -1,6 +1,10 @@
 import * as Types from './baseTypes';
 
+import { RootTodoForReportFragment } from '../fragments/__generated__/RootTodoForReport.graphql';
+import { RootTagForReportFragment } from '../fragments/__generated__/RootTagForReport.graphql';
 import gql from 'graphql-tag';
+import { RootTodoForReportFragmentDoc } from '../fragments/__generated__/RootTodoForReport.graphql';
+import { RootTagForReportFragmentDoc } from '../fragments/__generated__/RootTagForReport.graphql';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
@@ -17,43 +21,14 @@ export type TodosReportPageQuery = (
     & Pick<Types.Category, 'id' | 'name'>
   )>, todos: Array<(
     { __typename?: 'Todo' }
-    & TodosReportPageTodoFragment
+    & RootTodoForReportFragment
   )>, tags: Array<(
     { __typename?: 'Tag' }
-    & TodosReportPageTagFragment
+    & RootTagForReportFragment
   )> }
 );
 
-export type TodosReportPageTodoFragment = (
-  { __typename?: 'Todo' }
-  & Pick<Types.Todo, 'id' | 'text' | 'status'>
-  & { tags: Array<(
-    { __typename?: 'Tag' }
-    & TodosReportPageTagFragment
-  )> }
-);
 
-export type TodosReportPageTagFragment = (
-  { __typename?: 'Tag' }
-  & Pick<Types.Tag, 'id' | 'name'>
-);
-
-export const TodosReportPageTagFragmentDoc = gql`
-    fragment TodosReportPageTag on Tag {
-  id
-  name
-}
-    `;
-export const TodosReportPageTodoFragmentDoc = gql`
-    fragment TodosReportPageTodo on Todo {
-  id
-  text
-  tags {
-    ...TodosReportPageTag
-  }
-  status
-}
-    ${TodosReportPageTagFragmentDoc}`;
 export const TodosReportPageDocument = gql`
     query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
   category(where: {id: $categoryId}) {
@@ -61,14 +36,14 @@ export const TodosReportPageDocument = gql`
     name
   }
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
-    ...TodosReportPageTodo
+    ...RootTodoForReport
   }
   tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
-    ...TodosReportPageTag
+    ...RootTagForReport
   }
 }
-    ${TodosReportPageTodoFragmentDoc}
-${TodosReportPageTagFragmentDoc}`;
+    ${RootTodoForReportFragmentDoc}
+${RootTagForReportFragmentDoc}`;
 
 /**
  * __useTodosReportPageQuery__

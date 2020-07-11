@@ -6,23 +6,9 @@ query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
   todos(
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
-    ...TodosReportPageTodo
+    ...RootTodoForReport
   }
   tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
-    ...TodosReportPageTag
+    ...RootTagForReport
   }
-}
-
-fragment TodosReportPageTodo on Todo {
-  id
-  text
-  tags {
-    ...TodosReportPageTag
-  }
-  status
-}
-
-fragment TodosReportPageTag on Tag {
-  id
-  name
 }

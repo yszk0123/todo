@@ -1,8 +1,6 @@
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import {
-  TodosReportPageTagFragment,
-  TodosReportPageTodoFragment,
-} from '../../../graphql/__generated__/TodosReportPage.graphql';
+import { RootTagForReportFragment } from '../../../graphql/fragments/__generated__/RootTagForReport.graphql';
+import { RootTodoForReportFragment } from '../../../graphql/fragments/__generated__/RootTodoForReport.graphql';
 import { printTodoStatus } from '../../../viewModels/TodoStatus';
 import { simplifyURL } from '../../helpers/simplifyURL';
 
@@ -24,8 +22,8 @@ function getTime(text: string): number {
 }
 
 export function printTodosReport(
-  todos: TodosReportPageTodoFragment[],
-  tags: TodosReportPageTagFragment[]
+  todos: RootTodoForReportFragment[],
+  tags: RootTagForReportFragment[]
 ): string {
   const filteredTodos = todos
     .filter((todo) => !IGNORE_RE.test(todo.text))
