@@ -94,9 +94,8 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         onClick={handleSelectOneCheckpoint}
       />
       <CheckpointEditForm
-        endAt={checkpointEditFormState.endAt}
+        checkpointEditFormState={checkpointEditFormState}
         isSelected={isSelected}
-        name={checkpointEditFormState.name}
         onArchiveOneCheckpoint={handleArchiveOneCheckpoint}
         onChangeEndAt={handleChangeEndAt}
         onChangeName={handleChangeName}

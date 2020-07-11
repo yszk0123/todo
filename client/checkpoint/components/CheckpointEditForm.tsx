@@ -8,11 +8,11 @@ import {
   EditFormInputField,
 } from '../../shared/components/EditForm';
 import { DateTime } from '../../viewModels/DateTime';
+import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
 
 export const CheckpointEditForm: React.FunctionComponent<{
-  endAt: DateTime | null;
+  checkpointEditFormState: CheckpointEditFormState;
   isSelected: boolean;
-  name: string | null;
   onArchiveOneCheckpoint: () => void;
   onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
@@ -20,9 +20,8 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onDeleteOneCheckpoint: () => void;
   onUpdateOneCheckpoint: () => void;
 }> = ({
-  endAt,
+  checkpointEditFormState,
   isSelected,
-  name,
   onArchiveOneCheckpoint,
   onChangeEndAt,
   onChangeName,
@@ -40,8 +39,14 @@ export const CheckpointEditForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormInputField value={name ?? ''} onChange={onChangeName} />
-      <EditFormDateTimeInputField value={endAt} onChange={onChangeEndAt} />
+      <EditFormInputField
+        value={checkpointEditFormState.name ?? ''}
+        onChange={onChangeName}
+      />
+      <EditFormDateTimeInputField
+        value={checkpointEditFormState.endAt}
+        onChange={onChangeEndAt}
+      />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );
