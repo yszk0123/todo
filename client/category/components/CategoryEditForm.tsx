@@ -6,17 +6,18 @@ import {
   EditFormActionsField,
   EditFormInputField,
 } from '../../shared/components/EditForm';
+import { CategoryEditFormState } from '../ducks/CategoryEditFormDucks';
 
 export const CategoryEditForm: React.FunctionComponent<{
+  categoryEditFormState: CategoryEditFormState;
   isSelected: boolean;
-  name: string;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCreateOneCategory: () => void;
   onDeleteOneCategory: () => void;
   onUpdateOneCategory: () => void;
 }> = ({
+  categoryEditFormState,
   isSelected,
-  name,
   onChangeName,
   onCreateOneCategory,
   onDeleteOneCategory,
@@ -31,7 +32,10 @@ export const CategoryEditForm: React.FunctionComponent<{
 
   return (
     <EditForm>
-      <EditFormInputField value={name} onChange={onChangeName} />
+      <EditFormInputField
+        value={categoryEditFormState.name}
+        onChange={onChangeName}
+      />
       <EditFormActionsField actions={actions} />
     </EditForm>
   );

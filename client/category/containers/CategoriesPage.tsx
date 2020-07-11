@@ -82,8 +82,8 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
         onClick={handleSelectOneCategory}
       />
       <CategoryEditForm
+        categoryEditFormState={categoryEditFormState}
         isSelected={isSelected}
-        name={categoryEditFormState.name}
         onChangeName={handleChangeName}
         onCreateOneCategory={handleCreateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
