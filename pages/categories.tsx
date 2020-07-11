@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import { CategoriesPage } from '../client/components/pages/CategoriesPage';
+import { CategoriesPage } from '../client/views/pages/CategoriesPage';
 
 export default () => {
   return (

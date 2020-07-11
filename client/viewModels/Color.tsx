@@ -1,5 +1,7 @@
 import { Color } from '../graphql/__generated__/baseTypes';
-import { defaultTagColor } from '../theme/defaultTagColor';
+import { defaultTagColor } from '../views/theme/theme';
+
+export { Color };
 
 export function getColorCode(color: Color): string {
   switch (color) {

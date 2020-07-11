@@ -14,7 +14,7 @@ import {
   tagEditFormReset,
   tagEditFormSet,
   TagEditFormState,
-} from '../state/TagEditFormState';
+} from '../models/TagEditFormState';
 import { ID } from '../viewModels/ID';
 
 export class TagUsecase {

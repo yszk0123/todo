@@ -14,7 +14,7 @@ import {
   categoryEditFormReset,
   categoryEditFormSet,
   CategoryEditFormState,
-} from '../state/CategoryEditFormState';
+} from '../models/CategoryEditFormState';
 import { ID } from '../viewModels/ID';
 
 export class CategoryUsecase {
