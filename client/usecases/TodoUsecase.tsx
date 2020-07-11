@@ -6,10 +6,10 @@ import {
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
-  refetchTodosQuery,
+  refetchGetTodosQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
-} from '../graphql/__generated__/TodosPage.graphql';
+} from '../graphql/__generated__/Todo.graphql';
 import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
 import {
   TodoEditFormAction,
@@ -65,7 +65,7 @@ export class TodoUsecase {
               : undefined,
         },
       },
-      refetchQueries: [refetchTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery({ categoryId })],
     });
   }
 
@@ -110,7 +110,7 @@ export class TodoUsecase {
     await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
-      refetchQueries: [refetchTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery({ categoryId })],
     });
   }
 
@@ -137,7 +137,7 @@ export class TodoUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
-      refetchQueries: [refetchTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery({ categoryId })],
     });
   }
 }
