@@ -1,7 +1,7 @@
-import { useIndexPageQuery } from '../graphql/__generated__/IndexPage.graphql';
+import { useDashboardPageQuery } from '../graphql/__generated__/DashboardPage.graphql';
 
-export function useIndexPageState() {
-  const { data, loading } = useIndexPageQuery({
+export function useDashboardPageState() {
+  const { data, loading } = useDashboardPageQuery({
     fetchPolicy: 'cache-and-network',
   });
 

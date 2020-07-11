@@ -1,4 +1,4 @@
-query IndexPage {
+query DashboardPage {
   me {
     id
     name

@@ -1,1 +1,1 @@
-export { IndexPage } from './containers/IndexPage';
+export { DashboardPage } from './containers/DashboardPage';

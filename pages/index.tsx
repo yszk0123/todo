@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import { IndexPage } from '../client/dashboard';
+import { DashboardPage } from '../client/dashboard';
 
 export default () => {
   return (
@@ -9,7 +9,7 @@ export default () => {
       <Head>
         <title>Home</title>
       </Head>
-      <IndexPage />
+      <DashboardPage />
     </>
   );
 };

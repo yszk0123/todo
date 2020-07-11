@@ -9,16 +9,16 @@ import { CategoryCountListItem } from '../components/CategoryCountListItem';
 import { CheckpointCountListItem } from '../components/CheckpointCountListItem';
 import { TagCountListItem } from '../components/TagCountListItem';
 import { TodoCountListItem } from '../components/TodoCountListItem';
-import { useIndexPageState } from '../hooks/useIndexPageState';
+import { useDashboardPageState } from '../hooks/useDashboardPageState';
 
-export const IndexPage: React.FunctionComponent<EmptyProps> = () => {
+export const DashboardPage: React.FunctionComponent<EmptyProps> = () => {
   const {
     categoryCount,
     checkpointCount,
     isLoading,
     tagCount,
     todoCount,
-  } = useIndexPageState();
+  } = useDashboardPageState();
 
   if (isLoading) {
     return <LoadingIndicator />;
