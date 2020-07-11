@@ -2,9 +2,9 @@ import { useApolloClient } from '@apollo/client';
 import React from 'react';
 
 import { Color } from '../../../graphql/__generated__/baseTypes';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { RootTagFragment } from '../../../graphql/__generated__/Tag.graphql';
 import { useTagsPageQuery } from '../../../graphql/__generated__/TagsPage.graphql';
-import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import {
   tagEditFormInitialState,
   tagEditFormReducer,
