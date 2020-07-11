@@ -47,18 +47,6 @@ export const TodoStatusBar: React.FunctionComponent<{
   return (
     <StatusBar
       left={[
-        ...(category
-          ? [
-              {
-                type: StatusBarItemType.LINK as const,
-                content: {
-                  href: '/categories/[categoryId]/todos/report',
-                  as: `/categories/${category.id}/todos/report`,
-                  text: 'See report',
-                },
-              },
-            ]
-          : []),
         {
           type: StatusBarItemType.BUTTON as const,
           content: {
@@ -80,6 +68,18 @@ export const TodoStatusBar: React.FunctionComponent<{
                 content: c.name,
               };
         }),
+        ...(category
+          ? [
+              {
+                type: StatusBarItemType.LINK as const,
+                content: {
+                  href: '/categories/[categoryId]/todos/report',
+                  as: `/categories/${category.id}/todos/report`,
+                  text: 'See report',
+                },
+              },
+            ]
+          : []),
       ]}
       right={[
         category !== null
