@@ -57,7 +57,7 @@ function useTodosPageState(
     categoryName: data?.category?.name ?? null,
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
-    isLoading: loading,
+    isLoading: !data && loading,
     isSyncing: pageData?.page?.isSyncing ?? false,
     now,
     todos: data?.todos ?? [],
