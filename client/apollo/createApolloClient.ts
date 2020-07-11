@@ -3,8 +3,8 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { isSSR } from '../components/helpers/isSSR';
 import introspectionResult from '../graphql/__generated__/introspectionResult';
 import {
-  GetPageDocument,
-  GetPageQuery,
+  PageIsSyncingDocument,
+  PageIsSyncingQuery,
 } from '../graphql/__generated__/Page.graphql';
 
 export function createApolloClient() {
@@ -23,8 +23,8 @@ export function createApolloClient() {
     resolvers: {},
   });
 
-  cache.writeQuery<GetPageQuery>({
-    query: GetPageDocument,
+  cache.writeQuery<PageIsSyncingQuery>({
+    query: PageIsSyncingDocument,
     data: { page: { __typename: 'Page', isSyncing: false } },
   });
 

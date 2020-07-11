@@ -2,8 +2,8 @@ import { ApolloClient } from '@apollo/client';
 
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
 import {
-  GetPageDocument,
-  GetPageQuery,
+  PageIsSyncingDocument,
+  PageIsSyncingQuery,
 } from '../graphql/__generated__/Page.graphql';
 import {
   CreateOneTodoDocument,
@@ -150,8 +150,8 @@ export class TodoUsecase {
   }
 
   private writeIsSyncing(isSyncing: boolean) {
-    this.client.writeQuery<GetPageQuery>({
-      query: GetPageDocument,
+    this.client.writeQuery<PageIsSyncingQuery>({
+      query: PageIsSyncingDocument,
       data: { page: { __typename: 'Page', isSyncing } },
     });
   }
