@@ -2,11 +2,11 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/TodoTag.graphql';
+import { TodoTagFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { ColorBadge } from '../../layout/ColorBadge';
 
 export const TodoListTags: React.FunctionComponent<{
-  tags: CategoryTagFragment[];
+  tags: TodoTagFragment[];
 }> = ({ tags }) => {
   if (tags.length === 0) {
     return null;

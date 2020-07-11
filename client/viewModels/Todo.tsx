@@ -1,5 +1,5 @@
 import { TodoStatus } from '../graphql/__generated__/baseTypes';
-import { RootTodoFragment } from '../graphql/fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
 type Group = {
@@ -27,9 +27,7 @@ function getTime(text: string): number {
   return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
 }
 
-function sortTodosByContent(
-  todos: RootTodoFragment[]
-): RootTodoFragment[] {
+function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
   return [...todos].sort((a, b) => {
     const time = getTime(a.text) - getTime(b.text);
     if (time !== 0) return time;

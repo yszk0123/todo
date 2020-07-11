@@ -4,10 +4,10 @@ import React from 'react';
 
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
+import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
+import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
+import { TodoTagFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { useTodosPageQuery } from '../../../graphql/__generated__/TodosPage.graphql';
-import { RootCheckpointFragment } from '../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
-import { CategoryTagFragment } from '../../../graphql/fragments/__generated__/TodoTag.graphql';
 import {
   todoEditFormInitialState,
   todoEditFormReducer,
@@ -84,7 +84,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     await todoUsecase.archiveTodosById(categoryId, selectedTodoIds);
   }, [categoryId, selectedTodoIds, todoUsecase]);
 
-  const handleToggleTag = React.useCallback((tag: CategoryTagFragment) => {
+  const handleToggleTag = React.useCallback((tag: TodoTagFragment) => {
     dispatch(todoEditFormToggleTag(tag));
   }, []);
 

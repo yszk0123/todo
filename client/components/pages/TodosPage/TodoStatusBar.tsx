@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdCheck } from 'react-icons/md';
 
-import { RootCategoryFragment } from '../../../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { ID } from '../../../viewModels/ID';
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
 

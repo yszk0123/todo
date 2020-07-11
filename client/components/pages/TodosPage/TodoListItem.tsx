@@ -4,7 +4,7 @@ import React from 'react';
 import { Box } from 'rebass';
 
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { RootTodoFragment } from '../../../graphql/fragments/__generated__/RootTodo.graphql';
+import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { ListItem } from '../../layout/List';
 import { TodoListStatus } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';

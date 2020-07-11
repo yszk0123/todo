@@ -1,4 +1,4 @@
-import * as Types from '../../__generated__/baseTypes';
+import * as Types from './baseTypes';
 
 import gql from 'graphql-tag';
 

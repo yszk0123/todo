@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { TodoStatus } from '../../../../graphql/__generated__/baseTypes';
-import { RootCheckpointFragment } from '../../../../graphql/fragments/__generated__/RootCheckpoint.graphql';
-import { CategoryTagFragment } from '../../../../graphql/fragments/__generated__/TodoTag.graphql';
+import { RootCheckpointFragment } from '../../../../graphql/__generated__/Checkpoint.graphql';
+import { TodoTagFragment } from '../../../../graphql/__generated__/Todo.graphql';
 import { SelectMode } from '../../../../viewModels/SelectMode';
 import {
   EditForm,
@@ -15,16 +15,16 @@ import { TodoEditFormTagsField } from './TodoEditFormTagsField';
 import { TodoEditFormTextField } from './TodoEditFormTextField';
 
 const NoneForm: React.FunctionComponent<{
-  categoryTags: CategoryTagFragment[];
+  categoryTags: TodoTagFragment[];
   checkpoint: RootCheckpointFragment | null;
   checkpoints: RootCheckpointFragment[];
   onChangeText: (text: string) => void;
   onCreateOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onToggleTag: (tag: CategoryTagFragment) => void;
+  onToggleTag: (tag: TodoTagFragment) => void;
   status: TodoStatus | null;
-  tags: CategoryTagFragment[] | null;
+  tags: TodoTagFragment[] | null;
   text: string;
 }> = ({
   categoryTags,
@@ -66,7 +66,7 @@ const NoneForm: React.FunctionComponent<{
 };
 
 const SingleForm: React.FunctionComponent<{
-  categoryTags: CategoryTagFragment[];
+  categoryTags: TodoTagFragment[];
   checkpoint: RootCheckpointFragment | null;
   checkpoints: RootCheckpointFragment[];
   onArchiveTodo: () => void;
@@ -74,10 +74,10 @@ const SingleForm: React.FunctionComponent<{
   onDeleteOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onToggleTag: (tag: CategoryTagFragment) => void;
+  onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   status: TodoStatus | null;
-  tags: CategoryTagFragment[] | null;
+  tags: TodoTagFragment[] | null;
   text: string;
 }> = ({
   categoryTags,
@@ -123,17 +123,17 @@ const SingleForm: React.FunctionComponent<{
 };
 
 const MultiForm: React.FunctionComponent<{
-  categoryTags: CategoryTagFragment[];
+  categoryTags: TodoTagFragment[];
   checkpoint: RootCheckpointFragment | null;
   checkpoints: RootCheckpointFragment[];
   onArchiveTodo: () => void;
   onDeleteOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onToggleTag: (tag: CategoryTagFragment) => void;
+  onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   status: TodoStatus | null;
-  tags: CategoryTagFragment[] | null;
+  tags: TodoTagFragment[] | null;
 }> = ({
   categoryTags,
   checkpoint,
@@ -175,7 +175,7 @@ const MultiForm: React.FunctionComponent<{
 };
 
 export const TodoEditForm: React.FunctionComponent<{
-  categoryTags: CategoryTagFragment[];
+  categoryTags: TodoTagFragment[];
   checkpoint: RootCheckpointFragment | null;
   checkpoints: RootCheckpointFragment[];
   onArchiveTodo: () => void;
@@ -184,11 +184,11 @@ export const TodoEditForm: React.FunctionComponent<{
   onDeleteOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus) => void;
-  onToggleTag: (tag: CategoryTagFragment) => void;
+  onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   selectMode: SelectMode;
   status: TodoStatus | null;
-  tags: CategoryTagFragment[] | null;
+  tags: TodoTagFragment[] | null;
   text: string;
 }> = ({
   categoryTags,

@@ -1,6 +1,6 @@
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
-import { RootTagForReportFragment } from '../../../graphql/fragments/__generated__/RootTagForReport.graphql';
-import { RootTodoForReportFragment } from '../../../graphql/fragments/__generated__/RootTodoForReport.graphql';
+import { RootTagForReportFragment } from '../../../graphql/__generated__/TagForReport.graphql';
+import { RootTodoForReportFragment } from '../../../graphql/__generated__/TodoForReport.graphql';
 import { printTodoStatus } from '../../../viewModels/TodoStatus';
 import { simplifyURL } from '../../helpers/simplifyURL';
 

@@ -1,7 +1,7 @@
 import { first } from '../components/helpers/first';
 import { Color } from '../graphql/__generated__/baseTypes';
-import { RootCategoryFragment } from '../graphql/fragments/__generated__/RootCategory.graphql';
-import { RootTagFragment } from '../graphql/fragments/__generated__/RootTag.graphql';
+import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
+import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { ID } from '../viewModels/ID';
 
 export type TagEditFormState = {

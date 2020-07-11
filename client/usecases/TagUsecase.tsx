@@ -7,7 +7,7 @@ import {
   DeleteOneTagMutationVariables,
   UpdateOneTagDocument,
   UpdateOneTagMutationVariables,
-} from '../graphql/__generated__/TagsPage.graphql';
+} from '../graphql/__generated__/Tag.graphql';
 import {
   TagEditFormAction,
   tagEditFormReset,

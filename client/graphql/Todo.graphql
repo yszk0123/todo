@@ -1,0 +1,58 @@
+query GetTodos($categoryId: String!) {
+  todos(
+    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
+  ) {
+    ...RootTodo
+  }
+}
+
+mutation CreateOneTodo($input: TodoCreateInput!) {
+  createOneTodo(data: $input) {
+    ...RootTodo
+  }
+}
+
+mutation DeleteTodo($input: DeleteTodoInput!) {
+  deleteTodo(data: $input) {
+    id
+    categoryId
+  }
+}
+
+mutation UpdateTodo($input: UpdateTodoInput!) {
+  updateTodo(data: $input) {
+    ...RootTodo
+  }
+}
+
+mutation DeleteTodosById($input: DeleteTodosByIdInput!) {
+  deleteTodosById(data: $input)
+}
+
+mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
+  updateTodosById(data: $input) {
+    ...RootTodo
+  }
+}
+
+fragment RootTodo on Todo {
+  id
+  text
+  categoryId
+  tags {
+    ...TodoTag
+  }
+  status
+  archivedAt
+  checkpoint {
+    id
+    name
+    endAt
+  }
+}
+
+fragment TodoTag on Tag {
+  id
+  name
+  color
+}

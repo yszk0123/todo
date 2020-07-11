@@ -1,5 +1,5 @@
 import { first } from '../components/helpers/first';
-import { RootCategoryFragment } from '../graphql/fragments/__generated__/RootCategory.graphql';
+import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
 import { ID } from '../viewModels/ID';
 
 export type CategoryEditFormState = {

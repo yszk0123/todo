@@ -7,7 +7,7 @@ import {
   DeleteOneCheckpointMutationVariables,
   UpdateOneCheckpointDocument,
   UpdateOneCheckpointMutationVariables,
-} from '../graphql/__generated__/CheckpointsPage.graphql';
+} from '../graphql/__generated__/Checkpoint.graphql';
 import {
   CheckpointEditFormAction,
   checkpointEditFormReset,

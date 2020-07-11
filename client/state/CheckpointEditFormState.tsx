@@ -1,5 +1,5 @@
 import { first } from '../components/helpers/first';
-import { RootCheckpointFragment } from '../graphql/fragments/__generated__/RootCheckpoint.graphql';
+import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 import { DateTime } from '../viewModels/DateTime';
 import { ID } from '../viewModels/ID';
 
