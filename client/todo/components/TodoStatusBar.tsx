@@ -7,7 +7,6 @@ import {
   StatusBar,
   StatusBarItemType,
 } from '../../shared/components/StatusBar';
-import { ID } from '../../viewModels/ID';
 
 const animation = {
   animationName: 'rotation',
@@ -40,21 +39,20 @@ const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
 
 export const TodoStatusBar: React.FunctionComponent<{
   categories: RootCategoryFragment[];
-  categoryId: ID | null;
-  categoryName: string | null;
+  category: RootCategoryFragment | null;
   count: number;
   isSyncing: boolean;
-}> = ({ categories, categoryId, categoryName, count, isSyncing }) => {
+}> = ({ categories, category, count, isSyncing }) => {
   return (
     <StatusBar
       left={[
-        ...(categoryId
+        ...(category
           ? [
               {
                 type: StatusBarItemType.LINK as const,
                 content: {
                   href: '/categories/[categoryId]/todos/report',
-                  as: `/categories/${categoryId}/todos/report`,
+                  as: `/categories/${category.id}/todos/report`,
                   text: 'See report',
                 },
               },
@@ -80,8 +78,8 @@ export const TodoStatusBar: React.FunctionComponent<{
         }),
       ]}
       right={[
-        categoryName !== null
-          ? { type: StatusBarItemType.TEXT, content: categoryName }
+        category !== null
+          ? { type: StatusBarItemType.TEXT, content: category.name }
           : null,
         {
           type: StatusBarItemType.TEXT,

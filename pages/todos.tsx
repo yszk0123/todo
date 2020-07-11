@@ -9,7 +9,7 @@ export default () => {
       <Head>
         <title>Todo</title>
       </Head>
-      <TodosPage categoryId={null} />
+      <TodosPage />
     </>
   );
 };

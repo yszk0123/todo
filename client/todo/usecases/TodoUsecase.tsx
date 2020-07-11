@@ -41,12 +41,13 @@ function getNextStatus(status: TodoStatus): TodoStatus {
 }
 
 function getQueryVariables(
-  categoryId: ID | null,
   todoSearchFormValue: TodoSearchFormValue | null
 ): GetTodosQueryVariables {
   return {
     input: {
-      categoryId: categoryId ? { equals: categoryId } : undefined,
+      categoryId: todoSearchFormValue?.category?.id
+        ? { equals: todoSearchFormValue?.category?.id }
+        : undefined,
       archivedAt: { equals: null },
       status: todoSearchFormValue?.status ?? undefined,
       tags: todoSearchFormValue?.tags
@@ -69,14 +70,12 @@ export class TodoUsecase {
 
   async createOneTodo(
     userId: string,
-    categoryId: string | null,
     todoEditFormState: TodoEditFormState,
     todoSearchFormValue: TodoSearchFormValue | null
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
-    const categoryIdToCreate =
-      categoryId ?? todoEditFormState.category?.id ?? null;
+    const categoryIdToCreate = todoEditFormState.category?.id ?? null;
     if (categoryIdToCreate === null) {
       alert('CategoryId required');
       return;
@@ -100,9 +99,7 @@ export class TodoUsecase {
         },
       },
       refetchQueries: [
-        refetchGetTodosQuery(
-          getQueryVariables(categoryId, todoSearchFormValue)
-        ),
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
       ],
     });
   }
@@ -145,7 +142,6 @@ export class TodoUsecase {
   }
 
   async deleteTodosById(
-    categoryId: ID | null,
     todoIds: ID[],
     todoSearchFormValue: TodoSearchFormValue | null
   ) {
@@ -157,9 +153,7 @@ export class TodoUsecase {
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
       refetchQueries: [
-        refetchGetTodosQuery(
-          getQueryVariables(categoryId, todoSearchFormValue)
-        ),
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
       ],
     });
   }
@@ -179,7 +173,6 @@ export class TodoUsecase {
   }
 
   async archiveTodosById(
-    categoryId: ID | null,
     todoIds: ID[],
     todoSearchFormValue: TodoSearchFormValue | null
   ) {
@@ -192,9 +185,7 @@ export class TodoUsecase {
         },
       },
       refetchQueries: [
-        refetchGetTodosQuery(
-          getQueryVariables(categoryId, todoSearchFormValue)
-        ),
+        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
       ],
     });
   }
