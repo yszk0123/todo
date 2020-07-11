@@ -12,14 +12,13 @@ import {
 } from '../../shared/components/EditForm';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { identity } from '../../shared/helpers/identity';
+import { TagEditFormState } from '../ducks/TagEditFormDucks';
 
 const colors = Object.values(Color);
 
 export const TagEditForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
-  color: Color;
   isSelected: boolean;
-  name: string;
   onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
@@ -28,11 +27,10 @@ export const TagEditForm: React.FunctionComponent<{
   onToggleCategory: (category: RootCategoryFragment) => void;
   onUpdateOneTag: () => void;
   tagCategories: RootCategoryFragment[];
+  tagEditFormState: TagEditFormState;
 }> = ({
   categories,
-  color,
   isSelected,
-  name,
   onArchiveOneTag,
   onChangeColor,
   onChangeName,
@@ -41,6 +39,7 @@ export const TagEditForm: React.FunctionComponent<{
   onToggleCategory,
   onUpdateOneTag,
   tagCategories,
+  tagEditFormState,
 }) => {
   const actions: EditFormAction[] = isSelected
     ? [
@@ -62,8 +61,8 @@ export const TagEditForm: React.FunctionComponent<{
         getDisplayName={identity}
         getValue={identity}
         items={colors}
-        rightElement={<ColorBox color={color} />}
-        selectedItem={color}
+        rightElement={<ColorBox color={tagEditFormState.color} />}
+        selectedItem={tagEditFormState.color}
         onChange={onChangeColor}
       />
       <EditFormActionsField actions={actions} />

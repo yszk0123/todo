@@ -103,10 +103,9 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <TagEditForm
         categories={rootCategories}
-        color={tagEditFormState.color}
         isSelected={isSelected}
-        name={name}
         tagCategories={tagEditFormState.tagCategories}
+        tagEditFormState={tagEditFormState}
         onArchiveOneTag={handleArchiveOneTag}
         onChangeColor={handleChangeColor}
         onChangeName={handleChangeName}
