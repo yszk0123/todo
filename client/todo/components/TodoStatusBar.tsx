@@ -66,15 +66,20 @@ export const TodoStatusBar: React.FunctionComponent<{
             text: 'All',
           },
         },
-        ...categories.map((category) => {
-          return {
-            type: StatusBarItemType.LINK as const,
-            content: {
-              href: '/categories/[categoryId]/todos',
-              as: `/categories/${category.id}/todos`,
-              text: category.name,
-            },
-          };
+        ...categories.map((c) => {
+          return category && c.id !== category.id
+            ? {
+                type: StatusBarItemType.LINK as const,
+                content: {
+                  href: '/categories/[categoryId]/todos',
+                  as: `/categories/${c.id}/todos`,
+                  text: c.name,
+                },
+              }
+            : {
+                type: StatusBarItemType.TEXT as const,
+                content: c.name,
+              };
         }),
       ]}
       right={[
