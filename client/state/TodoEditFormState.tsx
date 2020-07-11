@@ -100,7 +100,7 @@ export const todoEditFormInitialState: TodoEditFormState = {
 };
 
 export function todoEditFormReducer(
-  state: TodoEditFormState,
+  state: TodoEditFormState = todoEditFormInitialState,
   action: TodoEditFormAction
 ): TodoEditFormState {
   switch (action.type) {

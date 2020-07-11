@@ -1,6 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import Head from 'next/head';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
@@ -9,9 +10,8 @@ import { usePageIsSyncingQuery } from '../../../graphql/__generated__/Page.graph
 import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { TodoTagFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { useTodosPageQuery } from '../../../graphql/__generated__/TodosPage.graphql';
+import { useTypedSelector } from '../../../redux/useTypedSelector';
 import {
-  todoEditFormInitialState,
-  todoEditFormReducer,
   todoEditFormReset,
   todoEditFormSelectMany,
   todoEditFormSelectOne,
@@ -77,10 +77,8 @@ type Props = {
 
 export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
   const client = useApolloClient();
-  const [todoEditFormState, dispatch] = React.useReducer(
-    todoEditFormReducer,
-    todoEditFormInitialState
-  );
+  const dispatch = useDispatch();
+  const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
   const [todoUsecase] = React.useState(() => new TodoUsecase(client, dispatch));
 
   const {
@@ -96,17 +94,23 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     userId,
   } = useTodosPageState(categoryId, todoEditFormState);
 
-  const handleSelectOneTodo = React.useCallback((todo: RootTodoFragment) => {
-    dispatch(todoEditFormSelectOne(todo));
-  }, []);
+  const handleSelectOneTodo = React.useCallback(
+    (todo: RootTodoFragment) => {
+      dispatch(todoEditFormSelectOne(todo));
+    },
+    [dispatch]
+  );
 
-  const handleSelectManyTodo = React.useCallback((todo: RootTodoFragment) => {
-    dispatch(todoEditFormSelectMany(todo));
-  }, []);
+  const handleSelectManyTodo = React.useCallback(
+    (todo: RootTodoFragment) => {
+      dispatch(todoEditFormSelectMany(todo));
+    },
+    [dispatch]
+  );
 
   const handleDeselectTodo = React.useCallback(() => {
     dispatch(todoEditFormReset());
-  }, []);
+  }, [dispatch]);
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
@@ -132,23 +136,32 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     todoUsecase.archiveTodosById(categoryId, todoEditFormState.selectedTodoIds);
   }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
 
-  const handleToggleTag = React.useCallback((tag: TodoTagFragment) => {
-    dispatch(todoEditFormToggleTag(tag));
-  }, []);
+  const handleToggleTag = React.useCallback(
+    (tag: TodoTagFragment) => {
+      dispatch(todoEditFormToggleTag(tag));
+    },
+    [dispatch]
+  );
 
-  const handleChangeText = React.useCallback((text: string) => {
-    dispatch(todoEditFormSet({ text }));
-  }, []);
+  const handleChangeText = React.useCallback(
+    (text: string) => {
+      dispatch(todoEditFormSet({ text }));
+    },
+    [dispatch]
+  );
 
-  const handleSelectStatus = React.useCallback((status: TodoStatus) => {
-    dispatch(todoEditFormSet({ status }));
-  }, []);
+  const handleSelectStatus = React.useCallback(
+    (status: TodoStatus) => {
+      dispatch(todoEditFormSet({ status }));
+    },
+    [dispatch]
+  );
 
   const handleSelectCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
       dispatch(todoEditFormSet({ checkpoint }));
     },
-    []
+    [dispatch]
   );
 
   const checkpointsWithDummy = React.useMemo(

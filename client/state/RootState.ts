@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { todoEditFormReducer } from './TodoEditFormState';
+import { todoEditFormReducer, TodoEditFormState } from './TodoEditFormState';
 
-export const rootReducer = combineReducers({
+export type RootState = {
+  todoEditForm: TodoEditFormState;
+};
+
+export const rootReducer = combineReducers<RootState>({
   todoEditForm: todoEditFormReducer,
 });
