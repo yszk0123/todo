@@ -1,17 +1,11 @@
-query TodosPage($categoryId: String!, $categoryUUID: UUID!) {
+query TodosPage($todoInput: TodoWhereInput!, $tagInput: TagWhereInput!) {
   me {
     id
   }
-  category(where: { id: $categoryId }) {
-    id
-    name
-  }
-  todos(
-    where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
-  ) {
+  todos(where: $todoInput) {
     ...RootTodo
   }
-  tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
+  tags(where: $tagInput) {
     ...TodoTag
   }
   checkpoints {

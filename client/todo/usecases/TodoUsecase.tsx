@@ -19,6 +19,7 @@ import {
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
+  GetTodosQueryVariables,
   refetchGetTodosQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
@@ -36,6 +37,15 @@ function getNextStatus(status: TodoStatus): TodoStatus {
     case TodoStatus.Done:
       return TodoStatus.Todo;
   }
+}
+
+function getQueryVariables(categoryId: ID | null): GetTodosQueryVariables {
+  return {
+    input: {
+      categoryId: categoryId ? { equals: categoryId } : undefined,
+      archivedAt: { equals: null },
+    },
+  };
 }
 
 export class TodoUsecase {
@@ -69,7 +79,7 @@ export class TodoUsecase {
               : undefined,
         },
       },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 
@@ -118,7 +128,7 @@ export class TodoUsecase {
     await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
       mutation: DeleteTodosByIdDocument,
       variables: { input: { ids: todoIds } },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 
@@ -145,7 +155,7 @@ export class TodoUsecase {
           archivedAt: toDateTime(new Date()),
         },
       },
-      refetchQueries: [refetchGetTodosQuery({ categoryId })],
+      refetchQueries: [refetchGetTodosQuery(getQueryVariables(categoryId))],
     });
   }
 

@@ -24,7 +24,7 @@ import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
 
 type Props = {
-  categoryId: ID;
+  categoryId: ID | null;
 };
 
 export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
