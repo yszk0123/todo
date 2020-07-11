@@ -5,6 +5,7 @@ import React from 'react';
 import { UPDATE_INTERVAL } from '../../../constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../../graphql/__generated__/baseTypes';
 import { RootCheckpointFragment } from '../../../graphql/__generated__/Checkpoint.graphql';
+import { usePageIsSyncingQuery } from '../../../graphql/__generated__/Page.graphql';
 import { RootTodoFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { TodoTagFragment } from '../../../graphql/__generated__/Todo.graphql';
 import { useTodosPageQuery } from '../../../graphql/__generated__/TodosPage.graphql';
@@ -38,6 +39,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     variables: { categoryId, categoryUUID: categoryId },
     fetchPolicy: 'cache-and-network',
   });
+  const { data: pageData } = usePageIsSyncingQuery();
   const client = useApolloClient();
   const [todoEditFormState, dispatch] = React.useReducer(
     todoEditFormReducer,
@@ -127,6 +129,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     return loading ? <LoadingIndicator /> : null;
   }
 
+  const isSyncing = pageData?.page?.isSyncing ?? false;
   const categoryName = data.category?.name ?? null;
   const todos = data.todos ?? [];
   const categoryTags = data.tags ?? [];
@@ -151,6 +154,7 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
         categoryId={categoryId}
         categoryName={categoryName}
         count={todos.length}
+        isSyncing={isSyncing}
       />
       <TodoList
         now={now}

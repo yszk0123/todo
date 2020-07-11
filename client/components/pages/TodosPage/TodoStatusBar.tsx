@@ -1,16 +1,47 @@
 import React from 'react';
-import { MdCheck } from 'react-icons/md';
+import { MdCached, MdCheck } from 'react-icons/md';
+import { Flex } from 'rebass';
 
 import { RootCategoryFragment } from '../../../graphql/__generated__/Category.graphql';
 import { ID } from '../../../viewModels/ID';
 import { StatusBar, StatusBarItemType } from '../../layout/StatusBar';
+
+const animation = {
+  animationName: 'rotation',
+  animationIterationCount: 'infinite',
+  animationDuration: '2s',
+  animationTimingFunction: 'linear',
+  '@keyframes rotation': {
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(360deg)',
+    },
+  },
+} as const;
+
+const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
+  isSyncing,
+}) => {
+  if (!isSyncing) {
+    return <MdCheck />;
+  }
+
+  return (
+    <Flex sx={animation}>
+      <MdCached />
+    </Flex>
+  );
+};
 
 export const TodoStatusBar: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   categoryId: ID;
   categoryName: string | null;
   count: number;
-}> = ({ categories, categoryId, categoryName, count }) => {
+  isSyncing: boolean;
+}> = ({ categories, categoryId, categoryName, count, isSyncing }) => {
   return (
     <StatusBar
       left={[
@@ -43,7 +74,7 @@ export const TodoStatusBar: React.FunctionComponent<{
         },
         {
           type: StatusBarItemType.FLEX,
-          content: <MdCheck />,
+          content: <SyncStatus isSyncing={isSyncing} />,
         },
       ]}
     />

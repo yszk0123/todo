@@ -1,0 +1,5 @@
+query PageIsSyncing {
+  page @client {
+    isSyncing
+  }
+}

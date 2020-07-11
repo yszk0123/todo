@@ -1,0 +1,1193 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+type Query {
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, where: CategoryWhereInput): [Category!]!
+  category(where: CategoryWhereUniqueInput!): Category
+  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, where: CheckpointWhereInput): [Checkpoint!]!
+  me: User
+  page: Page
+  stats: Stats
+  tag(where: TagWhereUniqueInput!): Tag
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, where: TagWhereInput): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, where: TodoWhereInput): [Todo!]!
+}
+input CategoryWhereUniqueInput {
+  id: String
+}
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  name: StringFilter
+  NOT: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
+  tags: TagFilter
+  todos: TodoFilter
+}
+input NullableDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+"""Use JavaScript Date object for date/time fields."""
+scalar DateTime
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+input UUIDFilter {
+  contains: UUID
+  endsWith: UUID
+  equals: UUID
+  gt: UUID
+  gte: UUID
+  in: [UUID!]
+  lt: UUID
+  lte: UUID
+  not: UUID
+  notIn: [UUID!]
+  startsWith: UUID
+}
+scalar UUID
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+input UserWhereInput {
+  accounts: AccountFilter
+  AND: [UserWhereInput!]
+  avatarUrl: NullableStringFilter
+  categories: CategoryFilter
+  checkpoints: CheckpointFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  id: UUIDFilter
+  name: NullableStringFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  tags: TagFilter
+  todos: TodoFilter
+}
+input AccountFilter {
+  every: AccountWhereInput
+  none: AccountWhereInput
+  some: AccountWhereInput
+}
+input AccountWhereInput {
+  accessToken: StringFilter
+  accessTokenExpires: NullableDateTimeFilter
+  AND: [AccountWhereInput!]
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  providerAccountId: StringFilter
+  providerId: StringFilter
+  providerType: StringFilter
+  refreshToken: NullableStringFilter
+  user: UserWhereInput
+  userId: StringFilter
+}
+input NullableStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+input CategoryFilter {
+  every: CategoryWhereInput
+  none: CategoryWhereInput
+  some: CategoryWhereInput
+}
+input CheckpointFilter {
+  every: CheckpointWhereInput
+  none: CheckpointWhereInput
+  some: CheckpointWhereInput
+}
+input CheckpointWhereInput {
+  AND: [CheckpointWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  endAt: DateTimeFilter
+  id: UUIDFilter
+  name: NullableStringFilter
+  NOT: [CheckpointWhereInput!]
+  OR: [CheckpointWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+input TodoFilter {
+  every: TodoWhereInput
+  none: TodoWhereInput
+  some: TodoWhereInput
+}
+input TodoWhereInput {
+  AND: [TodoWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  category: CategoryWhereInput
+  categoryId: StringFilter
+  checkpoint: CheckpointWhereInput
+  checkpointId: NullableStringFilter
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [TodoWhereInput!]
+  OR: [TodoWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
+  status: TodoStatus
+  tags: TagFilter
+  text: StringFilter
+}
+enum TodoStatus {
+  DONE
+  IN_PROGRESS
+  TODO
+  WAITING
+}
+input TagFilter {
+  every: TagWhereInput
+  none: TagWhereInput
+  some: TagWhereInput
+}
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  categories: CategoryFilter
+  color: Color
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  name: StringFilter
+  NOT: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  owner: UserWhereInput
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+enum Color {
+  BLUE
+  DEFAULT
+  GREEN
+  PURPLE
+  RED
+  YELLOW
+}
+type Category {
+  archivedAt: DateTime
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  owner: User!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
+}
+type User {
+  avatarUrl: String
+  email: String!
+  id: String!
+  name: String
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+input TodoWhereUniqueInput {
+  id: String
+}
+type Todo {
+  archivedAt: DateTime
+  category: Category!
+  categoryId: String!
+  checkpoint: Checkpoint
+  checkpointId: String
+  createdAt: DateTime!
+  id: String!
+  owner: User!
+  ownerId: String!
+  status: TodoStatus!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
+  text: String!
+}
+type Checkpoint {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String!
+  name: String
+  ownerId: String!
+}
+input TagWhereUniqueInput {
+  id: String
+}
+input TagOrderByInput {
+  archivedAt: OrderByArg
+  color: OrderByArg
+  createdAt: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  ownerId: OrderByArg
+}
+enum OrderByArg {
+  asc
+  desc
+}
+type Tag {
+  archivedAt: DateTime
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
+  color: Color!
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  owner: User!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
+}
+input TodoOrderByInput {
+  archivedAt: OrderByArg
+  categoryId: OrderByArg
+  checkpointId: OrderByArg
+  createdAt: OrderByArg
+  id: OrderByArg
+  ownerId: OrderByArg
+  status: OrderByArg
+  text: OrderByArg
+}
+input CheckpointWhereUniqueInput {
+  id: String
+}
+type Page {
+  isSyncing: Boolean
+}
+type Stats {
+  categoryCount: Int
+  checkpointCount: Int
+  tagCount: Int
+  todoCount: Int
+}
+type Mutation {
+  createOneCategory(data: CategoryCreateInput!): Category!
+  createOneCheckpoint(data: CheckpointCreateInput!): Checkpoint!
+  createOneTag(data: TagCreateInput!): Tag!
+  createOneTodo(data: TodoCreateInput!): Todo!
+  deleteOneCategory(where: CategoryWhereUniqueInput!): Category
+  deleteOneCheckpoint(where: CheckpointWhereUniqueInput!): Checkpoint
+  deleteOneTag(where: TagWhereUniqueInput!): Tag
+  deleteTodo(data: DeleteTodoInput!): Todo
+  deleteTodosById(data: DeleteTodosByIdInput!): [ID!]
+  updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateOneCheckpoint(data: CheckpointUpdateInput!, where: CheckpointWhereUniqueInput!): Checkpoint
+  updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateTodo(data: UpdateTodoInput!): Todo
+  updateTodosById(data: UpdateTodosByIdInput!): [Todo!]
+}
+input CategoryCreateInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  tags: TagCreateManyWithoutCategoriesInput
+  todos: TodoCreateManyWithoutCategoryInput
+}
+input UserCreateOneWithoutCategoriesInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCategoriesInput
+}
+input UserWhereUniqueInput {
+  email: String
+  id: String
+}
+input UserCreateWithoutCategoriesInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  tags: TagCreateManyWithoutOwnerInput
+  todos: TodoCreateManyWithoutOwnerInput
+}
+input AccountCreateManyWithoutUserInput {
+  connect: [AccountWhereUniqueInput!]
+  create: [AccountCreateWithoutUserInput!]
+}
+input AccountWhereUniqueInput {
+  id: String
+  providerAccountId: String
+}
+input AccountCreateWithoutUserInput {
+  accessToken: String!
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String!
+  providerId: String!
+  providerType: String!
+  refreshToken: String
+}
+input CheckpointCreateManyWithoutOwnerInput {
+  connect: [CheckpointWhereUniqueInput!]
+  create: [CheckpointCreateWithoutOwnerInput!]
+}
+input CheckpointCreateWithoutOwnerInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  todos: TodoCreateManyWithoutCheckpointInput
+}
+input TodoCreateManyWithoutCheckpointInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCheckpointInput!]
+}
+input TodoCreateWithoutCheckpointInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+input CategoryCreateOneWithoutTodosInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutTodosInput
+}
+input CategoryCreateWithoutTodosInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  tags: TagCreateManyWithoutCategoriesInput
+}
+input TagCreateManyWithoutCategoriesInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutCategoriesInput!]
+}
+input TagCreateWithoutCategoriesInput {
+  archivedAt: DateTime
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  todos: TodoCreateManyWithoutTagsInput
+}
+input UserCreateOneWithoutTagsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTagsInput
+}
+input UserCreateWithoutTagsInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryCreateManyWithoutOwnerInput
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  todos: TodoCreateManyWithoutOwnerInput
+}
+input CategoryCreateManyWithoutOwnerInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutOwnerInput!]
+}
+input CategoryCreateWithoutOwnerInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String!
+  tags: TagCreateManyWithoutCategoriesInput
+  todos: TodoCreateManyWithoutCategoryInput
+}
+input TodoCreateManyWithoutCategoryInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCategoryInput!]
+}
+input TodoCreateWithoutCategoryInput {
+  archivedAt: DateTime
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+input CheckpointCreateOneWithoutTodosInput {
+  connect: CheckpointWhereUniqueInput
+  create: CheckpointCreateWithoutTodosInput
+}
+input CheckpointCreateWithoutTodosInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  owner: UserCreateOneWithoutCheckpointsInput!
+}
+input UserCreateOneWithoutCheckpointsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCheckpointsInput
+}
+input UserCreateWithoutCheckpointsInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  tags: TagCreateManyWithoutOwnerInput
+  todos: TodoCreateManyWithoutOwnerInput
+}
+input TagCreateManyWithoutOwnerInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutOwnerInput!]
+}
+input TagCreateWithoutOwnerInput {
+  archivedAt: DateTime
+  categories: CategoryCreateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  todos: TodoCreateManyWithoutTagsInput
+}
+input CategoryCreateManyWithoutTagsInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutTagsInput!]
+}
+input CategoryCreateWithoutTagsInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutCategoriesInput!
+  todos: TodoCreateManyWithoutCategoryInput
+}
+input TodoCreateManyWithoutTagsInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutTagsInput!]
+}
+input TodoCreateWithoutTagsInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  status: TodoStatus
+  text: String!
+}
+input UserCreateOneWithoutTodosInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTodosInput
+}
+input UserCreateWithoutTodosInput {
+  accounts: AccountCreateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryCreateManyWithoutOwnerInput
+  checkpoints: CheckpointCreateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  tags: TagCreateManyWithoutOwnerInput
+}
+input TodoCreateManyWithoutOwnerInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutOwnerInput!]
+}
+input TodoCreateWithoutOwnerInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+input TagCreateManyWithoutTodosInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutTodosInput!]
+}
+input TagCreateWithoutTodosInput {
+  archivedAt: DateTime
+  categories: CategoryCreateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+}
+input CheckpointCreateInput {
+  archivedAt: DateTime
+  endAt: DateTime!
+  id: String
+  name: String
+  owner: UserCreateOneWithoutCheckpointsInput!
+  todos: TodoCreateManyWithoutCheckpointInput
+}
+input TagCreateInput {
+  archivedAt: DateTime
+  categories: CategoryCreateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  todos: TodoCreateManyWithoutTagsInput
+}
+input TodoCreateInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+input DeleteTodoInput {
+  id: ID!
+}
+input DeleteTodosByIdInput {
+  ids: [ID!]!
+}
+input CategoryUpdateInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  tags: TagUpdateManyWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+input UserUpdateOneRequiredWithoutCategoriesInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCategoriesInput
+  update: UserUpdateWithoutCategoriesDataInput
+  upsert: UserUpsertWithoutCategoriesInput
+}
+input UserUpdateWithoutCategoriesDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String
+  tags: TagUpdateManyWithoutOwnerInput
+  todos: TodoUpdateManyWithoutOwnerInput
+}
+input AccountUpdateManyWithoutUserInput {
+  connect: [AccountWhereUniqueInput!]
+  create: [AccountCreateWithoutUserInput!]
+  delete: [AccountWhereUniqueInput!]
+  deleteMany: [AccountScalarWhereInput!]
+  disconnect: [AccountWhereUniqueInput!]
+  set: [AccountWhereUniqueInput!]
+  update: [AccountUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [AccountUpdateManyWithWhereNestedInput!]
+  upsert: [AccountUpsertWithWhereUniqueWithoutUserInput!]
+}
+input AccountScalarWhereInput {
+  accessToken: StringFilter
+  accessTokenExpires: NullableDateTimeFilter
+  AND: [AccountScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [AccountScalarWhereInput!]
+  OR: [AccountScalarWhereInput!]
+  providerAccountId: StringFilter
+  providerId: StringFilter
+  providerType: StringFilter
+  refreshToken: NullableStringFilter
+  userId: StringFilter
+}
+input AccountUpdateWithWhereUniqueWithoutUserInput {
+  data: AccountUpdateWithoutUserDataInput!
+  where: AccountWhereUniqueInput!
+}
+input AccountUpdateWithoutUserDataInput {
+  accessToken: String
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String
+  providerId: String
+  providerType: String
+  refreshToken: String
+}
+input AccountUpdateManyWithWhereNestedInput {
+  data: AccountUpdateManyDataInput!
+  where: AccountScalarWhereInput!
+}
+input AccountUpdateManyDataInput {
+  accessToken: String
+  accessTokenExpires: DateTime
+  createdAt: DateTime
+  id: String
+  providerAccountId: String
+  providerId: String
+  providerType: String
+  refreshToken: String
+}
+input AccountUpsertWithWhereUniqueWithoutUserInput {
+  create: AccountCreateWithoutUserInput!
+  update: AccountUpdateWithoutUserDataInput!
+  where: AccountWhereUniqueInput!
+}
+input CheckpointUpdateManyWithoutOwnerInput {
+  connect: [CheckpointWhereUniqueInput!]
+  create: [CheckpointCreateWithoutOwnerInput!]
+  delete: [CheckpointWhereUniqueInput!]
+  deleteMany: [CheckpointScalarWhereInput!]
+  disconnect: [CheckpointWhereUniqueInput!]
+  set: [CheckpointWhereUniqueInput!]
+  update: [CheckpointUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [CheckpointUpdateManyWithWhereNestedInput!]
+  upsert: [CheckpointUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+input CheckpointScalarWhereInput {
+  AND: [CheckpointScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  endAt: DateTimeFilter
+  id: UUIDFilter
+  name: NullableStringFilter
+  NOT: [CheckpointScalarWhereInput!]
+  OR: [CheckpointScalarWhereInput!]
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+input CheckpointUpdateWithWhereUniqueWithoutOwnerInput {
+  data: CheckpointUpdateWithoutOwnerDataInput!
+  where: CheckpointWhereUniqueInput!
+}
+input CheckpointUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  todos: TodoUpdateManyWithoutCheckpointInput
+}
+input TodoUpdateManyWithoutCheckpointInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCheckpointInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutCheckpointInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutCheckpointInput!]
+}
+input TodoScalarWhereInput {
+  AND: [TodoScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  categoryId: StringFilter
+  checkpointId: NullableStringFilter
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  NOT: [TodoScalarWhereInput!]
+  OR: [TodoScalarWhereInput!]
+  ownerId: StringFilter
+  status: TodoStatus
+  tags: TagFilter
+  text: StringFilter
+}
+input TodoUpdateWithWhereUniqueWithoutCheckpointInput {
+  data: TodoUpdateWithoutCheckpointDataInput!
+  where: TodoWhereUniqueInput!
+}
+input TodoUpdateWithoutCheckpointDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+input CategoryUpdateOneRequiredWithoutTodosInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutTodosInput
+  update: CategoryUpdateWithoutTodosDataInput
+  upsert: CategoryUpsertWithoutTodosInput
+}
+input CategoryUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  tags: TagUpdateManyWithoutCategoriesInput
+}
+input TagUpdateManyWithoutCategoriesInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutCategoriesInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutCategoriesInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutCategoriesInput!]
+}
+input TagScalarWhereInput {
+  AND: [TagScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  categories: CategoryFilter
+  color: Color
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  name: StringFilter
+  NOT: [TagScalarWhereInput!]
+  OR: [TagScalarWhereInput!]
+  ownerId: StringFilter
+  todos: TodoFilter
+}
+input TagUpdateWithWhereUniqueWithoutCategoriesInput {
+  data: TagUpdateWithoutCategoriesDataInput!
+  where: TagWhereUniqueInput!
+}
+input TagUpdateWithoutCategoriesDataInput {
+  archivedAt: DateTime
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  todos: TodoUpdateManyWithoutTagsInput
+}
+input UserUpdateOneRequiredWithoutTagsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTagsInput
+  update: UserUpdateWithoutTagsDataInput
+  upsert: UserUpsertWithoutTagsInput
+}
+input UserUpdateWithoutTagsDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryUpdateManyWithoutOwnerInput
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String
+  todos: TodoUpdateManyWithoutOwnerInput
+}
+input CategoryUpdateManyWithoutOwnerInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutOwnerInput!]
+  delete: [CategoryWhereUniqueInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+input CategoryScalarWhereInput {
+  AND: [CategoryScalarWhereInput!]
+  archivedAt: NullableDateTimeFilter
+  createdAt: DateTimeFilter
+  id: UUIDFilter
+  name: StringFilter
+  NOT: [CategoryScalarWhereInput!]
+  OR: [CategoryScalarWhereInput!]
+  ownerId: StringFilter
+  tags: TagFilter
+  todos: TodoFilter
+}
+input CategoryUpdateWithWhereUniqueWithoutOwnerInput {
+  data: CategoryUpdateWithoutOwnerDataInput!
+  where: CategoryWhereUniqueInput!
+}
+input CategoryUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String
+  tags: TagUpdateManyWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+input TodoUpdateManyWithoutCategoryInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutCategoryInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutCategoryInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutCategoryInput!]
+}
+input TodoUpdateWithWhereUniqueWithoutCategoryInput {
+  data: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+input TodoUpdateWithoutCategoryDataInput {
+  archivedAt: DateTime
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+input CheckpointUpdateOneWithoutTodosInput {
+  connect: CheckpointWhereUniqueInput
+  create: CheckpointCreateWithoutTodosInput
+  delete: Boolean
+  disconnect: Boolean
+  update: CheckpointUpdateWithoutTodosDataInput
+  upsert: CheckpointUpsertWithoutTodosInput
+}
+input CheckpointUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCheckpointsInput
+}
+input UserUpdateOneRequiredWithoutCheckpointsInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutCheckpointsInput
+  update: UserUpdateWithoutCheckpointsDataInput
+  upsert: UserUpsertWithoutCheckpointsInput
+}
+input UserUpdateWithoutCheckpointsDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String
+  tags: TagUpdateManyWithoutOwnerInput
+  todos: TodoUpdateManyWithoutOwnerInput
+}
+input TagUpdateManyWithoutOwnerInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutOwnerInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+input TagUpdateWithWhereUniqueWithoutOwnerInput {
+  data: TagUpdateWithoutOwnerDataInput!
+  where: TagWhereUniqueInput!
+}
+input TagUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
+  categories: CategoryUpdateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  todos: TodoUpdateManyWithoutTagsInput
+}
+input CategoryUpdateManyWithoutTagsInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateWithoutTagsInput!]
+  delete: [CategoryWhereUniqueInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutTagsInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutTagsInput!]
+}
+input CategoryUpdateWithWhereUniqueWithoutTagsInput {
+  data: CategoryUpdateWithoutTagsDataInput!
+  where: CategoryWhereUniqueInput!
+}
+input CategoryUpdateWithoutTagsDataInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCategoriesInput
+  todos: TodoUpdateManyWithoutCategoryInput
+}
+input CategoryUpdateManyWithWhereNestedInput {
+  data: CategoryUpdateManyDataInput!
+  where: CategoryScalarWhereInput!
+}
+input CategoryUpdateManyDataInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  name: String
+}
+input CategoryUpsertWithWhereUniqueWithoutTagsInput {
+  create: CategoryCreateWithoutTagsInput!
+  update: CategoryUpdateWithoutTagsDataInput!
+  where: CategoryWhereUniqueInput!
+}
+input TodoUpdateManyWithoutTagsInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutTagsInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutTagsInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutTagsInput!]
+}
+input TodoUpdateWithWhereUniqueWithoutTagsInput {
+  data: TodoUpdateWithoutTagsDataInput!
+  where: TodoWhereUniqueInput!
+}
+input TodoUpdateWithoutTagsDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
+  status: TodoStatus
+  text: String
+}
+input UserUpdateOneRequiredWithoutTodosInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutTodosInput
+  update: UserUpdateWithoutTodosDataInput
+  upsert: UserUpsertWithoutTodosInput
+}
+input UserUpdateWithoutTodosDataInput {
+  accounts: AccountUpdateManyWithoutUserInput
+  avatarUrl: String
+  categories: CategoryUpdateManyWithoutOwnerInput
+  checkpoints: CheckpointUpdateManyWithoutOwnerInput
+  createdAt: DateTime
+  email: String
+  id: String
+  name: String
+  tags: TagUpdateManyWithoutOwnerInput
+}
+input UserUpsertWithoutTodosInput {
+  create: UserCreateWithoutTodosInput!
+  update: UserUpdateWithoutTodosDataInput!
+}
+input TodoUpdateManyWithWhereNestedInput {
+  data: TodoUpdateManyDataInput!
+  where: TodoScalarWhereInput!
+}
+input TodoUpdateManyDataInput {
+  archivedAt: DateTime
+  createdAt: DateTime
+  id: String
+  status: TodoStatus
+  text: String
+}
+input TodoUpsertWithWhereUniqueWithoutTagsInput {
+  create: TodoCreateWithoutTagsInput!
+  update: TodoUpdateWithoutTagsDataInput!
+  where: TodoWhereUniqueInput!
+}
+input TagUpdateManyWithWhereNestedInput {
+  data: TagUpdateManyDataInput!
+  where: TagScalarWhereInput!
+}
+input TagUpdateManyDataInput {
+  archivedAt: DateTime
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+}
+input TagUpsertWithWhereUniqueWithoutOwnerInput {
+  create: TagCreateWithoutOwnerInput!
+  update: TagUpdateWithoutOwnerDataInput!
+  where: TagWhereUniqueInput!
+}
+input TodoUpdateManyWithoutOwnerInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutOwnerInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutOwnerInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutOwnerInput!]
+}
+input TodoUpdateWithWhereUniqueWithoutOwnerInput {
+  data: TodoUpdateWithoutOwnerDataInput!
+  where: TodoWhereUniqueInput!
+}
+input TodoUpdateWithoutOwnerDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+input TagUpdateManyWithoutTodosInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutTodosInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutTodosInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutTodosInput!]
+}
+input TagUpdateWithWhereUniqueWithoutTodosInput {
+  data: TagUpdateWithoutTodosDataInput!
+  where: TagWhereUniqueInput!
+}
+input TagUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
+  categories: CategoryUpdateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+}
+input TagUpsertWithWhereUniqueWithoutTodosInput {
+  create: TagCreateWithoutTodosInput!
+  update: TagUpdateWithoutTodosDataInput!
+  where: TagWhereUniqueInput!
+}
+input TodoUpsertWithWhereUniqueWithoutOwnerInput {
+  create: TodoCreateWithoutOwnerInput!
+  update: TodoUpdateWithoutOwnerDataInput!
+  where: TodoWhereUniqueInput!
+}
+input UserUpsertWithoutCheckpointsInput {
+  create: UserCreateWithoutCheckpointsInput!
+  update: UserUpdateWithoutCheckpointsDataInput!
+}
+input CheckpointUpsertWithoutTodosInput {
+  create: CheckpointCreateWithoutTodosInput!
+  update: CheckpointUpdateWithoutTodosDataInput!
+}
+input TodoUpsertWithWhereUniqueWithoutCategoryInput {
+  create: TodoCreateWithoutCategoryInput!
+  update: TodoUpdateWithoutCategoryDataInput!
+  where: TodoWhereUniqueInput!
+}
+input CategoryUpsertWithWhereUniqueWithoutOwnerInput {
+  create: CategoryCreateWithoutOwnerInput!
+  update: CategoryUpdateWithoutOwnerDataInput!
+  where: CategoryWhereUniqueInput!
+}
+input UserUpsertWithoutTagsInput {
+  create: UserCreateWithoutTagsInput!
+  update: UserUpdateWithoutTagsDataInput!
+}
+input TagUpsertWithWhereUniqueWithoutCategoriesInput {
+  create: TagCreateWithoutCategoriesInput!
+  update: TagUpdateWithoutCategoriesDataInput!
+  where: TagWhereUniqueInput!
+}
+input CategoryUpsertWithoutTodosInput {
+  create: CategoryCreateWithoutTodosInput!
+  update: CategoryUpdateWithoutTodosDataInput!
+}
+input TodoUpsertWithWhereUniqueWithoutCheckpointInput {
+  create: TodoCreateWithoutCheckpointInput!
+  update: TodoUpdateWithoutCheckpointDataInput!
+  where: TodoWhereUniqueInput!
+}
+input CheckpointUpdateManyWithWhereNestedInput {
+  data: CheckpointUpdateManyDataInput!
+  where: CheckpointScalarWhereInput!
+}
+input CheckpointUpdateManyDataInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+}
+input CheckpointUpsertWithWhereUniqueWithoutOwnerInput {
+  create: CheckpointCreateWithoutOwnerInput!
+  update: CheckpointUpdateWithoutOwnerDataInput!
+  where: CheckpointWhereUniqueInput!
+}
+input UserUpsertWithoutCategoriesInput {
+  create: UserCreateWithoutCategoriesInput!
+  update: UserUpdateWithoutCategoriesDataInput!
+}
+input CheckpointUpdateInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutCheckpointsInput
+  todos: TodoUpdateManyWithoutCheckpointInput
+}
+input TagUpdateInput {
+  archivedAt: DateTime
+  categories: CategoryUpdateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  todos: TodoUpdateManyWithoutTagsInput
+}
+input UpdateTodoInput {
+  archivedAt: DateTime
+  checkpointId: ID
+  id: ID!
+  status: TodoStatus
+  tags: [ID!]
+  text: String
+}
+input UpdateTodosByIdInput {
+  archivedAt: DateTime
+  checkpointId: ID
+  ids: [ID!]!
+  status: TodoStatus
+  tags: [ID!]
+  text: String
+}
+"""The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."""
+scalar Json
