@@ -108,16 +108,13 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     dispatch(todoEditFormReset());
   }, []);
 
-  const handleCreateOneTodo = React.useCallback(async () => {
+  const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
-    await todoUsecase.createOneTodo(userId, categoryId, todoEditFormState);
+    todoUsecase.createOneTodo(userId, categoryId, todoEditFormState);
   }, [categoryId, todoEditFormState, todoUsecase, userId]);
 
-  const handleDeleteTodosById = React.useCallback(async () => {
-    await todoUsecase.deleteTodosById(
-      categoryId,
-      todoEditFormState.selectedTodoIds
-    );
+  const handleDeleteTodosById = React.useCallback(() => {
+    todoUsecase.deleteTodosById(categoryId, todoEditFormState.selectedTodoIds);
   }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
@@ -131,11 +128,8 @@ export const TodosPage: React.FunctionComponent<Props> = ({ categoryId }) => {
     [todoUsecase]
   );
 
-  const handleArchiveTodosById = React.useCallback(async () => {
-    await todoUsecase.archiveTodosById(
-      categoryId,
-      todoEditFormState.selectedTodoIds
-    );
+  const handleArchiveTodosById = React.useCallback(() => {
+    todoUsecase.archiveTodosById(categoryId, todoEditFormState.selectedTodoIds);
   }, [categoryId, todoEditFormState.selectedTodoIds, todoUsecase]);
 
   const handleToggleTag = React.useCallback((tag: TodoTagFragment) => {
