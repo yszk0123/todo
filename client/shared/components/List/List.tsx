@@ -29,6 +29,7 @@ export const List: React.FunctionComponent<Props> = ({
         boxShadow: hasHeader ? 1 : undefined,
         position: 'relative',
       }}
+      width={1}
       onClick={stopPropagation}
     >
       {hasHeader && (
