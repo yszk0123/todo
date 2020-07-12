@@ -8,8 +8,10 @@ import {
 } from '../../../shared/components/EditForm';
 import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { DateTime } from '../../../viewModels/DateTime';
 import { TodoSearchFormValue } from '../../ducks/TodoSearchFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
+import { TodoSearchFormArchivedAtField } from './TodoSearchFormArchivedAtField';
 import { TodoSearchFormCheckpointField } from './TodoSearchFormCheckpointField';
 import { TodoSearchFormStatusField } from './TodoSearchFormStatusField';
 import { TodoSearchFormTagsField } from './TodoSearchFormTagsField';
@@ -19,6 +21,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
+  onChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onChangeText: (text: string) => void;
   onCloseModal: () => void;
   onCommit: () => void;
@@ -31,6 +34,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   categoryTags,
   checkpoints,
   isOpen,
+  onChangeArchivedAt,
   onChangeText,
   onCloseModal,
   onCommit,
@@ -65,6 +69,10 @@ export const TodoSearchForm: React.FunctionComponent<{
         <TodoSearchFormTextField
           text={todoSearchFormValue.text}
           onChangeText={onChangeText}
+        />
+        <TodoSearchFormArchivedAtField
+          value={todoSearchFormValue.archivedAt}
+          onChange={onChangeArchivedAt}
         />
         <EditFormActionsField actions={actions} />
       </EditForm>
