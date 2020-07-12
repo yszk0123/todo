@@ -7,24 +7,29 @@ import {
   EditFormDateTimeInputField,
   EditFormInputField,
 } from '../../shared/components/EditForm';
+import { Modal } from '../../shared/components/Modal';
 import { DateTime } from '../../viewModels/DateTime';
 import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
 
 export const CheckpointEditForm: React.FunctionComponent<{
   checkpointEditFormState: CheckpointEditFormState;
+  isOpen: boolean;
   isSelected: boolean;
   onArchiveOneCheckpoint: () => void;
   onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onCloseModal: () => void;
   onCreateOneCheckpoint: () => void;
   onDeleteOneCheckpoint: () => void;
   onUpdateOneCheckpoint: () => void;
 }> = ({
   checkpointEditFormState,
+  isOpen,
   isSelected,
   onArchiveOneCheckpoint,
   onChangeEndAt,
   onChangeName,
+  onCloseModal,
   onCreateOneCheckpoint,
   onDeleteOneCheckpoint,
   onUpdateOneCheckpoint,
@@ -38,16 +43,18 @@ export const CheckpointEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
 
   return (
-    <EditForm>
-      <EditFormInputField
-        value={checkpointEditFormState.name ?? ''}
-        onChange={onChangeName}
-      />
-      <EditFormDateTimeInputField
-        value={checkpointEditFormState.endAt}
-        onChange={onChangeEndAt}
-      />
-      <EditFormActionsField actions={actions} />
-    </EditForm>
+    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+      <EditForm>
+        <EditFormInputField
+          value={checkpointEditFormState.name ?? ''}
+          onChange={onChangeName}
+        />
+        <EditFormDateTimeInputField
+          value={checkpointEditFormState.endAt}
+          onChange={onChangeEndAt}
+        />
+        <EditFormActionsField actions={actions} />
+      </EditForm>
+    </Modal>
   );
 };

@@ -50,19 +50,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     todos,
     userId,
   } = useTodosPageState();
-  const [modalType, setModalType] = React.useState(ModalType.NONE);
-
-  const handleCloseModal = React.useCallback(() => {
-    setModalType(ModalType.NONE);
-  }, []);
-
-  const handleOpenSearch = React.useCallback(() => {
-    setModalType(ModalType.SEARCH);
-  }, []);
-
-  const handleOpenEdit = React.useCallback(() => {
-    setModalType(ModalType.EDIT);
-  }, []);
+  const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
 
   const handleSelectOneTodo = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -132,8 +120,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSearchCommit = React.useCallback(() => {
     dispatch(todoSearchFormCommit());
-    handleCloseModal();
-  }, [dispatch, handleCloseModal]);
+    onCloseModal();
+  }, [dispatch, onCloseModal]);
 
   const handleSelectStatus = React.useCallback(
     (status: TodoStatus) => {
@@ -222,8 +210,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         count={todos.length}
         isSyncing={isSyncing}
         onClickCategory={handleSelectSearchCategory}
-        onClickEdit={handleOpenEdit}
-        onClickSearch={handleOpenSearch}
+        onClickEdit={onOpenEdit}
+        onClickSearch={onOpenSearch}
       />
       <TodoList
         isCategoryNameShown={isCategoryNameShown}
@@ -243,7 +231,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         todoEditFormState={todoEditFormState}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
-        onCloseModal={handleCloseModal}
+        onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}
         onDeleteOneTodo={handleDeleteTodosById}
         onSelectCategory={handleSelectCategory}
@@ -258,7 +246,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isOpen={modalType === ModalType.SEARCH}
         todoSearchFormValue={todoSearchFormDraft}
         onChangeText={handleChangeSearchText}
-        onCloseModal={handleCloseModal}
+        onCloseModal={onCloseModal}
         onCommit={handleSearchCommit}
         onReset={handleSearchReset}
         onSelectCheckpoint={handleSelectSearchCheckpoint}
@@ -273,4 +261,22 @@ enum ModalType {
   NONE,
   SEARCH,
   EDIT,
+}
+
+function useModalType() {
+  const [modalType, setModalType] = React.useState(ModalType.NONE);
+
+  const onCloseModal = React.useCallback(() => {
+    setModalType(ModalType.NONE);
+  }, []);
+
+  const onOpenSearch = React.useCallback(() => {
+    setModalType(ModalType.SEARCH);
+  }, []);
+
+  const onOpenEdit = React.useCallback(() => {
+    setModalType(ModalType.EDIT);
+  }, []);
+
+  return { onCloseModal, onOpenSearch, onOpenEdit, modalType };
 }

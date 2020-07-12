@@ -3,14 +3,17 @@ import { MdLabel } from 'react-icons/md';
 
 import {
   StatusBar,
+  StatusBarButton,
   StatusBarItem,
   StatusBarLeft,
+  StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
 
-export const TagStatusBar: React.FunctionComponent<{ count: number }> = ({
-  count,
-}) => {
+export const TagStatusBar: React.FunctionComponent<{
+  count: number;
+  onClickEdit: () => void;
+}> = ({ count, onClickEdit }) => {
   return (
     <StatusBar>
       <StatusBarLeft>
@@ -19,6 +22,9 @@ export const TagStatusBar: React.FunctionComponent<{ count: number }> = ({
           <MdLabel />
         </StatusBarItem>
       </StatusBarLeft>
+      <StatusBarRight>
+        <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+      </StatusBarRight>
     </StatusBar>
   );
 };

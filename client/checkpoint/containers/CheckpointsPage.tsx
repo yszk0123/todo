@@ -29,6 +29,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     now,
     userId,
   } = useCheckpointsPageState();
+  const { modalType, onCloseModal, onOpenEdit } = useModalType();
 
   const handleSelectOneCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment) => {
@@ -86,7 +87,10 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent onClick={handleDeselectCheckpoint}>
-      <CheckpointStatusBar count={checkpoints.length} />
+      <CheckpointStatusBar
+        count={checkpoints.length}
+        onClickEdit={onOpenEdit}
+      />
       <CheckpointList
         checkpoints={checkpoints}
         currentCheckpointId={currentCheckpointId}
@@ -95,10 +99,12 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <CheckpointEditForm
         checkpointEditFormState={checkpointEditFormState}
+        isOpen={modalType === ModalType.EDIT}
         isSelected={isSelected}
         onArchiveOneCheckpoint={handleArchiveOneCheckpoint}
         onChangeEndAt={handleChangeEndAt}
         onChangeName={handleChangeName}
+        onCloseModal={onCloseModal}
         onCreateOneCheckpoint={handleCreateOneCheckpoint}
         onDeleteOneCheckpoint={handleDeleteOneCheckpoint}
         onUpdateOneCheckpoint={handleUpdateOneCheckpoint}
@@ -106,3 +112,22 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     </PageContent>
   );
 };
+
+enum ModalType {
+  NONE,
+  EDIT,
+}
+
+function useModalType() {
+  const [modalType, setModalType] = React.useState(ModalType.NONE);
+
+  const onCloseModal = React.useCallback(() => {
+    setModalType(ModalType.NONE);
+  }, []);
+
+  const onOpenEdit = React.useCallback(() => {
+    setModalType(ModalType.EDIT);
+  }, []);
+
+  return { onCloseModal, onOpenEdit, modalType };
+}

@@ -3,14 +3,17 @@ import { MdPlace } from 'react-icons/md';
 
 import {
   StatusBar,
+  StatusBarButton,
   StatusBarItem,
   StatusBarLeft,
+  StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
 
 export const CheckpointStatusBar: React.FunctionComponent<{
   count: number;
-}> = ({ count }) => {
+  onClickEdit: () => void;
+}> = ({ count, onClickEdit }) => {
   return (
     <StatusBar>
       <StatusBarLeft>
@@ -19,6 +22,9 @@ export const CheckpointStatusBar: React.FunctionComponent<{
           <MdPlace />
         </StatusBarItem>
       </StatusBarLeft>
+      <StatusBarRight>
+        <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+      </StatusBarRight>
     </StatusBar>
   );
 };
