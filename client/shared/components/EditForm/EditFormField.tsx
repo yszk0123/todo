@@ -1,9 +1,12 @@
 import React from 'react';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
+
+const LABEL_WIDTH = 100;
 
 export const EditFormField: React.FunctionComponent<{
+  label?: string;
   rightElement?: JSX.Element | null;
-}> = ({ children, rightElement }) => {
+}> = ({ children, label, rightElement }) => {
   return (
     <Flex
       alignItems="center"
@@ -15,6 +18,11 @@ export const EditFormField: React.FunctionComponent<{
         ':last-child': { borderBottom: 'none' },
       }}
     >
+      {label !== undefined && (
+        <Text minWidth={LABEL_WIDTH} mr={2} textAlign="right">
+          {label}
+        </Text>
+      )}
       {children}
       {rightElement != null ? (
         <Box ml={2} sx={{ flexShrink: 0 }}>

@@ -47,10 +47,12 @@ export const CheckpointEditForm: React.FunctionComponent<{
     <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
       <EditForm>
         <EditFormInputField
+          label="Name"
           value={checkpointEditFormState.name ?? ''}
           onChange={onChangeName}
         />
         <EditFormDateTimeInputField
+          label="EndAt"
           value={checkpointEditFormState.endAt}
           onChange={onChangeEndAt}
         />

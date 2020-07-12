@@ -9,5 +9,11 @@ type Props = {
 };
 
 export function TodoSearchFormArchivedAtField({ onChange, value }: Props) {
-  return <EditFormDateTimeInputField value={value} onChange={onChange} />;
+  return (
+    <EditFormDateTimeInputField
+      label="ArchivedAt"
+      value={value}
+      onChange={onChange}
+    />
+  );
 }

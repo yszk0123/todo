@@ -33,17 +33,19 @@ function EditFormRadioFieldItem<T>({
 
 export function EditFormRadioField<T extends string>({
   items,
+  label,
   onClick,
   rightElement,
   selectedItem,
 }: {
   items: T[];
+  label: string;
   onClick: (item: T) => void;
   rightElement?: JSX.Element | null;
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <EditFormField rightElement={rightElement}>
+    <EditFormField label={label} rightElement={rightElement}>
       {items.map((item, i) => {
         return (
           <EditFormRadioFieldItem

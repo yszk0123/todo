@@ -20,6 +20,7 @@ export function TodoSearchFormCategoryField({
       getDisplayName={getDisplayNameFromCategory}
       getValue={getValueFromCategory}
       items={categories}
+      label="Category"
       rightElement={!category ? <Badge text="preserved" /> : null}
       selectedItem={category}
       onChange={onSelectCategory}

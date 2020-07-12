@@ -61,13 +61,15 @@ export const TagEditForm: React.FunctionComponent<{
         <EditFormChecklistField
           checkedItems={tagCategories}
           items={categories}
+          label="Categories"
           onClick={onToggleCategory}
         />
-        <EditFormInputField value={name} onChange={onChangeName} />
+        <EditFormInputField label="Name" value={name} onChange={onChangeName} />
         <EditFormSelectField
           getDisplayName={identity}
           getValue={identity}
           items={colors}
+          label="Color"
           rightElement={<ColorBox color={tagEditFormState.color} />}
           selectedItem={tagEditFormState.color}
           onChange={onChangeColor}

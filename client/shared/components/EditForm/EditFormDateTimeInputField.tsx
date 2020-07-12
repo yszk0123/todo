@@ -1,6 +1,7 @@
 import { Input } from '@rebass/forms';
 import { format } from 'date-fns';
 import React from 'react';
+import { Box } from 'rebass';
 
 import {
   DateTime,
@@ -20,9 +21,10 @@ function convertIntoDateString(value: DateTime | null): string {
 }
 
 export const EditFormDateTimeInputField: React.FunctionComponent<{
+  label: string;
   onChange: (value: DateTime | null) => void;
   value: DateTime | null;
-}> = ({ onChange, value }) => {
+}> = ({ label, onChange, value }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
@@ -35,8 +37,14 @@ export const EditFormDateTimeInputField: React.FunctionComponent<{
   const dateString = React.useMemo(() => convertIntoDateString(value), [value]);
 
   return (
-    <EditFormField>
-      <Input type="datetime-local" value={dateString} onChange={handleChange} />
+    <EditFormField label={label}>
+      <Box sx={{ flexGrow: 1 }}>
+        <Input
+          type="datetime-local"
+          value={dateString}
+          onChange={handleChange}
+        />
+      </Box>
     </EditFormField>
   );
 };

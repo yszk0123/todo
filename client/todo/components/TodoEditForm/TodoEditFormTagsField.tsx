@@ -29,6 +29,7 @@ export function TodoEditFormTagsField({
       getDisplayName={getDisplayName}
       getValue={getValue}
       items={categoryTags}
+      label="Tags"
       rightElement={!tags ? <Badge text="preserved" /> : null}
       selectedItems={tags ?? EMPTY_TAGS}
       onDeselect={onToggleTag}

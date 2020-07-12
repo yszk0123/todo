@@ -16,5 +16,7 @@ export function TodoEditFormTextField({ onChangeText, text }: Props) {
     [onChangeText]
   );
 
-  return <EditFormInputField value={text} onChange={handleChangeText} />;
+  return (
+    <EditFormInputField label="Text" value={text} onChange={handleChangeText} />
+  );
 }

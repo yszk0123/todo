@@ -26,6 +26,7 @@ export function TodoSearchFormStatusField({
       getDisplayName={getDisplayName}
       getValue={getValue}
       items={statuses}
+      label="Status"
       rightElement={!status ? <Badge text="preserved" /> : null}
       selectedItem={status}
       onChange={onSelectStatus}

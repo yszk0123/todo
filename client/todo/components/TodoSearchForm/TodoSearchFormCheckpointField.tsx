@@ -20,6 +20,7 @@ export function TodoSearchFormCheckpointField({
       getDisplayName={getDisplayNameFromCheckpoint}
       getValue={getValueFromCheckpoint}
       items={checkpoints}
+      label="Checkpoint"
       rightElement={!checkpoint ? <Badge text="preserved" /> : null}
       selectedItem={checkpoint}
       onChange={onSelectCheckpoint}

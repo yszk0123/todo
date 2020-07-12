@@ -8,6 +8,7 @@ export function EditFormSelectField<T>({
   getDisplayName,
   getValue,
   items,
+  label,
   onChange,
   rightElement,
   selectedItem,
@@ -15,12 +16,13 @@ export function EditFormSelectField<T>({
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
   items: T[];
+  label: string;
   onChange: (item: T | null) => void;
   rightElement?: JSX.Element | null;
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <EditFormField>
+    <EditFormField label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <Select
           getDisplayName={getDisplayName}

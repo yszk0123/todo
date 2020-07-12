@@ -12,6 +12,7 @@ export function EditFormBadgeSelectField<T>({
   getDisplayName,
   getValue,
   items,
+  label,
   onDeselect,
   onSelect,
   rightElement,
@@ -21,6 +22,7 @@ export function EditFormBadgeSelectField<T>({
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
   items: T[];
+  label: string;
   onDeselect: (item: T) => void;
   onSelect: (item: T) => void;
   rightElement?: JSX.Element | null;
@@ -43,7 +45,7 @@ export function EditFormBadgeSelectField<T>({
   const isEmpty = selectedItems.length === 0;
 
   return (
-    <EditFormField>
+    <EditFormField label={label}>
       <MiniList>
         {selectedItems.map((item, i) => {
           return (
