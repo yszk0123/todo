@@ -722,6 +722,7 @@ export type Stats = {
   checkpointCount?: Maybe<Scalars['Int']>;
   tagCount?: Maybe<Scalars['Int']>;
   todoCount?: Maybe<Scalars['Int']>;
+  todoCountByDate?: Maybe<Array<TodoCountByDate>>;
 };
 
 export type StringFilter = {
@@ -1016,6 +1017,12 @@ export type TodoTagsArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<TagOrderByInput>;
+};
+
+export type TodoCountByDate = {
+  __typename?: 'TodoCountByDate';
+  count: Scalars['Int'];
+  date?: Maybe<Scalars['String']>;
 };
 
 export type TodoCreateInput = {
