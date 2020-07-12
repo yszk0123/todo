@@ -84,7 +84,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState);
-  }, [todoEditFormState, todoUsecase]);
+    onCloseModal();
+  }, [onCloseModal, todoEditFormState, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
     (todo: RootTodoFragment) => {
