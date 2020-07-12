@@ -91,13 +91,17 @@ export class TodoUsecase {
     });
   }
 
-  updateTodosById({
-    checkpoint,
-    selectedTodoIds,
-    status,
-    tags,
-    text,
-  }: TodoEditFormState) {
+  updateTodosById(
+    {
+      category,
+      checkpoint,
+      selectedTodoIds,
+      status,
+      tags,
+      text,
+    }: TodoEditFormState,
+    todoSearchFormValue: TodoSearchFormValue | null
+  ) {
     const count = selectedTodoIds.length;
     if (count === 0) return;
 
@@ -111,6 +115,7 @@ export class TodoUsecase {
         variables: {
           input: {
             ids: selectedTodoIds,
+            categoryId: category?.id ?? undefined,
             text: count === 1 ? text : undefined,
             tags: tagIds,
             status: status ? status : undefined,
@@ -122,6 +127,7 @@ export class TodoUsecase {
                 : undefined,
           },
         },
+        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
       })
     );
   }
