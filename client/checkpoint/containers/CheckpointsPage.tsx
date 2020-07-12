@@ -10,6 +10,7 @@ import { CheckpointList } from '../components/CheckpointList';
 import { CheckpointStatusBar } from '../components/CheckpointStatusBar';
 import {
   checkpointEditFormReset,
+  checkpointEditFormSelectMany,
   checkpointEditFormSelectOne,
   checkpointEditFormSet,
 } from '../ducks/CheckpointEditFormStateDucks';
@@ -23,7 +24,6 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const {
     checkpointEditFormState,
     checkpoints,
-    currentCheckpointId,
     isLoading,
     now,
     selectMode,
@@ -34,6 +34,13 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const handleSelectOneCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment) => {
       dispatch(checkpointEditFormSelectOne(checkpoint));
+    },
+    [dispatch]
+  );
+
+  const handleSelectManyCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment) => {
+      dispatch(checkpointEditFormSelectMany(checkpoint));
     },
     [dispatch]
   );
@@ -50,18 +57,18 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     );
   }, [userId, checkpointUsecase, checkpointEditFormState]);
 
-  const handleDeleteOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.deleteOneCheckpoint(
+  const handleDeleteCheckpointsById = React.useCallback(async () => {
+    await checkpointUsecase.deleteCheckpointsById(
       checkpointEditFormState.selectedCheckpointIds
     );
   }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
-  const handleUpdateOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.updateOneCheckpoint(checkpointEditFormState);
+  const handleUpdateCheckpointsById = React.useCallback(async () => {
+    await checkpointUsecase.updateCheckpointsById(checkpointEditFormState);
   }, [checkpointUsecase, checkpointEditFormState]);
 
   const handleArchiveOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.archiveOneCheckpoint(
+    await checkpointUsecase.archiveCheckpointsById(
       checkpointEditFormState.selectedCheckpointIds
     );
   }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
@@ -94,9 +101,10 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <CheckpointList
         checkpoints={checkpoints}
-        currentCheckpointId={currentCheckpointId}
         now={now}
+        selectedCheckpointIds={checkpointEditFormState.selectedCheckpointIds}
         onClick={handleSelectOneCheckpoint}
+        onClickCheckbox={handleSelectManyCheckpoint}
       />
       <CheckpointEditForm
         checkpointEditFormState={checkpointEditFormState}
@@ -107,8 +115,8 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         onChangeName={handleChangeName}
         onCloseModal={onCloseModal}
         onCreateOneCheckpoint={handleCreateOneCheckpoint}
-        onDeleteOneCheckpoint={handleDeleteOneCheckpoint}
-        onUpdateOneCheckpoint={handleUpdateOneCheckpoint}
+        onDeleteCheckpointsById={handleDeleteCheckpointsById}
+        onUpdateCheckpointsById={handleUpdateCheckpointsById}
       />
     </PageContent>
   );

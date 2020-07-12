@@ -19,10 +19,20 @@ mutation UpdateOneCheckpoint(
   }
 }
 
+mutation UpdateCheckpointsById($input: UpdateCheckpointsByIdInput!) {
+  updateCheckpointsById(data: $input) {
+    ...RootCheckpoint
+  }
+}
+
 mutation DeleteOneCheckpoint($where: CheckpointWhereUniqueInput!) {
   deleteOneCheckpoint(where: $where) {
     id
   }
+}
+
+mutation DeleteCheckpointsById($data: DeleteCheckpointsByIdInput!) {
+  deleteCheckpointsById(data: $data)
 }
 
 fragment RootCheckpoint on Checkpoint {

@@ -300,11 +300,13 @@ type Mutation {
   createOneCheckpoint(data: CheckpointCreateInput!): Checkpoint!
   createOneTag(data: TagCreateInput!): Tag!
   createOneTodo(data: TodoCreateInput!): Todo!
+  deleteCheckpointsById(data: DeleteCheckpointsByIdInput!): [ID!]
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
   deleteOneCheckpoint(where: CheckpointWhereUniqueInput!): Checkpoint
   deleteOneTag(where: TagWhereUniqueInput!): Tag
   deleteTodo(data: DeleteTodoInput!): Todo
   deleteTodosById(data: DeleteTodosByIdInput!): [ID!]
+  updateCheckpointsById(data: UpdateCheckpointsByIdInput!): [Checkpoint!]
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneCheckpoint(data: CheckpointUpdateInput!, where: CheckpointWhereUniqueInput!): Checkpoint
   updateOneTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
@@ -584,11 +586,20 @@ input TodoCreateInput {
   tags: TagCreateManyWithoutTodosInput
   text: String!
 }
+input DeleteCheckpointsByIdInput {
+  ids: [ID!]!
+}
 input DeleteTodoInput {
   id: ID!
 }
 input DeleteTodosByIdInput {
   ids: [ID!]!
+}
+input UpdateCheckpointsByIdInput {
+  archivedAt: DateTime
+  endAt: DateTime
+  ids: [ID!]!
+  name: String
 }
 input CategoryUpdateInput {
   archivedAt: DateTime
