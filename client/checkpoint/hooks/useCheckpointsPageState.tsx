@@ -29,8 +29,6 @@ export function useCheckpointsPageState() {
     now,
     checkpointEditFormState,
     checkpoints: data?.checkpoints ?? [],
-    currentCheckpointId:
-      checkpointEditFormState.selectedCheckpointIds[0] ?? null,
     isLoading: !data && loading,
     selectMode: getSelectMode(checkpointEditFormState.selectedCheckpointIds),
     userId: data?.me?.id,

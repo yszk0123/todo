@@ -20,7 +20,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
   onCloseModal: () => void;
   onCreateOneCheckpoint: () => void;
-  onDeleteOneCheckpoint: () => void;
+  onDeleteCheckpointsById: () => void;
   onUpdateOneCheckpoint: () => void;
   selectMode: SelectMode;
 }> = ({
@@ -31,13 +31,13 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onChangeName,
   onCloseModal,
   onCreateOneCheckpoint,
-  onDeleteOneCheckpoint,
+  onDeleteCheckpointsById,
   onUpdateOneCheckpoint,
   selectMode,
 }) => {
   const actions: EditFormAction[] = isSelected(selectMode)
     ? [
-        { label: 'Delete', onClick: onDeleteOneCheckpoint },
+        { label: 'Delete', onClick: onDeleteCheckpointsById },
         { label: 'Archive', onClick: onArchiveOneCheckpoint },
         { label: 'Update', onClick: onUpdateOneCheckpoint },
       ]

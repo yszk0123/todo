@@ -522,6 +522,10 @@ export type DateTimeFilter = {
   notIn?: Maybe<Array<Scalars['DateTime']>>;
 };
 
+export type DeleteCheckpointsByIdInput = {
+  ids: Array<Scalars['ID']>;
+};
+
 export type DeleteTodoInput = {
   id: Scalars['ID'];
 };
@@ -537,6 +541,7 @@ export type Mutation = {
   createOneCheckpoint: Checkpoint;
   createOneTag: Tag;
   createOneTodo: Todo;
+  deleteCheckpointsById?: Maybe<Array<Scalars['ID']>>;
   deleteOneCategory?: Maybe<Category>;
   deleteOneCheckpoint?: Maybe<Checkpoint>;
   deleteOneTag?: Maybe<Tag>;
@@ -567,6 +572,11 @@ export type MutationCreateOneTagArgs = {
 
 export type MutationCreateOneTodoArgs = {
   data: TodoCreateInput;
+};
+
+
+export type MutationDeleteCheckpointsByIdArgs = {
+  data: DeleteCheckpointsByIdInput;
 };
 
 

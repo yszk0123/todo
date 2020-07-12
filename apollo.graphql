@@ -300,6 +300,7 @@ type Mutation {
   createOneCheckpoint(data: CheckpointCreateInput!): Checkpoint!
   createOneTag(data: TagCreateInput!): Tag!
   createOneTodo(data: TodoCreateInput!): Todo!
+  deleteCheckpointsById(data: DeleteCheckpointsByIdInput!): [ID!]
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
   deleteOneCheckpoint(where: CheckpointWhereUniqueInput!): Checkpoint
   deleteOneTag(where: TagWhereUniqueInput!): Tag
@@ -583,6 +584,9 @@ input TodoCreateInput {
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
+}
+input DeleteCheckpointsByIdInput {
+  ids: [ID!]!
 }
 input DeleteTodoInput {
   id: ID!

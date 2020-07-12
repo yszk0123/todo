@@ -1,5 +1,12 @@
 import { schema } from 'nexus';
 
+schema.inputObjectType({
+  name: 'DeleteCheckpointsByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
+  },
+});
+
 schema.extendType({
   type: 'Mutation',
   definition(t) {
@@ -42,6 +49,33 @@ schema.extendType({
         });
         const ownerId = checkpoint?.ownerId;
         return !!userId && !!ownerId && userId === ownerId;
+      },
+    });
+
+    t.list.field('deleteCheckpointsById', {
+      type: 'ID',
+      args: {
+        data: schema.arg({
+          type: 'DeleteCheckpointsByIdInput',
+          required: true,
+        }),
+      },
+      async authorize(_root, args, ctx) {
+        const checkpointIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const checkpoints = await ctx.db.checkpoint.findMany({
+          where: { id: { in: checkpointIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && checkpoints.every((e) => e.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const checkpointIds = args.data.ids;
+        await ctx.db.checkpoint.deleteMany({
+          where: { id: { in: checkpointIds } },
+        });
+        return checkpointIds;
       },
     });
   },

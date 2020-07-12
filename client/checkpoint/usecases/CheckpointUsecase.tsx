@@ -11,6 +11,8 @@ import {
 import {
   CreateOneCheckpointDocument,
   CreateOneCheckpointMutationVariables,
+  DeleteCheckpointsByIdDocument,
+  DeleteCheckpointsByIdMutationVariables,
   DeleteOneCheckpointDocument,
   DeleteOneCheckpointMutationVariables,
   refetchGetCheckpointQuery,
@@ -85,6 +87,19 @@ export class CheckpointUsecase {
     await this.client.mutate<unknown, DeleteOneCheckpointMutationVariables>({
       mutation: DeleteOneCheckpointDocument,
       variables: { where: { id: checkpointId } },
+      refetchQueries: [refetchGetCheckpointQuery()],
+    });
+  }
+
+  async deleteCheckpointsById(checkpointIds: ID[]) {
+    const count = checkpointIds.length;
+    if (!confirm(`Delete ${count} items?`)) return;
+
+    this.dispatch(checkpointEditFormReset());
+
+    await this.client.mutate<unknown, DeleteCheckpointsByIdMutationVariables>({
+      mutation: DeleteCheckpointsByIdDocument,
+      variables: { data: { ids: checkpointIds } },
       refetchQueries: [refetchGetCheckpointQuery()],
     });
   }

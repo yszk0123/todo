@@ -55,6 +55,16 @@ export type DeleteOneCheckpointMutation = (
   )> }
 );
 
+export type DeleteCheckpointsByIdMutationVariables = Types.Exact<{
+  data: Types.DeleteCheckpointsByIdInput;
+}>;
+
+
+export type DeleteCheckpointsByIdMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Types.Mutation, 'deleteCheckpointsById'>
+);
+
 export type RootCheckpointFragment = (
   { __typename?: 'Checkpoint' }
   & Pick<Types.Checkpoint, 'id' | 'name' | 'endAt'>
@@ -199,3 +209,33 @@ export function useDeleteOneCheckpointMutation(baseOptions?: ApolloReactHooks.Mu
 export type DeleteOneCheckpointMutationHookResult = ReturnType<typeof useDeleteOneCheckpointMutation>;
 export type DeleteOneCheckpointMutationResult = ApolloReactCommon.MutationResult<DeleteOneCheckpointMutation>;
 export type DeleteOneCheckpointMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>;
+export const DeleteCheckpointsByIdDocument = gql`
+    mutation DeleteCheckpointsById($data: DeleteCheckpointsByIdInput!) {
+  deleteCheckpointsById(data: $data)
+}
+    `;
+export type DeleteCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;
+
+/**
+ * __useDeleteCheckpointsByIdMutation__
+ *
+ * To run a mutation, you first call `useDeleteCheckpointsByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCheckpointsByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCheckpointsByIdMutation, { data, loading, error }] = useDeleteCheckpointsByIdMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useDeleteCheckpointsByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>(DeleteCheckpointsByIdDocument, baseOptions);
+      }
+export type DeleteCheckpointsByIdMutationHookResult = ReturnType<typeof useDeleteCheckpointsByIdMutation>;
+export type DeleteCheckpointsByIdMutationResult = ApolloReactCommon.MutationResult<DeleteCheckpointsByIdMutation>;
+export type DeleteCheckpointsByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;
