@@ -1,5 +1,8 @@
 import { TodoStatus } from '../shared/graphql/__generated__/baseTypes';
-import { RootTodoFragment } from '../todo/graphql/__generated__/Todo.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../todo/graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
 type Group = {
@@ -27,12 +30,24 @@ function getTime(text: string): number {
   return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
 }
 
+function compareTags(a: TodoTagFragment[], b: TodoTagFragment[]): number {
+  const len = Math.min(a.length, b.length);
+  for (let i = 0; i < len; i += 1) {
+    const name = a[i].name.localeCompare(b[i].name);
+    if (name !== 0) return name;
+  }
+  return a.length - b.length;
+}
+
 function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
   return [...todos].sort((a, b) => {
     const time = getTime(a.text) - getTime(b.text);
     if (time !== 0) return time;
     const status = statusToIndex[a.status] - statusToIndex[b.status];
-    return status;
+    if (status !== 0) return status;
+    const name = a.category.name.localeCompare(b.category.name);
+    if (name !== 0) return name;
+    return compareTags(a.tags, b.tags);
   });
 }
 
