@@ -20,12 +20,12 @@ import {
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
-  GetTodosQueryVariables,
   refetchGetTodosQuery,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import { getTodoWhereInput } from '../view_models/TodoWhereInput';
 
 function getNextStatus(status: TodoStatus): TodoStatus {
   switch (status) {
@@ -40,28 +40,10 @@ function getNextStatus(status: TodoStatus): TodoStatus {
   }
 }
 
-function getQueryVariables(
-  todoSearchFormValue: TodoSearchFormValue | null
-): GetTodosQueryVariables {
-  return {
-    input: {
-      categoryId: todoSearchFormValue?.category?.id
-        ? { equals: todoSearchFormValue?.category?.id }
-        : undefined,
-      archivedAt: todoSearchFormValue?.archivedAt
-        ? { lte: todoSearchFormValue.archivedAt }
-        : { equals: null },
-      status: todoSearchFormValue?.status ?? undefined,
-      tags: todoSearchFormValue?.tags?.length
-        ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
-        : undefined,
-      text: todoSearchFormValue?.text
-        ? {
-            contains: todoSearchFormValue.text,
-          }
-        : undefined,
-    },
-  };
+function getRefetchQuery(todoSearchFormValue: TodoSearchFormValue | null) {
+  return refetchGetTodosQuery({
+    input: getTodoWhereInput(todoSearchFormValue),
+  });
 }
 
 export class TodoUsecase {
@@ -105,9 +87,7 @@ export class TodoUsecase {
               : undefined,
         },
       },
-      refetchQueries: [
-        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
-      ],
+      refetchQueries: [getRefetchQuery(todoSearchFormValue)],
     });
   }
 
@@ -158,9 +138,7 @@ export class TodoUsecase {
       this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
         mutation: DeleteTodosByIdDocument,
         variables: { input: { ids: todoIds } },
-        refetchQueries: [
-          refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
-        ],
+        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
       })
     );
   }
@@ -194,9 +172,7 @@ export class TodoUsecase {
             archivedAt: toDateTime(new Date()),
           },
         },
-        refetchQueries: [
-          refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
-        ],
+        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
       })
     );
   }
