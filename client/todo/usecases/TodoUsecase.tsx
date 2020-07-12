@@ -109,7 +109,7 @@ export class TodoUsecase {
     });
   }
 
-  async updateTodosById({
+  updateTodosById({
     checkpoint,
     selectedTodoIds,
     status,
@@ -123,30 +123,28 @@ export class TodoUsecase {
 
     this.dispatch(todoEditFormSet({ selectedTodoIds: [] }));
 
-    this.writeIsSyncing(true);
-
-    await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
-      mutation: UpdateTodosByIdDocument,
-      variables: {
-        input: {
-          ids: selectedTodoIds,
-          text: count === 1 ? text : undefined,
-          tags: tagIds,
-          status: status ? status : undefined,
-          checkpointId:
-            checkpoint === DUMMY_CHECKPOINT
-              ? null
-              : checkpoint
-              ? checkpoint.id
-              : undefined,
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: selectedTodoIds,
+            text: count === 1 ? text : undefined,
+            tags: tagIds,
+            status: status ? status : undefined,
+            checkpointId:
+              checkpoint === DUMMY_CHECKPOINT
+                ? null
+                : checkpoint
+                ? checkpoint.id
+                : undefined,
+          },
         },
-      },
-    });
-
-    this.writeIsSyncing(false);
+      })
+    );
   }
 
-  async deleteTodosById(
+  deleteTodosById(
     todoIds: ID[],
     todoSearchFormValue: TodoSearchFormValue | null
   ) {
@@ -154,44 +152,57 @@ export class TodoUsecase {
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
     this.dispatch(todoEditFormReset());
-    await this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
-      mutation: DeleteTodosByIdDocument,
-      variables: { input: { ids: todoIds } },
-      refetchQueries: [
-        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
-      ],
-    });
+    this.sync(() =>
+      this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
+        mutation: DeleteTodosByIdDocument,
+        variables: { input: { ids: todoIds } },
+        refetchQueries: [
+          refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
+        ],
+      })
+    );
   }
 
-  async toggleStatus(todo: RootTodoFragment) {
+  toggleStatus(todo: RootTodoFragment) {
     const newStatus = getNextStatus(todo.status);
 
-    await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
-      mutation: UpdateTodosByIdDocument,
-      variables: {
-        input: {
-          ids: [todo.id],
-          status: newStatus,
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: [todo.id],
+            status: newStatus,
+          },
         },
-      },
-    });
+      })
+    );
   }
 
-  async archiveTodosById(
+  archiveTodosById(
     todoIds: ID[],
     todoSearchFormValue: TodoSearchFormValue | null
   ) {
-    await this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
-      mutation: UpdateTodosByIdDocument,
-      variables: {
-        input: {
-          ids: todoIds,
-          archivedAt: toDateTime(new Date()),
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            archivedAt: toDateTime(new Date()),
+          },
         },
-      },
-      refetchQueries: [
-        refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
-      ],
+        refetchQueries: [
+          refetchGetTodosQuery(getQueryVariables(todoSearchFormValue)),
+        ],
+      })
+    );
+  }
+
+  private async sync(callback: () => Promise<unknown>) {
+    this.writeIsSyncing(true);
+    callback().finally(() => {
+      this.writeIsSyncing(false);
     });
   }
 
