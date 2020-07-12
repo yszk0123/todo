@@ -13,6 +13,7 @@ import {
 import { Modal } from '../../shared/components/Modal';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { identity } from '../../shared/helpers/identity';
+import { isSelected, SelectMode } from '../../view_models/SelectMode';
 import { TagEditFormState } from '../ducks/TagEditFormDucks';
 
 const colors = Object.values(Color);
@@ -20,7 +21,6 @@ const colors = Object.values(Color);
 export const TagEditForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   isOpen: boolean;
-  isSelected: boolean;
   onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
@@ -29,12 +29,12 @@ export const TagEditForm: React.FunctionComponent<{
   onDeleteOneTag: () => void;
   onToggleCategory: (category: RootCategoryFragment) => void;
   onUpdateOneTag: () => void;
+  selectMode: SelectMode;
   tagCategories: RootCategoryFragment[];
   tagEditFormState: TagEditFormState;
 }> = ({
   categories,
   isOpen,
-  isSelected,
   onArchiveOneTag,
   onChangeColor,
   onChangeName,
@@ -43,10 +43,11 @@ export const TagEditForm: React.FunctionComponent<{
   onDeleteOneTag,
   onToggleCategory,
   onUpdateOneTag,
+  selectMode,
   tagCategories,
   tagEditFormState,
 }) => {
-  const actions: EditFormAction[] = isSelected
+  const actions: EditFormAction[] = isSelected(selectMode)
     ? [
         { label: 'Delete', onClick: onDeleteOneTag },
         { label: 'Archive', onClick: onArchiveOneTag },

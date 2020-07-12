@@ -13,7 +13,7 @@ import {
   StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
-import { SelectMode } from '../../view_models/SelectMode';
+import { isSelected, SelectMode } from '../../view_models/SelectMode';
 
 const animation = {
   animationName: 'rotation',
@@ -68,8 +68,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearch,
   selectMode,
 }) => {
+  const selected = isSelected(selectMode);
+
   return (
-    <StatusBar>
+    <StatusBar isSelected={selected}>
       <StatusBarLeft>
         <StatusBarItem>
           <Select
@@ -93,11 +95,17 @@ export const TodoStatusBar: React.FunctionComponent<{
             text="See report"
           />
         )}
-        {selectMode !== SelectMode.NONE && (
+        {selected && (
           <StatusBarButton label="Archive" onClick={onClickArchive} />
         )}
-        <StatusBarButton label="Search" onClick={onClickSearch} />
-        <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+        {!selected && (
+          <StatusBarButton label="Search" onClick={onClickSearch} />
+        )}
+        <StatusBarButton
+          isPrimary
+          label={selected ? 'Edit' : 'Create'}
+          onClick={onClickEdit}
+        />
       </StatusBarRight>
     </StatusBar>
   );

@@ -9,12 +9,12 @@ import {
 } from '../../shared/components/EditForm';
 import { Modal } from '../../shared/components/Modal';
 import { DateTime } from '../../view_models/DateTime';
+import { isSelected, SelectMode } from '../../view_models/SelectMode';
 import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
 
 export const CheckpointEditForm: React.FunctionComponent<{
   checkpointEditFormState: CheckpointEditFormState;
   isOpen: boolean;
-  isSelected: boolean;
   onArchiveOneCheckpoint: () => void;
   onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
@@ -22,10 +22,10 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onCreateOneCheckpoint: () => void;
   onDeleteOneCheckpoint: () => void;
   onUpdateOneCheckpoint: () => void;
+  selectMode: SelectMode;
 }> = ({
   checkpointEditFormState,
   isOpen,
-  isSelected,
   onArchiveOneCheckpoint,
   onChangeEndAt,
   onChangeName,
@@ -33,8 +33,9 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onCreateOneCheckpoint,
   onDeleteOneCheckpoint,
   onUpdateOneCheckpoint,
+  selectMode,
 }) => {
-  const actions: EditFormAction[] = isSelected
+  const actions: EditFormAction[] = isSelected(selectMode)
     ? [
         { label: 'Delete', onClick: onDeleteOneCheckpoint },
         { label: 'Archive', onClick: onArchiveOneCheckpoint },

@@ -24,7 +24,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     categoryEditFormState,
     currentCategoryId,
     isLoading,
-    isSelected,
+    selectMode,
     userId,
   } = useCategoriesPageState();
   const { modalType, onCloseModal, onOpenEdit } = useModalType();
@@ -76,7 +76,11 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent onClick={handleDeselectCategory}>
-      <CategoryStatusBar count={categories.length} onClickEdit={onOpenEdit} />
+      <CategoryStatusBar
+        count={categories.length}
+        selectMode={selectMode}
+        onClickEdit={onOpenEdit}
+      />
       <CategoryList
         categories={categories}
         currentCategoryId={currentCategoryId}
@@ -85,7 +89,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       <CategoryEditForm
         categoryEditFormState={categoryEditFormState}
         isOpen={modalType === ModalType.EDIT}
-        isSelected={isSelected}
+        selectMode={selectMode}
         onChangeName={handleChangeName}
         onCloseModal={onCloseModal}
         onCreateOneCategory={handleCreateOneCategory}

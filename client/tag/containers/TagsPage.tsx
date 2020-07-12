@@ -25,8 +25,8 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   const {
     currentTagId,
     isLoading,
-    isSelected,
     rootCategories,
+    selectMode,
     tagEditFormState,
     tags,
     userId,
@@ -96,7 +96,11 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent onClick={handleDeselectTag}>
-      <TagStatusBar count={tags.length} onClickEdit={onOpenEdit} />
+      <TagStatusBar
+        count={tags.length}
+        selectMode={selectMode}
+        onClickEdit={onOpenEdit}
+      />
       <TagList
         currentTagId={currentTagId}
         tags={tags}
@@ -105,7 +109,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       <TagEditForm
         categories={rootCategories}
         isOpen={modalType === ModalType.EDIT}
-        isSelected={isSelected}
+        selectMode={selectMode}
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
         onArchiveOneTag={handleArchiveOneTag}
