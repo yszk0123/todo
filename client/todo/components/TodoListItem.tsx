@@ -1,7 +1,7 @@
 // FIXME: Use layout components instead of using rebass directly
 import { Checkbox } from '@rebass/forms';
 import React from 'react';
-import { Box } from 'rebass';
+import { Box, Flex } from 'rebass';
 
 import { Label } from '../../shared/components/Label';
 import { ListItem } from '../../shared/components/List';
@@ -62,9 +62,9 @@ export const TodoListItem: React.FunctionComponent<{
             <>
               <TodoListTags tags={todo.tags} />
               {isCategoryNameShown && (
-                <Box ml={1}>
+                <Flex ml={1}>
                   <Label text={todo.category.name} />
-                </Box>
+                </Flex>
               )}
             </>
           }
