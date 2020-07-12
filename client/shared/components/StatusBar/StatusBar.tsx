@@ -20,7 +20,7 @@ export const StatusBar: React.FunctionComponent<EmptyProps> = ({
       fontSize={2}
       justifyContent="space-between"
       p={2}
-      sx={{ position: 'sticky', zIndex: 2, bottom: 0 }}
+      sx={{ position: 'sticky', zIndex: 2, bottom: 0, boxShadow: 2 }}
       onClick={stopPropagation}
     >
       {children}
