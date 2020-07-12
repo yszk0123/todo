@@ -75,11 +75,16 @@ export class TodoUsecase {
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
-    const categoryIdToCreate = todoEditFormState.category?.id ?? null;
+    const categoryIdToCreate =
+      todoEditFormState.category?.id ??
+      todoSearchFormValue?.category?.id ??
+      null;
     if (categoryIdToCreate === null) {
       alert('CategoryId required');
       return;
     }
+    const checkpointToCreate =
+      checkpoint ?? todoSearchFormValue?.checkpoint ?? null;
 
     this.dispatch(todoEditFormSet({ text: '' }));
 
@@ -91,10 +96,10 @@ export class TodoUsecase {
           category: { connect: { id: categoryIdToCreate } },
           tags: newTags ? { connect: newTags } : undefined,
           text,
-          status: status ?? TodoStatus.Todo,
+          status: status ?? todoSearchFormValue?.status ?? TodoStatus.Todo,
           checkpoint:
-            checkpoint && checkpoint !== DUMMY_CHECKPOINT
-              ? { connect: { id: checkpoint.id } }
+            checkpointToCreate && checkpointToCreate !== DUMMY_CHECKPOINT
+              ? { connect: { id: checkpointToCreate.id } }
               : undefined,
         },
       },
