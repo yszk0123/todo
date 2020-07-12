@@ -20,7 +20,9 @@ function getQueryVariables(
       categoryId: todoSearchFormValue?.category?.id
         ? { equals: todoSearchFormValue?.category?.id }
         : undefined,
-      archivedAt: { equals: null },
+      archivedAt: todoSearchFormValue?.archivedAt
+        ? { lte: todoSearchFormValue.archivedAt }
+        : { equals: null },
       status: todoSearchFormValue?.status ?? undefined,
       tags: todoSearchFormValue?.tags?.length
         ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }

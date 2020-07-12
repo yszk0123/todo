@@ -8,6 +8,7 @@ import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { DUMMY_CHECKPOINT } from '../../viewModels/Checkpoint';
+import { DateTime } from '../../viewModels/DateTime';
 import { EmptyProps } from '../../viewModels/EmptyProps';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoList } from '../components/TodoList';
@@ -118,6 +119,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleSearchReset = React.useCallback(() => {
     dispatch(todoSearchFormReset());
   }, [dispatch]);
+
+  const handleChangeArchivedAt = React.useCallback(
+    (archivedAt: DateTime | null) => {
+      dispatch(todoSearchFormSet({ archivedAt }));
+    },
+    [dispatch]
+  );
 
   const handleSearchCommit = React.useCallback(() => {
     dispatch(todoSearchFormCommit());
@@ -248,6 +256,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.SEARCH}
         todoSearchFormValue={todoSearchFormDraft}
+        onChangeArchivedAt={handleChangeArchivedAt}
         onChangeText={handleChangeSearchText}
         onCloseModal={onCloseModal}
         onCommit={handleSearchCommit}

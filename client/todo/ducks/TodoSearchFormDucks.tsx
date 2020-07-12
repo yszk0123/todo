@@ -2,9 +2,11 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
+import { DateTime } from '../../viewModels/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 
 export type TodoSearchFormValue = {
+  archivedAt: DateTime | null;
   category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
   status: TodoStatus | null;
@@ -73,6 +75,7 @@ export function todoSearchFormCommit(): TodoSearchFormAction {
 export const todoSearchFormInitialState: TodoSearchFormState = {
   current: null,
   draft: {
+    archivedAt: null,
     category: null,
     checkpoint: null,
     status: null,

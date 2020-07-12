@@ -88,8 +88,6 @@ schema.queryType({
           where: {
             ...args.where,
             ownerId: { equals: ctx.user.id },
-            // FIXME: Set from client
-            archivedAt: { equals: null },
           },
           first: TODO_LIMIT,
         };
