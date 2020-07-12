@@ -25,7 +25,7 @@ export function ListItem<T>({
   return (
     <Flex
       alignItems="center"
-      bg={isActive ? 'muted' : undefined}
+      bg={isActive ? 'highlight' : undefined}
       flex="1 1 auto"
       p={2}
       sx={{
