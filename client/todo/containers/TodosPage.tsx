@@ -210,6 +210,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         category={category}
         count={todos.length}
         isSyncing={isSyncing}
+        selectMode={selectMode}
+        onClickArchive={handleArchiveTodosById}
         onClickCategory={handleSelectSearchCategory}
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}

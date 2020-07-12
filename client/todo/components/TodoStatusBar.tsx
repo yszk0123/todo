@@ -13,6 +13,7 @@ import {
   StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
+import { SelectMode } from '../../viewModels/SelectMode';
 
 const animation = {
   animationName: 'rotation',
@@ -51,17 +52,21 @@ export const TodoStatusBar: React.FunctionComponent<{
   category: RootCategoryFragment | null;
   count: number;
   isSyncing: boolean;
+  onClickArchive: () => void;
   onClickCategory: (category: RootCategoryFragment | null) => void;
   onClickEdit: () => void;
   onClickSearch: () => void;
+  selectMode: SelectMode;
 }> = ({
   categories,
   category,
   count,
   isSyncing,
+  onClickArchive,
   onClickCategory,
   onClickEdit,
   onClickSearch,
+  selectMode,
 }) => {
   return (
     <StatusBar>
@@ -87,6 +92,9 @@ export const TodoStatusBar: React.FunctionComponent<{
             href="/categories/[categoryId]/todos/report"
             text="See report"
           />
+        )}
+        {selectMode !== SelectMode.NONE && (
+          <StatusBarButton label="Archive" onClick={onClickArchive} />
         )}
         <StatusBarButton label="Search" onClick={onClickSearch} />
         <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
