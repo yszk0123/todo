@@ -5,9 +5,9 @@ import {
   PageIsSyncingDocument,
   PageIsSyncingQuery,
 } from '../../shared/graphql/__generated__/Page.graphql';
-import { DUMMY_CHECKPOINT } from '../../viewModels/Checkpoint';
-import { toDateTime } from '../../viewModels/DateTime';
-import { ID } from '../../viewModels/ID';
+import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
+import { toDateTime } from '../../view_models/DateTime';
+import { ID } from '../../view_models/ID';
 import {
   TodoEditFormAction,
   todoEditFormReset,

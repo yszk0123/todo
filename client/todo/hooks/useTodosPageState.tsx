@@ -5,7 +5,7 @@ import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.g
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
-import { SelectMode } from '../../viewModels/SelectMode';
+import { SelectMode } from '../../view_models/SelectMode';
 import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   TodosPageQueryVariables,

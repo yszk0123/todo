@@ -6,7 +6,7 @@ import {
   DateTime,
   parseDateTime,
   toDateTime,
-} from '../../../viewModels/DateTime';
+} from '../../../view_models/DateTime';
 import { EditFormField } from './EditFormField';
 
 function parseDate(input: string): DateTime | null {

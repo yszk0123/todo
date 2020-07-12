@@ -2,7 +2,7 @@ import { format, formatDistance } from 'date-fns';
 import React from 'react';
 import { Text } from 'rebass';
 
-import { DateTime, parseDateTime } from '../../viewModels/DateTime';
+import { DateTime, parseDateTime } from '../../view_models/DateTime';
 
 function formatDate(dateString: DateTime, now: number): string {
   const date = parseDateTime(dateString);

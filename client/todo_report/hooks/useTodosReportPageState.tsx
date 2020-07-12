@@ -1,4 +1,4 @@
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { useTodosReportPageQuery } from '../graphql/__generated__/TodosReportPage.graphql';
 
 export function useTodosReportPageState(categoryId: ID) {

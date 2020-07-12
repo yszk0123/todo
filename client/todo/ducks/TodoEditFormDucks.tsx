@@ -3,7 +3,7 @@ import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/C
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { first } from '../../shared/helpers/first';
 import { toggle, toggleWith } from '../../shared/helpers/toggle';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import {
   RootTodoFragment,
   TodoTagFragment,

@@ -13,7 +13,7 @@ import {
   StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
-import { SelectMode } from '../../viewModels/SelectMode';
+import { SelectMode } from '../../view_models/SelectMode';
 
 const animation = {
   animationName: 'rotation',

@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/client';
 import React from 'react';
 
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { Page } from '../components/Page';
 import { usePageContainerQuery } from '../graphql/__generated__/PageContainer.graphql';
 

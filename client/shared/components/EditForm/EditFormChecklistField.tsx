@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Displayable } from '../../../viewModels/Displayable';
+import { Displayable } from '../../../view_models/Displayable';
 import { Checklist } from '../Checklist';
 import { EditFormField } from './EditFormField';
 

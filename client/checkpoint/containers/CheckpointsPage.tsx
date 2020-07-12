@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
-import { DateTime } from '../../viewModels/DateTime';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { DateTime } from '../../view_models/DateTime';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { CheckpointEditForm } from '../components/CheckpointEditForm';
 import { CheckpointList } from '../components/CheckpointList';
 import { CheckpointStatusBar } from '../components/CheckpointStatusBar';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from '../../shared/components/List';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagListItem } from './TagListItem';
 

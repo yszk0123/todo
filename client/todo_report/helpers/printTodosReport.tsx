@@ -1,6 +1,6 @@
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { simplifyURL } from '../../shared/view_helpers/simplifyURL';
-import { printTodoStatus } from '../../viewModels/TodoStatus';
+import { printTodoStatus } from '../../view_models/TodoStatus';
 import { RootTagForReportFragment } from '../graphql/__generated__/TagForReport.graphql';
 import { RootTodoForReportFragment } from '../graphql/__generated__/TodoForReport.graphql';
 

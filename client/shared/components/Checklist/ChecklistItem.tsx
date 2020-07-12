@@ -2,7 +2,7 @@ import { Checkbox } from '@rebass/forms';
 import React from 'react';
 import { Flex, Text } from 'rebass';
 
-import { Displayable } from '../../../viewModels/Displayable';
+import { Displayable } from '../../../view_models/Displayable';
 import { preventDefault } from '../../view_helpers/preventDefault';
 
 export function ChecklistItem<T extends Displayable>({

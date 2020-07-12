@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
-import { EmptyProps } from '../../../viewModels/EmptyProps';
+import { EmptyProps } from '../../../view_models/EmptyProps';
 import { MiniList } from '../MiniList';
 
 export const StatusBarRight: React.FunctionComponent<EmptyProps> = ({

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { FONT_FAMILY } from '../../shared/theme/theme';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { EmptyProps } from '../../view_models/EmptyProps';
 
 export const GlobalStyle: React.FunctionComponent<EmptyProps> = () => {
   return (

@@ -1,4 +1,4 @@
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 
 export function createLookupTable<T extends { id: ID }>(
   values: T[]

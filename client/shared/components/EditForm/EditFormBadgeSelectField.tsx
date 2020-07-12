@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from 'rebass';
 
-import { Color } from '../../../viewModels/Color';
+import { Color } from '../../../view_models/Color';
 import { ClosableBadge } from '../ClosableBadge';
 import { MiniList, MiniListItem } from '../MiniList';
 import { Select } from '../Select';

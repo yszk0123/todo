@@ -5,7 +5,7 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { TagEditForm } from '../components/TagEditForm';
 import { TagList } from '../components/TagList';
 import { TagStatusBar } from '../components/TagStatusBar';

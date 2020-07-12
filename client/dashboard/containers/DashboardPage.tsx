@@ -4,7 +4,7 @@ import React from 'react';
 import { List } from '../../shared/components/List';
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { CategoryCountListItem } from '../components/CategoryCountListItem';
 import { CheckpointCountListItem } from '../components/CheckpointCountListItem';
 import { TagCountListItem } from '../components/TagCountListItem';

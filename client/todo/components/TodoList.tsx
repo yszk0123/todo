@@ -3,8 +3,8 @@ import React from 'react';
 import { List } from '../../shared/components/List';
 import { Note } from '../../shared/components/Note';
 import { RelativeDateTimeText } from '../../shared/components/RelativeDateTimeText';
-import { ID } from '../../viewModels/ID';
-import { groupTodoByCheckpoint, isPast } from '../../viewModels/Todo';
+import { ID } from '../../view_models/ID';
+import { groupTodoByCheckpoint, isPast } from '../../view_models/Todo';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import { TodoListItem } from './TodoListItem';
 

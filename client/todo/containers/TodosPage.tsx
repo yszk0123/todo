@@ -7,9 +7,9 @@ import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/C
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
-import { DUMMY_CHECKPOINT } from '../../viewModels/Checkpoint';
-import { DateTime } from '../../viewModels/DateTime';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
+import { DateTime } from '../../view_models/DateTime';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoList } from '../components/TodoList';
 import { TodoSearchForm } from '../components/TodoSearchForm';

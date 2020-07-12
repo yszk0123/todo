@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from '../../shared/components/List';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
 import { CategoryListItem } from './CategoryListItem';
 

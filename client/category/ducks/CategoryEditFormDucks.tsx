@@ -1,6 +1,6 @@
 import { first } from '../../shared/helpers/first';
 import { toggle } from '../../shared/helpers/toggle';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
 
 export type CategoryEditFormState = {

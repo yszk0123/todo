@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import React from 'react';
 import { Text } from 'rebass';
 
-import { DateTime, parseDateTime } from '../../viewModels/DateTime';
+import { DateTime, parseDateTime } from '../../view_models/DateTime';
 
 function formatDate(date: DateTime): string {
   return format(parseDateTime(date), 'yyyy/MM/dd HH:mm');

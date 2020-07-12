@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from '../../shared/components/Link';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 
 export const GoToReportLink: React.FunctionComponent<{
   categoryId: ID;

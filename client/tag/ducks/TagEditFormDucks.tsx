@@ -2,7 +2,7 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { first } from '../../shared/helpers/first';
 import { toggle, toggleWith } from '../../shared/helpers/toggle';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 
 export type TagEditFormState = {

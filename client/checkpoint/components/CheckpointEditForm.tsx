@@ -8,7 +8,7 @@ import {
   EditFormInputField,
 } from '../../shared/components/EditForm';
 import { Modal } from '../../shared/components/Modal';
-import { DateTime } from '../../viewModels/DateTime';
+import { DateTime } from '../../view_models/DateTime';
 import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
 
 export const CheckpointEditForm: React.FunctionComponent<{

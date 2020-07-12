@@ -2,7 +2,7 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
-import { DateTime } from '../../viewModels/DateTime';
+import { DateTime } from '../../view_models/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 
 export type TodoSearchFormValue = {

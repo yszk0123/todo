@@ -2,7 +2,7 @@ import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
-import { SelectMode } from '../../viewModels/SelectMode';
+import { SelectMode } from '../../view_models/SelectMode';
 import { useTagsPageQuery } from '../graphql/__generated__/TagsPage.graphql';
 
 export function useTagsPageState() {

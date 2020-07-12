@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Flex } from 'rebass';
 
-import { EmptyProps } from '../../../viewModels/EmptyProps';
+import { EmptyProps } from '../../../view_models/EmptyProps';
 import { isSSR } from '../../helpers/isSSR';
 import { stopPropagation } from '../../view_helpers/stopPropagation';
 

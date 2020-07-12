@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
-import { Displayable } from '../../../viewModels/Displayable';
+import { Displayable } from '../../../view_models/Displayable';
 import { createLookupTable } from '../../helpers/createLookupTable';
 import { ChecklistItem } from './ChecklistItem';
 

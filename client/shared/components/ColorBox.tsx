@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from 'rebass';
 
-import { Color, getColorCode } from '../../viewModels/Color';
+import { Color, getColorCode } from '../../view_models/Color';
 
 export const ColorBox: React.FunctionComponent<{
   color: Color;

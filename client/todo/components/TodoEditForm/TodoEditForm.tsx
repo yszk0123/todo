@@ -9,7 +9,7 @@ import {
 } from '../../../shared/components/EditForm';
 import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
-import { SelectMode } from '../../../viewModels/SelectMode';
+import { SelectMode } from '../../../view_models/SelectMode';
 import { TodoEditFormState } from '../../ducks/TodoEditFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 import { TodoEditFormCategoryField } from './TodoEditFormCategoryField';

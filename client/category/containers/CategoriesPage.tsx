@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
-import { EmptyProps } from '../../viewModels/EmptyProps';
+import { EmptyProps } from '../../view_models/EmptyProps';
 import { CategoryEditForm } from '../components/CategoryEditForm';
 import { CategoryList } from '../components/CategoryList';
 import { CategoryStatusBar } from '../components/CategoryStatusBar';

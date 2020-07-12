@@ -2,7 +2,7 @@ import React from 'react';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import { TodosReport } from '../components/TodosReport';
 import { useTodosReportPageState } from '../hooks/useTodosReportPageState';
 

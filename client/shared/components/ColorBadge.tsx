@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Color, getColorCode } from '../../viewModels/Color';
+import { Color, getColorCode } from '../../view_models/Color';
 import { Badge } from './Badge';
 
 export const ColorBadge: React.FunctionComponent<{

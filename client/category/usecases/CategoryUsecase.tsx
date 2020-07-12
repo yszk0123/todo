@@ -1,6 +1,6 @@
 import { ApolloClient } from '@apollo/client';
 
-import { ID } from '../../viewModels/ID';
+import { ID } from '../../view_models/ID';
 import {
   CategoryEditFormAction,
   categoryEditFormReset,

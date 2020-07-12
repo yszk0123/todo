@@ -8,7 +8,7 @@ import {
 } from '../../../shared/components/EditForm';
 import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
-import { DateTime } from '../../../viewModels/DateTime';
+import { DateTime } from '../../../view_models/DateTime';
 import { TodoSearchFormValue } from '../../ducks/TodoSearchFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 import { TodoSearchFormArchivedAtField } from './TodoSearchFormArchivedAtField';

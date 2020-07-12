@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/client';
 
-import { toDateTime } from '../../viewModels/DateTime';
-import { ID } from '../../viewModels/ID';
+import { toDateTime } from '../../view_models/DateTime';
+import { ID } from '../../view_models/ID';
 import {
   CheckpointEditFormAction,
   checkpointEditFormReset,

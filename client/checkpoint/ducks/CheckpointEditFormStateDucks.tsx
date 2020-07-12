@@ -1,7 +1,7 @@
 import { first } from '../../shared/helpers/first';
 import { toggle } from '../../shared/helpers/toggle';
-import { DateTime } from '../../viewModels/DateTime';
-import { ID } from '../../viewModels/ID';
+import { DateTime } from '../../view_models/DateTime';
+import { ID } from '../../view_models/ID';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 
 export type CheckpointEditFormState = {
