@@ -1183,6 +1183,7 @@ input UpdateTodoInput {
 }
 input UpdateTodosByIdInput {
   archivedAt: DateTime
+  categoryId: ID
   checkpointId: ID
   ids: [ID!]!
   status: TodoStatus

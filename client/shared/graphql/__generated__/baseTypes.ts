@@ -1315,6 +1315,7 @@ export type UpdateTodoInput = {
 
 export type UpdateTodosByIdInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  categoryId?: Maybe<Scalars['ID']>;
   checkpointId?: Maybe<Scalars['ID']>;
   ids: Array<Scalars['ID']>;
   status?: Maybe<TodoStatus>;

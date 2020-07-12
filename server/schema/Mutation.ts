@@ -31,6 +31,7 @@ schema.inputObjectType({
   definition(t) {
     t.list.id('ids', { required: true });
     t.string('text', {});
+    t.id('categoryId', {});
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
     t.id('checkpointId', {});
@@ -243,6 +244,7 @@ schema.mutationType({
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
+        const categoryId = args.data.categoryId ?? undefined;
         const checkpointId = args.data.checkpointId;
 
         const updatedTodos = await Promise.all(
@@ -253,6 +255,9 @@ schema.mutationType({
                 tags: hasTags ? { set: tags } : undefined,
                 status,
                 archivedAt,
+                category: categoryId
+                  ? { connect: { id: categoryId } }
+                  : undefined,
                 checkpoint:
                   checkpointId === null
                     ? { disconnect: true }
