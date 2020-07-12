@@ -71,7 +71,7 @@ export function useTodosPageState() {
     checkpoints: data?.checkpoints ?? [],
     isCategoryNameShown: current?.category?.id == null,
     isLoading: !data && loading,
-    isSyncing: pageData?.page?.isSyncing ?? false,
+    isSyncing: loading || (pageData?.page?.isSyncing ?? false),
     now,
     todoEditFormState,
     todos: data?.todos ?? [],
