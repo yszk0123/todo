@@ -3,18 +3,22 @@ import { MdPlace } from 'react-icons/md';
 
 import {
   StatusBar,
-  StatusBarItemType,
+  StatusBarItem,
+  StatusBarLeft,
+  StatusBarText,
 } from '../../shared/components/StatusBar';
 
 export const CheckpointStatusBar: React.FunctionComponent<{
   count: number;
 }> = ({ count }) => {
   return (
-    <StatusBar
-      right={[
-        { type: StatusBarItemType.TEXT, content: `${count} checkpoints` },
-        { type: StatusBarItemType.FLEX, content: <MdPlace /> },
-      ]}
-    />
+    <StatusBar>
+      <StatusBarLeft>
+        <StatusBarText text={`${count} checkpoints`} />
+        <StatusBarItem>
+          <MdPlace />
+        </StatusBarItem>
+      </StatusBarLeft>
+    </StatusBar>
   );
 };

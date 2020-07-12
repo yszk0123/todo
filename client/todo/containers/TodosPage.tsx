@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
-import { Modal } from '../../shared/components/Modal';
 import { PageContent } from '../../shared/components/PageContent';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { DUMMY_CHECKPOINT } from '../../viewModels/Checkpoint';
@@ -223,13 +222,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         count={todos.length}
         isSyncing={isSyncing}
         onClickCategory={handleSelectSearchCategory}
+        onClickEdit={handleOpenEdit}
+        onClickSearch={handleOpenSearch}
       />
-      <button type="button" onClick={handleOpenSearch}>
-        Search
-      </button>
-      <button type="button" onClick={handleOpenEdit}>
-        Edit
-      </button>
       <TodoList
         isCategoryNameShown={isCategoryNameShown}
         now={now}
@@ -239,43 +234,37 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickStatus={handleToggleStatus}
         onClickToggle={handleSelectManyTodo}
       />
-      <Modal
+      <TodoEditForm
+        categories={categories}
+        categoryTags={categoryTags}
+        checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.EDIT}
-        onClickOuter={handleCloseModal}
-      >
-        <TodoEditForm
-          categories={categories}
-          categoryTags={categoryTags}
-          checkpoints={checkpointsWithDummy}
-          selectMode={selectMode}
-          todoEditFormState={todoEditFormState}
-          onArchiveTodo={handleArchiveTodosById}
-          onChangeText={handleChangeText}
-          onCreateOneTodo={handleCreateOneTodo}
-          onDeleteOneTodo={handleDeleteTodosById}
-          onSelectCategory={handleSelectCategory}
-          onSelectCheckpoint={handleSelectCheckpoint}
-          onSelectStatus={handleSelectStatus}
-          onToggleTag={handleToggleTag}
-          onUpdateOneTodo={handleUpdateTodosById}
-        />
-      </Modal>
-      <Modal
+        selectMode={selectMode}
+        todoEditFormState={todoEditFormState}
+        onArchiveTodo={handleArchiveTodosById}
+        onChangeText={handleChangeText}
+        onCloseModal={handleCloseModal}
+        onCreateOneTodo={handleCreateOneTodo}
+        onDeleteOneTodo={handleDeleteTodosById}
+        onSelectCategory={handleSelectCategory}
+        onSelectCheckpoint={handleSelectCheckpoint}
+        onSelectStatus={handleSelectStatus}
+        onToggleTag={handleToggleTag}
+        onUpdateOneTodo={handleUpdateTodosById}
+      />
+      <TodoSearchForm
+        categoryTags={categoryTags}
+        checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.SEARCH}
-        onClickOuter={handleCloseModal}
-      >
-        <TodoSearchForm
-          categoryTags={categoryTags}
-          checkpoints={checkpointsWithDummy}
-          todoSearchFormValue={todoSearchFormDraft}
-          onChangeText={handleChangeSearchText}
-          onCommit={handleSearchCommit}
-          onReset={handleSearchReset}
-          onSelectCheckpoint={handleSelectSearchCheckpoint}
-          onSelectStatus={handleSelectSearchStatus}
-          onToggleTag={handleToggleSearchTag}
-        />
-      </Modal>
+        todoSearchFormValue={todoSearchFormDraft}
+        onChangeText={handleChangeSearchText}
+        onCloseModal={handleCloseModal}
+        onCommit={handleSearchCommit}
+        onReset={handleSearchReset}
+        onSelectCheckpoint={handleSelectSearchCheckpoint}
+        onSelectStatus={handleSelectSearchStatus}
+        onToggleTag={handleToggleSearchTag}
+      />
     </PageContent>
   );
 };

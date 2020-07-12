@@ -1,16 +1,24 @@
 import React from 'react';
+import { MdList } from 'react-icons/md';
 
 import {
   StatusBar,
-  StatusBarItemType,
+  StatusBarItem,
+  StatusBarLeft,
+  StatusBarText,
 } from '../../shared/components/StatusBar';
 
 export const CategoryStatusBar: React.FunctionComponent<{ count: number }> = ({
   count,
 }) => {
   return (
-    <StatusBar
-      right={[{ type: StatusBarItemType.TEXT, content: `${count} categories` }]}
-    />
+    <StatusBar>
+      <StatusBarLeft>
+        <StatusBarText text={`${count} categories`} />
+        <StatusBarItem>
+          <MdList />
+        </StatusBarItem>
+      </StatusBarLeft>
+    </StatusBar>
   );
 };

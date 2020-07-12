@@ -3,9 +3,15 @@ import { MdCached, MdCheck } from 'react-icons/md';
 import { Flex } from 'rebass';
 
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
+import { Select } from '../../shared/components/Select';
 import {
   StatusBar,
-  StatusBarItemType,
+  StatusBarButton,
+  StatusBarItem,
+  StatusBarLeft,
+  StatusBarLink,
+  StatusBarRight,
+  StatusBarText,
 } from '../../shared/components/StatusBar';
 
 const animation = {
@@ -37,63 +43,54 @@ const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
   );
 };
 
+const getDisplayName = (category: RootCategoryFragment) => category.name;
+const getValue = (category: RootCategoryFragment) => category.id;
+
 export const TodoStatusBar: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   category: RootCategoryFragment | null;
   count: number;
   isSyncing: boolean;
   onClickCategory: (category: RootCategoryFragment | null) => void;
-}> = ({ categories, category, count, isSyncing, onClickCategory }) => {
+  onClickEdit: () => void;
+  onClickSearch: () => void;
+}> = ({
+  categories,
+  category,
+  count,
+  isSyncing,
+  onClickCategory,
+  onClickEdit,
+  onClickSearch,
+}) => {
   return (
-    <StatusBar
-      left={[
-        {
-          type: StatusBarItemType.BUTTON as const,
-          content: {
-            label: 'All',
-            onClick: () => onClickCategory(null),
-          },
-        },
-        ...categories.map((c) => {
-          return category === null || c.id !== category.id
-            ? {
-                type: StatusBarItemType.BUTTON as const,
-                content: {
-                  label: c.name,
-                  onClick: () => onClickCategory(c),
-                },
-              }
-            : {
-                type: StatusBarItemType.TEXT as const,
-                content: c.name,
-              };
-        }),
-        ...(category
-          ? [
-              {
-                type: StatusBarItemType.LINK as const,
-                content: {
-                  href: '/categories/[categoryId]/todos/report',
-                  as: `/categories/${category.id}/todos/report`,
-                  text: 'See report',
-                },
-              },
-            ]
-          : []),
-      ]}
-      right={[
-        category !== null
-          ? { type: StatusBarItemType.TEXT, content: category.name }
-          : null,
-        {
-          type: StatusBarItemType.TEXT,
-          content: `${count} todos`,
-        },
-        {
-          type: StatusBarItemType.FLEX,
-          content: <SyncStatus isSyncing={isSyncing} />,
-        },
-      ]}
-    />
+    <StatusBar>
+      <StatusBarLeft>
+        <StatusBarItem>
+          <Select
+            getDisplayName={getDisplayName}
+            getValue={getValue}
+            items={categories}
+            selectedItem={category}
+            onChange={onClickCategory}
+          />
+        </StatusBarItem>
+        <StatusBarText text={`${count} todos`} />
+        <StatusBarItem>
+          <SyncStatus isSyncing={isSyncing} />
+        </StatusBarItem>
+      </StatusBarLeft>
+      <StatusBarRight>
+        {!!category && (
+          <StatusBarLink
+            as={`/categories/${category.id}/todos/report`}
+            href="/categories/[categoryId]/todos/report"
+            text="See report"
+          />
+        )}
+        <StatusBarButton label="Search" onClick={onClickSearch} />
+        <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+      </StatusBarRight>
+    </StatusBar>
   );
 };
