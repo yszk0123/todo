@@ -1,6 +1,6 @@
 // @see https://github.com/rebassjs/rebass/blob/93754aaaab99eab305415e1610e0e0f84bdfafca/packages/preset-material/src/index.js
 
-export const theme = {
+export const THEME = {
   colors: {
     text: '#080818',
     background: '#fff',
@@ -152,7 +152,7 @@ export const theme = {
   },
 };
 
-export const defaultTagColor = '#333333';
+export const DEFAULT_TAG_COLOR = '#333333';
 
 // @see https://ics.media/entry/200317/
 export const FONT_FAMILY =

@@ -1,12 +1,12 @@
 import { Color } from '../shared/graphql/__generated__/baseTypes';
-import { defaultTagColor } from '../shared/theme/theme';
+import { DEFAULT_TAG_COLOR } from '../shared/theme/theme';
 
 export { Color };
 
 export function getColorCode(color: Color): string {
   switch (color) {
     case Color.Default:
-      return defaultTagColor;
+      return DEFAULT_TAG_COLOR;
     case Color.Blue:
       return 'navy';
     case Color.Green:

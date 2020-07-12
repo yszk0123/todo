@@ -6,7 +6,7 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider as ReactReduxProvider } from 'react-redux';
 
-import { theme } from '../shared/theme/theme';
+import { THEME } from '../shared/theme/theme';
 import { GlobalStyle } from './components/GlobalStyle';
 import { PageContainer } from './containers/PageContainer';
 import { createApolloClient } from './createApolloClient';
@@ -35,7 +35,7 @@ export function createApp(): React.FunctionComponent<Props> {
     const { session } = pageProps;
 
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={THEME}>
         <ApolloProvider client={client}>
           <NextAuthProvider session={session}>
             <ReactReduxProvider store={store}>
