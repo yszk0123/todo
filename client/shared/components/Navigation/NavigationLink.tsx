@@ -10,7 +10,11 @@ export const NavigationLink: React.FunctionComponent<{
 }> = ({ as, href, prefetch, text }) => {
   return (
     <NextLink as={as} href={href} passHref prefetch={prefetch}>
-      <RebassLink mr={1} variant="nav">
+      <RebassLink
+        mr={1}
+        sx={{ flexGrow: 1, textAlign: 'center' }}
+        variant="nav"
+      >
         <Text fontWeight="bold">{text}</Text>
       </RebassLink>
     </NextLink>

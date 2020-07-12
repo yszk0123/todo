@@ -10,6 +10,7 @@ export const THEME = {
     gray: '#555',
     warning: '#f44',
     highlight: 'hsla(205, 100%, 40%, 0.125)',
+    light: 'rgba(240, 240, 255, 0.3)',
     dark: 'rgba(0, 10, 20, 0.1)',
   },
   fonts: {
@@ -101,6 +102,7 @@ export const THEME = {
       color: 'inherit',
       textDecoration: 'none',
       ':hover,:focus,.active': {
+        bg: 'light',
         color: 'primary',
       },
     },
