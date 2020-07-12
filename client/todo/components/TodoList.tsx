@@ -26,6 +26,7 @@ export const TodoList: React.FunctionComponent<{
   todos,
 }) => {
   const groups = React.useMemo(() => groupTodoByCheckpoint(todos), [todos]);
+  const isSelectMode = selectedTodoIds.length > 0;
 
   return (
     <>
@@ -52,6 +53,7 @@ export const TodoList: React.FunctionComponent<{
                 <TodoListItem
                   isCategoryNameShown={isCategoryNameShown}
                   isSelected={isSelected}
+                  isSelectMode={isSelectMode}
                   key={todo.id}
                   todo={todo}
                   onClick={onClick}

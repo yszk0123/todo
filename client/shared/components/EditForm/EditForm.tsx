@@ -12,6 +12,7 @@ export const EditForm: React.FunctionComponent<Props> = ({ children }) => {
     <Box
       as="form"
       sx={{
+        bg: 'background',
         border: '1px solid',
         borderColor: 'primary',
         borderRadius: 4,
@@ -21,6 +22,7 @@ export const EditForm: React.FunctionComponent<Props> = ({ children }) => {
         pb: 2,
         mb: 2,
       }}
+      width="100%"
       onClick={stopPropagation}
       onSubmit={preventDefault}
     >

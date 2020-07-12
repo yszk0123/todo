@@ -22,10 +22,11 @@ function linkifyTextDecorator(text: string): string {
 }
 
 export const TodoListText: React.FunctionComponent<{
+  subElement?: JSX.Element | null;
   text: string;
-}> = React.memo(({ text }) => {
+}> = React.memo(({ subElement, text }) => {
   return (
-    <ListText>
+    <ListText subElement={subElement}>
       <Linkify
         componentDecorator={linkifyComponentDecorator}
         textDecorator={linkifyTextDecorator}

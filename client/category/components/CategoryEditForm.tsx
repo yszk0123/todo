@@ -6,19 +6,24 @@ import {
   EditFormActionsField,
   EditFormInputField,
 } from '../../shared/components/EditForm';
+import { Modal } from '../../shared/components/Modal';
 import { CategoryEditFormState } from '../ducks/CategoryEditFormDucks';
 
 export const CategoryEditForm: React.FunctionComponent<{
   categoryEditFormState: CategoryEditFormState;
+  isOpen: boolean;
   isSelected: boolean;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onCloseModal: () => void;
   onCreateOneCategory: () => void;
   onDeleteOneCategory: () => void;
   onUpdateOneCategory: () => void;
 }> = ({
   categoryEditFormState,
+  isOpen,
   isSelected,
   onChangeName,
+  onCloseModal,
   onCreateOneCategory,
   onDeleteOneCategory,
   onUpdateOneCategory,
@@ -31,12 +36,14 @@ export const CategoryEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneCategory }];
 
   return (
-    <EditForm>
-      <EditFormInputField
-        value={categoryEditFormState.name}
-        onChange={onChangeName}
-      />
-      <EditFormActionsField actions={actions} />
-    </EditForm>
+    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+      <EditForm>
+        <EditFormInputField
+          value={categoryEditFormState.name}
+          onChange={onChangeName}
+        />
+        <EditFormActionsField actions={actions} />
+      </EditForm>
+    </Modal>
   );
 };

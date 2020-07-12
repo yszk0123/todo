@@ -13,6 +13,7 @@ import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
   isCategoryNameShown: boolean;
+  isSelectMode: boolean;
   isSelected: boolean;
   onClick: (todo: RootTodoFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
@@ -20,6 +21,7 @@ export const TodoListItem: React.FunctionComponent<{
   todo: RootTodoFragment;
 }> = ({
   isCategoryNameShown,
+  isSelectMode,
   isSelected,
   onClick,
   onClickStatus,
@@ -46,23 +48,28 @@ export const TodoListItem: React.FunctionComponent<{
       isDim={isDone}
       item={todo}
       leftElement={
-        <>
+        isSelectMode ? (
           <Box onClick={handleClickToggle}>
-            <Checkbox checked={isSelected} readOnly />
+            <Checkbox checked={isSelected} marginRight={0} readOnly />
           </Box>
+        ) : (
           <TodoListStatus status={todo.status} onClick={handleClickStatus} />
-        </>
+        )
       }
-      mainElement={<TodoListText text={todo.text} />}
-      rightElement={
-        <>
-          <TodoListTags tags={todo.tags} />
-          {isCategoryNameShown && (
-            <Box ml={1}>
-              <Label text={todo.category.name} />
-            </Box>
-          )}
-        </>
+      mainElement={
+        <TodoListText
+          subElement={
+            <>
+              <TodoListTags tags={todo.tags} />
+              {isCategoryNameShown && (
+                <Box ml={1}>
+                  <Label text={todo.category.name} />
+                </Box>
+              )}
+            </>
+          }
+          text={todo.text}
+        />
       }
       onClick={onClick}
     ></ListItem>

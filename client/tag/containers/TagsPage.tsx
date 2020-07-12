@@ -31,6 +31,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     tags,
     userId,
   } = useTagsPageState();
+  const { modalType, onCloseModal, onOpenEdit } = useModalType();
 
   const handleSelectOneTag = React.useCallback(
     (tag: RootTagFragment) => {
@@ -95,7 +96,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent onClick={handleDeselectTag}>
-      <TagStatusBar count={tags.length} />
+      <TagStatusBar count={tags.length} onClickEdit={onOpenEdit} />
       <TagList
         currentTagId={currentTagId}
         tags={tags}
@@ -103,12 +104,14 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <TagEditForm
         categories={rootCategories}
+        isOpen={modalType === ModalType.EDIT}
         isSelected={isSelected}
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
         onArchiveOneTag={handleArchiveOneTag}
         onChangeColor={handleChangeColor}
         onChangeName={handleChangeName}
+        onCloseModal={onCloseModal}
         onCreateOneTag={handleCreateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
         onToggleCategory={handleToggleTagCategory}
@@ -117,3 +120,22 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     </PageContent>
   );
 };
+
+enum ModalType {
+  NONE,
+  EDIT,
+}
+
+function useModalType() {
+  const [modalType, setModalType] = React.useState(ModalType.NONE);
+
+  const onCloseModal = React.useCallback(() => {
+    setModalType(ModalType.NONE);
+  }, []);
+
+  const onOpenEdit = React.useCallback(() => {
+    setModalType(ModalType.EDIT);
+  }, []);
+
+  return { onCloseModal, onOpenEdit, modalType };
+}

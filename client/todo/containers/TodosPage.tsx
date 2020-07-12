@@ -50,6 +50,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     todos,
     userId,
   } = useTodosPageState();
+  const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
 
   const handleSelectOneTodo = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -83,7 +84,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState);
-  }, [todoEditFormState, todoUsecase]);
+    onCloseModal();
+  }, [onCloseModal, todoEditFormState, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -119,7 +121,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSearchCommit = React.useCallback(() => {
     dispatch(todoSearchFormCommit());
-  }, [dispatch]);
+    onCloseModal();
+  }, [dispatch, onCloseModal]);
 
   const handleSelectStatus = React.useCallback(
     (status: TodoStatus) => {
@@ -207,7 +210,11 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         category={category}
         count={todos.length}
         isSyncing={isSyncing}
+        selectMode={selectMode}
+        onClickArchive={handleArchiveTodosById}
         onClickCategory={handleSelectSearchCategory}
+        onClickEdit={onOpenEdit}
+        onClickSearch={onOpenSearch}
       />
       <TodoList
         isCategoryNameShown={isCategoryNameShown}
@@ -222,10 +229,12 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         categories={categories}
         categoryTags={categoryTags}
         checkpoints={checkpointsWithDummy}
+        isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
         todoEditFormState={todoEditFormState}
         onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleChangeText}
+        onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}
         onDeleteOneTodo={handleDeleteTodosById}
         onSelectCategory={handleSelectCategory}
@@ -237,8 +246,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
       <TodoSearchForm
         categoryTags={categoryTags}
         checkpoints={checkpointsWithDummy}
+        isOpen={modalType === ModalType.SEARCH}
         todoSearchFormValue={todoSearchFormDraft}
         onChangeText={handleChangeSearchText}
+        onCloseModal={onCloseModal}
         onCommit={handleSearchCommit}
         onReset={handleSearchReset}
         onSelectCheckpoint={handleSelectSearchCheckpoint}
@@ -248,3 +259,27 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     </PageContent>
   );
 };
+
+enum ModalType {
+  NONE,
+  SEARCH,
+  EDIT,
+}
+
+function useModalType() {
+  const [modalType, setModalType] = React.useState(ModalType.NONE);
+
+  const onCloseModal = React.useCallback(() => {
+    setModalType(ModalType.NONE);
+  }, []);
+
+  const onOpenSearch = React.useCallback(() => {
+    setModalType(ModalType.SEARCH);
+  }, []);
+
+  const onOpenEdit = React.useCallback(() => {
+    setModalType(ModalType.EDIT);
+  }, []);
+
+  return { onCloseModal, onOpenSearch, onOpenEdit, modalType };
+}

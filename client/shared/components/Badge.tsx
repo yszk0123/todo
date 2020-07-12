@@ -1,16 +1,18 @@
 import React from 'react';
-import { Box } from 'rebass';
+import { Flex } from 'rebass';
 
 export const Badge: React.FunctionComponent<{
   color?: string;
+  icon?: JSX.Element;
+  onClick?: () => void;
   text: string;
-}> = ({ color = 'gray', text }) => {
+}> = ({ color = 'gray', icon, onClick, text }) => {
   return (
-    <Box
+    <Flex
+      alignItems="center"
       sx={{
         color: 'white',
         bg: color,
-        display: 'inline-block',
         whiteSpace: 'nowrap',
         px: 2,
         py: 1,
@@ -21,6 +23,11 @@ export const Badge: React.FunctionComponent<{
       }}
     >
       {text}
-    </Box>
+      {!!icon && (
+        <Flex ml={1} onClick={onClick}>
+          {icon}
+        </Flex>
+      )}
+    </Flex>
   );
 };

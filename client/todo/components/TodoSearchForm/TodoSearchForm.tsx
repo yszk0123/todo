@@ -6,6 +6,7 @@ import {
   EditFormAction,
   EditFormActionsField,
 } from '../../../shared/components/EditForm';
+import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { TodoSearchFormValue } from '../../ducks/TodoSearchFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
@@ -17,7 +18,9 @@ import { TodoSearchFormTextField } from './TodoSearchFormTextField';
 export const TodoSearchForm: React.FunctionComponent<{
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
+  isOpen: boolean;
   onChangeText: (text: string) => void;
+  onCloseModal: () => void;
   onCommit: () => void;
   onReset: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
@@ -27,7 +30,9 @@ export const TodoSearchForm: React.FunctionComponent<{
 }> = ({
   categoryTags,
   checkpoints,
+  isOpen,
   onChangeText,
+  onCloseModal,
   onCommit,
   onReset,
   onSelectCheckpoint,
@@ -41,26 +46,28 @@ export const TodoSearchForm: React.FunctionComponent<{
   ];
 
   return (
-    <EditForm>
-      <TodoSearchFormTagsField
-        categoryTags={categoryTags}
-        tags={todoSearchFormValue.tags}
-        onToggleTag={onToggleTag}
-      />
-      <TodoSearchFormStatusField
-        status={todoSearchFormValue.status}
-        onSelectStatus={onSelectStatus}
-      />
-      <TodoSearchFormCheckpointField
-        checkpoint={todoSearchFormValue.checkpoint}
-        checkpoints={checkpoints}
-        onSelectCheckpoint={onSelectCheckpoint}
-      />
-      <TodoSearchFormTextField
-        text={todoSearchFormValue.text}
-        onChangeText={onChangeText}
-      />
-      <EditFormActionsField actions={actions} />
-    </EditForm>
+    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+      <EditForm>
+        <TodoSearchFormTagsField
+          categoryTags={categoryTags}
+          tags={todoSearchFormValue.tags}
+          onToggleTag={onToggleTag}
+        />
+        <TodoSearchFormStatusField
+          status={todoSearchFormValue.status}
+          onSelectStatus={onSelectStatus}
+        />
+        <TodoSearchFormCheckpointField
+          checkpoint={todoSearchFormValue.checkpoint}
+          checkpoints={checkpoints}
+          onSelectCheckpoint={onSelectCheckpoint}
+        />
+        <TodoSearchFormTextField
+          text={todoSearchFormValue.text}
+          onChangeText={onChangeText}
+        />
+        <EditFormActionsField actions={actions} />
+      </EditForm>
+    </Modal>
   );
 };

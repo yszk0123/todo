@@ -10,6 +10,7 @@ import {
   EditFormInputField,
   EditFormSelectField,
 } from '../../shared/components/EditForm';
+import { Modal } from '../../shared/components/Modal';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { identity } from '../../shared/helpers/identity';
 import { TagEditFormState } from '../ducks/TagEditFormDucks';
@@ -18,10 +19,12 @@ const colors = Object.values(Color);
 
 export const TagEditForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
+  isOpen: boolean;
   isSelected: boolean;
   onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
   onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onCloseModal: () => void;
   onCreateOneTag: () => void;
   onDeleteOneTag: () => void;
   onToggleCategory: (category: RootCategoryFragment) => void;
@@ -30,10 +33,12 @@ export const TagEditForm: React.FunctionComponent<{
   tagEditFormState: TagEditFormState;
 }> = ({
   categories,
+  isOpen,
   isSelected,
   onArchiveOneTag,
   onChangeColor,
   onChangeName,
+  onCloseModal,
   onCreateOneTag,
   onDeleteOneTag,
   onToggleCategory,
@@ -50,22 +55,24 @@ export const TagEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneTag }];
 
   return (
-    <EditForm>
-      <EditFormChecklistField
-        checkedItems={tagCategories}
-        items={categories}
-        onClick={onToggleCategory}
-      />
-      <EditFormInputField value={name} onChange={onChangeName} />
-      <EditFormSelectField
-        getDisplayName={identity}
-        getValue={identity}
-        items={colors}
-        rightElement={<ColorBox color={tagEditFormState.color} />}
-        selectedItem={tagEditFormState.color}
-        onChange={onChangeColor}
-      />
-      <EditFormActionsField actions={actions} />
-    </EditForm>
+    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+      <EditForm>
+        <EditFormChecklistField
+          checkedItems={tagCategories}
+          items={categories}
+          onClick={onToggleCategory}
+        />
+        <EditFormInputField value={name} onChange={onChangeName} />
+        <EditFormSelectField
+          getDisplayName={identity}
+          getValue={identity}
+          items={colors}
+          rightElement={<ColorBox color={tagEditFormState.color} />}
+          selectedItem={tagEditFormState.color}
+          onChange={onChangeColor}
+        />
+        <EditFormActionsField actions={actions} />
+      </EditForm>
+    </Modal>
   );
 };

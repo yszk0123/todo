@@ -27,6 +27,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     isSelected,
     userId,
   } = useCategoriesPageState();
+  const { modalType, onCloseModal, onOpenEdit } = useModalType();
 
   const handleSelectOneCategory = React.useCallback(
     (category: RootCategoryFragment) => {
@@ -75,7 +76,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent onClick={handleDeselectCategory}>
-      <CategoryStatusBar count={categories.length} />
+      <CategoryStatusBar count={categories.length} onClickEdit={onOpenEdit} />
       <CategoryList
         categories={categories}
         currentCategoryId={currentCategoryId}
@@ -83,8 +84,10 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       />
       <CategoryEditForm
         categoryEditFormState={categoryEditFormState}
+        isOpen={modalType === ModalType.EDIT}
         isSelected={isSelected}
         onChangeName={handleChangeName}
+        onCloseModal={onCloseModal}
         onCreateOneCategory={handleCreateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
         onUpdateOneCategory={handleUpdateOneCategory}
@@ -92,3 +95,22 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     </PageContent>
   );
 };
+
+enum ModalType {
+  NONE,
+  EDIT,
+}
+
+function useModalType() {
+  const [modalType, setModalType] = React.useState(ModalType.NONE);
+
+  const onCloseModal = React.useCallback(() => {
+    setModalType(ModalType.NONE);
+  }, []);
+
+  const onOpenEdit = React.useCallback(() => {
+    setModalType(ModalType.EDIT);
+  }, []);
+
+  return { onCloseModal, onOpenEdit, modalType };
+}

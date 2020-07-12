@@ -1,16 +1,30 @@
 import React from 'react';
+import { MdList } from 'react-icons/md';
 
 import {
   StatusBar,
-  StatusBarItemType,
+  StatusBarButton,
+  StatusBarItem,
+  StatusBarLeft,
+  StatusBarRight,
+  StatusBarText,
 } from '../../shared/components/StatusBar';
 
-export const CategoryStatusBar: React.FunctionComponent<{ count: number }> = ({
-  count,
-}) => {
+export const CategoryStatusBar: React.FunctionComponent<{
+  count: number;
+  onClickEdit: () => void;
+}> = ({ count, onClickEdit }) => {
   return (
-    <StatusBar
-      right={[{ type: StatusBarItemType.TEXT, content: `${count} categories` }]}
-    />
+    <StatusBar>
+      <StatusBarLeft>
+        <StatusBarText text={`${count} categories`} />
+        <StatusBarItem>
+          <MdList />
+        </StatusBarItem>
+      </StatusBarLeft>
+      <StatusBarRight>
+        <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+      </StatusBarRight>
+    </StatusBar>
   );
 };
