@@ -133,7 +133,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   }, [dispatch, onCloseModal]);
 
   const handleSelectStatus = React.useCallback(
-    (status: TodoStatus) => {
+    (status: TodoStatus | null) => {
       dispatch(todoEditFormSet({ status }));
     },
     [dispatch]
@@ -168,7 +168,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   );
 
   const handleSelectSearchStatus = React.useCallback(
-    (status: TodoStatus) => {
+    (status: TodoStatus | null) => {
       dispatch(todoSearchFormSet({ status }));
     },
     [dispatch]

@@ -28,7 +28,7 @@ const NoneForm: React.FunctionComponent<{
   onCreateOneTodo: () => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onSelectStatus: (status: TodoStatus) => void;
+  onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   todoEditFormState: TodoEditFormState;
 }> = ({
@@ -90,7 +90,7 @@ const SingleForm: React.FunctionComponent<{
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onSelectStatus: (status: TodoStatus) => void;
+  onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   todoEditFormState: TodoEditFormState;
@@ -149,7 +149,7 @@ const MultiForm: React.FunctionComponent<{
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onSelectStatus: (status: TodoStatus) => void;
+  onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   todoEditFormState: TodoEditFormState;
@@ -207,7 +207,7 @@ export const TodoEditForm: React.FunctionComponent<{
   onDeleteOneTodo: () => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onSelectStatus: (status: TodoStatus) => void;
+  onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   selectMode: SelectMode;

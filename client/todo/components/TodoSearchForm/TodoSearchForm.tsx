@@ -27,7 +27,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   onCommit: () => void;
   onReset: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onSelectStatus: (status: TodoStatus) => void;
+  onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   todoSearchFormValue: TodoSearchFormValue;
 }> = ({
