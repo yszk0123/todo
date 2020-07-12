@@ -56,16 +56,20 @@ export const TodoListItem: React.FunctionComponent<{
           <TodoListStatus status={todo.status} onClick={handleClickStatus} />
         )
       }
-      mainElement={<TodoListText text={todo.text} />}
-      rightElement={
-        <>
-          <TodoListTags tags={todo.tags} />
-          {isCategoryNameShown && (
-            <Box ml={1}>
-              <Label text={todo.category.name} />
-            </Box>
-          )}
-        </>
+      mainElement={
+        <TodoListText
+          subElement={
+            <>
+              <TodoListTags tags={todo.tags} />
+              {isCategoryNameShown && (
+                <Box ml={1}>
+                  <Label text={todo.category.name} />
+                </Box>
+              )}
+            </>
+          }
+          text={todo.text}
+        />
       }
       onClick={onClick}
     ></ListItem>
