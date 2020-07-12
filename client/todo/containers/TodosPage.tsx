@@ -16,6 +16,7 @@ import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
   todoEditFormReset,
+  todoEditFormSelectByCategory,
   todoEditFormSelectByTag,
   todoEditFormSelectMany,
   todoEditFormSelectOne,
@@ -28,7 +29,10 @@ import {
   todoSearchFormSet,
   todoSearchFormToggleTag,
 } from '../ducks/TodoSearchFormDucks';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import {
+  RootTodoFragment,
+  TodoCategoryFragment,
+} from '../graphql/__generated__/Todo.graphql';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
@@ -71,6 +75,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleSelectByTag = React.useCallback(
     (tag: TodoTagFragment) => {
       dispatch(todoEditFormSelectByTag(todos, tag));
+    },
+    [dispatch, todos]
+  );
+
+  const handleSelectByCategory = React.useCallback(
+    (category: TodoCategoryFragment) => {
+      dispatch(todoEditFormSelectByCategory(todos, category));
     },
     [dispatch, todos]
   );
@@ -238,6 +249,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
         onClick={handleSelectOneTodo}
+        onClickCategory={handleSelectByCategory}
         onClickStatus={handleToggleStatus}
         onClickTag={handleSelectByTag}
         onClickToggle={handleSelectManyTodo}

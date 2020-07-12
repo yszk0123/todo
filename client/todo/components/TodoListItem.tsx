@@ -8,6 +8,7 @@ import { ListItem } from '../../shared/components/List';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import {
   RootTodoFragment,
+  TodoCategoryFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
 import { TodoListStatus } from './TodoListStatus';
@@ -19,6 +20,7 @@ export const TodoListItem: React.FunctionComponent<{
   isSelectMode: boolean;
   isSelected: boolean;
   onClick: (todo: RootTodoFragment) => void;
+  onClickCategory: (category: TodoCategoryFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
@@ -28,6 +30,7 @@ export const TodoListItem: React.FunctionComponent<{
   isSelectMode,
   isSelected,
   onClick,
+  onClickCategory,
   onClickStatus,
   onClickTag,
   onClickToggle,
@@ -44,6 +47,14 @@ export const TodoListItem: React.FunctionComponent<{
   const handleClickStatus = React.useCallback(() => {
     onClickStatus(todo);
   }, [todo, onClickStatus]);
+
+  const handleClickCategory = React.useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      onClickCategory(todo.category);
+    },
+    [onClickCategory, todo.category]
+  );
 
   const isDone = todo.status === TodoStatus.Done;
 
@@ -67,7 +78,7 @@ export const TodoListItem: React.FunctionComponent<{
             <>
               <TodoListTags tags={todo.tags} onClick={onClickTag} />
               {isCategoryNameShown && (
-                <Flex ml={1}>
+                <Flex ml={1} onClick={handleClickCategory}>
                   <Label text={todo.category.name} />
                 </Flex>
               )}

@@ -43,8 +43,7 @@ fragment RootTodo on Todo {
   status
   archivedAt
   category {
-    id
-    name
+    ...TodoCategory
   }
   checkpoint {
     id
@@ -57,4 +56,9 @@ fragment TodoTag on Tag {
   id
   name
   color
+}
+
+fragment TodoCategory on Category {
+  id
+  name
 }

@@ -87,7 +87,7 @@ export type RootTodoFragment = (
     & TodoTagFragment
   )>, category: (
     { __typename?: 'Category' }
-    & Pick<Types.Category, 'id' | 'name'>
+    & TodoCategoryFragment
   ), checkpoint?: Types.Maybe<(
     { __typename?: 'Checkpoint' }
     & Pick<Types.Checkpoint, 'id' | 'name' | 'endAt'>
@@ -99,11 +99,22 @@ export type TodoTagFragment = (
   & Pick<Types.Tag, 'id' | 'name' | 'color'>
 );
 
+export type TodoCategoryFragment = (
+  { __typename?: 'Category' }
+  & Pick<Types.Category, 'id' | 'name'>
+);
+
 export const TodoTagFragmentDoc = gql`
     fragment TodoTag on Tag {
   id
   name
   color
+}
+    `;
+export const TodoCategoryFragmentDoc = gql`
+    fragment TodoCategory on Category {
+  id
+  name
 }
     `;
 export const RootTodoFragmentDoc = gql`
@@ -117,8 +128,7 @@ export const RootTodoFragmentDoc = gql`
   status
   archivedAt
   category {
-    id
-    name
+    ...TodoCategory
   }
   checkpoint {
     id
@@ -126,7 +136,8 @@ export const RootTodoFragmentDoc = gql`
     endAt
   }
 }
-    ${TodoTagFragmentDoc}`;
+    ${TodoTagFragmentDoc}
+${TodoCategoryFragmentDoc}`;
 export const GetTodosDocument = gql`
     query GetTodos($input: TodoWhereInput!) {
   todos(where: $input) {

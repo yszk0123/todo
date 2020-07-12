@@ -7,6 +7,7 @@ import { toggle, toggleWith } from '../../shared/helpers/toggle';
 import { ID } from '../../view_models/ID';
 import {
   RootTodoFragment,
+  TodoCategoryFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
 
@@ -22,6 +23,7 @@ export type TodoEditFormState = {
 enum TodoEditFormActionType {
   RESET = 'todoEditForm/RESET',
   SELECT = 'todoEditForm/SELECT',
+  SELECT_BY_CATEGORY = 'todoEditForm/SELECT_BY_CATEGORY',
   SELECT_BY_TAG = 'todoEditForm/SELECT_BY_TAG',
   SELECT_MANY = 'todoEditForm/SELECT_MANY',
   SELECT_ONE = 'todoEditForm/SELECT_ONE',
@@ -52,6 +54,10 @@ export type TodoEditFormAction =
   | {
       payload: { tag: TodoTagFragment; todos: RootTodoFragment[] };
       type: TodoEditFormActionType.SELECT_BY_TAG;
+    }
+  | {
+      payload: { category: TodoCategoryFragment; todos: RootTodoFragment[] };
+      type: TodoEditFormActionType.SELECT_BY_CATEGORY;
     }
   | {
       payload: { tag: TodoTagFragment };
@@ -89,6 +95,16 @@ export function todoEditFormSelectByTag(
   return {
     type: TodoEditFormActionType.SELECT_BY_TAG,
     payload: { todos, tag },
+  };
+}
+
+export function todoEditFormSelectByCategory(
+  todos: RootTodoFragment[],
+  category: TodoCategoryFragment
+): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.SELECT_BY_CATEGORY,
+    payload: { todos, category },
   };
 }
 
@@ -182,46 +198,20 @@ export function todoEditFormReducer(
       }
     }
     case TodoEditFormActionType.SELECT_BY_TAG: {
-      const { selectedTodoIds } = state;
       const { tag, todos } = action.payload;
 
       const selectedTodosByTag = todos.filter((todo) =>
         todo.tags.includes(tag)
       );
+      return selectTodos(state, selectedTodosByTag);
+    }
+    case TodoEditFormActionType.SELECT_BY_CATEGORY: {
+      const { category, todos } = action.payload;
 
-      const count = selectedTodosByTag.length;
-      if (count === 0) {
-        return todoEditFormInitialState;
-      }
-
-      const selectedTodoIdsByTag = selectedTodosByTag.map((todo) => todo.id);
-      const isIdentical = shallowEqual(selectedTodoIds, selectedTodoIdsByTag);
-      if (isIdentical) {
-        return todoEditFormInitialState;
-      }
-
-      if (count === 1) {
-        const todo = selectedTodosByTag[0];
-        return {
-          ...state,
-          category: todo.category,
-          checkpoint: todo.checkpoint ?? null,
-          selectedTodoIds: [todo.id],
-          status: todo.status,
-          tags: todo.tags,
-          text: todo.text,
-        };
-      } else {
-        return {
-          ...state,
-          category: null,
-          checkpoint: null,
-          selectedTodoIds: selectedTodoIdsByTag,
-          status: null,
-          tags: null,
-          text: '',
-        };
-      }
+      const selectedTodosByCategory = todos.filter(
+        (todo) => todo.category === category
+      );
+      return selectTodos(state, selectedTodosByCategory);
     }
     case TodoEditFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
@@ -235,5 +225,45 @@ export function todoEditFormReducer(
     default: {
       return state;
     }
+  }
+}
+
+function selectTodos(
+  state: TodoEditFormState,
+  selectedTodos: RootTodoFragment[]
+): TodoEditFormState {
+  const { selectedTodoIds } = state;
+  const count = selectedTodos.length;
+  if (count === 0) {
+    return todoEditFormInitialState;
+  }
+
+  const selectedTodoIdsByTag = selectedTodos.map((todo) => todo.id);
+  const isIdentical = shallowEqual(selectedTodoIds, selectedTodoIdsByTag);
+  if (isIdentical) {
+    return todoEditFormInitialState;
+  }
+
+  if (count === 1) {
+    const todo = selectedTodos[0];
+    return {
+      ...state,
+      category: todo.category,
+      checkpoint: todo.checkpoint ?? null,
+      selectedTodoIds: [todo.id],
+      status: todo.status,
+      tags: todo.tags,
+      text: todo.text,
+    };
+  } else {
+    return {
+      ...state,
+      category: null,
+      checkpoint: null,
+      selectedTodoIds: selectedTodoIdsByTag,
+      status: null,
+      tags: null,
+      text: '',
+    };
   }
 }
