@@ -7,6 +7,7 @@ import React from 'react';
 import { Provider as ReactReduxProvider } from 'react-redux';
 
 import { theme } from '../shared/theme/theme';
+import { GlobalStyle } from './components/GlobalStyle';
 import { PageContainer } from './containers/PageContainer';
 import { createApolloClient } from './createApolloClient';
 import { createReduxStore } from './createReduxStore';
@@ -40,6 +41,7 @@ export function createApp(): React.FunctionComponent<Props> {
             <ReactReduxProvider store={store}>
               <Head>
                 <title>Todo</title>
+                <GlobalStyle />
               </Head>
               <PageContainer>
                 <Component {...pageProps} />
