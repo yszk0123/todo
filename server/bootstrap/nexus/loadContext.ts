@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import { schema } from 'nexus';
 
-import { getJWT } from '../getJWT';
+import { getJWT } from '../helpers/getJWT';
 
 // Prevent nexus build error
 // > node_modules/@types/typegen-nexus-context/index.d.ts:15:58 - error TS1005: ',' expected.

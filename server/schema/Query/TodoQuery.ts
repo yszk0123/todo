@@ -1,0 +1,28 @@
+import { schema } from 'nexus';
+
+export const TODO_LIMIT = 100;
+
+schema.extendType({
+  type: 'Query',
+  definition(t) {
+    t.crud.todos({
+      filtering: true,
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      resolve(root, args, ctx, info, originalResolve) {
+        if (!ctx.user?.id) return [];
+
+        const newArgs: typeof args = {
+          ...args,
+          where: {
+            ...args.where,
+            ownerId: { equals: ctx.user.id },
+          },
+          first: TODO_LIMIT,
+        };
+        return originalResolve(root, newArgs, ctx, info);
+      },
+    });
+  },
+});

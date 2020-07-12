@@ -1,7 +1,7 @@
 import { use } from 'nexus';
 import { prisma } from 'nexus-plugin-prisma';
 
-import { getPrismaClient } from '../plugins/getPrismaClient';
+import { getPrismaClient } from '../../plugins/getPrismaClient';
 
 const instance = getPrismaClient();
 

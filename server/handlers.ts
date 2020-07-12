@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const app = require('nexus').default;
 
-require('./schema');
+require('./bootstrap/loadAll');
 
 app.assemble();
 
