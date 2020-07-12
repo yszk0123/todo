@@ -50,7 +50,7 @@ function getQueryVariables(
         : undefined,
       archivedAt: { equals: null },
       status: todoSearchFormValue?.status ?? undefined,
-      tags: todoSearchFormValue?.tags
+      tags: todoSearchFormValue?.tags?.length
         ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
         : undefined,
       text: todoSearchFormValue?.text
