@@ -15,10 +15,24 @@ export type DashboardPageQuery = (
   )>, stats?: Types.Maybe<(
     { __typename?: 'Stats' }
     & Pick<Types.Stats, 'categoryCount' | 'checkpointCount' | 'tagCount' | 'todoCount'>
+    & { todoCountByDate?: Types.Maybe<Array<(
+      { __typename?: 'TodoCountByDate' }
+      & TodoCountByDateFragment
+    )>> }
   )> }
 );
 
+export type TodoCountByDateFragment = (
+  { __typename?: 'TodoCountByDate' }
+  & Pick<Types.TodoCountByDate, 'count' | 'date'>
+);
 
+export const TodoCountByDateFragmentDoc = gql`
+    fragment TodoCountByDate on TodoCountByDate {
+  count
+  date
+}
+    `;
 export const DashboardPageDocument = gql`
     query DashboardPage {
   me {
@@ -30,9 +44,12 @@ export const DashboardPageDocument = gql`
     checkpointCount
     tagCount
     todoCount
+    todoCountByDate {
+      ...TodoCountByDate
+    }
   }
 }
-    `;
+    ${TodoCountByDateFragmentDoc}`;
 
 /**
  * __useDashboardPageQuery__

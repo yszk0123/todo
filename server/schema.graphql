@@ -567,6 +567,7 @@ type Stats {
   checkpointCount: Int
   tagCount: Int
   todoCount: Int
+  todoCountByDate: [TodoCountByDate!]
 }
 
 input StringFilter {
@@ -834,6 +835,11 @@ type Todo {
   status: TodoStatus!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
   text: String!
+}
+
+type TodoCountByDate {
+  count: Int!
+  date: String
 }
 
 input TodoCreateInput {
@@ -1133,6 +1139,7 @@ input UpdateTodoInput {
 
 input UpdateTodosByIdInput {
   archivedAt: DateTime
+  categoryId: ID
   checkpointId: ID
   ids: [ID!]!
   status: TodoStatus

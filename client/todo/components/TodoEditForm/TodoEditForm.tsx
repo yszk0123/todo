@@ -82,6 +82,7 @@ const NoneForm: React.FunctionComponent<{
 };
 
 const SingleForm: React.FunctionComponent<{
+  categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
@@ -89,12 +90,14 @@ const SingleForm: React.FunctionComponent<{
   onChangeText: (text: string) => void;
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
+  onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   todoEditFormState: TodoEditFormState;
 }> = ({
+  categories,
   categoryTags,
   checkpoints,
   isOpen,
@@ -102,6 +105,7 @@ const SingleForm: React.FunctionComponent<{
   onChangeText,
   onCloseModal,
   onDeleteOneTodo,
+  onSelectCategory,
   onSelectCheckpoint,
   onSelectStatus,
   onToggleTag,
@@ -130,6 +134,11 @@ const SingleForm: React.FunctionComponent<{
           checkpoint={todoEditFormState.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
+        />
+        <TodoEditFormCategoryField
+          categories={categories}
+          category={todoEditFormState.category}
+          onSelectCategory={onSelectCategory}
         />
         <TodoEditFormTextField
           text={todoEditFormState.text}
@@ -142,24 +151,28 @@ const SingleForm: React.FunctionComponent<{
 };
 
 const MultiForm: React.FunctionComponent<{
+  categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
   onArchiveTodo: () => void;
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
+  onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   todoEditFormState: TodoEditFormState;
 }> = ({
+  categories,
   categoryTags,
   checkpoints,
   isOpen,
   onArchiveTodo,
   onCloseModal,
   onDeleteOneTodo,
+  onSelectCategory,
   onSelectCheckpoint,
   onSelectStatus,
   onToggleTag,
@@ -188,6 +201,11 @@ const MultiForm: React.FunctionComponent<{
           checkpoint={todoEditFormState.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
+        />
+        <TodoEditFormCategoryField
+          categories={categories}
+          category={todoEditFormState.category}
+          onSelectCategory={onSelectCategory}
         />
         <EditFormActionsField actions={actions} />
       </EditForm>
@@ -252,6 +270,7 @@ export const TodoEditForm: React.FunctionComponent<{
     case SelectMode.SINGLE: {
       return (
         <SingleForm
+          categories={categories}
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           isOpen={isOpen}
@@ -260,6 +279,7 @@ export const TodoEditForm: React.FunctionComponent<{
           onChangeText={onChangeText}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
+          onSelectCategory={onSelectCategory}
           onSelectCheckpoint={onSelectCheckpoint}
           onSelectStatus={onSelectStatus}
           onToggleTag={onToggleTag}
@@ -270,6 +290,7 @@ export const TodoEditForm: React.FunctionComponent<{
     case SelectMode.MULTI: {
       return (
         <MultiForm
+          categories={categories}
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           isOpen={isOpen}
@@ -277,6 +298,7 @@ export const TodoEditForm: React.FunctionComponent<{
           onArchiveTodo={onArchiveTodo}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
+          onSelectCategory={onSelectCategory}
           onSelectCheckpoint={onSelectCheckpoint}
           onSelectStatus={onSelectStatus}
           onToggleTag={onToggleTag}

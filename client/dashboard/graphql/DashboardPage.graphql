@@ -8,5 +8,13 @@ query DashboardPage {
     checkpointCount
     tagCount
     todoCount
+    todoCountByDate {
+      ...TodoCountByDate
+    }
   }
+}
+
+fragment TodoCountByDate on TodoCountByDate {
+  count
+  date
 }

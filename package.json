@@ -41,6 +41,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/rebass": "^4.0.6",
     "@types/rebass__forms": "^4.0.2",
+    "@types/recharts": "^1.8.14",
     "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
@@ -78,6 +79,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-redux": "^7.2.0",
     "rebass": "^4.0.7",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5"
   }
 }

@@ -1,4 +1,9 @@
-import { useDashboardPageQuery } from '../graphql/__generated__/DashboardPage.graphql';
+import {
+  TodoCountByDateFragment,
+  useDashboardPageQuery,
+} from '../graphql/__generated__/DashboardPage.graphql';
+
+const EMPTY_TODO_COUNT_BY_DATE: TodoCountByDateFragment[] = [];
 
 export function useDashboardPageState() {
   const { data, loading } = useDashboardPageQuery({
@@ -11,5 +16,6 @@ export function useDashboardPageState() {
     todoCount: data?.stats?.todoCount ?? null,
     checkpointCount: data?.stats?.checkpointCount ?? null,
     isLoading: !data && loading,
+    todoCountByDate: data?.stats?.todoCountByDate ?? EMPTY_TODO_COUNT_BY_DATE,
   };
 }
