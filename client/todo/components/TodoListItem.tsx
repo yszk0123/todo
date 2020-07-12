@@ -6,7 +6,10 @@ import { Box, Flex } from 'rebass';
 import { Label } from '../../shared/components/Label';
 import { ListItem } from '../../shared/components/List';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../graphql/__generated__/Todo.graphql';
 import { TodoListStatus } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
@@ -17,6 +20,7 @@ export const TodoListItem: React.FunctionComponent<{
   isSelected: boolean;
   onClick: (todo: RootTodoFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
+  onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
   todo: RootTodoFragment;
 }> = ({
@@ -25,6 +29,7 @@ export const TodoListItem: React.FunctionComponent<{
   isSelected,
   onClick,
   onClickStatus,
+  onClickTag,
   onClickToggle,
   todo,
 }) => {
@@ -60,7 +65,7 @@ export const TodoListItem: React.FunctionComponent<{
         <TodoListText
           subElement={
             <>
-              <TodoListTags tags={todo.tags} />
+              <TodoListTags tags={todo.tags} onClick={onClickTag} />
               {isCategoryNameShown && (
                 <Flex ml={1}>
                   <Label text={todo.category.name} />

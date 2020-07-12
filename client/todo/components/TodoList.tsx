@@ -5,7 +5,10 @@ import { Note } from '../../shared/components/Note';
 import { RelativeDateTimeText } from '../../shared/components/RelativeDateTimeText';
 import { ID } from '../../view_models/ID';
 import { groupTodoByCheckpoint, isPast } from '../../view_models/Todo';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../graphql/__generated__/Todo.graphql';
 import { TodoListItem } from './TodoListItem';
 
 export const TodoList: React.FunctionComponent<{
@@ -13,6 +16,7 @@ export const TodoList: React.FunctionComponent<{
   now: number;
   onClick: (item: RootTodoFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
+  onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
   selectedTodoIds: ID[];
   todos: RootTodoFragment[];
@@ -21,6 +25,7 @@ export const TodoList: React.FunctionComponent<{
   now,
   onClick,
   onClickStatus,
+  onClickTag,
   onClickToggle,
   selectedTodoIds,
   todos,
@@ -58,6 +63,7 @@ export const TodoList: React.FunctionComponent<{
                   todo={todo}
                   onClick={onClick}
                   onClickStatus={onClickStatus}
+                  onClickTag={onClickTag}
                   onClickToggle={onClickToggle}
                 />
               );

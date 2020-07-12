@@ -2,6 +2,7 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { first } from '../../shared/helpers/first';
+import { shallowEqual } from '../../shared/helpers/shallowEqual';
 import { toggle, toggleWith } from '../../shared/helpers/toggle';
 import { ID } from '../../view_models/ID';
 import {
@@ -21,6 +22,7 @@ export type TodoEditFormState = {
 enum TodoEditFormActionType {
   RESET = 'todoEditForm/RESET',
   SELECT = 'todoEditForm/SELECT',
+  SELECT_BY_TAG = 'todoEditForm/SELECT_BY_TAG',
   SELECT_MANY = 'todoEditForm/SELECT_MANY',
   SELECT_ONE = 'todoEditForm/SELECT_ONE',
   SET = 'todoEditForm/SET',
@@ -48,6 +50,10 @@ export type TodoEditFormAction =
       type: TodoEditFormActionType.SELECT_MANY;
     }
   | {
+      payload: { tag: TodoTagFragment; todos: RootTodoFragment[] };
+      type: TodoEditFormActionType.SELECT_BY_TAG;
+    }
+  | {
       payload: { tag: TodoTagFragment };
       type: TodoEditFormActionType.TOGGLE_TAG;
     };
@@ -73,6 +79,16 @@ export function todoEditFormSelectMany(
   return {
     type: TodoEditFormActionType.SELECT_MANY,
     payload: { todo },
+  };
+}
+
+export function todoEditFormSelectByTag(
+  todos: RootTodoFragment[],
+  tag: TodoTagFragment
+): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.SELECT_BY_TAG,
+    payload: { todos, tag },
   };
 }
 
@@ -159,6 +175,48 @@ export function todoEditFormReducer(
           category: null,
           checkpoint: null,
           selectedTodoIds: newSelectedTodoIds,
+          status: null,
+          tags: null,
+          text: '',
+        };
+      }
+    }
+    case TodoEditFormActionType.SELECT_BY_TAG: {
+      const { selectedTodoIds } = state;
+      const { tag, todos } = action.payload;
+
+      const selectedTodosByTag = todos.filter((todo) =>
+        todo.tags.includes(tag)
+      );
+
+      const count = selectedTodosByTag.length;
+      if (count === 0) {
+        return todoEditFormInitialState;
+      }
+
+      const selectedTodoIdsByTag = selectedTodosByTag.map((todo) => todo.id);
+      const isIdentical = shallowEqual(selectedTodoIds, selectedTodoIdsByTag);
+      if (isIdentical) {
+        return todoEditFormInitialState;
+      }
+
+      if (count === 1) {
+        const todo = selectedTodosByTag[0];
+        return {
+          ...state,
+          category: todo.category,
+          checkpoint: todo.checkpoint ?? null,
+          selectedTodoIds: [todo.id],
+          status: todo.status,
+          tags: todo.tags,
+          text: todo.text,
+        };
+      } else {
+        return {
+          ...state,
+          category: null,
+          checkpoint: null,
+          selectedTodoIds: selectedTodoIdsByTag,
           status: null,
           tags: null,
           text: '',
