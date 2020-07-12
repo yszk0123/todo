@@ -21,7 +21,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onCloseModal: () => void;
   onCreateOneCheckpoint: () => void;
   onDeleteCheckpointsById: () => void;
-  onUpdateOneCheckpoint: () => void;
+  onUpdateCheckpointsById: () => void;
   selectMode: SelectMode;
 }> = ({
   checkpointEditFormState,
@@ -32,14 +32,14 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onCloseModal,
   onCreateOneCheckpoint,
   onDeleteCheckpointsById,
-  onUpdateOneCheckpoint,
+  onUpdateCheckpointsById,
   selectMode,
 }) => {
   const actions: EditFormAction[] = isSelected(selectMode)
     ? [
         { label: 'Delete', onClick: onDeleteCheckpointsById },
         { label: 'Archive', onClick: onArchiveOneCheckpoint },
-        { label: 'Update', onClick: onUpdateOneCheckpoint },
+        { label: 'Update', onClick: onUpdateCheckpointsById },
       ]
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
 

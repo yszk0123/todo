@@ -16,8 +16,8 @@ import {
   DeleteOneCheckpointDocument,
   DeleteOneCheckpointMutationVariables,
   refetchGetCheckpointQuery,
-  UpdateOneCheckpointDocument,
-  UpdateOneCheckpointMutationVariables,
+  UpdateCheckpointsByIdDocument,
+  UpdateCheckpointsByIdMutationVariables,
 } from '../graphql/__generated__/Checkpoint.graphql';
 
 export class CheckpointUsecase {
@@ -51,26 +51,20 @@ export class CheckpointUsecase {
     });
   }
 
-  async updateOneCheckpoint({
+  async updateCheckpointsById({
     endAt,
     name,
     selectedCheckpointIds,
   }: CheckpointEditFormState) {
-    const count = selectedCheckpointIds.length;
-    if (count !== 1) return;
-    const selectedCheckpointId = selectedCheckpointIds[0];
-
     this.dispatch(checkpointEditFormSet({ selectedCheckpointIds: [] }));
 
-    await this.client.mutate<unknown, UpdateOneCheckpointMutationVariables>({
-      mutation: UpdateOneCheckpointDocument,
+    await this.client.mutate<unknown, UpdateCheckpointsByIdMutationVariables>({
+      mutation: UpdateCheckpointsByIdDocument,
       variables: {
-        where: {
-          id: selectedCheckpointId,
-        },
-        data: {
-          name: count === 1 ? name : undefined,
-          endAt: endAt ? endAt : undefined,
+        input: {
+          ids: selectedCheckpointIds,
+          name: name !== '' ? name : undefined,
+          endAt: endAt ?? undefined,
         },
       },
     });
@@ -104,17 +98,12 @@ export class CheckpointUsecase {
     });
   }
 
-  async archiveOneCheckpoint(checkpointIds: ID[]) {
-    if (checkpointIds.length !== 1) return;
-    const checkpointId = checkpointIds[0];
-
-    await this.client.mutate<unknown, UpdateOneCheckpointMutationVariables>({
-      mutation: UpdateOneCheckpointDocument,
+  async archiveCheckpointsById(checkpointIds: ID[]) {
+    await this.client.mutate<unknown, UpdateCheckpointsByIdMutationVariables>({
+      mutation: UpdateCheckpointsByIdDocument,
       variables: {
-        where: {
-          id: checkpointId,
-        },
-        data: {
+        input: {
+          ids: checkpointIds,
           archivedAt: toDateTime(new Date()),
         },
       },

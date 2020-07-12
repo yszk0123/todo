@@ -42,6 +42,19 @@ export type UpdateOneCheckpointMutation = (
   )> }
 );
 
+export type UpdateCheckpointsByIdMutationVariables = Types.Exact<{
+  input: Types.UpdateCheckpointsByIdInput;
+}>;
+
+
+export type UpdateCheckpointsByIdMutation = (
+  { __typename?: 'Mutation' }
+  & { updateCheckpointsById?: Types.Maybe<Array<(
+    { __typename?: 'Checkpoint' }
+    & RootCheckpointFragment
+  )>> }
+);
+
 export type DeleteOneCheckpointMutationVariables = Types.Exact<{
   where: Types.CheckpointWhereUniqueInput;
 }>;
@@ -177,6 +190,38 @@ export function useUpdateOneCheckpointMutation(baseOptions?: ApolloReactHooks.Mu
 export type UpdateOneCheckpointMutationHookResult = ReturnType<typeof useUpdateOneCheckpointMutation>;
 export type UpdateOneCheckpointMutationResult = ApolloReactCommon.MutationResult<UpdateOneCheckpointMutation>;
 export type UpdateOneCheckpointMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>;
+export const UpdateCheckpointsByIdDocument = gql`
+    mutation UpdateCheckpointsById($input: UpdateCheckpointsByIdInput!) {
+  updateCheckpointsById(data: $input) {
+    ...RootCheckpoint
+  }
+}
+    ${RootCheckpointFragmentDoc}`;
+export type UpdateCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
+
+/**
+ * __useUpdateCheckpointsByIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateCheckpointsByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCheckpointsByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCheckpointsByIdMutation, { data, loading, error }] = useUpdateCheckpointsByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCheckpointsByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>(UpdateCheckpointsByIdDocument, baseOptions);
+      }
+export type UpdateCheckpointsByIdMutationHookResult = ReturnType<typeof useUpdateCheckpointsByIdMutation>;
+export type UpdateCheckpointsByIdMutationResult = ApolloReactCommon.MutationResult<UpdateCheckpointsByIdMutation>;
+export type UpdateCheckpointsByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
 export const DeleteOneCheckpointDocument = gql`
     mutation DeleteOneCheckpoint($where: CheckpointWhereUniqueInput!) {
   deleteOneCheckpoint(where: $where) {

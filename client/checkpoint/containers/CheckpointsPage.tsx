@@ -63,12 +63,12 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     );
   }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
-  const handleUpdateOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.updateOneCheckpoint(checkpointEditFormState);
+  const handleUpdateCheckpointsById = React.useCallback(async () => {
+    await checkpointUsecase.updateCheckpointsById(checkpointEditFormState);
   }, [checkpointUsecase, checkpointEditFormState]);
 
   const handleArchiveOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.archiveOneCheckpoint(
+    await checkpointUsecase.archiveCheckpointsById(
       checkpointEditFormState.selectedCheckpointIds
     );
   }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
@@ -116,7 +116,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         onCloseModal={onCloseModal}
         onCreateOneCheckpoint={handleCreateOneCheckpoint}
         onDeleteCheckpointsById={handleDeleteCheckpointsById}
-        onUpdateOneCheckpoint={handleUpdateOneCheckpoint}
+        onUpdateCheckpointsById={handleUpdateCheckpointsById}
       />
     </PageContent>
   );

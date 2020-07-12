@@ -547,6 +547,7 @@ export type Mutation = {
   deleteOneTag?: Maybe<Tag>;
   deleteTodo?: Maybe<Todo>;
   deleteTodosById?: Maybe<Array<Scalars['ID']>>;
+  updateCheckpointsById?: Maybe<Array<Checkpoint>>;
   updateOneCategory?: Maybe<Category>;
   updateOneCheckpoint?: Maybe<Checkpoint>;
   updateOneTag?: Maybe<Tag>;
@@ -602,6 +603,11 @@ export type MutationDeleteTodoArgs = {
 
 export type MutationDeleteTodosByIdArgs = {
   data: DeleteTodosByIdInput;
+};
+
+
+export type MutationUpdateCheckpointsByIdArgs = {
+  data: UpdateCheckpointsByIdInput;
 };
 
 
@@ -1319,6 +1325,13 @@ export type TodoWhereInput = {
 
 export type TodoWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
+};
+
+export type UpdateCheckpointsByIdInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  endAt?: Maybe<Scalars['DateTime']>;
+  ids: Array<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type UpdateTodoInput = {
