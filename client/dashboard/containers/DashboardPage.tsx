@@ -1,10 +1,13 @@
-// FIXME: Use layout components instead of using rebass directly
 import React from 'react';
-import { Flex } from 'rebass';
 
 import { List } from '../../shared/components/List';
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
+import {
+  VerticalStack,
+  VerticalStackItem,
+  VerticalStackMainItem,
+} from '../../shared/components/VerticalStack';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { CategoryCountListItem } from '../components/CategoryCountListItem';
 import { CheckpointCountListItem } from '../components/CheckpointCountListItem';
@@ -29,19 +32,19 @@ export const DashboardPage: React.FunctionComponent<EmptyProps> = () => {
 
   return (
     <PageContent>
-      <Flex flexDirection="column" height="100%">
-        <Flex flexShrink={0} width={1}>
+      <VerticalStack>
+        <VerticalStackItem>
           <List>
             <CategoryCountListItem count={categoryCount} />
             <TodoCountListItem count={todoCount} />
             <CheckpointCountListItem count={checkpointCount} />
             <TagCountListItem count={tagCount} />
           </List>
-        </Flex>
-        <Flex flexGrow={1}>
+        </VerticalStackItem>
+        <VerticalStackMainItem>
           <TodoCountByDateChart data={todoCountByDate} />
-        </Flex>
-      </Flex>
+        </VerticalStackMainItem>
+      </VerticalStack>
     </PageContent>
   );
 };
