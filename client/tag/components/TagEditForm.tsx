@@ -64,7 +64,11 @@ export const TagEditForm: React.FunctionComponent<{
           label="Categories"
           onClick={onToggleCategory}
         />
-        <EditFormInputField label="Name" value={name} onChange={onChangeName} />
+        <EditFormInputField
+          label="Name"
+          value={tagEditFormState.name}
+          onChange={onChangeName}
+        />
         <EditFormSelectField
           getDisplayName={identity}
           getValue={identity}
