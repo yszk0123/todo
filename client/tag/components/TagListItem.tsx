@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ListItem } from '../../shared/components/List';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
+import { TagListIcon } from './TagListIcon';
 
 export const TagListItem: React.FunctionComponent<{
   isActive: boolean;
@@ -12,6 +13,7 @@ export const TagListItem: React.FunctionComponent<{
     <ListItem
       isActive={isActive}
       item={tag}
+      leftElement={<TagListIcon />}
       mainElement={tag.name}
       onClick={onClick}
     />
