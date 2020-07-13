@@ -8,15 +8,7 @@ type Props = {
 };
 
 export function TodoSearchFormTextField({ onChangeText, text }: Props) {
-  const handleChangeText = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const text = event.currentTarget.value;
-      onChangeText(text);
-    },
-    [onChangeText]
-  );
-
   return (
-    <EditFormInputField label="Text" value={text} onChange={handleChangeText} />
+    <EditFormInputField label="Text" value={text} onChange={onChangeText} />
   );
 }
