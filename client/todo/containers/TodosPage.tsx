@@ -16,8 +16,6 @@ import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
   todoEditFormReset,
-  todoEditFormSelectByCategory,
-  todoEditFormSelectByTag,
   todoEditFormSelectMany,
   todoEditFormSelectOne,
   todoEditFormSet,
@@ -74,16 +72,18 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSelectByTag = React.useCallback(
     (tag: TodoTagFragment) => {
-      dispatch(todoEditFormSelectByTag(todos, tag));
+      dispatch(todoSearchFormSet({ tags: [tag] }));
+      dispatch(todoSearchFormCommit());
     },
-    [dispatch, todos]
+    [dispatch]
   );
 
   const handleSelectByCategory = React.useCallback(
     (category: TodoCategoryFragment) => {
-      dispatch(todoEditFormSelectByCategory(todos, category));
+      dispatch(todoSearchFormSet({ category }));
+      dispatch(todoSearchFormCommit());
     },
-    [dispatch, todos]
+    [dispatch]
   );
 
   const handleDeselectTodo = React.useCallback(() => {
