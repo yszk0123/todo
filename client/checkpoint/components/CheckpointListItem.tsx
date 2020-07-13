@@ -1,11 +1,9 @@
-// FIXME: Use layout components instead of using rebass directly
-import { Checkbox } from '@rebass/forms';
 import React from 'react';
-import { Box } from 'rebass';
 
-import { ListItem } from '../../shared/components/List';
+import { ListCheckbox, ListItem } from '../../shared/components/List';
 import { RelativeDateTimeText } from '../../shared/components/RelativeDateTimeText';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
+import { CheckpointListIcon } from './CheckpointListIcon';
 
 export const CheckpointListItem: React.FunctionComponent<{
   checkpoint: RootCheckpointFragment;
@@ -22,25 +20,20 @@ export const CheckpointListItem: React.FunctionComponent<{
   onClick,
   onClickCheckbox,
 }) => {
-  const handleClickCheckbox = React.useCallback(
-    (event: React.MouseEvent<HTMLInputElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-      onClickCheckbox(checkpoint);
-    },
-    [checkpoint, onClickCheckbox]
-  );
-
   return (
     <ListItem
       isActive={isSelected}
       item={checkpoint}
       leftElement={
         isSelectMode ? (
-          <Box onClick={handleClickCheckbox}>
-            <Checkbox checked={isSelected} marginRight={0} readOnly />
-          </Box>
-        ) : undefined
+          <ListCheckbox
+            isSelected={isSelected}
+            item={checkpoint}
+            onClick={onClickCheckbox}
+          />
+        ) : (
+          <CheckpointListIcon />
+        )
       }
       mainElement={checkpoint.name ?? ''}
       rightElement={<RelativeDateTimeText now={now} value={checkpoint.endAt} />}
