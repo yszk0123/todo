@@ -1,5 +1,4 @@
 import React from 'react';
-import { MdLabel } from 'react-icons/md';
 
 import {
   StatusBar,
@@ -10,6 +9,7 @@ import {
   StatusBarText,
 } from '../../shared/components/StatusBar';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
+import { TagIcon } from './TagIcon';
 
 export const TagStatusBar: React.FunctionComponent<{
   count: number;
@@ -23,7 +23,7 @@ export const TagStatusBar: React.FunctionComponent<{
       <StatusBarLeft>
         <StatusBarText text={`${count} tags`} />
         <StatusBarItem>
-          <MdLabel />
+          <TagIcon />
         </StatusBarItem>
       </StatusBarLeft>
       <StatusBarRight>

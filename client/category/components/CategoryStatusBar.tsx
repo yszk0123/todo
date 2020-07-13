@@ -1,5 +1,4 @@
 import React from 'react';
-import { MdList } from 'react-icons/md';
 
 import {
   StatusBar,
@@ -10,6 +9,7 @@ import {
   StatusBarText,
 } from '../../shared/components/StatusBar';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
+import { CategoryIcon } from './CategoryIcon';
 
 export const CategoryStatusBar: React.FunctionComponent<{
   count: number;
@@ -23,7 +23,7 @@ export const CategoryStatusBar: React.FunctionComponent<{
       <StatusBarLeft>
         <StatusBarText text={`${count} categories`} />
         <StatusBarItem>
-          <MdList />
+          <CategoryIcon />
         </StatusBarItem>
       </StatusBarLeft>
       <StatusBarRight>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { MdPlace } from 'react-icons/md';
 
 import {
   StatusBar,
@@ -10,6 +9,7 @@ import {
   StatusBarText,
 } from '../../shared/components/StatusBar';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
+import { CheckpointIcon } from './CheckpointIcon';
 
 export const CheckpointStatusBar: React.FunctionComponent<{
   count: number;
@@ -23,7 +23,7 @@ export const CheckpointStatusBar: React.FunctionComponent<{
       <StatusBarLeft>
         <StatusBarText text={`${count} checkpoints`} />
         <StatusBarItem>
-          <MdPlace />
+          <CheckpointIcon />
         </StatusBarItem>
       </StatusBarLeft>
       <StatusBarRight>

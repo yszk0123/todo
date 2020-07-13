@@ -1,9 +1,9 @@
 import React from 'react';
-import { MdList } from 'react-icons/md';
 
 import { ListIcon } from '../../shared/components/List';
 import { EmptyProps } from '../../view_models/EmptyProps';
+import { CategoryIcon } from './CategoryIcon';
 
 export const CategoryListIcon: React.FunctionComponent<EmptyProps> = () => {
-  return <ListIcon icon={<MdList />} />;
+  return <ListIcon icon={<CategoryIcon />} />;
 };

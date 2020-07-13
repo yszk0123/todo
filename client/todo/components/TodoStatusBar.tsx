@@ -1,5 +1,4 @@
 import React from 'react';
-import { MdCached, MdCheck } from 'react-icons/md';
 import { Flex } from 'rebass';
 
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
@@ -13,7 +12,9 @@ import {
   StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
+import { SyncIcon } from '../../shared/components/SyncIcon';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
+import { TodoIcon } from './TodoIcon';
 
 const animation = {
   animationName: 'rotation',
@@ -34,12 +35,12 @@ const SyncStatus: React.FunctionComponent<{ isSyncing: boolean }> = ({
   isSyncing,
 }) => {
   if (!isSyncing) {
-    return <MdCheck />;
+    return <TodoIcon />;
   }
 
   return (
     <Flex sx={animation}>
-      <MdCached />
+      <SyncIcon />
     </Flex>
   );
 };

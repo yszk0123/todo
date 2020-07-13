@@ -1,8 +1,8 @@
 import React from 'react';
-import { MdClose } from 'react-icons/md';
 
 import { Color, getColorCode } from '../../view_models/Color';
 import { Badge } from './Badge';
+import { CloseIcon } from './CloseIcon';
 
 export const ClosableBadge: React.FunctionComponent<{
   color: Color;
@@ -12,6 +12,11 @@ export const ClosableBadge: React.FunctionComponent<{
   const colorCode = getColorCode(color);
 
   return (
-    <Badge color={colorCode} icon={<MdClose />} text={text} onClick={onClick} />
+    <Badge
+      color={colorCode}
+      icon={<CloseIcon />}
+      text={text}
+      onClick={onClick}
+    />
   );
 };
