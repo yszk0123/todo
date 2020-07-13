@@ -1,84 +1,103 @@
 import React from 'react';
-import { Box, BoxProps } from 'rebass';
+import { Box, Flex, SxStyleProp } from 'rebass';
 
-export const LoadingIndicator = () => {
+import { EmptyProps } from '../../view_models/EmptyProps';
+
+const LoadingIndicatorWithSize: React.FunctionComponent<{
+  radius: number;
+  size: number;
+}> = ({ radius, size }) => {
   return (
-    <Box>
-      <AnimatedCircle
-        color="primary"
-        duration={1500}
-        r={200}
-        sx={{ position: 'absolute', left: '50%', top: '50%' }}
-        w={10}
-      />
-      <AnimatedCircle
-        color="secondary"
-        delay={600}
-        duration={763}
-        r={220}
-        sx={{ position: 'absolute', left: '50%', top: '50%' }}
-        w={10}
-      />
-    </Box>
+    <Flex alignItems="center" justifyContent="center" width="100%">
+      <Box
+        sx={{
+          position: 'relative',
+          transformStyle: 'preserve-3d',
+          width: size,
+          height: size,
+        }}
+      >
+        <Stellar radius={radius} size={size} />
+        <Satellite delay={0} duration={200} id={1} radius={4} size={size} />
+        <Satellite delay={-50} duration={400} id={2} radius={5} size={size} />
+        <Satellite delay={-100} duration={600} id={3} radius={6} size={size} />
+        <Satellite delay={-300} duration={1000} id={4} radius={7} size={size} />
+      </Box>
+    </Flex>
   );
 };
 
-const AnimatedCircle = ({
-  delay,
-  duration,
-  ...props
-}: BoxProps & {
-  color: string;
-  delay?: number;
-  duration: number;
-  r: number;
-  w: number;
-}) => {
+const Stellar: React.FunctionComponent<{
+  radius: number;
+  size: number;
+}> = ({ radius, size }) => {
   const sx = React.useMemo(() => {
     return {
-      ...props.sx,
-      animationName: 'width',
-      animationDuration: duration ? `${duration}ms` : undefined,
-      animationIterationCount: 'infinite',
-      animationTimingFunction: 'ease-out-cubic',
-      animationDirection: 'alternate',
-      animationDelay: delay ? `${delay}ms` : undefined,
-      '@keyframes width': {
-        from: {
-          transform: 'scale(1)',
-          opacity: 0,
-        },
-        to: {
-          transform: 'scale(2)',
-          opacity: 1,
-        },
-      },
-    } as const;
-  }, [props.sx, delay, duration]);
+      left: size / 2 - radius,
+      top: size / 2 - radius,
+      transform: 'translate3d(0px, 0px, 0px)',
+    };
+  }, [radius, size]);
 
-  return <Circle {...props} sx={sx} />;
+  return <Circle radius={radius} sx={sx} />;
 };
 
-const Circle = ({
-  color,
-  r,
-  w,
-  ...props
-}: BoxProps & { color: string; r: number; w: number }) => {
-  return (
-    <Box
-      {...props}
-      sx={{
-        ...props.sx,
-        marginLeft: -r / 4,
-        marginTop: -r / 4,
-        borderRadius: '50%',
-        width: r / 2,
-        height: r / 2,
-        borderColor: color,
-        borderWidth: w,
-        borderStyle: color || w ? 'solid' : undefined,
-      }}
-    />
-  );
+const Satellite: React.FunctionComponent<{
+  delay: number;
+  duration: number;
+  id: number;
+  radius: number;
+  size: number;
+}> = ({ delay, duration, id, radius, size }) => {
+  const sx = React.useMemo(() => {
+    return {
+      bg: 'secondary',
+      animationName: `Satellite-rotation-${id}`,
+      animationIterationCount: 'infinite',
+      animationDuration: `${duration}ms`,
+      animationDelay: `${delay}ms`,
+      animationTimingFunction: 'ease-in-out',
+      [`@keyframes Satellite-rotation-${id}`]: {
+        '0%': {
+          transform: `translate3d(0px, ${size * 0.8 - radius}px, 10px)`,
+        },
+        '50%': {
+          transform: `translate3d(${size - 2 * radius - 1}px, ${
+            size * 0.2 - radius
+          }px, 10px)`,
+        },
+        '51%': {
+          transform: `translate3d(${size - 2 * radius - 1}px, ${
+            size * 0.2 - radius
+          }px, -10px)`,
+        },
+        '100%': {
+          transform: `translate3d(0px, ${size * 0.8 - radius}px, -10px)`,
+        },
+      },
+    };
+  }, [radius, size, id, delay, duration]);
+
+  return <Circle radius={radius} sx={sx} />;
+};
+
+const Circle: React.FunctionComponent<{ radius: number; sx: SxStyleProp }> = ({
+  radius,
+  sx,
+}) => {
+  const circleSx2 = React.useMemo(() => {
+    return {
+      position: 'absolute',
+      borderRadius: 9999,
+      bg: 'primary',
+      width: radius * 2,
+      height: radius * 2,
+      ...sx,
+    } as const;
+  }, [radius, sx]);
+  return <Box sx={circleSx2} />;
+};
+
+export const LoadingIndicator: React.FunctionComponent<EmptyProps> = () => {
+  return <LoadingIndicatorWithSize radius={32} size={64} />;
 };
