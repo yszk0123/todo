@@ -12,7 +12,13 @@ export const Page: React.FunctionComponent<{
   username: string | null;
 }> = ({ avatarUrl, content, hasSession, isLoading, username }) => {
   if (isLoading) {
-    return <LoadingIndicator />;
+    return (
+      <Flex flexDirection="column" minHeight="100vh">
+        <Flex flexGrow={1}>
+          <LoadingIndicator />
+        </Flex>
+      </Flex>
+    );
   }
 
   return (
