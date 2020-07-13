@@ -6,20 +6,20 @@ import { isSSR } from '../helpers/isSSR';
 
 type Props = {
   isOpen: boolean;
-  onClickOuter: () => void;
+  onClose: () => void;
 };
 
 export const Modal: React.FunctionComponent<Props> = ({
   children,
   isOpen,
-  onClickOuter,
+  onClose,
 }) => {
   const handleClickOuter = React.useCallback(
     (event: React.MouseEvent) => {
       event.stopPropagation();
-      onClickOuter();
+      onClose();
     },
-    [onClickOuter]
+    [onClose]
   );
 
   if (isSSR() || !isOpen) {

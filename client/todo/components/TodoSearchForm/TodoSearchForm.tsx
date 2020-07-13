@@ -50,7 +50,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+    <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <TodoSearchFormTagsField
           categoryTags={categoryTags}

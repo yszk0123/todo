@@ -44,7 +44,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
 
   return (
-    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+    <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <EditFormInputField
           label="Name"

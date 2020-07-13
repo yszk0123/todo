@@ -50,7 +50,7 @@ const NoneForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+    <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <TodoEditFormTagsField
           categoryTags={categoryTags}
@@ -119,7 +119,7 @@ const SingleForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+    <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <TodoEditFormTagsField
           categoryTags={categoryTags}
@@ -186,7 +186,7 @@ const MultiForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClickOuter={onCloseModal}>
+    <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <TodoEditFormTagsField
           categoryTags={categoryTags}
