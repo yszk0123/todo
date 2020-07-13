@@ -202,6 +202,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSelectSearchCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
+      dispatch(todoSearchFormReset());
       dispatch(todoSearchFormSet({ category }));
       dispatch(todoSearchFormCommit());
     },
