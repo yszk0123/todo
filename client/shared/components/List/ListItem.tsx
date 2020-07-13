@@ -18,9 +18,16 @@ export function ListItem<T>({
   onClick?: (item: T) => void;
   rightElement?: JSX.Element | null;
 }): JSX.Element {
-  const handleClick = React.useCallback(() => {
-    onClick?.(item);
-  }, [item, onClick]);
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      if (onClick) {
+        event.preventDefault();
+        event.stopPropagation();
+        onClick(item);
+      }
+    },
+    [item, onClick]
+  );
 
   return (
     <Flex
