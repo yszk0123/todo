@@ -74,8 +74,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
   const handleChangeName = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.currentTarget.value;
+    (name: string) => {
       dispatch(checkpointEditFormSet({ name }));
     },
     [dispatch]

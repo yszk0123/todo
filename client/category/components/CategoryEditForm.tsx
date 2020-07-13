@@ -13,7 +13,7 @@ import { CategoryEditFormState } from '../ducks/CategoryEditFormDucks';
 export const CategoryEditForm: React.FunctionComponent<{
   categoryEditFormState: CategoryEditFormState;
   isOpen: boolean;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeName: (name: string) => void;
   onCloseModal: () => void;
   onCreateOneCategory: () => void;
   onDeleteOneCategory: () => void;

@@ -23,7 +23,7 @@ export const TagEditForm: React.FunctionComponent<{
   isOpen: boolean;
   onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeName: (name: string) => void;
   onCloseModal: () => void;
   onCreateOneTag: () => void;
   onDeleteOneTag: () => void;

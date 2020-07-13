@@ -17,7 +17,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
   isOpen: boolean;
   onArchiveOneCheckpoint: () => void;
   onChangeEndAt: (endAt: DateTime | null) => void;
-  onChangeName: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeName: (name: string) => void;
   onCloseModal: () => void;
   onCreateOneCheckpoint: () => void;
   onDeleteCheckpointsById: () => void;

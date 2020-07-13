@@ -74,8 +74,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
   );
 
   const handleChangeName = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.currentTarget.value;
+    (name: string) => {
       dispatch(tagEditFormSet({ name }));
     },
     [dispatch]

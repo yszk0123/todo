@@ -63,8 +63,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
   // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
 
   const handleChangeName = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.currentTarget.value;
+    (name: string) => {
       dispatch(categoryEditFormSet({ name }));
     },
     [dispatch]
