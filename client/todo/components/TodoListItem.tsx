@@ -11,7 +11,7 @@ import {
   TodoCategoryFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
-import { TodoListStatus } from './TodoListStatus';
+import { TodoListStatusIcon } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
@@ -69,7 +69,10 @@ export const TodoListItem: React.FunctionComponent<{
             <Checkbox checked={isSelected} marginRight={0} readOnly />
           </Box>
         ) : (
-          <TodoListStatus status={todo.status} onClick={handleClickStatus} />
+          <TodoListStatusIcon
+            status={todo.status}
+            onClick={handleClickStatus}
+          />
         )
       }
       mainElement={

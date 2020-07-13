@@ -1,4 +1,3 @@
-// FIXME: Use layout components instead of using rebass directly
 import React from 'react';
 import {
   MdCheckBox,
@@ -6,8 +5,8 @@ import {
   MdHourglassFull,
   MdIndeterminateCheckBox,
 } from 'react-icons/md';
-import { Flex } from 'rebass';
 
+import { ListIcon } from '../../shared/components/List';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 
 const Status: React.FunctionComponent<{ status: TodoStatus }> = ({
@@ -25,28 +24,9 @@ const Status: React.FunctionComponent<{ status: TodoStatus }> = ({
   }
 };
 
-export const TodoListStatus: React.FunctionComponent<{
+export const TodoListStatusIcon: React.FunctionComponent<{
   onClick: () => void;
   status: TodoStatus;
 }> = ({ onClick, status }) => {
-  const handleClick = React.useCallback(
-    (event: React.MouseEvent) => {
-      event.stopPropagation();
-      onClick();
-    },
-    [onClick]
-  );
-
-  return (
-    <Flex
-      alignItems="center"
-      color="gray"
-      fontSize={24}
-      justifyContent="center"
-      sx={{ ':hover': { opacity: 0.7 } }}
-      onClick={handleClick}
-    >
-      <Status status={status} />
-    </Flex>
-  );
+  return <ListIcon icon={<Status status={status} />} onClick={onClick} />;
 };
