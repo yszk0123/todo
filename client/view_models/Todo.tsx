@@ -1,11 +1,13 @@
 import { TodoStatus } from '../shared/graphql/__generated__/baseTypes';
 import {
   RootTodoFragment,
+  TodoCheckpointFragment,
   TodoTagFragment,
 } from '../todo/graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
 export type TodoGroup = {
+  checkpoint: TodoCheckpointFragment | null;
   header: { endAt: DateTime | null; name: string | null };
   todos: RootTodoFragment[];
 };
@@ -60,7 +62,11 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
     if (!group) {
       const name = todo.checkpoint?.name ?? null;
       const endAt = todo.checkpoint?.endAt ?? null;
-      group = { header: { name, endAt }, todos: [] };
+      group = {
+        header: { name, endAt },
+        todos: [],
+        checkpoint: todo.checkpoint ?? null,
+      };
     }
     group.todos.push(todo);
     groupsById[key] = group;

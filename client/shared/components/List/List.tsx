@@ -5,6 +5,7 @@ import { stopPropagation } from '../../view_helpers/stopPropagation';
 
 type Props = {
   leftElement?: JSX.Element | null;
+  onClickHeader?: () => void;
   rightElement?: JSX.Element | null;
   variant?: string;
 };
@@ -12,6 +13,7 @@ type Props = {
 export const List: React.FunctionComponent<Props> = ({
   children,
   leftElement,
+  onClickHeader,
   rightElement,
   variant = 'gray',
 }) => {
@@ -43,8 +45,13 @@ export const List: React.FunctionComponent<Props> = ({
                 : 'flex-start'
               : 'flex-end'
           }
-          sx={{ position: 'absolute', top: -2 }}
+          sx={{
+            position: 'absolute',
+            top: -2,
+            cursor: onClickHeader ? 'pointer' : undefined,
+          }}
           width={1}
+          onClick={onClickHeader}
         >
           {!!leftElement && (
             <Box bg="background" ml={2} px={1}>

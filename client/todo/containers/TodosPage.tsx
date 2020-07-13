@@ -209,6 +209,15 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [dispatch]
   );
 
+  const handleSearchByCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      dispatch(todoSearchFormReset());
+      dispatch(todoSearchFormSet({ checkpoint }));
+      dispatch(todoSearchFormCommit());
+    },
+    [dispatch]
+  );
+
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
@@ -251,6 +260,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         todos={todos}
         onClick={handleSelectOneTodo}
         onClickCategory={handleSelectByCategory}
+        onClickCheckpoint={handleSearchByCheckpoint}
         onClickStatus={handleToggleStatus}
         onClickTag={handleSelectByTag}
         onClickToggle={handleSelectManyTodo}

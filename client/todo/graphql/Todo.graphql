@@ -46,10 +46,14 @@ fragment RootTodo on Todo {
     ...TodoCategory
   }
   checkpoint {
-    id
-    name
-    endAt
+    ...TodoCheckpoint
   }
+}
+
+fragment TodoCheckpoint on Checkpoint {
+  id
+  name
+  endAt
 }
 
 fragment TodoTag on Tag {

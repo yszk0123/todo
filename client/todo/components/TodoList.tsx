@@ -7,6 +7,7 @@ import { isPast, TodoGroup } from '../../view_models/Todo';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
+  TodoCheckpointFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
 import { TodoListItem } from './TodoListItem';
@@ -18,6 +19,7 @@ export function TodoList({
   now,
   onClick,
   onClickCategory,
+  onClickCheckpoint,
   onClickStatus,
   onClickTag,
   onClickToggle,
@@ -29,6 +31,7 @@ export function TodoList({
   now: number;
   onClick: (item: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
+  onClickCheckpoint: (checkpoint: TodoCheckpointFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
@@ -37,6 +40,12 @@ export function TodoList({
   const header = group.header;
   const todos = group.todos;
   const past = isPast(header.endAt, now);
+
+  const handleClickCheckpoint = React.useCallback(() => {
+    if (group.checkpoint !== null) {
+      onClickCheckpoint(group.checkpoint);
+    }
+  }, [group.checkpoint, onClickCheckpoint]);
 
   return (
     <List
@@ -47,6 +56,7 @@ export function TodoList({
         ) : null
       }
       variant={past ? 'warning' : undefined}
+      onClickHeader={handleClickCheckpoint}
     >
       {todos.map((todo) => {
         const isSelected = selectedTodoIds.includes(todo.id);

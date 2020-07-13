@@ -8,6 +8,9 @@ export function getTodoWhereInput(
     categoryId: todoSearchFormValue?.category?.id
       ? { equals: todoSearchFormValue?.category?.id }
       : undefined,
+    checkpointId: todoSearchFormValue?.checkpoint?.id
+      ? { equals: todoSearchFormValue.checkpoint.id }
+      : undefined,
     archivedAt: todoSearchFormValue?.archivedAt
       ? { lte: todoSearchFormValue.archivedAt }
       : { equals: null },

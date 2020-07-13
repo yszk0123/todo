@@ -5,6 +5,7 @@ import { groupTodoByCheckpoint } from '../../view_models/Todo';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
+  TodoCheckpointFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
 import { TodoList } from './TodoList';
@@ -14,6 +15,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   now: number;
   onClick: (item: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
+  onClickCheckpoint: (checkpoint: TodoCheckpointFragment) => void;
   onClickStatus: (todo: RootTodoFragment) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
@@ -24,6 +26,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   now,
   onClick,
   onClickCategory,
+  onClickCheckpoint,
   onClickStatus,
   onClickTag,
   onClickToggle,
@@ -46,6 +49,7 @@ export const TodoGroupedList: React.FunctionComponent<{
             selectedTodoIds={selectedTodoIds}
             onClick={onClick}
             onClickCategory={onClickCategory}
+            onClickCheckpoint={onClickCheckpoint}
             onClickStatus={onClickStatus}
             onClickTag={onClickTag}
             onClickToggle={onClickToggle}
