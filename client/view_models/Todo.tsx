@@ -5,7 +5,7 @@ import {
 } from '../todo/graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
-type Group = {
+export type TodoGroup = {
   header: { endAt: DateTime | null; name: string | null };
   todos: RootTodoFragment[];
 };
@@ -51,8 +51,8 @@ function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
   });
 }
 
-export function groupTodoByCheckpoint(todos: RootTodoFragment[]): Group[] {
-  const groupsById: Record<string, Group> = {};
+export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
+  const groupsById: Record<string, TodoGroup> = {};
 
   sortTodosByContent(todos).forEach((todo) => {
     const key = todo.checkpoint?.id ?? '__DEFAULT__';

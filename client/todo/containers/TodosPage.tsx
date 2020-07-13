@@ -11,7 +11,7 @@ import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { TodoEditForm } from '../components/TodoEditForm';
-import { TodoList } from '../components/TodoList';
+import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
@@ -244,7 +244,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}
       />
-      <TodoList
+      <TodoGroupedList
         isCategoryNameShown={isCategoryNameShown}
         now={now}
         selectedTodoIds={todoEditFormState.selectedTodoIds}
