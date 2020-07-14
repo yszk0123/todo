@@ -21,7 +21,6 @@ export function ListItem<T>({
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {
       if (onClick) {
-        event.preventDefault();
         event.stopPropagation();
         onClick(item);
       }
