@@ -2,16 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Flex } from 'rebass';
 
+import { EmptyProps } from '../../../view_models/EmptyProps';
 import { isSSR } from '../../helpers/isSSR';
 import { stopPropagation } from '../../view_helpers/stopPropagation';
 
-type Props = {
-  isSelected?: boolean;
-};
-
-export const StatusBar: React.FunctionComponent<Props> = ({
+export const StatusBar: React.FunctionComponent<EmptyProps> = ({
   children,
-  isSelected = false,
 }) => {
   if (isSSR()) {
     return null;
@@ -19,7 +15,7 @@ export const StatusBar: React.FunctionComponent<Props> = ({
 
   return ReactDOM.createPortal(
     <Flex
-      flexDirection="column"
+      flexDirection="column-reverse"
       sx={{
         position: 'sticky',
         zIndex: 2,
@@ -28,18 +24,7 @@ export const StatusBar: React.FunctionComponent<Props> = ({
       }}
       onClick={stopPropagation}
     >
-      <Flex
-        bg={isSelected ? 'gray' : 'background'}
-        color={isSelected ? 'white' : 'gray'}
-        fontSize={2}
-        justifyContent="space-between"
-        p={2}
-        sx={{
-          transition: 'background 0.3s ease-out',
-        }}
-      >
-        {children}
-      </Flex>
+      {children}
     </Flex>,
     document.body
   );

@@ -7,6 +7,7 @@ import {
   StatusBarItem,
   StatusBarLeft,
   StatusBarLink,
+  StatusBarPrimaryRow,
   StatusBarRight,
   StatusBarText,
 } from '../../../shared/components/StatusBar';
@@ -44,44 +45,46 @@ export const TodoStatusBar: React.FunctionComponent<{
   const selected = isSelected(selectMode);
 
   return (
-    <StatusBar isSelected={selected}>
-      <StatusBarLeft>
-        <StatusBarItem>
-          <TodoStatusBarCategorySelect
-            categories={categories}
-            category={category}
-            onClickCategory={onClickCategory}
+    <StatusBar>
+      <StatusBarPrimaryRow isSelected={selected}>
+        <StatusBarLeft>
+          <StatusBarItem>
+            <TodoStatusBarCategorySelect
+              categories={categories}
+              category={category}
+              onClickCategory={onClickCategory}
+            />
+          </StatusBarItem>
+          <StatusBarText text={`${count} todos`} />
+          <StatusBarItem>
+            <TodoStatusBarSyncStatus isSyncing={isSyncing} />
+          </StatusBarItem>
+        </StatusBarLeft>
+        <StatusBarRight>
+          {!!category && (
+            <StatusBarLink
+              as={`/categories/${category.id}/todos/report`}
+              href="/categories/[categoryId]/todos/report"
+              text="See report"
+            />
+          )}
+          {selected && (
+            <TodoStatusBarArchiveButton
+              archiveStatus={archiveStatus}
+              onClickArchive={onClickArchive}
+              onClickUnarchive={onClickUnarchive}
+            />
+          )}
+          {!selected && (
+            <StatusBarButton label="Search" onClick={onClickSearch} />
+          )}
+          <StatusBarButton
+            isPrimary
+            label={selected ? 'Edit' : 'Create'}
+            onClick={onClickEdit}
           />
-        </StatusBarItem>
-        <StatusBarText text={`${count} todos`} />
-        <StatusBarItem>
-          <TodoStatusBarSyncStatus isSyncing={isSyncing} />
-        </StatusBarItem>
-      </StatusBarLeft>
-      <StatusBarRight>
-        {!!category && (
-          <StatusBarLink
-            as={`/categories/${category.id}/todos/report`}
-            href="/categories/[categoryId]/todos/report"
-            text="See report"
-          />
-        )}
-        {selected && (
-          <TodoStatusBarArchiveButton
-            archiveStatus={archiveStatus}
-            onClickArchive={onClickArchive}
-            onClickUnarchive={onClickUnarchive}
-          />
-        )}
-        {!selected && (
-          <StatusBarButton label="Search" onClick={onClickSearch} />
-        )}
-        <StatusBarButton
-          isPrimary
-          label={selected ? 'Edit' : 'Create'}
-          onClick={onClickEdit}
-        />
-      </StatusBarRight>
+        </StatusBarRight>
+      </StatusBarPrimaryRow>
     </StatusBar>
   );
 };

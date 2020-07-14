@@ -5,6 +5,7 @@ import {
   StatusBarButton,
   StatusBarItem,
   StatusBarLeft,
+  StatusBarPrimaryRow,
   StatusBarRight,
   StatusBarText,
 } from '../../shared/components/StatusBar';
@@ -19,20 +20,22 @@ export const TagStatusBar: React.FunctionComponent<{
   const selected = isSelected(selectMode);
 
   return (
-    <StatusBar isSelected={selected}>
-      <StatusBarLeft>
-        <StatusBarText text={`${count} tags`} />
-        <StatusBarItem>
-          <TagIcon />
-        </StatusBarItem>
-      </StatusBarLeft>
-      <StatusBarRight>
-        <StatusBarButton
-          isPrimary
-          label={selected ? 'Edit' : 'Create'}
-          onClick={onClickEdit}
-        />
-      </StatusBarRight>
+    <StatusBar>
+      <StatusBarPrimaryRow isSelected={selected}>
+        <StatusBarLeft>
+          <StatusBarText text={`${count} tags`} />
+          <StatusBarItem>
+            <TagIcon />
+          </StatusBarItem>
+        </StatusBarLeft>
+        <StatusBarRight>
+          <StatusBarButton
+            isPrimary
+            label={selected ? 'Edit' : 'Create'}
+            onClick={onClickEdit}
+          />
+        </StatusBarRight>
+      </StatusBarPrimaryRow>
     </StatusBar>
   );
 };
