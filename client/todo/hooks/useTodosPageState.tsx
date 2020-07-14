@@ -30,43 +30,29 @@ function getQueryVariables(
 
 export function useTodosPageState() {
   const router = useRouter();
-  const query = React.useMemo(() => parseTodoSearchRawQuery(router.query), [
-    router.query,
-  ]);
+  const todoSearchQuery = React.useMemo(
+    () => parseTodoSearchRawQuery(router.query),
+    [router.query]
+  );
   const todoSearchFormState = useTypedSelector((state) => state.todoSearchForm);
-  const current = todoSearchFormState.current;
-  const variables = React.useMemo(() => getQueryVariables(query), [query]);
+  const variables = React.useMemo(() => getQueryVariables(todoSearchQuery), [
+    todoSearchQuery,
+  ]);
   const { data, loading, refetch } = useTodosPageQuery({
     variables,
     fetchPolicy: 'cache-and-network',
   });
   const { data: pageData } = usePageIsSyncingQuery();
   const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
-  const prev = React.useRef<TodoSearchQuery | null>(null);
-
-  React.useEffect(() => {
-    if (prev.current !== null && prev.current === current) {
-      return;
-    }
-    prev.current = current;
-    if (current === null) {
-      return;
-    }
-
-    router.push({
-      pathname: router.pathname,
-      query: current, // FIXME: Convert TodoSearchQuery into ParsedQuery
-    });
-  }, [current, router, prev]);
 
   const [now, setNow] = React.useState(() => Date.now());
 
   const category = React.useMemo(() => {
-    const categoryId = current?.categoryId;
+    const categoryId = todoSearchQuery.categoryId;
     return (
       data?.categories?.find((category) => category.id === categoryId) ?? null
     );
-  }, [current?.categoryId, data?.categories]);
+  }, [todoSearchQuery.categoryId, data?.categories]);
 
   const archiveStatus = React.useMemo(
     () => getArchiveStatus(data?.todos ?? []),
@@ -87,7 +73,7 @@ export function useTodosPageState() {
     category,
     categoryTags: data?.tags ?? [],
     checkpoints: data?.checkpoints ?? [],
-    isCategoryNameShown: current?.categoryId == null,
+    isCategoryNameShown: todoSearchQuery.categoryId == null,
     isLoading: !data && loading,
     isSyncing: loading || (pageData?.page?.isSyncing ?? false),
     archiveStatus,
@@ -95,8 +81,8 @@ export function useTodosPageState() {
     todoEditFormState,
     todos: data?.todos ?? [],
     userId: data?.me?.id ?? null,
-    todoSearchFormCurrent: todoSearchFormState.current,
     todoSearchFormDraft: todoSearchFormState.draft,
+    todoSearchQuery,
     selectMode:
       count === 0
         ? SelectMode.NONE

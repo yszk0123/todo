@@ -22,7 +22,6 @@ import {
   todoEditFormToggleTag,
 } from '../ducks/TodoEditFormDucks';
 import {
-  todoSearchFormCommit,
   todoSearchFormReset,
   todoSearchFormSet,
   todoSearchFormToggleTag,
@@ -50,8 +49,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     now,
     selectMode,
     todoEditFormState,
-    todoSearchFormCurrent,
     todoSearchFormDraft,
+    todoSearchQuery,
     todos,
     userId,
   } = useTodosPageState();
@@ -66,18 +65,16 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSelectByTag = React.useCallback(
     (tag: TodoTagFragment) => {
-      dispatch(todoSearchFormSet({ tags: [tag] }));
-      dispatch(todoSearchFormCommit());
+      todoUsecase.search({ tags: [tag] });
     },
-    [dispatch]
+    [todoUsecase]
   );
 
   const handleSelectByCategory = React.useCallback(
     (category: TodoCategoryFragment) => {
-      dispatch(todoSearchFormSet({ category }));
-      dispatch(todoSearchFormCommit());
+      todoUsecase.search({ category });
     },
-    [dispatch]
+    [todoUsecase]
   );
 
   const handleDeselectTodo = React.useCallback(() => {
@@ -86,20 +83,20 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
-    todoUsecase.createOneTodo(userId, todoEditFormState, todoSearchFormCurrent);
-  }, [todoEditFormState, todoSearchFormCurrent, todoUsecase, userId]);
+    todoUsecase.createOneTodo(userId, todoEditFormState, todoSearchQuery);
+  }, [todoEditFormState, todoSearchQuery, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(() => {
     todoUsecase.deleteTodosById(
       todoEditFormState.selectedTodoIds,
-      todoSearchFormCurrent
+      todoSearchQuery
     );
-  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
+  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
-    todoUsecase.updateTodosById(todoEditFormState, todoSearchFormCurrent);
+    todoUsecase.updateTodosById(todoEditFormState, todoSearchQuery);
     onCloseModal();
-  }, [onCloseModal, todoEditFormState, todoSearchFormCurrent, todoUsecase]);
+  }, [onCloseModal, todoEditFormState, todoSearchQuery, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -111,16 +108,16 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleArchiveTodosById = React.useCallback(() => {
     todoUsecase.archiveTodosById(
       todoEditFormState.selectedTodoIds,
-      todoSearchFormCurrent
+      todoSearchQuery
     );
-  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
+  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleUnarchiveTodosById = React.useCallback(() => {
     todoUsecase.unarchiveTodosById(
       todoEditFormState.selectedTodoIds,
-      todoSearchFormCurrent
+      todoSearchQuery
     );
-  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
+  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleToggleTag = React.useCallback(
     (tag: TodoTagFragment) => {
@@ -148,9 +145,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   );
 
   const handleSearchCommit = React.useCallback(() => {
-    dispatch(todoSearchFormCommit());
+    todoUsecase.search(todoSearchFormDraft);
     onCloseModal();
-  }, [dispatch, onCloseModal]);
+  }, [onCloseModal, todoSearchFormDraft, todoUsecase]);
 
   const handleSelectStatus = React.useCallback(
     (status: TodoStatus | null) => {
@@ -201,22 +198,18 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [dispatch]
   );
 
-  const handleSelectSearchCategory = React.useCallback(
+  const handleSearchByCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
-      dispatch(todoSearchFormReset());
-      dispatch(todoSearchFormSet({ category }));
-      dispatch(todoSearchFormCommit());
+      todoUsecase.search({ category });
     },
-    [dispatch]
+    [todoUsecase]
   );
 
   const handleSearchByCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      dispatch(todoSearchFormReset());
-      dispatch(todoSearchFormSet({ checkpoint }));
-      dispatch(todoSearchFormCommit());
+      todoUsecase.search({ checkpoint });
     },
-    [dispatch]
+    [todoUsecase]
   );
 
   const checkpointsWithDummy = React.useMemo(
@@ -233,7 +226,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
       dispatch(todoEditFormReset());
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [todoSearchFormCurrent]
+    [todoSearchQuery]
   );
 
   if (isLoading) {
@@ -255,7 +248,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isSyncing={isSyncing}
         selectMode={selectMode}
         onClickArchive={handleArchiveTodosById}
-        onClickCategory={handleSelectSearchCategory}
+        onClickCategory={handleSearchByCategory}
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}
         onClickUnarchive={handleUnarchiveTodosById}

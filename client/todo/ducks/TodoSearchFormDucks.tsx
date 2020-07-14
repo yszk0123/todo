@@ -4,26 +4,6 @@ import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
 import { DateTime } from '../../view_models/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
-import { TodoSearchQuery } from '../view_models/TodoSearchQuery';
-
-function parseTodoSearchFormValue(
-  value: TodoSearchFormValue | null
-): TodoSearchQuery {
-  const archivedAt = value?.archivedAt ?? null;
-  const categoryId = value?.category?.id ?? null;
-  const checkpointId = value?.checkpoint?.id ?? null;
-  const status = value?.status ?? null;
-  const tagIds = value?.tags?.map((tag) => tag.id) ?? null;
-  const text = value?.text ?? null;
-  return {
-    archivedAt,
-    categoryId,
-    checkpointId,
-    status,
-    tagIds,
-    text,
-  };
-}
 
 export type TodoSearchFormValue = {
   archivedAt: DateTime | null;
@@ -35,12 +15,10 @@ export type TodoSearchFormValue = {
 };
 
 export type TodoSearchFormState = {
-  current: TodoSearchQuery | null;
   draft: TodoSearchFormValue;
 };
 
 enum TodoSearchFormActionType {
-  COMMIT = 'todoSearchForm/COMMIT',
   RESET = 'todoSearchForm/RESET',
   SET = 'todoSearchForm/SET',
   TOGGLE_TAG = 'todoSearchForm/TOGGLE_TAG',
@@ -53,9 +31,6 @@ export type TodoSearchFormAction =
   | {
       payload: { draft: Partial<TodoSearchFormValue> };
       type: TodoSearchFormActionType.SET;
-    }
-  | {
-      type: TodoSearchFormActionType.COMMIT;
     }
   | {
       payload: { tag: TodoTagFragment };
@@ -86,14 +61,7 @@ export function todoSearchFormSet(
   };
 }
 
-export function todoSearchFormCommit(): TodoSearchFormAction {
-  return {
-    type: TodoSearchFormActionType.COMMIT,
-  };
-}
-
 export const todoSearchFormInitialState: TodoSearchFormState = {
-  current: null,
   draft: {
     archivedAt: null,
     category: null,
@@ -119,13 +87,6 @@ export function todoSearchFormReducer(
           ...state.draft,
           ...action.payload.draft,
         },
-      };
-    }
-    case TodoSearchFormActionType.COMMIT: {
-      const current = parseTodoSearchFormValue(state.draft);
-      return {
-        ...state,
-        current,
       };
     }
     case TodoSearchFormActionType.TOGGLE_TAG: {

@@ -1,4 +1,5 @@
 import { ApolloClient } from '@apollo/client';
+import Router from 'next/router';
 
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import {
@@ -14,6 +15,7 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../ducks/TodoEditFormDucks';
+import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -24,7 +26,10 @@ import {
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
-import { TodoSearchQuery } from '../view_models/TodoSearchQuery';
+import {
+  fromTodoSearchFormValue,
+  TodoSearchQuery,
+} from '../view_models/TodoSearchQuery';
 import { getTodoWhereInput } from '../view_models/TodoWhereInput';
 
 function getNextStatus(status: TodoStatus): TodoStatus {
@@ -51,6 +56,11 @@ export class TodoUsecase {
     private client: ApolloClient<unknown>,
     private dispatch: (action: TodoEditFormAction) => void
   ) {}
+
+  search(todoSearchFormValue: Partial<TodoSearchFormValue>) {
+    const query = fromTodoSearchFormValue(todoSearchFormValue);
+    Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
+  }
 
   async createOneTodo(
     userId: string,

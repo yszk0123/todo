@@ -1,6 +1,7 @@
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { DateTime, toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
+import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 
 export type TodoSearchQuery = {
   archivedAt: DateTime | null;
@@ -17,6 +18,25 @@ const stringToTodoStatusMap: Record<string, TodoStatus | undefined> = {
   [TodoStatus.Waiting]: TodoStatus.Waiting,
   [TodoStatus.Done]: TodoStatus.Done,
 };
+
+export function fromTodoSearchFormValue(
+  value: Partial<TodoSearchFormValue> | null
+): TodoSearchQuery {
+  const archivedAt = value?.archivedAt ?? null;
+  const categoryId = value?.category?.id ?? null;
+  const checkpointId = value?.checkpoint?.id ?? null;
+  const status = value?.status ?? null;
+  const tagIds = value?.tags?.map((tag) => tag.id) ?? null;
+  const text = value?.text ?? null;
+  return {
+    archivedAt,
+    categoryId,
+    checkpointId,
+    status,
+    tagIds,
+    text,
+  };
+}
 
 export function parseTodoSearchRawQuery(
   query: Record<string, string | string[] | undefined>
