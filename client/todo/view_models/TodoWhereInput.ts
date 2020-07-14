@@ -1,26 +1,24 @@
 import { TodoWhereInput } from '../../shared/graphql/__generated__/baseTypes';
-import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
+import { TodoSearchQuery } from './TodoSearchQuery';
 
 export function getTodoWhereInput(
-  todoSearchFormValue: TodoSearchFormValue | null
+  query: TodoSearchQuery | null
 ): TodoWhereInput {
   return {
-    categoryId: todoSearchFormValue?.category?.id
-      ? { equals: todoSearchFormValue?.category?.id }
+    categoryId: query?.categoryId ? { equals: query?.categoryId } : undefined,
+    checkpointId: query?.checkpointId
+      ? { equals: query.checkpointId }
       : undefined,
-    checkpointId: todoSearchFormValue?.checkpoint?.id
-      ? { equals: todoSearchFormValue.checkpoint.id }
-      : undefined,
-    archivedAt: todoSearchFormValue?.archivedAt
-      ? { lte: todoSearchFormValue.archivedAt }
+    archivedAt: query?.archivedAt
+      ? { lte: query.archivedAt }
       : { equals: null },
-    status: todoSearchFormValue?.status ?? undefined,
-    tags: todoSearchFormValue?.tags?.length
-      ? { some: { id: { in: todoSearchFormValue.tags.map((t) => t.id) } } }
+    status: query?.status ?? undefined,
+    tags: query?.tagIds?.length
+      ? { some: { id: { in: query.tagIds } } }
       : undefined,
-    text: todoSearchFormValue?.text
+    text: query?.text
       ? {
-          contains: todoSearchFormValue.text,
+          contains: query.text,
         }
       : undefined,
   };

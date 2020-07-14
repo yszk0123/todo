@@ -14,7 +14,6 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../ducks/TodoEditFormDucks';
-import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -25,6 +24,7 @@ import {
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../view_models/TodoSearchQuery';
 import { getTodoWhereInput } from '../view_models/TodoWhereInput';
 
 function getNextStatus(status: TodoStatus): TodoStatus {
@@ -40,9 +40,9 @@ function getNextStatus(status: TodoStatus): TodoStatus {
   }
 }
 
-function getRefetchQuery(todoSearchFormValue: TodoSearchFormValue | null) {
+function getRefetchQuery(todoSearchQuery: TodoSearchQuery | null) {
   return refetchGetTodosQuery({
-    input: getTodoWhereInput(todoSearchFormValue),
+    input: getTodoWhereInput(todoSearchQuery),
   });
 }
 
@@ -55,20 +55,18 @@ export class TodoUsecase {
   async createOneTodo(
     userId: string,
     todoEditFormState: TodoEditFormState,
-    todoSearchFormValue: TodoSearchFormValue | null
+    todoSearchQuery: TodoSearchQuery | null
   ) {
     const { checkpoint, status, tags, text } = todoEditFormState;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
     const categoryIdToCreate =
-      todoEditFormState.category?.id ??
-      todoSearchFormValue?.category?.id ??
-      null;
+      todoEditFormState.category?.id ?? todoSearchQuery?.categoryId ?? null;
     if (categoryIdToCreate === null) {
       alert('CategoryId required');
       return;
     }
-    const checkpointToCreate =
-      checkpoint ?? todoSearchFormValue?.checkpoint ?? null;
+    const checkpointIdToCreate =
+      checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
 
     this.dispatch(todoEditFormSet({ text: '' }));
 
@@ -80,14 +78,13 @@ export class TodoUsecase {
           category: { connect: { id: categoryIdToCreate } },
           tags: newTags ? { connect: newTags } : undefined,
           text,
-          status: status ?? todoSearchFormValue?.status ?? TodoStatus.Todo,
-          checkpoint:
-            checkpointToCreate && checkpointToCreate !== DUMMY_CHECKPOINT
-              ? { connect: { id: checkpointToCreate.id } }
-              : undefined,
+          status: status ?? todoSearchQuery?.status ?? TodoStatus.Todo,
+          checkpoint: checkpointIdToCreate
+            ? { connect: { id: checkpointIdToCreate } }
+            : undefined,
         },
       },
-      refetchQueries: [getRefetchQuery(todoSearchFormValue)],
+      refetchQueries: [getRefetchQuery(todoSearchQuery)],
     });
   }
 
@@ -100,7 +97,7 @@ export class TodoUsecase {
       tags,
       text,
     }: TodoEditFormState,
-    todoSearchFormValue: TodoSearchFormValue | null
+    todoSearchQuery: TodoSearchQuery | null
   ) {
     const count = selectedTodoIds.length;
     if (count === 0) return;
@@ -127,15 +124,12 @@ export class TodoUsecase {
                 : undefined,
           },
         },
-        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
       })
     );
   }
 
-  deleteTodosById(
-    todoIds: ID[],
-    todoSearchFormValue: TodoSearchFormValue | null
-  ) {
+  deleteTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
     const count = todoIds.length;
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
@@ -144,7 +138,7 @@ export class TodoUsecase {
       this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
         mutation: DeleteTodosByIdDocument,
         variables: { input: { ids: todoIds } },
-        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
       })
     );
   }
@@ -165,10 +159,7 @@ export class TodoUsecase {
     );
   }
 
-  archiveTodosById(
-    todoIds: ID[],
-    todoSearchFormValue: TodoSearchFormValue | null
-  ) {
+  archiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
         mutation: UpdateTodosByIdDocument,
@@ -178,7 +169,7 @@ export class TodoUsecase {
             archivedAt: toDateTime(new Date()),
           },
         },
-        refetchQueries: [getRefetchQuery(todoSearchFormValue)],
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
       })
     );
   }

@@ -1,12 +1,10 @@
 import { TagWhereInput } from '../../shared/graphql/__generated__/baseTypes';
-import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
+import { TodoSearchQuery } from './TodoSearchQuery';
 
-export function getTagWhereInput(
-  todoSearchFormValue: TodoSearchFormValue | null
-): TagWhereInput {
+export function getTagWhereInput(query: TodoSearchQuery | null): TagWhereInput {
   return {
-    categories: todoSearchFormValue?.category?.id
-      ? { some: { id: { equals: todoSearchFormValue?.category?.id } } }
+    categories: query?.categoryId
+      ? { some: { id: { equals: query.categoryId } } }
       : undefined,
     archivedAt: { equals: null },
   };

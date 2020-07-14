@@ -4,6 +4,26 @@ import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
 import { DateTime } from '../../view_models/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../view_models/TodoSearchQuery';
+
+function parseTodoSearchFormValue(
+  value: TodoSearchFormValue | null
+): TodoSearchQuery {
+  const archivedAt = value?.archivedAt ?? null;
+  const categoryId = value?.category?.id ?? null;
+  const checkpointId = value?.checkpoint?.id ?? null;
+  const status = value?.status ?? null;
+  const tagIds = value?.tags?.map((tag) => tag.id) ?? null;
+  const text = value?.text ?? null;
+  return {
+    archivedAt,
+    categoryId,
+    checkpointId,
+    status,
+    tagIds,
+    text,
+  };
+}
 
 export type TodoSearchFormValue = {
   archivedAt: DateTime | null;
@@ -15,7 +35,7 @@ export type TodoSearchFormValue = {
 };
 
 export type TodoSearchFormState = {
-  current: TodoSearchFormValue | null;
+  current: TodoSearchQuery | null;
   draft: TodoSearchFormValue;
 };
 
@@ -102,9 +122,10 @@ export function todoSearchFormReducer(
       };
     }
     case TodoSearchFormActionType.COMMIT: {
+      const current = parseTodoSearchFormValue(state.draft);
       return {
         ...state,
-        current: state.draft,
+        current,
       };
     }
     case TodoSearchFormActionType.TOGGLE_TAG: {
