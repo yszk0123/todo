@@ -17,7 +17,6 @@ import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
   todoEditFormReset,
   todoEditFormSelectMany,
-  todoEditFormSelectOne,
   todoEditFormSet,
   todoEditFormToggleTag,
 } from '../ducks/TodoEditFormDucks';
@@ -55,13 +54,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     userId,
   } = useTodosPageState();
   const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
-
-  const handleSelectOneTodo = React.useCallback(
-    (todo: RootTodoFragment) => {
-      dispatch(todoEditFormSelectOne(todo));
-    },
-    [dispatch]
-  );
 
   const handleSelectManyTodo = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -258,7 +250,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         now={now}
         selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
-        onClick={handleSelectOneTodo}
+        onClick={handleSelectManyTodo}
         onClickCategory={handleSelectByCategory}
         onClickCheckpoint={handleSearchByCheckpoint}
         onClickStatus={handleToggleStatus}

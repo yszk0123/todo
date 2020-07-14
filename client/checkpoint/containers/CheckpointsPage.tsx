@@ -11,7 +11,6 @@ import { CheckpointStatusBar } from '../components/CheckpointStatusBar';
 import {
   checkpointEditFormReset,
   checkpointEditFormSelectMany,
-  checkpointEditFormSelectOne,
   checkpointEditFormSet,
 } from '../ducks/CheckpointEditFormStateDucks';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
@@ -30,13 +29,6 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     userId,
   } = useCheckpointsPageState();
   const { modalType, onCloseModal, onOpenEdit } = useModalType();
-
-  const handleSelectOneCheckpoint = React.useCallback(
-    (checkpoint: RootCheckpointFragment) => {
-      dispatch(checkpointEditFormSelectOne(checkpoint));
-    },
-    [dispatch]
-  );
 
   const handleSelectManyCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment) => {
@@ -102,7 +94,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         checkpoints={checkpoints}
         now={now}
         selectedCheckpointIds={checkpointEditFormState.selectedCheckpointIds}
-        onClick={handleSelectOneCheckpoint}
+        onClick={handleSelectManyCheckpoint}
         onClickCheckbox={handleSelectManyCheckpoint}
       />
       <CheckpointEditForm
