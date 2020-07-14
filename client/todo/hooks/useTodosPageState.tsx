@@ -28,8 +28,6 @@ function getQueryVariables(
   };
 }
 
-const DEFAULT_PREV = '__DEFAULT_PREV__' as const;
-
 export function useTodosPageState() {
   const router = useRouter();
   const query = React.useMemo(() => parseTodoSearchRawQuery(router.query), [
@@ -44,15 +42,16 @@ export function useTodosPageState() {
   });
   const { data: pageData } = usePageIsSyncingQuery();
   const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
-  const prev = React.useRef<TodoSearchQuery | typeof DEFAULT_PREV | null>(
-    DEFAULT_PREV
-  );
+  const prev = React.useRef<TodoSearchQuery | null>(null);
 
   React.useEffect(() => {
-    if (prev.current !== DEFAULT_PREV && prev.current === current) {
+    if (prev.current !== null && prev.current === current) {
       return;
     }
     prev.current = current;
+    if (current === null) {
+      return;
+    }
 
     router.push({
       pathname: router.pathname,
