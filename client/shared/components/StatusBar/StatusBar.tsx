@@ -19,21 +19,27 @@ export const StatusBar: React.FunctionComponent<Props> = ({
 
   return ReactDOM.createPortal(
     <Flex
-      bg={isSelected ? 'gray' : 'background'}
-      color={isSelected ? 'white' : 'gray'}
-      fontSize={2}
-      justifyContent="space-between"
-      p={2}
+      flexDirection="column"
       sx={{
         position: 'sticky',
         zIndex: 2,
         bottom: 0,
         boxShadow: 2,
-        transition: 'background 0.3s ease-out',
       }}
       onClick={stopPropagation}
     >
-      {children}
+      <Flex
+        bg={isSelected ? 'gray' : 'background'}
+        color={isSelected ? 'white' : 'gray'}
+        fontSize={2}
+        justifyContent="space-between"
+        p={2}
+        sx={{
+          transition: 'background 0.3s ease-out',
+        }}
+      >
+        {children}
+      </Flex>
     </Flex>,
     document.body
   );
