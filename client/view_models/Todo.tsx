@@ -6,6 +6,24 @@ import {
 } from '../todo/graphql/__generated__/Todo.graphql';
 import { DateTime, parseDateTime } from './DateTime';
 
+export enum TodoArchiveStatus {
+  ARCHIVED,
+  UNARCHIVED,
+  MIXED,
+}
+
+export function getArchiveStatus(todos: RootTodoFragment[]): TodoArchiveStatus {
+  const count = todos.length;
+  if (count === 0) return TodoArchiveStatus.MIXED;
+
+  const archivedCount = todos.filter((todo) => todo.archivedAt != null).length;
+  return count === archivedCount
+    ? TodoArchiveStatus.ARCHIVED
+    : archivedCount === 0
+    ? TodoArchiveStatus.UNARCHIVED
+    : TodoArchiveStatus.MIXED;
+}
+
 export type TodoGroup = {
   checkpoint: TodoCheckpointFragment | null;
   header: { endAt: DateTime | null; name: string | null };

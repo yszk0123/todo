@@ -7,6 +7,7 @@ import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
 import { SelectMode } from '../../view_models/SelectMode';
+import { getArchiveStatus } from '../../view_models/Todo';
 import {
   TodosPageQueryVariables,
   useTodosPageQuery,
@@ -68,6 +69,11 @@ export function useTodosPageState() {
     );
   }, [current?.categoryId, data?.categories]);
 
+  const archiveStatus = React.useMemo(
+    () => getArchiveStatus(data?.todos ?? []),
+    [data?.todos]
+  );
+
   useInterval(() => {
     if (isDocumentVisible()) {
       refetch();
@@ -85,6 +91,7 @@ export function useTodosPageState() {
     isCategoryNameShown: current?.categoryId == null,
     isLoading: !data && loading,
     isSyncing: loading || (pageData?.page?.isSyncing ?? false),
+    archiveStatus,
     now,
     todoEditFormState,
     todos: data?.todos ?? [],

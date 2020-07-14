@@ -160,7 +160,7 @@ schema.extendType({
         const tags = (args.data.tags ?? []).map((id) => ({ id }));
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
-        const archivedAt = args.data.archivedAt ?? undefined;
+        const archivedAt = args.data.archivedAt;
         const categoryId = args.data.categoryId ?? undefined;
         const checkpointId = args.data.checkpointId;
 

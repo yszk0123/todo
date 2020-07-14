@@ -38,6 +38,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const dispatch = useDispatch();
   const todoUsecase = useTodoUsecase();
   const {
+    archiveStatus,
     categories,
     category,
     categoryTags,
@@ -108,6 +109,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleArchiveTodosById = React.useCallback(() => {
     todoUsecase.archiveTodosById(
+      todoEditFormState.selectedTodoIds,
+      todoSearchFormCurrent
+    );
+  }, [todoEditFormState.selectedTodoIds, todoSearchFormCurrent, todoUsecase]);
+
+  const handleUnarchiveTodosById = React.useCallback(() => {
+    todoUsecase.unarchiveTodosById(
       todoEditFormState.selectedTodoIds,
       todoSearchFormCurrent
     );
@@ -235,6 +243,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         </Head>
       )}
       <TodoStatusBar
+        archiveStatus={archiveStatus}
         categories={categories}
         category={category}
         count={todos.length}
@@ -244,6 +253,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickCategory={handleSelectSearchCategory}
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}
+        onClickUnarchive={handleUnarchiveTodosById}
       />
       <TodoGroupedList
         isCategoryNameShown={isCategoryNameShown}

@@ -174,6 +174,21 @@ export class TodoUsecase {
     );
   }
 
+  unarchiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            archivedAt: null,
+          },
+        },
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
+      })
+    );
+  }
+
   private async sync(callback: () => Promise<unknown>) {
     this.writeIsSyncing(true);
     callback().finally(() => {

@@ -14,6 +14,7 @@ import {
 } from '../../shared/components/StatusBar';
 import { SyncIcon } from '../../shared/components/SyncIcon';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
+import { TodoArchiveStatus } from '../../view_models/Todo';
 import { TodoIcon } from './TodoIcon';
 
 const animation = {
@@ -49,6 +50,7 @@ const getDisplayName = (category: RootCategoryFragment) => category.name;
 const getValue = (category: RootCategoryFragment) => category.id;
 
 export const TodoStatusBar: React.FunctionComponent<{
+  archiveStatus: TodoArchiveStatus;
   categories: RootCategoryFragment[];
   category: RootCategoryFragment | null;
   count: number;
@@ -57,8 +59,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickCategory: (category: RootCategoryFragment | null) => void;
   onClickEdit: () => void;
   onClickSearch: () => void;
+  onClickUnarchive: () => void;
   selectMode: SelectMode;
 }> = ({
+  archiveStatus,
   categories,
   category,
   count,
@@ -67,6 +71,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickCategory,
   onClickEdit,
   onClickSearch,
+  onClickUnarchive,
   selectMode,
 }) => {
   const selected = isSelected(selectMode);
@@ -97,7 +102,11 @@ export const TodoStatusBar: React.FunctionComponent<{
           />
         )}
         {selected && (
-          <StatusBarButton label="Archive" onClick={onClickArchive} />
+          <StatusBarArchiveButton
+            archiveStatus={archiveStatus}
+            onClickArchive={onClickArchive}
+            onClickUnarchive={onClickUnarchive}
+          />
         )}
         {!selected && (
           <StatusBarButton label="Search" onClick={onClickSearch} />
@@ -110,4 +119,19 @@ export const TodoStatusBar: React.FunctionComponent<{
       </StatusBarRight>
     </StatusBar>
   );
+};
+
+const StatusBarArchiveButton: React.FunctionComponent<{
+  archiveStatus: TodoArchiveStatus;
+  onClickArchive: () => void;
+  onClickUnarchive: () => void;
+}> = ({ archiveStatus, onClickArchive, onClickUnarchive }) => {
+  switch (archiveStatus) {
+    case TodoArchiveStatus.UNARCHIVED:
+      return <StatusBarButton label="Archive" onClick={onClickArchive} />;
+    case TodoArchiveStatus.ARCHIVED:
+      return <StatusBarButton label="Unarchive" onClick={onClickUnarchive} />;
+    case TodoArchiveStatus.MIXED:
+      return null;
+  }
 };
