@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Box, Flex } from 'rebass';
 
 import { isSSR } from '../helpers/isSSR';
-import { useGlobalEscapeKey } from '../hooks/useGlobalEscapeKey';
 
 type Props = {
   isOpen: boolean;
@@ -22,8 +21,6 @@ export const Modal: React.FunctionComponent<Props> = ({
     },
     [onClose]
   );
-
-  useGlobalEscapeKey(onClose, isOpen);
 
   if (isSSR() || !isOpen) {
     return null;

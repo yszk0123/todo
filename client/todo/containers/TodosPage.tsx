@@ -7,6 +7,7 @@ import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/C
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
+import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
@@ -222,6 +223,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
   );
+
+  const handleEscape =
+    modalType === ModalType.NONE ? handleDeselectTodo : onCloseModal;
+  useGlobalEscapeKey(handleEscape);
 
   React.useEffect(
     () => {

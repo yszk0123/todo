@@ -5,6 +5,7 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
+import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { TagEditForm } from '../components/TagEditForm';
 import { TagList } from '../components/TagList';
@@ -88,6 +89,10 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     },
     [dispatch]
   );
+
+  const handleEscape =
+    modalType === ModalType.NONE ? handleDeselectTag : onCloseModal;
+  useGlobalEscapeKey(handleEscape);
 
   if (isLoading) {
     return <LoadingIndicator />;

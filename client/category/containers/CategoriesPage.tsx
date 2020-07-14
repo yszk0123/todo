@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
+import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { CategoryEditForm } from '../components/CategoryEditForm';
 import { CategoryList } from '../components/CategoryList';
@@ -68,6 +69,10 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     },
     [dispatch]
   );
+
+  const handleEscape =
+    modalType === ModalType.NONE ? handleDeselectCategory : onCloseModal;
+  useGlobalEscapeKey(handleEscape);
 
   if (isLoading) {
     return <LoadingIndicator />;

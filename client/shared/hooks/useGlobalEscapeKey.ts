@@ -2,7 +2,7 @@ import React from 'react';
 
 export function useGlobalEscapeKey(
   onEscape: () => unknown,
-  isEnabled: boolean
+  isEnabled = true
 ): void {
   const isCompositRef = React.useRef(false);
 
