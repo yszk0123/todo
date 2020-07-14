@@ -2,12 +2,15 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
+import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.graphql';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
+import { ID } from '../../view_models/ID';
 import { SelectMode } from '../../view_models/SelectMode';
 import { getArchiveStatus } from '../../view_models/Todo';
+import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodosPageQueryVariables,
   useTodosPageQuery,
@@ -59,6 +62,11 @@ export function useTodosPageState() {
     [data?.todos]
   );
 
+  const status = React.useMemo(
+    () => getStatus(data?.todos ?? [], todoEditFormState.selectedTodoIds),
+    [data?.todos, todoEditFormState.selectedTodoIds]
+  );
+
   useInterval(() => {
     if (isDocumentVisible()) {
       refetch();
@@ -78,6 +86,7 @@ export function useTodosPageState() {
     isSyncing: loading || (pageData?.page?.isSyncing ?? false),
     archiveStatus,
     now,
+    status,
     todoEditFormState,
     todos: data?.todos ?? [],
     userId: data?.me?.id ?? null,
@@ -90,4 +99,17 @@ export function useTodosPageState() {
         ? SelectMode.SINGLE
         : SelectMode.MULTI,
   };
+}
+
+function getStatus(
+  todos: RootTodoFragment[],
+  selectedTodoIds: ID[]
+): TodoStatus | null {
+  const selectedTodos = todos.filter((todo) =>
+    selectedTodoIds.includes(todo.id)
+  );
+  if (selectedTodos.length === 0) return null;
+
+  const status = selectedTodos[0].status;
+  return selectedTodos.every((todo) => todo.status === status) ? status : null;
 }

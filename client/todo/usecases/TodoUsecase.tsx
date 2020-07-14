@@ -169,6 +169,20 @@ export class TodoUsecase {
     );
   }
 
+  updateStatus(todoIds: ID[], status: TodoStatus) {
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            status,
+          },
+        },
+      })
+    );
+  }
+
   archiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({

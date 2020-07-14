@@ -48,6 +48,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     isSyncing,
     now,
     selectMode,
+    status,
     todoEditFormState,
     todoSearchFormDraft,
     todoSearchQuery,
@@ -198,6 +199,15 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [todoUsecase]
   );
 
+  const handleUpdateStatus = React.useCallback(
+    (status: TodoStatus | null) => {
+      if (status !== null) {
+        todoUsecase.updateStatus(todoEditFormState.selectedTodoIds, status);
+      }
+    },
+    [todoEditFormState.selectedTodoIds, todoUsecase]
+  );
+
   const handleArchiveTodosById = React.useCallback(() => {
     todoUsecase.archiveTodosById(
       todoEditFormState.selectedTodoIds,
@@ -247,6 +257,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         count={todos.length}
         isSyncing={isSyncing}
         selectMode={selectMode}
+        status={status}
+        onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
         onClickCategory={handleSearchByRootCategory}
         onClickEdit={onOpenEdit}
