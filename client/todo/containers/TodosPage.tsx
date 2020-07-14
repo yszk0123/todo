@@ -284,7 +284,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
         todoEditFormState={todoEditFormState}
-        onArchiveTodo={handleArchiveTodosById}
         onChangeText={handleSetText}
         onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}

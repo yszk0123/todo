@@ -86,7 +86,6 @@ const SingleForm: React.FunctionComponent<{
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
-  onArchiveTodo: () => void;
   onChangeText: (text: string) => void;
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
@@ -101,7 +100,6 @@ const SingleForm: React.FunctionComponent<{
   categoryTags,
   checkpoints,
   isOpen,
-  onArchiveTodo,
   onChangeText,
   onCloseModal,
   onDeleteOneTodo,
@@ -114,7 +112,6 @@ const SingleForm: React.FunctionComponent<{
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
-    { label: 'Archive', onClick: onArchiveTodo },
     { label: 'Update', onClick: onUpdateOneTodo },
   ];
 
@@ -155,7 +152,6 @@ const MultiForm: React.FunctionComponent<{
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
-  onArchiveTodo: () => void;
   onCloseModal: () => void;
   onDeleteOneTodo: () => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
@@ -169,7 +165,6 @@ const MultiForm: React.FunctionComponent<{
   categoryTags,
   checkpoints,
   isOpen,
-  onArchiveTodo,
   onCloseModal,
   onDeleteOneTodo,
   onSelectCategory,
@@ -181,7 +176,6 @@ const MultiForm: React.FunctionComponent<{
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
-    { label: 'Archive', onClick: onArchiveTodo },
     { label: 'Update', onClick: onUpdateOneTodo },
   ];
 
@@ -218,7 +212,6 @@ export const TodoEditForm: React.FunctionComponent<{
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
-  onArchiveTodo: () => void;
   onChangeText: (text: string) => void;
   onCloseModal: () => void;
   onCreateOneTodo: () => void;
@@ -235,7 +228,6 @@ export const TodoEditForm: React.FunctionComponent<{
   categoryTags,
   checkpoints,
   isOpen,
-  onArchiveTodo,
   onChangeText,
   onCloseModal,
   onCreateOneTodo,
@@ -275,7 +267,6 @@ export const TodoEditForm: React.FunctionComponent<{
           checkpoints={checkpoints}
           isOpen={isOpen}
           todoEditFormState={todoEditFormState}
-          onArchiveTodo={onArchiveTodo}
           onChangeText={onChangeText}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
@@ -295,7 +286,6 @@ export const TodoEditForm: React.FunctionComponent<{
           checkpoints={checkpoints}
           isOpen={isOpen}
           todoEditFormState={todoEditFormState}
-          onArchiveTodo={onArchiveTodo}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
           onSelectCategory={onSelectCategory}
