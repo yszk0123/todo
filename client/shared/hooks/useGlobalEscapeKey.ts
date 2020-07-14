@@ -10,6 +10,8 @@ export function useGlobalEscapeKey(
     (event: KeyboardEvent) => {
       if (event.code === 'Escape' && !isCompositRef.current) {
         onEscape();
+        event.preventDefault();
+        event.stopPropagation();
       }
     },
     [onEscape]
