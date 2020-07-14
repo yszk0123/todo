@@ -63,23 +63,116 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [dispatch]
   );
 
-  const handleSelectByTag = React.useCallback(
+  const handleDeselectTodo = React.useCallback(() => {
+    dispatch(todoEditFormReset());
+  }, [dispatch]);
+
+  const handleToggleTag = React.useCallback(
+    (tag: TodoTagFragment) => {
+      dispatch(todoEditFormToggleTag(tag));
+    },
+    [dispatch]
+  );
+
+  const handleSetText = React.useCallback(
+    (text: string) => {
+      dispatch(todoEditFormSet({ text }));
+    },
+    [dispatch]
+  );
+
+  const handleResetSearch = React.useCallback(() => {
+    dispatch(todoSearchFormReset());
+  }, [dispatch]);
+
+  const handleSetArchivedAt = React.useCallback(
+    (archivedAt: DateTime | null) => {
+      dispatch(todoSearchFormSet({ archivedAt }));
+    },
+    [dispatch]
+  );
+
+  const handleSetStatus = React.useCallback(
+    (status: TodoStatus | null) => {
+      dispatch(todoEditFormSet({ status }));
+    },
+    [dispatch]
+  );
+
+  const handleSetCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      dispatch(todoEditFormSet({ checkpoint }));
+    },
+    [dispatch]
+  );
+
+  const handleSetCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      dispatch(todoEditFormSet({ category }));
+    },
+    [dispatch]
+  );
+
+  const handleToggleTagInSearch = React.useCallback(
+    (tag: TodoTagFragment) => {
+      dispatch(todoSearchFormToggleTag(tag));
+    },
+    [dispatch]
+  );
+
+  const handleSetTextInSearch = React.useCallback(
+    (text: string) => {
+      dispatch(todoSearchFormSet({ text }));
+    },
+    [dispatch]
+  );
+
+  const handleSetStatusInSearch = React.useCallback(
+    (status: TodoStatus | null) => {
+      dispatch(todoSearchFormSet({ status }));
+    },
+    [dispatch]
+  );
+
+  const handleSetCheckpointInSearch = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      dispatch(todoSearchFormSet({ checkpoint }));
+    },
+    [dispatch]
+  );
+
+  const handleSearch = React.useCallback(() => {
+    todoUsecase.search(todoSearchFormDraft);
+    onCloseModal();
+  }, [onCloseModal, todoSearchFormDraft, todoUsecase]);
+
+  const handleSearchByTodoTag = React.useCallback(
     (tag: TodoTagFragment) => {
       todoUsecase.search({ tags: [tag] });
     },
     [todoUsecase]
   );
 
-  const handleSelectByCategory = React.useCallback(
+  const handleSearchByTodoCategory = React.useCallback(
     (category: TodoCategoryFragment) => {
       todoUsecase.search({ category });
     },
     [todoUsecase]
   );
 
-  const handleDeselectTodo = React.useCallback(() => {
-    dispatch(todoEditFormReset());
-  }, [dispatch]);
+  const handleSearchByRootCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      todoUsecase.search({ category });
+    },
+    [todoUsecase]
+  );
+
+  const handleSearchByRootCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      todoUsecase.search({ checkpoint });
+    },
+    [todoUsecase]
+  );
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
@@ -119,99 +212,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     );
   }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
 
-  const handleToggleTag = React.useCallback(
-    (tag: TodoTagFragment) => {
-      dispatch(todoEditFormToggleTag(tag));
-    },
-    [dispatch]
-  );
-
-  const handleChangeText = React.useCallback(
-    (text: string) => {
-      dispatch(todoEditFormSet({ text }));
-    },
-    [dispatch]
-  );
-
-  const handleSearchReset = React.useCallback(() => {
-    dispatch(todoSearchFormReset());
-  }, [dispatch]);
-
-  const handleChangeArchivedAt = React.useCallback(
-    (archivedAt: DateTime | null) => {
-      dispatch(todoSearchFormSet({ archivedAt }));
-    },
-    [dispatch]
-  );
-
-  const handleSearchCommit = React.useCallback(() => {
-    todoUsecase.search(todoSearchFormDraft);
-    onCloseModal();
-  }, [onCloseModal, todoSearchFormDraft, todoUsecase]);
-
-  const handleSelectStatus = React.useCallback(
-    (status: TodoStatus | null) => {
-      dispatch(todoEditFormSet({ status }));
-    },
-    [dispatch]
-  );
-
-  const handleSelectCheckpoint = React.useCallback(
-    (checkpoint: RootCheckpointFragment | null) => {
-      dispatch(todoEditFormSet({ checkpoint }));
-    },
-    [dispatch]
-  );
-
-  const handleSelectCategory = React.useCallback(
-    (category: RootCategoryFragment | null) => {
-      dispatch(todoEditFormSet({ category }));
-    },
-    [dispatch]
-  );
-
-  const handleToggleSearchTag = React.useCallback(
-    (tag: TodoTagFragment) => {
-      dispatch(todoSearchFormToggleTag(tag));
-    },
-    [dispatch]
-  );
-
-  const handleChangeSearchText = React.useCallback(
-    (text: string) => {
-      dispatch(todoSearchFormSet({ text }));
-    },
-    [dispatch]
-  );
-
-  const handleSelectSearchStatus = React.useCallback(
-    (status: TodoStatus | null) => {
-      dispatch(todoSearchFormSet({ status }));
-    },
-    [dispatch]
-  );
-
-  const handleSelectSearchCheckpoint = React.useCallback(
-    (checkpoint: RootCheckpointFragment | null) => {
-      dispatch(todoSearchFormSet({ checkpoint }));
-    },
-    [dispatch]
-  );
-
-  const handleSearchByCategory = React.useCallback(
-    (category: RootCategoryFragment | null) => {
-      todoUsecase.search({ category });
-    },
-    [todoUsecase]
-  );
-
-  const handleSearchByCheckpoint = React.useCallback(
-    (checkpoint: RootCheckpointFragment | null) => {
-      todoUsecase.search({ checkpoint });
-    },
-    [todoUsecase]
-  );
-
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
@@ -248,7 +248,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isSyncing={isSyncing}
         selectMode={selectMode}
         onClickArchive={handleArchiveTodosById}
-        onClickCategory={handleSearchByCategory}
+        onClickCategory={handleSearchByRootCategory}
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}
         onClickUnarchive={handleUnarchiveTodosById}
@@ -259,10 +259,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
         onClick={handleSelectManyTodo}
-        onClickCategory={handleSelectByCategory}
-        onClickCheckpoint={handleSearchByCheckpoint}
+        onClickCategory={handleSearchByTodoCategory}
+        onClickCheckpoint={handleSearchByRootCheckpoint}
         onClickStatus={handleToggleStatus}
-        onClickTag={handleSelectByTag}
+        onClickTag={handleSearchByTodoTag}
         onClickToggle={handleSelectManyTodo}
       />
       <TodoEditForm
@@ -273,13 +273,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         selectMode={selectMode}
         todoEditFormState={todoEditFormState}
         onArchiveTodo={handleArchiveTodosById}
-        onChangeText={handleChangeText}
+        onChangeText={handleSetText}
         onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}
         onDeleteOneTodo={handleDeleteTodosById}
-        onSelectCategory={handleSelectCategory}
-        onSelectCheckpoint={handleSelectCheckpoint}
-        onSelectStatus={handleSelectStatus}
+        onSelectCategory={handleSetCategory}
+        onSelectCheckpoint={handleSetCheckpoint}
+        onSelectStatus={handleSetStatus}
         onToggleTag={handleToggleTag}
         onUpdateOneTodo={handleUpdateTodosById}
       />
@@ -288,14 +288,14 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.SEARCH}
         todoSearchFormValue={todoSearchFormDraft}
-        onChangeArchivedAt={handleChangeArchivedAt}
-        onChangeText={handleChangeSearchText}
+        onChangeArchivedAt={handleSetArchivedAt}
+        onChangeText={handleSetTextInSearch}
         onCloseModal={onCloseModal}
-        onCommit={handleSearchCommit}
-        onReset={handleSearchReset}
-        onSelectCheckpoint={handleSelectSearchCheckpoint}
-        onSelectStatus={handleSelectSearchStatus}
-        onToggleTag={handleToggleSearchTag}
+        onCommit={handleSearch}
+        onReset={handleResetSearch}
+        onSelectCheckpoint={handleSetCheckpointInSearch}
+        onSelectStatus={handleSetStatusInSearch}
+        onToggleTag={handleToggleTagInSearch}
       />
     </PageContent>
   );

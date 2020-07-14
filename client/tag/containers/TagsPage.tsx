@@ -45,43 +45,21 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(tagEditFormReset());
   }, [dispatch]);
 
-  const handleCreateOneTag = React.useCallback(async () => {
-    if (!userId) return;
-    await tagUsecase.createOneTag(userId, tagEditFormState);
-  }, [userId, tagUsecase, tagEditFormState]);
-
-  const handleDeleteOneTag = React.useCallback(async () => {
-    await tagUsecase.deleteOneTag(tagEditFormState.selectedTagIds);
-  }, [tagUsecase, tagEditFormState.selectedTagIds]);
-
-  const handleArchiveOneTag = React.useCallback(async () => {
-    await tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
-  }, [tagUsecase, tagEditFormState.selectedTagIds]);
-
-  const handleUpdateOneTag = React.useCallback(async () => {
-    await tagUsecase.updateOneTag(tagEditFormState);
-  }, [tagUsecase, tagEditFormState]);
-
-  // FIXME: Implement
-  // const handleArchiveOneTag = React.useCallback(async () => {
-  //   await tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
-  // }, [tagUsecase, tagEditFormState.selectedTagIds]);
-
-  const handleToggleTagCategory = React.useCallback(
+  const handleToggleRootCategory = React.useCallback(
     (category: RootCategoryFragment) => {
       dispatch(tagEditFormToggleCategory(category));
     },
     [dispatch]
   );
 
-  const handleChangeName = React.useCallback(
+  const handleSetName = React.useCallback(
     (name: string) => {
       dispatch(tagEditFormSet({ name }));
     },
     [dispatch]
   );
 
-  const handleChangeColor = React.useCallback(
+  const handleSetColor = React.useCallback(
     (color: Color | null) => {
       if (color) {
         dispatch(tagEditFormSet({ color }));
@@ -89,6 +67,28 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     },
     [dispatch]
   );
+
+  const handleCreateOneTag = React.useCallback(() => {
+    if (!userId) return;
+    tagUsecase.createOneTag(userId, tagEditFormState);
+  }, [userId, tagUsecase, tagEditFormState]);
+
+  const handleDeleteOneTag = React.useCallback(() => {
+    tagUsecase.deleteOneTag(tagEditFormState.selectedTagIds);
+  }, [tagUsecase, tagEditFormState.selectedTagIds]);
+
+  const handleArchiveOneTag = React.useCallback(() => {
+    tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
+  }, [tagUsecase, tagEditFormState.selectedTagIds]);
+
+  const handleUpdateOneTag = React.useCallback(() => {
+    tagUsecase.updateOneTag(tagEditFormState);
+  }, [tagUsecase, tagEditFormState]);
+
+  // FIXME: Implement
+  // const handleArchiveOneTag = React.useCallback(() => {
+  //   tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
+  // }, [tagUsecase, tagEditFormState.selectedTagIds]);
 
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectTag : onCloseModal;
@@ -117,12 +117,12 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
         onArchiveOneTag={handleArchiveOneTag}
-        onChangeColor={handleChangeColor}
-        onChangeName={handleChangeName}
+        onChangeColor={handleSetColor}
+        onChangeName={handleSetName}
         onCloseModal={onCloseModal}
         onCreateOneTag={handleCreateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
-        onToggleCategory={handleToggleTagCategory}
+        onToggleCategory={handleToggleRootCategory}
         onUpdateOneTag={handleUpdateOneTag}
       />
     </PageContent>

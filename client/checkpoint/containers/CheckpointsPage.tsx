@@ -42,43 +42,40 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(checkpointEditFormReset());
   }, [dispatch]);
 
-  const handleCreateOneCheckpoint = React.useCallback(async () => {
-    if (!userId) return;
-    await checkpointUsecase.createOneCheckpoint(
-      userId,
-      checkpointEditFormState
-    );
-  }, [userId, checkpointUsecase, checkpointEditFormState]);
-
-  const handleDeleteCheckpointsById = React.useCallback(async () => {
-    await checkpointUsecase.deleteCheckpointsById(
-      checkpointEditFormState.selectedCheckpointIds
-    );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
-
-  const handleUpdateCheckpointsById = React.useCallback(async () => {
-    await checkpointUsecase.updateCheckpointsById(checkpointEditFormState);
-  }, [checkpointUsecase, checkpointEditFormState]);
-
-  const handleArchiveOneCheckpoint = React.useCallback(async () => {
-    await checkpointUsecase.archiveCheckpointsById(
-      checkpointEditFormState.selectedCheckpointIds
-    );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
-
-  const handleChangeName = React.useCallback(
+  const handleSetName = React.useCallback(
     (name: string) => {
       dispatch(checkpointEditFormSet({ name }));
     },
     [dispatch]
   );
 
-  const handleChangeEndAt = React.useCallback(
+  const handleSetEndAt = React.useCallback(
     (endAt: DateTime | null) => {
       dispatch(checkpointEditFormSet({ endAt }));
     },
     [dispatch]
   );
+
+  const handleCreateOneCheckpoint = React.useCallback(() => {
+    if (!userId) return;
+    checkpointUsecase.createOneCheckpoint(userId, checkpointEditFormState);
+  }, [userId, checkpointUsecase, checkpointEditFormState]);
+
+  const handleDeleteCheckpointsById = React.useCallback(() => {
+    checkpointUsecase.deleteCheckpointsById(
+      checkpointEditFormState.selectedCheckpointIds
+    );
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
+
+  const handleUpdateCheckpointsById = React.useCallback(() => {
+    checkpointUsecase.updateCheckpointsById(checkpointEditFormState);
+  }, [checkpointUsecase, checkpointEditFormState]);
+
+  const handleArchiveOneCheckpoint = React.useCallback(() => {
+    checkpointUsecase.archiveCheckpointsById(
+      checkpointEditFormState.selectedCheckpointIds
+    );
+  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
 
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectCheckpoint : onCloseModal;
@@ -107,8 +104,8 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
         onArchiveOneCheckpoint={handleArchiveOneCheckpoint}
-        onChangeEndAt={handleChangeEndAt}
-        onChangeName={handleChangeName}
+        onChangeEndAt={handleSetEndAt}
+        onChangeName={handleSetName}
         onCloseModal={onCloseModal}
         onCreateOneCheckpoint={handleCreateOneCheckpoint}
         onDeleteCheckpointsById={handleDeleteCheckpointsById}

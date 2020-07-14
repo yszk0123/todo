@@ -41,34 +41,34 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(categoryEditFormReset());
   }, [dispatch]);
 
-  const handleCreateOneCategory = React.useCallback(async () => {
-    if (!userId) return;
-    await categoryUsecase.createOneCategory(userId, categoryEditFormState);
-  }, [userId, categoryUsecase, categoryEditFormState]);
-
-  const handleDeleteOneCategory = React.useCallback(async () => {
-    await categoryUsecase.deleteOneCategory(
-      categoryEditFormState.selectedCategoryIds
-    );
-  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
-
-  const handleUpdateOneCategory = React.useCallback(async () => {
-    await categoryUsecase.updateOneCategory(categoryEditFormState);
-  }, [categoryUsecase, categoryEditFormState]);
-
-  // FIXME: Implement
-  // const handleArchiveOneCategory = React.useCallback(async () => {
-  //   await categoryUsecase.archiveOneCategory(
-  //     categoryEditFormState.selectedCategoryIds
-  //   );
-  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
-
-  const handleChangeName = React.useCallback(
+  const handleSetName = React.useCallback(
     (name: string) => {
       dispatch(categoryEditFormSet({ name }));
     },
     [dispatch]
   );
+
+  const handleCreateOneCategory = React.useCallback(() => {
+    if (!userId) return;
+    categoryUsecase.createOneCategory(userId, categoryEditFormState);
+  }, [userId, categoryUsecase, categoryEditFormState]);
+
+  const handleDeleteOneCategory = React.useCallback(() => {
+    categoryUsecase.deleteOneCategory(
+      categoryEditFormState.selectedCategoryIds
+    );
+  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
+
+  const handleUpdateOneCategory = React.useCallback(() => {
+    categoryUsecase.updateOneCategory(categoryEditFormState);
+  }, [categoryUsecase, categoryEditFormState]);
+
+  // FIXME: Implement
+  // const handleArchiveOneCategory = React.useCallback(() => {
+  //   categoryUsecase.archiveOneCategory(
+  //     categoryEditFormState.selectedCategoryIds
+  //   );
+  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
 
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectCategory : onCloseModal;
@@ -94,7 +94,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
         categoryEditFormState={categoryEditFormState}
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
-        onChangeName={handleChangeName}
+        onChangeName={handleSetName}
         onCloseModal={onCloseModal}
         onCreateOneCategory={handleCreateOneCategory}
         onDeleteOneCategory={handleDeleteOneCategory}
