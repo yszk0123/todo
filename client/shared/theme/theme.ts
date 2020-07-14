@@ -108,7 +108,7 @@ export const THEME = {
     },
     listItem: {
       ':hover': {
-        bg: 'muted',
+        bg: 'highlight',
       },
     },
   },
