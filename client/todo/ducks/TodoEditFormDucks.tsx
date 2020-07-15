@@ -3,7 +3,11 @@ import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/C
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { shallowEqual } from '../../shared/helpers/shallowEqual';
 import { toggle, toggleWith } from '../../shared/helpers/toggle';
-import { ID } from '../../view_models/ID';
+import {
+  getSelectedTodoIds,
+  TodoSelection,
+  TodoSelectionType,
+} from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -13,13 +17,15 @@ import {
 export type TodoEditFormState = {
   category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
-  selectedTodoIds: ID[];
+  selection: TodoSelection;
   status: TodoStatus | null;
   tags: TodoTagFragment[] | null;
   text: string;
 };
 
 enum TodoEditFormActionType {
+  DESELECT = 'todoEditForm/DESELECT',
+  EXPAND = 'todoEditForm/EXPAND',
   RESET = 'todoEditForm/RESET',
   SELECT = 'todoEditForm/SELECT',
   SELECT_BY_CATEGORY = 'todoEditForm/SELECT_BY_CATEGORY',
@@ -32,6 +38,13 @@ enum TodoEditFormActionType {
 export type TodoEditFormAction =
   | {
       type: TodoEditFormActionType.RESET;
+    }
+  | {
+      type: TodoEditFormActionType.DESELECT;
+    }
+  | {
+      payload: { todo: RootTodoFragment };
+      type: TodoEditFormActionType.EXPAND;
     }
   | {
       payload: { state: Partial<TodoEditFormState> };
@@ -61,6 +74,21 @@ export type TodoEditFormAction =
 export function todoEditFormReset(): TodoEditFormAction {
   return {
     type: TodoEditFormActionType.RESET,
+  };
+}
+
+export function todoEditFormDeselect(): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.DESELECT,
+  };
+}
+
+export function todoEditFormExpandTodo(
+  todo: RootTodoFragment
+): TodoEditFormAction {
+  return {
+    type: TodoEditFormActionType.EXPAND,
+    payload: { todo },
   };
 }
 
@@ -114,7 +142,7 @@ export function todoEditFormSet(
 export const todoEditFormInitialState: TodoEditFormState = {
   category: null,
   checkpoint: null,
-  selectedTodoIds: [],
+  selection: { type: TodoSelectionType.NONE },
   status: null,
   tags: null,
   text: '',
@@ -128,24 +156,41 @@ export function todoEditFormReducer(
     case TodoEditFormActionType.RESET: {
       return todoEditFormInitialState;
     }
+    case TodoEditFormActionType.DESELECT: {
+      return {
+        ...state,
+        selection: { type: TodoSelectionType.NONE },
+      };
+    }
     case TodoEditFormActionType.SET: {
       return {
         ...state,
         ...action.payload.state,
       };
     }
+    case TodoEditFormActionType.EXPAND: {
+      const todo = action.payload.todo;
+      return {
+        ...state,
+        selection: { type: TodoSelectionType.EXPAND, expandedTodoId: todo.id },
+      };
+    }
     case TodoEditFormActionType.SELECT_MANY: {
-      const { selectedTodoIds } = state;
+      const { selection } = state;
       const { todo } = action.payload;
 
-      const newSelectedTodoIds = toggle(selectedTodoIds, todo.id);
-      const isSingle = newSelectedTodoIds.length === 1;
+      const selectedTodoIds = getSelectedTodoIds(selection);
+      const newSelection = {
+        type: TodoSelectionType.SELECT,
+        selectedTodoIds: toggle(selectedTodoIds, todo.id),
+      } as const;
+      const isSingle = newSelection.selectedTodoIds.length === 1;
       if (isSingle) {
         return {
           ...state,
           category: todo.category,
           checkpoint: todo.checkpoint ?? null,
-          selectedTodoIds: newSelectedTodoIds,
+          selection: newSelection,
           status: todo.status,
           tags: todo.tags,
           text: todo.text,
@@ -155,7 +200,7 @@ export function todoEditFormReducer(
           ...state,
           category: null,
           checkpoint: null,
-          selectedTodoIds: newSelectedTodoIds,
+          selection: newSelection,
           status: null,
           tags: null,
           text: '',
@@ -197,12 +242,13 @@ function selectTodos(
   state: TodoEditFormState,
   selectedTodos: RootTodoFragment[]
 ): TodoEditFormState {
-  const { selectedTodoIds } = state;
+  const { selection } = state;
   const count = selectedTodos.length;
   if (count === 0) {
     return todoEditFormInitialState;
   }
 
+  const selectedTodoIds = getSelectedTodoIds(selection);
   const newSelectedTodoIds = selectedTodos.map((todo) => todo.id);
   const isIdentical = shallowEqual(selectedTodoIds, newSelectedTodoIds);
   if (isIdentical) {
@@ -215,7 +261,10 @@ function selectTodos(
       ...state,
       category: todo.category,
       checkpoint: todo.checkpoint ?? null,
-      selectedTodoIds: [todo.id],
+      selection: {
+        type: TodoSelectionType.SELECT,
+        selectedTodoIds: [todo.id],
+      },
       status: todo.status,
       tags: todo.tags,
       text: todo.text,
@@ -225,7 +274,10 @@ function selectTodos(
       ...state,
       category: null,
       checkpoint: null,
-      selectedTodoIds: newSelectedTodoIds,
+      selection: {
+        type: TodoSelectionType.SELECT,
+        selectedTodoIds: newSelectedTodoIds,
+      },
       status: null,
       tags: null,
       text: '',

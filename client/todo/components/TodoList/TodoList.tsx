@@ -3,7 +3,9 @@ import React from 'react';
 import { List } from '../../../shared/components/List';
 import { Note } from '../../../shared/components/Note';
 import { RelativeDateTimeText } from '../../../shared/components/RelativeDateTimeText';
+import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isPast, TodoGroup } from '../../../view_models/Todo';
+import { TodoSelection } from '../../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -15,27 +17,27 @@ import { TodoListItem } from './TodoListItem';
 export function TodoList({
   group,
   isCategoryNameShown,
-  isSelectMode,
   now,
   onClick,
   onClickCategory,
   onClickCheckpoint,
+  onClickExpand,
   onClickStatus,
   onClickTag,
   onClickToggle,
-  selectedTodoIds,
+  todoSelection,
 }: {
   group: TodoGroup;
   isCategoryNameShown: boolean;
-  isSelectMode: boolean;
   now: number;
   onClick: (item: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
   onClickCheckpoint: (checkpoint: TodoCheckpointFragment) => void;
-  onClickStatus: (todo: RootTodoFragment) => void;
+  onClickExpand: (todo: RootTodoFragment) => void;
+  onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
-  selectedTodoIds: string[];
+  todoSelection: TodoSelection;
 }): JSX.Element {
   const header = group.header;
   const todos = group.todos;
@@ -59,17 +61,15 @@ export function TodoList({
       onClickHeader={handleClickCheckpoint}
     >
       {todos.map((todo) => {
-        const isSelected = selectedTodoIds.includes(todo.id);
-
         return (
           <TodoListItem
             isCategoryNameShown={isCategoryNameShown}
-            isSelected={isSelected}
-            isSelectMode={isSelectMode}
             key={todo.id}
             todo={todo}
+            todoSelection={todoSelection}
             onClick={onClick}
             onClickCategory={onClickCategory}
+            onClickExpand={onClickExpand}
             onClickStatus={onClickStatus}
             onClickTag={onClickTag}
             onClickToggle={onClickToggle}

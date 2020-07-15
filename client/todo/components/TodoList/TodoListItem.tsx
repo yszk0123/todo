@@ -7,35 +7,46 @@ import { Label } from '../../../shared/components/Label';
 import { ListItem } from '../../../shared/components/List';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import {
+  isExpanded,
+  isSelected,
+  isSelectedSome,
+  TodoSelection,
+} from '../../../view_models/TodoSelection';
+import {
   RootTodoFragment,
   TodoCategoryFragment,
   TodoTagFragment,
 } from '../../graphql/__generated__/Todo.graphql';
+import { TodoStatusBarStatusSelect } from '../TodoStatusBar/TodoStatusBarStatusSelect';
 import { TodoListStatusIcon } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
 export const TodoListItem: React.FunctionComponent<{
   isCategoryNameShown: boolean;
-  isSelectMode: boolean;
-  isSelected: boolean;
   onClick: (todo: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
-  onClickStatus: (todo: RootTodoFragment) => void;
+  onClickExpand: (todo: RootTodoFragment) => void;
+  onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
   todo: RootTodoFragment;
+  todoSelection: TodoSelection;
 }> = ({
   isCategoryNameShown,
-  isSelectMode,
-  isSelected,
   onClick,
   onClickCategory,
+  onClickExpand,
   onClickStatus,
   onClickTag,
   onClickToggle,
   todo,
+  todoSelection,
 }) => {
+  const handleClickExpand = React.useCallback(() => {
+    onClickExpand(todo);
+  }, [onClickExpand, todo]);
+
   const handleClickToggle = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
@@ -44,9 +55,13 @@ export const TodoListItem: React.FunctionComponent<{
     },
     [todo, onClickToggle]
   );
-  const handleClickStatus = React.useCallback(() => {
-    onClickStatus(todo);
-  }, [todo, onClickStatus]);
+
+  const handleClickStatus = React.useCallback(
+    (status: TodoStatus) => {
+      onClickStatus(todo, status);
+    },
+    [todo, onClickStatus]
+  );
 
   const handleClickCategory = React.useCallback(
     (event: React.MouseEvent) => {
@@ -57,21 +72,37 @@ export const TodoListItem: React.FunctionComponent<{
   );
 
   const isDone = todo.status === TodoStatus.Done;
+  const selected = React.useMemo(() => isSelected(todoSelection, todo.id), [
+    todoSelection,
+    todo,
+  ]);
+  const expanded = React.useMemo(() => isExpanded(todoSelection, todo.id), [
+    todoSelection,
+    todo,
+  ]);
+  const isSelectMode = React.useMemo(() => isSelectedSome(todoSelection), [
+    todoSelection,
+  ]);
 
   return (
     <ListItem
-      isActive={isSelected}
+      isActive={selected}
       isDim={isDone}
       item={todo}
       leftElement={
-        isSelectMode ? (
+        expanded ? (
+          <TodoStatusBarStatusSelect
+            status={null}
+            onChange={handleClickStatus}
+          />
+        ) : isSelectMode ? (
           <Box onClick={handleClickToggle}>
-            <Checkbox checked={isSelected} marginRight={0} readOnly />
+            <Checkbox checked={selected} marginRight={0} readOnly />
           </Box>
         ) : (
           <TodoListStatusIcon
             status={todo.status}
-            onClick={handleClickStatus}
+            onClick={handleClickExpand}
           />
         )
       }

@@ -9,8 +9,10 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
+import { getSelectedTodoIds } from '../../view_models/TodoSelection';
 import {
   TodoEditFormAction,
+  todoEditFormDeselect,
   todoEditFormReset,
   todoEditFormSet,
   TodoEditFormState,
@@ -99,22 +101,16 @@ export class TodoUsecase {
   }
 
   updateTodosById(
-    {
-      category,
-      checkpoint,
-      selectedTodoIds,
-      status,
-      tags,
-      text,
-    }: TodoEditFormState,
+    { category, checkpoint, selection, status, tags, text }: TodoEditFormState,
     todoSearchQuery: TodoSearchQuery | null
   ) {
+    const selectedTodoIds = getSelectedTodoIds(selection);
     const count = selectedTodoIds.length;
     if (count === 0) return;
 
     const tagIds = tags ? tags.map((tag) => tag.id) : undefined;
 
-    this.dispatch(todoEditFormSet({ selectedTodoIds: [] }));
+    this.dispatch(todoEditFormDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
@@ -170,6 +166,8 @@ export class TodoUsecase {
   }
 
   updateStatus(todoIds: ID[], status: TodoStatus) {
+    this.dispatch(todoEditFormDeselect());
+
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
         mutation: UpdateTodosByIdDocument,

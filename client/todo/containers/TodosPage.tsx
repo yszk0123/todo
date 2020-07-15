@@ -11,11 +11,13 @@ import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
+import { getSelectedTodoIds } from '../../view_models/TodoSelection';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
+  todoEditFormExpandTodo,
   todoEditFormReset,
   todoEditFormSelectMany,
   todoEditFormSet,
@@ -56,6 +58,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     userId,
   } = useTodosPageState();
   const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
+  const selectedTodoIds = getSelectedTodoIds(todoEditFormState.selection);
 
   const handleSelectManyTodo = React.useCallback(
     (todo: RootTodoFragment) => {
@@ -142,6 +145,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [dispatch]
   );
 
+  const handleExpandTodo = React.useCallback(
+    (todo: RootTodoFragment) => {
+      dispatch(todoEditFormExpandTodo(todo));
+    },
+    [dispatch]
+  );
+
   const handleSearch = React.useCallback(() => {
     todoUsecase.search(todoSearchFormDraft);
     onCloseModal();
@@ -181,11 +191,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   }, [todoEditFormState, todoSearchQuery, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(() => {
-    todoUsecase.deleteTodosById(
-      todoEditFormState.selectedTodoIds,
-      todoSearchQuery
-    );
-  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
+    todoUsecase.deleteTodosById(selectedTodoIds, todoSearchQuery);
+  }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
     todoUsecase.updateTodosById(todoEditFormState, todoSearchQuery);
@@ -193,8 +200,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   }, [onCloseModal, todoEditFormState, todoSearchQuery, todoUsecase]);
 
   const handleToggleStatus = React.useCallback(
-    (todo: RootTodoFragment) => {
-      todoUsecase.toggleStatus(todo);
+    (todo: RootTodoFragment, status: TodoStatus) => {
+      todoUsecase.updateStatus([todo.id], status);
     },
     [todoUsecase]
   );
@@ -202,25 +209,19 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleUpdateStatus = React.useCallback(
     (status: TodoStatus | null) => {
       if (status !== null) {
-        todoUsecase.updateStatus(todoEditFormState.selectedTodoIds, status);
+        todoUsecase.updateStatus(selectedTodoIds, status);
       }
     },
-    [todoEditFormState.selectedTodoIds, todoUsecase]
+    [selectedTodoIds, todoUsecase]
   );
 
   const handleArchiveTodosById = React.useCallback(() => {
-    todoUsecase.archiveTodosById(
-      todoEditFormState.selectedTodoIds,
-      todoSearchQuery
-    );
-  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
+    todoUsecase.archiveTodosById(selectedTodoIds, todoSearchQuery);
+  }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleUnarchiveTodosById = React.useCallback(() => {
-    todoUsecase.unarchiveTodosById(
-      todoEditFormState.selectedTodoIds,
-      todoSearchQuery
-    );
-  }, [todoEditFormState.selectedTodoIds, todoSearchQuery, todoUsecase]);
+    todoUsecase.unarchiveTodosById(selectedTodoIds, todoSearchQuery);
+  }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
@@ -268,11 +269,12 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
       <TodoGroupedList
         isCategoryNameShown={isCategoryNameShown}
         now={now}
-        selectedTodoIds={todoEditFormState.selectedTodoIds}
         todos={todos}
+        todoSelection={todoEditFormState.selection}
         onClick={handleSelectManyTodo}
         onClickCategory={handleSearchByTodoCategory}
         onClickCheckpoint={handleSearchByRootCheckpoint}
+        onClickExpand={handleExpandTodo}
         onClickStatus={handleToggleStatus}
         onClickTag={handleSearchByTodoTag}
         onClickToggle={handleSelectManyTodo}

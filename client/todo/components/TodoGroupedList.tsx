@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ID } from '../../view_models/ID';
+import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { groupTodoByCheckpoint } from '../../view_models/Todo';
+import { TodoSelection } from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -16,10 +17,11 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClick: (item: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
   onClickCheckpoint: (checkpoint: TodoCheckpointFragment) => void;
-  onClickStatus: (todo: RootTodoFragment) => void;
+  onClickExpand: (item: RootTodoFragment) => void;
+  onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
-  selectedTodoIds: ID[];
+  todoSelection: TodoSelection;
   todos: RootTodoFragment[];
 }> = ({
   isCategoryNameShown,
@@ -27,14 +29,14 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClick,
   onClickCategory,
   onClickCheckpoint,
+  onClickExpand,
   onClickStatus,
   onClickTag,
   onClickToggle,
-  selectedTodoIds,
+  todoSelection,
   todos,
 }) => {
   const groups = React.useMemo(() => groupTodoByCheckpoint(todos), [todos]);
-  const isSelectMode = selectedTodoIds.length > 0;
 
   return (
     <>
@@ -43,13 +45,13 @@ export const TodoGroupedList: React.FunctionComponent<{
           <TodoList
             group={group}
             isCategoryNameShown={isCategoryNameShown}
-            isSelectMode={isSelectMode}
             key={`${group.header.name}-${i}`}
             now={now}
-            selectedTodoIds={selectedTodoIds}
+            todoSelection={todoSelection}
             onClick={onClick}
             onClickCategory={onClickCategory}
             onClickCheckpoint={onClickCheckpoint}
+            onClickExpand={onClickExpand}
             onClickStatus={onClickStatus}
             onClickTag={onClickTag}
             onClickToggle={onClickToggle}
