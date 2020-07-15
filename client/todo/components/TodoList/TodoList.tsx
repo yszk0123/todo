@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { List } from '../../shared/components/List';
-import { Note } from '../../shared/components/Note';
-import { RelativeDateTimeText } from '../../shared/components/RelativeDateTimeText';
-import { isPast, TodoGroup } from '../../view_models/Todo';
+import { List } from '../../../shared/components/List';
+import { Note } from '../../../shared/components/Note';
+import { RelativeDateTimeText } from '../../../shared/components/RelativeDateTimeText';
+import { isPast, TodoGroup } from '../../../view_models/Todo';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
   TodoCheckpointFragment,
   TodoTagFragment,
-} from '../graphql/__generated__/Todo.graphql';
+} from '../../graphql/__generated__/Todo.graphql';
 import { TodoListItem } from './TodoListItem';
 
 export function TodoList({

@@ -3,14 +3,14 @@ import { Checkbox } from '@rebass/forms';
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-import { Label } from '../../shared/components/Label';
-import { ListItem } from '../../shared/components/List';
-import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
+import { Label } from '../../../shared/components/Label';
+import { ListItem } from '../../../shared/components/List';
+import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
   TodoTagFragment,
-} from '../graphql/__generated__/Todo.graphql';
+} from '../../graphql/__generated__/Todo.graphql';
 import { TodoListStatusIcon } from './TodoListStatus';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';

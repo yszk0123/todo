@@ -2,8 +2,8 @@
 import React from 'react';
 import { Box, Flex } from 'rebass';
 
-import { ColorBadge } from '../../shared/components/ColorBadge';
-import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
+import { ColorBadge } from '../../../shared/components/ColorBadge';
+import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 
 export const TodoListTags: React.FunctionComponent<{
   onClick: (tag: TodoTagFragment) => void;

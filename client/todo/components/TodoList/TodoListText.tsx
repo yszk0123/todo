@@ -2,8 +2,8 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 
-import { ListText } from '../../shared/components/List';
-import { simplifyURL } from '../../shared/view_helpers/simplifyURL';
+import { ListText } from '../../../shared/components/List';
+import { simplifyURL } from '../../../shared/view_helpers/simplifyURL';
 
 function linkifyComponentDecorator(
   decoratedHref: string,
