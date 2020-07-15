@@ -36,7 +36,7 @@ export default class extends Document {
             href="/images/icons/apple-touch-icon.png"
           />
           <link rel="manifest" href="/manifest.json" />
-          <link rel="shortcut icon" href="/images/icons/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />
