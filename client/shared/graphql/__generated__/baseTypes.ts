@@ -9,9 +9,73 @@ export type Scalars = {
   Float: number;
   /** Use JavaScript Date object for date/time fields. */
   DateTime: string & {readonly __opaque__: 'DateTime'};
-  UUID: any;
   /** The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   Json: any;
+  UUID: any;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  categories: Array<Category>;
+  category?: Maybe<Category>;
+  checkpoints: Array<Checkpoint>;
+  me?: Maybe<User>;
+  page?: Maybe<Page>;
+  stats?: Maybe<Stats>;
+  tag?: Maybe<Tag>;
+  tags: Array<Tag>;
+  todos: Array<Todo>;
+};
+
+
+export type QueryCategoriesArgs = {
+  after?: Maybe<CategoryWhereUniqueInput>;
+  before?: Maybe<CategoryWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<CategoryWhereInput>;
+};
+
+
+export type QueryCategoryArgs = {
+  where: CategoryWhereUniqueInput;
+};
+
+
+export type QueryCheckpointsArgs = {
+  after?: Maybe<CheckpointWhereUniqueInput>;
+  before?: Maybe<CheckpointWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<CheckpointWhereInput>;
+};
+
+
+export type QueryTagArgs = {
+  where: TagWhereUniqueInput;
+};
+
+
+export type QueryTagsArgs = {
+  after?: Maybe<TagWhereUniqueInput>;
+  before?: Maybe<TagWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<TagWhereInput>;
+};
+
+
+export type QueryTodosArgs = {
+  after?: Maybe<TodoWhereUniqueInput>;
+  before?: Maybe<TodoWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<TodoWhereInput>;
+};
+
+export type Page = {
+  __typename?: 'Page';
+  isSyncing?: Maybe<Scalars['Boolean']>;
 };
 
 export type AccountCreateManyWithoutUserInput = {
@@ -667,70 +731,6 @@ export enum OrderByArg {
   Asc = 'asc',
   Desc = 'desc'
 }
-
-export type Page = {
-  __typename?: 'Page';
-  isSyncing?: Maybe<Scalars['Boolean']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  categories: Array<Category>;
-  category?: Maybe<Category>;
-  checkpoints: Array<Checkpoint>;
-  me?: Maybe<User>;
-  page?: Maybe<Page>;
-  stats?: Maybe<Stats>;
-  tag?: Maybe<Tag>;
-  tags: Array<Tag>;
-  todos: Array<Todo>;
-};
-
-
-export type QueryCategoriesArgs = {
-  after?: Maybe<CategoryWhereUniqueInput>;
-  before?: Maybe<CategoryWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<CategoryWhereInput>;
-};
-
-
-export type QueryCategoryArgs = {
-  where: CategoryWhereUniqueInput;
-};
-
-
-export type QueryCheckpointsArgs = {
-  after?: Maybe<CheckpointWhereUniqueInput>;
-  before?: Maybe<CheckpointWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<CheckpointWhereInput>;
-};
-
-
-export type QueryTagArgs = {
-  where: TagWhereUniqueInput;
-};
-
-
-export type QueryTagsArgs = {
-  after?: Maybe<TagWhereUniqueInput>;
-  before?: Maybe<TagWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<TagWhereInput>;
-};
-
-
-export type QueryTodosArgs = {
-  after?: Maybe<TodoWhereUniqueInput>;
-  before?: Maybe<TodoWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<TodoWhereInput>;
-};
 
 export type Stats = {
   __typename?: 'Stats';
