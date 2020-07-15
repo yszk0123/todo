@@ -182,6 +182,8 @@ export class TodoUsecase {
   }
 
   archiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
+    this.dispatch(todoEditFormDeselect());
+
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
         mutation: UpdateTodosByIdDocument,
@@ -197,6 +199,8 @@ export class TodoUsecase {
   }
 
   unarchiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
+    this.dispatch(todoEditFormDeselect());
+
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
         mutation: UpdateTodosByIdDocument,
