@@ -52,6 +52,16 @@ const NoneForm: React.FunctionComponent<{
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
+        <TodoEditFormCategoryField
+          categories={categories}
+          category={todoEditFormState.category}
+          onSelectCategory={onSelectCategory}
+        />
+        <TodoEditFormCheckpointField
+          checkpoint={todoEditFormState.checkpoint}
+          checkpoints={checkpoints}
+          onSelectCheckpoint={onSelectCheckpoint}
+        />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
           tags={todoEditFormState.tags}
@@ -60,16 +70,6 @@ const NoneForm: React.FunctionComponent<{
         <TodoEditFormStatusField
           status={todoEditFormState.status}
           onSelectStatus={onSelectStatus}
-        />
-        <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
-          checkpoints={checkpoints}
-          onSelectCheckpoint={onSelectCheckpoint}
-        />
-        <TodoEditFormCategoryField
-          categories={categories}
-          category={todoEditFormState.category}
-          onSelectCategory={onSelectCategory}
         />
         <TodoEditFormTextField
           text={todoEditFormState.text}
@@ -118,6 +118,16 @@ const SingleForm: React.FunctionComponent<{
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
+        <TodoEditFormCategoryField
+          categories={categories}
+          category={todoEditFormState.category}
+          onSelectCategory={onSelectCategory}
+        />
+        <TodoEditFormCheckpointField
+          checkpoint={todoEditFormState.checkpoint}
+          checkpoints={checkpoints}
+          onSelectCheckpoint={onSelectCheckpoint}
+        />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
           tags={todoEditFormState.tags}
@@ -126,16 +136,6 @@ const SingleForm: React.FunctionComponent<{
         <TodoEditFormStatusField
           status={todoEditFormState.status}
           onSelectStatus={onSelectStatus}
-        />
-        <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
-          checkpoints={checkpoints}
-          onSelectCheckpoint={onSelectCheckpoint}
-        />
-        <TodoEditFormCategoryField
-          categories={categories}
-          category={todoEditFormState.category}
-          onSelectCategory={onSelectCategory}
         />
         <TodoEditFormTextField
           text={todoEditFormState.text}
@@ -182,6 +182,16 @@ const MultiForm: React.FunctionComponent<{
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
+        <TodoEditFormCategoryField
+          categories={categories}
+          category={todoEditFormState.category}
+          onSelectCategory={onSelectCategory}
+        />
+        <TodoEditFormCheckpointField
+          checkpoint={todoEditFormState.checkpoint}
+          checkpoints={checkpoints}
+          onSelectCheckpoint={onSelectCheckpoint}
+        />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
           tags={todoEditFormState.tags}
@@ -190,16 +200,6 @@ const MultiForm: React.FunctionComponent<{
         <TodoEditFormStatusField
           status={todoEditFormState.status}
           onSelectStatus={onSelectStatus}
-        />
-        <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
-          checkpoints={checkpoints}
-          onSelectCheckpoint={onSelectCheckpoint}
-        />
-        <TodoEditFormCategoryField
-          categories={categories}
-          category={todoEditFormState.category}
-          onSelectCategory={onSelectCategory}
         />
         <EditFormActionsField actions={actions} />
       </EditForm>

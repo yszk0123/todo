@@ -52,6 +52,11 @@ export const TodoSearchForm: React.FunctionComponent<{
   return (
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
+        <TodoSearchFormCheckpointField
+          checkpoint={todoSearchFormValue.checkpoint}
+          checkpoints={checkpoints}
+          onSelectCheckpoint={onSelectCheckpoint}
+        />
         <TodoSearchFormTagsField
           categoryTags={categoryTags}
           tags={todoSearchFormValue.tags}
@@ -61,18 +66,13 @@ export const TodoSearchForm: React.FunctionComponent<{
           status={todoSearchFormValue.status}
           onSelectStatus={onSelectStatus}
         />
-        <TodoSearchFormCheckpointField
-          checkpoint={todoSearchFormValue.checkpoint}
-          checkpoints={checkpoints}
-          onSelectCheckpoint={onSelectCheckpoint}
+        <TodoSearchFormArchivedAtField
+          value={todoSearchFormValue.archivedAt}
+          onChange={onChangeArchivedAt}
         />
         <TodoSearchFormTextField
           text={todoSearchFormValue.text}
           onChangeText={onChangeText}
-        />
-        <TodoSearchFormArchivedAtField
-          value={todoSearchFormValue.archivedAt}
-          onChange={onChangeArchivedAt}
         />
         <EditFormActionsField actions={actions} />
       </EditForm>
