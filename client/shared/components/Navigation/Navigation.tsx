@@ -60,9 +60,9 @@ export const Navigation: React.FunctionComponent<{
         px={2}
         width={1}
       >
-        <NavigationLink href="/todos" text="Todo" />
-        <NavigationLink href="/checkpoints" text="Checkpoint" />
         <NavigationLink href="/categories" text="Category" />
+        <NavigationLink href="/checkpoints" text="Checkpoint" />
+        <NavigationLink href="/todos" text="Todo" />
         <NavigationLink href="/tags" text="Tag" />
       </Flex>
     </Flex>
