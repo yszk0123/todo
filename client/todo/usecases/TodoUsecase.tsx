@@ -27,25 +27,11 @@ import {
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
-import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   fromTodoSearchFormValue,
   TodoSearchQuery,
 } from '../view_models/TodoSearchQuery';
 import { getTodoWhereInput } from '../view_models/TodoWhereInput';
-
-function getNextStatus(status: TodoStatus): TodoStatus {
-  switch (status) {
-    case TodoStatus.Todo:
-      return TodoStatus.InProgress;
-    case TodoStatus.InProgress:
-      return TodoStatus.Done;
-    case TodoStatus.Waiting:
-      return TodoStatus.InProgress;
-    case TodoStatus.Done:
-      return TodoStatus.Todo;
-  }
-}
 
 function getRefetchQuery(todoSearchQuery: TodoSearchQuery | null) {
   return refetchGetTodosQuery({
@@ -145,22 +131,6 @@ export class TodoUsecase {
         mutation: DeleteTodosByIdDocument,
         variables: { input: { ids: todoIds } },
         refetchQueries: [getRefetchQuery(todoSearchQuery)],
-      })
-    );
-  }
-
-  toggleStatus(todo: RootTodoFragment) {
-    const newStatus = getNextStatus(todo.status);
-
-    this.sync(() =>
-      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
-        mutation: UpdateTodosByIdDocument,
-        variables: {
-          input: {
-            ids: [todo.id],
-            status: newStatus,
-          },
-        },
       })
     );
   }
