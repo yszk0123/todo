@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { Badge } from '../../../shared/components/Badge';
-import { EditFormSelectField } from '../../../shared/components/EditForm';
+import { EditFormIconSelectField } from '../../../shared/components/EditForm';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { getDisplayIconFromTodoStatus } from '../../../view_models/TodoStatus';
 
 const statuses: TodoStatus[] = [
   TodoStatus.Todo,
@@ -11,7 +12,6 @@ const statuses: TodoStatus[] = [
   TodoStatus.Done,
 ];
 
-const getDisplayName = (status: TodoStatus) => status;
 const getValue = (status: TodoStatus) => status;
 
 export function TodoSearchFormStatusField({
@@ -22,8 +22,8 @@ export function TodoSearchFormStatusField({
   status: TodoStatus | null;
 }): JSX.Element {
   return (
-    <EditFormSelectField
-      getDisplayName={getDisplayName}
+    <EditFormIconSelectField
+      getDisplayIcon={getDisplayIconFromTodoStatus}
       getValue={getValue}
       items={statuses}
       label="Status"
