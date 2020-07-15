@@ -1,0 +1,39 @@
+import React from 'react';
+import { Flex } from 'rebass';
+
+type Props = {
+  icon: JSX.Element;
+  isSelected?: boolean;
+  onClick?: () => void;
+};
+
+export function MiniListIconButton({
+  icon,
+  isSelected = false,
+  onClick,
+}: Props): JSX.Element {
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      if (onClick) {
+        event.stopPropagation();
+        onClick();
+      }
+    },
+    [onClick]
+  );
+
+  return (
+    <Flex
+      alignItems="center"
+      color={isSelected ? 'primary' : 'gray'}
+      fontSize={24}
+      justifyContent="center"
+      mr={2}
+      role="button"
+      sx={{ ':hover': { opacity: 0.7 }, cursor: 'pointer' }}
+      onClick={handleClick}
+    >
+      {icon}
+    </Flex>
+  );
+}
