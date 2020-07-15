@@ -1,9 +1,22 @@
 import React from 'react';
 
-import { Select } from '../../../shared/components/Select';
+import { IconSelect } from '../../../shared/components/IconSelect';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import {
+  TodoStatusDoneIcon,
+  TodoStatusInProgressIcon,
+  TodoStatusTodoIcon,
+  TodoStatusWaitingIcon,
+} from '../TodoStatusIcon';
 
-const getDisplayName = (status: TodoStatus) => status;
+const iconMap = {
+  [TodoStatus.Todo]: <TodoStatusTodoIcon />,
+  [TodoStatus.InProgress]: <TodoStatusInProgressIcon />,
+  [TodoStatus.Done]: <TodoStatusDoneIcon />,
+  [TodoStatus.Waiting]: <TodoStatusWaitingIcon />,
+};
+
+const getDisplayIcon = (status: TodoStatus) => iconMap[status];
 const getValue = (status: TodoStatus) => status;
 
 const STATUSES: TodoStatus[] = [
@@ -14,12 +27,12 @@ const STATUSES: TodoStatus[] = [
 ];
 
 export const TodoStatusBarStatusSelect: React.FunctionComponent<{
-  onChange: (status: TodoStatus | null) => void;
+  onChange: (status: TodoStatus) => void;
   status: TodoStatus | null;
 }> = ({ onChange, status }) => {
   return (
-    <Select
-      getDisplayName={getDisplayName}
+    <IconSelect
+      getDisplayIcon={getDisplayIcon}
       getValue={getValue}
       items={STATUSES}
       selectedItem={status}
