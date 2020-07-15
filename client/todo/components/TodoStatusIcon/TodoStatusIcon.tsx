@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
+import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { TodoStatusDoneIcon } from './TodoStatusDoneIcon';
 import { TodoStatusInProgressIcon } from './TodoStatusInProgressIcon';
 import { TodoStatusTodoIcon } from './TodoStatusTodoIcon';
