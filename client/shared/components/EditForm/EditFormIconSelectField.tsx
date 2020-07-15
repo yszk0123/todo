@@ -1,0 +1,38 @@
+import React from 'react';
+import { Box } from 'rebass';
+
+import { IconSelect } from '../IconSelect';
+import { EditFormField } from './EditFormField';
+
+export function EditFormIconSelectField<T>({
+  getDisplayIcon,
+  getValue,
+  items,
+  label,
+  onChange,
+  rightElement,
+  selectedItem,
+}: {
+  getDisplayIcon: (item: T) => JSX.Element;
+  getValue: (item: T) => string;
+  items: T[];
+  label: string;
+  onChange: (item: T | null) => void;
+  rightElement?: JSX.Element | null;
+  selectedItem: T | null;
+}): JSX.Element {
+  return (
+    <EditFormField label={label}>
+      <Box sx={{ flexGrow: 1 }}>
+        <IconSelect
+          getDisplayIcon={getDisplayIcon}
+          getValue={getValue}
+          items={items}
+          selectedItem={selectedItem}
+          onChange={onChange}
+        />
+      </Box>
+      {rightElement != null && <Box ml={2}>{rightElement}</Box>}
+    </EditFormField>
+  );
+}
