@@ -203,8 +203,8 @@ function selectTodos(
     return todoEditFormInitialState;
   }
 
-  const selectedTodoIdsByTag = selectedTodos.map((todo) => todo.id);
-  const isIdentical = shallowEqual(selectedTodoIds, selectedTodoIdsByTag);
+  const newSelectedTodoIds = selectedTodos.map((todo) => todo.id);
+  const isIdentical = shallowEqual(selectedTodoIds, newSelectedTodoIds);
   if (isIdentical) {
     return todoEditFormInitialState;
   }
@@ -225,7 +225,7 @@ function selectTodos(
       ...state,
       category: null,
       checkpoint: null,
-      selectedTodoIds: selectedTodoIdsByTag,
+      selectedTodoIds: newSelectedTodoIds,
       status: null,
       tags: null,
       text: '',
