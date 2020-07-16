@@ -39,9 +39,9 @@ export function createApp(): React.FunctionComponent<Props> {
         <ApolloProvider client={client}>
           <NextAuthProvider session={session}>
             <ReactReduxProvider store={store}>
+              <GlobalStyle />
               <Head>
                 <title>Todo</title>
-                <GlobalStyle />
               </Head>
               <PageContainer>
                 <Component {...pageProps} />
