@@ -15,6 +15,7 @@ import {
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
 import { TodoArchiveStatus } from '../../../view_models/Todo';
+import { TodoSecondaryStatusBarCategorySelect } from './TodoSecondaryStatusBarCategorySelect';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
@@ -109,7 +110,7 @@ export const TodoStatusBar: React.FunctionComponent<{
             />
           </StatusBarItem>
           <StatusBarItem>
-            <TodoStatusBarCategorySelect
+            <TodoSecondaryStatusBarCategorySelect
               categories={categories}
               category={category}
               onClickCategory={onClickCategoryInSub}
