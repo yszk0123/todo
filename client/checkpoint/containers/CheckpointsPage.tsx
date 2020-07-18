@@ -90,6 +90,7 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       <CheckpointStatusBar
         count={checkpoints.length}
         selectMode={selectMode}
+        onClickArchive={handleArchiveOneCheckpoint}
         onClickEdit={onOpenEdit}
       />
       <CheckpointList
@@ -103,7 +104,6 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         checkpointEditFormState={checkpointEditFormState}
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
-        onArchiveOneCheckpoint={handleArchiveOneCheckpoint}
         onChangeEndAt={handleSetEndAt}
         onChangeName={handleSetName}
         onCloseModal={onCloseModal}

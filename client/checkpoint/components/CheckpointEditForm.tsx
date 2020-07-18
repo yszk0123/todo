@@ -15,7 +15,6 @@ import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
 export const CheckpointEditForm: React.FunctionComponent<{
   checkpointEditFormState: CheckpointEditFormState;
   isOpen: boolean;
-  onArchiveOneCheckpoint: () => void;
   onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: (name: string) => void;
   onCloseModal: () => void;
@@ -26,7 +25,6 @@ export const CheckpointEditForm: React.FunctionComponent<{
 }> = ({
   checkpointEditFormState,
   isOpen,
-  onArchiveOneCheckpoint,
   onChangeEndAt,
   onChangeName,
   onCloseModal,
@@ -38,7 +36,6 @@ export const CheckpointEditForm: React.FunctionComponent<{
   const actions: EditFormAction[] = isSelected(selectMode)
     ? [
         { label: 'Delete', onClick: onDeleteCheckpointsById },
-        { label: 'Archive', onClick: onArchiveOneCheckpoint },
         { label: 'Update', onClick: onUpdateCheckpointsById },
       ]
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
