@@ -31,8 +31,8 @@ const CheckboxIcon = (props: any) => (
 
 export const Checkbox = React.forwardRef<
   unknown,
-  CheckboxProps & { icon: React.ElementType | null }
->(({ className, icon, sx, variant = 'checkbox', ...props }, ref) => (
+  Omit<CheckboxProps, 'className'> & { icon: React.ElementType | null }
+>(({ icon, sx, variant = 'checkbox', ...props }, ref) => (
   <Flex>
     <Box
       as="input"
@@ -51,7 +51,6 @@ export const Checkbox = React.forwardRef<
     <Box
       aria-hidden="true"
       as={icon || CheckboxIcon}
-      className={className}
       {...props}
       sx={{
         alignItems: 'center',

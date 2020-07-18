@@ -31,8 +31,8 @@ const RadioIcon = (props: any) => (
 
 export const Radio = React.forwardRef<
   unknown,
-  RadioProps & { icon: React.ElementType | null }
->(({ className, icon, sx, variant = 'radio', ...props }, ref) => (
+  Omit<RadioProps, 'className'> & { icon: React.ElementType | null }
+>(({ icon, sx, variant = 'radio', ...props }, ref) => (
   <Flex>
     <Box
       as="input"
@@ -51,7 +51,6 @@ export const Radio = React.forwardRef<
     <Box
       aria-hidden="true"
       as={icon || RadioIcon}
-      className={className}
       {...props}
       sx={{
         alignItems: 'center',
