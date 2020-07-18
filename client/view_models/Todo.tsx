@@ -43,7 +43,7 @@ const statusToIndex = {
   [TodoStatus.Done]: 3,
 };
 
-const TIME_RE = /^(\d{2}:\d{2})[-~]/;
+const TIME_RE = /^(?:\*\s+)?(\d{2}:\d{2})[-~]/;
 
 function getTime(text: string): number {
   const match = TIME_RE.exec(text);
