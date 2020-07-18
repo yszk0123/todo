@@ -20,10 +20,8 @@ export function MiniListIcon({ icon, onClick }: Props): JSX.Element {
   return (
     <Flex
       alignItems="center"
-      color="gray"
       justifyContent="center"
       mr={1}
-      sx={{ ':hover': { opacity: 0.7 } }}
       onClick={handleClick}
     >
       {icon}
