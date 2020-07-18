@@ -54,9 +54,13 @@ export const Radio = React.forwardRef<
       className={className}
       {...props}
       sx={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
         mr: 2,
         borderRadius: 4,
         color: 'gray',
+        ':hover': { opacity: 0.7 },
         'input:checked ~ &': {
           color: 'primary',
         },

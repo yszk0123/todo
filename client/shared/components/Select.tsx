@@ -3,7 +3,7 @@ import React from 'react';
 
 const DEFAULT_VALUE = '__DEFAULT__';
 
-export function Select<T>({
+function Select<T>({
   getDisplayName,
   getValue,
   id,
@@ -51,3 +51,7 @@ export function Select<T>({
     </RebassSelect>
   );
 }
+
+const MemoizedSelect = React.memo(Select) as typeof Select;
+
+export { MemoizedSelect as Select };

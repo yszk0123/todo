@@ -31,13 +31,6 @@ export function MiniListIconRadio({
       color={isSelected ? 'primary' : 'gray'}
       fontSize={24}
       icon={icon}
-      mr={2}
-      sx={{
-        ':hover': { opacity: 0.7 },
-        cursor: 'pointer',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
       onClick={handleClick}
     />
   );

@@ -5,7 +5,7 @@ import { Displayable } from '../../../view_models/Displayable';
 import { createLookupTable } from '../../helpers/createLookupTable';
 import { ChecklistItem } from './ChecklistItem';
 
-export function Checklist<T extends Displayable>({
+function Checklist<T extends Displayable>({
   checkedItems,
   id,
   items,
@@ -38,3 +38,7 @@ export function Checklist<T extends Displayable>({
     </Flex>
   );
 }
+
+const MemoizedChecklist = React.memo(Checklist) as typeof Checklist;
+
+export { MemoizedChecklist as Checklist };

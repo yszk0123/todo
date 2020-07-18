@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MiniList, MiniListIconCheckbox } from './MiniList';
 
-export function IconSelect<T>({
+function IconSelect<T>({
   getDisplayIcon,
   getValue,
   id,
@@ -40,3 +40,7 @@ export function IconSelect<T>({
     </MiniList>
   );
 }
+
+const MemoizedIconSelect = React.memo(IconSelect) as typeof IconSelect;
+
+export { MemoizedIconSelect as IconSelect };
