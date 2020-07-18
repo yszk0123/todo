@@ -94,7 +94,7 @@ export function useTodosPageState() {
     todoEditFormState,
     todos: data?.todos ?? EMPTY,
     userId: data?.me?.id ?? null,
-    todoSearchFormDraft: todoSearchFormState.draft,
+    todoSearchFormState,
     todoSearchQuery,
     selectMode:
       count === 0

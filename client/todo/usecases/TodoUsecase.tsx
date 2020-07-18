@@ -18,7 +18,7 @@ import {
   todoEditFormSet,
   TodoEditFormState,
 } from '../ducks/TodoEditFormDucks';
-import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
+import { TodoSearchFormState } from '../ducks/TodoSearchFormDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -29,7 +29,7 @@ import {
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
 import {
-  fromTodoSearchFormValue,
+  fromTodoSearchFormState,
   TodoSearchQuery,
 } from '../view_models/TodoSearchQuery';
 import { getTodoWhereInput } from '../view_models/TodoWhereInput';
@@ -46,8 +46,8 @@ export class TodoUsecase {
     private dispatch: (action: TodoEditFormAction) => void
   ) {}
 
-  search(todoSearchFormValue: Partial<TodoSearchFormValue>) {
-    const query = fromTodoSearchFormValue(todoSearchFormValue);
+  search(todoSearchFormState: Partial<TodoSearchFormState>) {
+    const query = fromTodoSearchFormState(todoSearchFormState);
     Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
   }
 

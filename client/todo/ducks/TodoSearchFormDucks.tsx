@@ -6,17 +6,13 @@ import { toggleWith } from '../../shared/helpers/toggle';
 import { DateTime } from '../../view_models/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 
-export type TodoSearchFormValue = {
+export type TodoSearchFormState = {
   archivedAt: DateTime | null;
   category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
   status: TodoStatus | null;
   tags: TodoTagFragment[] | null;
   text: string;
-};
-
-export type TodoSearchFormState = {
-  draft: TodoSearchFormValue;
 };
 
 enum TodoSearchFormActionType {
@@ -30,7 +26,7 @@ export type TodoSearchFormAction =
       type: TodoSearchFormActionType.RESET;
     }
   | {
-      payload: { draft: Partial<TodoSearchFormValue> };
+      payload: { state: Partial<TodoSearchFormState> };
       type: TodoSearchFormActionType.SET;
     }
   | {
@@ -54,23 +50,21 @@ export function todoSearchFormToggleTag(
 }
 
 export function todoSearchFormSet(
-  draft: Partial<TodoSearchFormValue>
+  state: Partial<TodoSearchFormState>
 ): TodoSearchFormAction {
   return {
     type: TodoSearchFormActionType.SET,
-    payload: { draft },
+    payload: { state },
   };
 }
 
 export const todoSearchFormInitialState: TodoSearchFormState = {
-  draft: {
-    archivedAt: null,
-    category: null,
-    checkpoint: null,
-    status: null,
-    tags: null,
-    text: '',
-  },
+  archivedAt: null,
+  category: null,
+  checkpoint: null,
+  status: null,
+  tags: null,
+  text: '',
 };
 
 export function todoSearchFormReducer(
@@ -84,22 +78,16 @@ export function todoSearchFormReducer(
     case TodoSearchFormActionType.SET: {
       return {
         ...state,
-        draft: {
-          ...state.draft,
-          ...action.payload.draft,
-        },
+        ...action.payload.state,
       };
     }
     case TodoSearchFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
-      const oldTags = state.draft.tags ?? EMPTY;
+      const oldTags = state.tags ?? EMPTY;
       const newTags = toggleWith(oldTags, tag, (t) => t.id);
       return {
         ...state,
-        draft: {
-          ...state.draft,
-          tags: newTags,
-        },
+        tags: newTags,
       };
     }
     default: {

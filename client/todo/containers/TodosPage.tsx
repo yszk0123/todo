@@ -57,7 +57,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     selectMode,
     status,
     todoEditFormState,
-    todoSearchFormDraft,
+    todoSearchFormState,
     todoSearchQuery,
     todos,
     userId,
@@ -158,9 +158,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   );
 
   const handleSearch = React.useCallback(() => {
-    todoUsecase.search(todoSearchFormDraft);
+    todoUsecase.search(todoSearchFormState);
     onCloseModal();
-  }, [onCloseModal, todoSearchFormDraft, todoUsecase]);
+  }, [onCloseModal, todoSearchFormState, todoUsecase]);
 
   const handleSearchByTodoTag = React.useCallback(
     (tag: TodoTagFragment) => {
@@ -354,7 +354,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         categoryTags={categoryTags}
         checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.SEARCH}
-        todoSearchFormValue={todoSearchFormDraft}
+        todoSearchFormState={todoSearchFormState}
         onChangeArchivedAt={handleSetArchivedAt}
         onChangeText={handleSetTextInSearch}
         onCloseModal={onCloseModal}

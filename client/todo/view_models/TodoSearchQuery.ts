@@ -1,7 +1,7 @@
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { DateTime, toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
-import { TodoSearchFormValue } from '../ducks/TodoSearchFormDucks';
+import { TodoSearchFormState } from '../ducks/TodoSearchFormDucks';
 
 export type TodoSearchQuery = {
   archivedAt: DateTime | null;
@@ -19,8 +19,8 @@ const stringToTodoStatusMap: Record<string, TodoStatus | undefined> = {
   [TodoStatus.Done]: TodoStatus.Done,
 };
 
-export function fromTodoSearchFormValue(
-  value: Partial<TodoSearchFormValue> | null
+export function fromTodoSearchFormState(
+  value: Partial<TodoSearchFormState> | null
 ): TodoSearchQuery {
   const archivedAt = value?.archivedAt ?? null;
   const categoryId = value?.category?.id ?? null;
