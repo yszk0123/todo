@@ -85,7 +85,7 @@ const Circle: React.FunctionComponent<{ radius: number; sx: SxStyleProp }> = ({
   radius,
   sx,
 }) => {
-  const circleSx2 = React.useMemo(() => {
+  const circleSx = React.useMemo(() => {
     return {
       position: 'absolute',
       borderRadius: 9999,
@@ -95,7 +95,7 @@ const Circle: React.FunctionComponent<{ radius: number; sx: SxStyleProp }> = ({
       ...sx,
     } as const;
   }, [radius, sx]);
-  return <Box sx={circleSx2} />;
+  return <Box sx={circleSx} />;
 };
 
 export const LoadingIndicator: React.FunctionComponent<EmptyProps> = () => {
