@@ -102,6 +102,6 @@ export const TodoListItem: React.FunctionComponent<{
         />
       }
       onClick={onClick}
-    ></ListItem>
+    />
   );
 };
