@@ -96,7 +96,12 @@ export const TodoListItem: React.FunctionComponent<{
           />
         ) : isSelectMode ? (
           <Box onClick={handleClickToggle}>
-            <Checkbox checked={selected} marginRight={0} readOnly />
+            <Checkbox
+              aria-label="selected"
+              checked={selected}
+              marginRight={0}
+              readOnly
+            />
           </Box>
         ) : (
           <TodoListStatusIcon
