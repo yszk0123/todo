@@ -29,6 +29,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   onChangeStatus: (status: TodoStatus | null) => void;
   onClickArchive: () => void;
   onClickCategory: (category: RootCategoryFragment | null) => void;
+  onClickCategoryInSub: (category: RootCategoryFragment | null) => void;
   onClickEdit: () => void;
   onClickSearch: () => void;
   onClickUnarchive: () => void;
@@ -43,6 +44,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   onChangeStatus,
   onClickArchive,
   onClickCategory,
+  onClickCategoryInSub,
   onClickEdit,
   onClickSearch,
   onClickUnarchive,
@@ -100,10 +102,19 @@ export const TodoStatusBar: React.FunctionComponent<{
       </StatusBarPrimaryRow>
       {selected && (
         <StatusBarSecondaryRow>
-          <TodoStatusBarStatusSelect
-            status={status}
-            onChange={onChangeStatus}
-          />
+          <StatusBarItem>
+            <TodoStatusBarStatusSelect
+              status={status}
+              onChange={onChangeStatus}
+            />
+          </StatusBarItem>
+          <StatusBarItem>
+            <TodoStatusBarCategorySelect
+              categories={categories}
+              category={category}
+              onClickCategory={onClickCategoryInSub}
+            />
+          </StatusBarItem>
         </StatusBarSecondaryRow>
       )}
     </StatusBar>

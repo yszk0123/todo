@@ -1,6 +1,7 @@
 import { ApolloClient } from '@apollo/client';
 import Router from 'next/router';
 
+import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import {
   PageIsSyncingDocument,
@@ -145,6 +146,22 @@ export class TodoUsecase {
           input: {
             ids: todoIds,
             status,
+          },
+        },
+      })
+    );
+  }
+
+  updateCategory(todoIds: ID[], category: RootCategoryFragment) {
+    this.dispatch(todoEditFormDeselect());
+
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            categoryId: category.id,
           },
         },
       })

@@ -220,6 +220,15 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [selectedTodoIds, todoUsecase]
   );
 
+  const handleUpdateCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      if (category !== null) {
+        todoUsecase.updateCategory(selectedTodoIds, category);
+      }
+    },
+    [selectedTodoIds, todoUsecase]
+  );
+
   const handleArchiveTodosById = React.useCallback(() => {
     todoUsecase.archiveTodosById(selectedTodoIds, todoSearchQuery);
   }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
@@ -297,6 +306,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
         onClickCategory={handleSearchByRootCategory}
+        onClickCategoryInSub={handleUpdateCategory}
         onClickEdit={onOpenEdit}
         onClickSearch={onOpenSearch}
         onClickUnarchive={handleUnarchiveTodosById}
