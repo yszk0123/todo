@@ -10,13 +10,16 @@ export const CategoryList: React.FunctionComponent<{
   currentCategoryId: ID | null;
   onClick: (category: RootCategoryFragment) => void;
 }> = ({ categories, currentCategoryId, onClick }) => {
+  const isSelectMode = currentCategoryId !== null;
+
   return (
     <List>
       {categories.map((category) => {
         return (
           <CategoryListItem
             category={category}
-            isActive={category.id === currentCategoryId}
+            isSelected={category.id === currentCategoryId}
+            isSelectMode={isSelectMode}
             key={category.id}
             onClick={onClick}
           />

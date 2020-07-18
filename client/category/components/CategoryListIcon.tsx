@@ -1,9 +1,28 @@
 import React from 'react';
 
-import { ListIcon } from '../../shared/components/List';
-import { EmptyProps } from '../../view_models/EmptyProps';
+import { ListIconCheckbox } from '../../shared/components/List';
+import { RootCategoryFragment } from '../graphql/__generated__/Category.graphql';
 import { CategoryIcon } from './CategoryIcon';
 
-export const CategoryListIcon: React.FunctionComponent<EmptyProps> = () => {
-  return <ListIcon icon={<CategoryIcon />} />;
+type Props = {
+  category: RootCategoryFragment;
+  isSelectMode: boolean;
+  isSelected: boolean;
+  onClick: (category: RootCategoryFragment) => void;
+};
+
+export const CategoryListIcon: React.FunctionComponent<Props> = ({
+  category,
+  isSelectMode,
+  isSelected,
+  onClick,
+}) => {
+  return (
+    <ListIconCheckbox
+      icon={isSelectMode ? null : CategoryIcon}
+      isSelected={isSelected}
+      item={category}
+      onClick={onClick}
+    />
+  );
 };

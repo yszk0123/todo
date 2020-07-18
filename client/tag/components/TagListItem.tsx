@@ -5,15 +5,23 @@ import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagListIcon } from './TagListIcon';
 
 export const TagListItem: React.FunctionComponent<{
-  isActive: boolean;
+  isSelectMode: boolean;
+  isSelected: boolean;
   onClick: (tag: RootTagFragment) => void;
   tag: RootTagFragment;
-}> = ({ isActive, onClick, tag }) => {
+}> = ({ isSelectMode, isSelected, onClick, tag }) => {
   return (
     <ListItem
-      isActive={isActive}
+      isActive={isSelected}
       item={tag}
-      leftElement={<TagListIcon />}
+      leftElement={
+        <TagListIcon
+          isSelected={isSelected}
+          isSelectMode={isSelectMode}
+          tag={tag}
+          onClick={onClick}
+        />
+      }
       mainElement={tag.name}
       onClick={onClick}
     />

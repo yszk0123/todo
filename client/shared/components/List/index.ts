@@ -3,3 +3,4 @@ export { ListItem } from './ListItem';
 export { ListText } from './ListText';
 export { ListIcon } from './ListIcon';
 export { ListCheckbox } from './ListCheckbox';
+export { ListIconCheckbox } from './ListIconCheckbox';

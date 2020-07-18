@@ -1,7 +1,6 @@
 // FIXME: Use layout components instead of using rebass directly
-import { Checkbox } from '@rebass/forms';
 import React from 'react';
-import { Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 
 import { Label } from '../../../shared/components/Label';
 import { ListItem } from '../../../shared/components/List';
@@ -18,7 +17,7 @@ import {
   TodoTagFragment,
 } from '../../graphql/__generated__/Todo.graphql';
 import { TodoStatusBarStatusSelect } from '../TodoStatusBar/TodoStatusBarStatusSelect';
-import { TodoListStatusIcon } from './TodoListStatus';
+import { TodoListIcon } from './TodoListIcon';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
@@ -47,14 +46,9 @@ export const TodoListItem: React.FunctionComponent<{
     onClickExpand(todo);
   }, [onClickExpand, todo]);
 
-  const handleClickToggle = React.useCallback(
-    (event: React.MouseEvent<HTMLInputElement>) => {
-      event.preventDefault();
-      event.stopPropagation();
-      onClickToggle(todo);
-    },
-    [todo, onClickToggle]
-  );
+  const handleClickToggle = React.useCallback(() => {
+    onClickToggle(todo);
+  }, [todo, onClickToggle]);
 
   const handleClickStatus = React.useCallback(
     (status: TodoStatus) => {
@@ -94,19 +88,12 @@ export const TodoListItem: React.FunctionComponent<{
             status={null}
             onChange={handleClickStatus}
           />
-        ) : isSelectMode ? (
-          <Box onClick={handleClickToggle}>
-            <Checkbox
-              aria-label="selected"
-              checked={selected}
-              marginRight={0}
-              readOnly
-            />
-          </Box>
         ) : (
-          <TodoListStatusIcon
-            status={todo.status}
-            onClick={handleClickExpand}
+          <TodoListIcon
+            isSelected={selected}
+            isSelectMode={isSelectMode}
+            todo={todo}
+            onClick={isSelectMode ? handleClickToggle : handleClickExpand}
           />
         )
       }

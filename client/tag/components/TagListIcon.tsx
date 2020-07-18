@@ -1,9 +1,28 @@
 import React from 'react';
 
-import { ListIcon } from '../../shared/components/List';
-import { EmptyProps } from '../../view_models/EmptyProps';
+import { ListIconCheckbox } from '../../shared/components/List';
+import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagIcon } from './TagIcon';
 
-export const TagListIcon: React.FunctionComponent<EmptyProps> = () => {
-  return <ListIcon icon={<TagIcon />} />;
+type Props = {
+  isSelectMode: boolean;
+  isSelected: boolean;
+  onClick: (tag: RootTagFragment) => void;
+  tag: RootTagFragment;
+};
+
+export const TagListIcon: React.FunctionComponent<Props> = ({
+  isSelectMode,
+  isSelected,
+  onClick,
+  tag,
+}) => {
+  return (
+    <ListIconCheckbox
+      icon={isSelectMode ? null : TagIcon}
+      isSelected={isSelected}
+      item={tag}
+      onClick={onClick}
+    />
+  );
 };

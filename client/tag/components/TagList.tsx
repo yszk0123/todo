@@ -10,12 +10,15 @@ export const TagList: React.FunctionComponent<{
   onClick: (tag: RootTagFragment) => void;
   tags: RootTagFragment[];
 }> = ({ currentTagId, onClick, tags }) => {
+  const isSelectMode = currentTagId !== null;
+
   return (
     <List>
       {tags.map((tag) => {
         return (
           <TagListItem
-            isActive={tag.id === currentTagId}
+            isSelected={tag.id === currentTagId}
+            isSelectMode={isSelectMode}
             key={tag.id}
             tag={tag}
             onClick={onClick}

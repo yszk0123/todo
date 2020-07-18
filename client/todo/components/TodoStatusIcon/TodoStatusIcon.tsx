@@ -20,3 +20,16 @@ export const TodoStatusIcon: React.FunctionComponent<{
       return <TodoStatusDoneIcon />;
   }
 };
+
+export function getTodoStatusIcon(status: TodoStatus): React.ElementType {
+  switch (status) {
+    case TodoStatus.Todo:
+      return TodoStatusTodoIcon;
+    case TodoStatus.InProgress:
+      return TodoStatusInProgressIcon;
+    case TodoStatus.Waiting:
+      return TodoStatusWaitingIcon;
+    case TodoStatus.Done:
+      return TodoStatusDoneIcon;
+  }
+}
