@@ -7,7 +7,7 @@ export const THEME = {
     primary: '#07c',
     secondary: '#30c',
     muted: '#f8f8f8',
-    gray: '#555',
+    gray: '#444',
     warning: '#f44',
     highlight: 'hsla(205, 100%, 40%, 0.125)',
     light: 'rgba(240, 240, 255, 0.3)',

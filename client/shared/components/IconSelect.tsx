@@ -23,11 +23,14 @@ export function IconSelect<T>({
           return null;
         }
 
+        const value = getValue(item);
+
         return (
           <MiniListIconButton
             icon={icon}
             isSelected={item === selectedItem}
-            key={getValue(item)}
+            key={value}
+            label={value}
             onClick={() => onChange(item)}
           />
         );

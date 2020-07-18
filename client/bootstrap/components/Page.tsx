@@ -3,6 +3,15 @@ import { Flex } from 'rebass';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { Navigation } from '../../shared/components/Navigation';
+import { EmptyProps } from '../../view_models/EmptyProps';
+
+const Wrapper: React.FunctionComponent<EmptyProps> = ({ children }) => {
+  return (
+    <Flex flexDirection="column" minHeight="100vh">
+      {children}
+    </Flex>
+  );
+};
 
 export const Page: React.FunctionComponent<{
   avatarUrl: string | null;
@@ -11,24 +20,16 @@ export const Page: React.FunctionComponent<{
   isLoading: boolean;
   username: string | null;
 }> = ({ avatarUrl, content, hasSession, isLoading, username }) => {
-  if (isLoading) {
-    return (
-      <Flex flexDirection="column" minHeight="100vh">
-        <Flex flexGrow={1}>
-          <LoadingIndicator />
-        </Flex>
-      </Flex>
-    );
-  }
-
   return (
-    <Flex flexDirection="column" minHeight="100vh">
+    <Wrapper>
       <Navigation
         avatarUrl={avatarUrl}
         hasSession={hasSession}
         username={username}
       />
-      {hasSession && <Flex flexGrow={1}>{content}</Flex>}
-    </Flex>
+      <Flex as="main" flexGrow={1} role="main">
+        {isLoading ? <LoadingIndicator /> : hasSession && content}
+      </Flex>
+    </Wrapper>
   );
 };
