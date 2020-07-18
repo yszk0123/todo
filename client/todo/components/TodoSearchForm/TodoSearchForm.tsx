@@ -50,7 +50,11 @@ export const TodoSearchForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#todo-search-text"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <TodoSearchFormCheckpointField
           checkpoint={todoSearchFormValue.checkpoint}

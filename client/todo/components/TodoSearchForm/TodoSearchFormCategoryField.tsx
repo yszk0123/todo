@@ -19,6 +19,7 @@ export function TodoSearchFormCategoryField({
     <EditFormSelectField
       getDisplayName={getDisplayNameFromCategory}
       getValue={getValueFromCategory}
+      id="todo-search-category"
       items={categories}
       label="Category"
       rightElement={!category ? <Badge text="preserved" /> : null}

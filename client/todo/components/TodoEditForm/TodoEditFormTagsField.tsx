@@ -28,6 +28,7 @@ export function TodoEditFormTagsField({
       getColor={getColor}
       getDisplayName={getDisplayName}
       getValue={getValue}
+      id="todo-edit-tags"
       items={categoryTags}
       label="Tags"
       rightElement={!tags ? <Badge text="preserved" /> : null}

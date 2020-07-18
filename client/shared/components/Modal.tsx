@@ -5,15 +5,20 @@ import { Box, Flex } from 'rebass';
 import { isSSR } from '../helpers/isSSR';
 
 type Props = {
+  initialFocusSelector: string;
   isOpen: boolean;
   onClose: () => void;
 };
 
 export const Modal: React.FunctionComponent<Props> = ({
   children,
+  initialFocusSelector,
   isOpen,
   onClose,
 }) => {
+  const previousActiveElementRef = React.useRef<Element | null>(null);
+  const previousIsOpenRef = React.useRef<boolean>(isOpen);
+
   const handleClickOuter = React.useCallback(
     (event: React.MouseEvent) => {
       event.stopPropagation();
@@ -21,6 +26,30 @@ export const Modal: React.FunctionComponent<Props> = ({
     },
     [onClose]
   );
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const element = document.querySelector(initialFocusSelector);
+    if (!(element instanceof HTMLElement)) {
+      return;
+    }
+
+    if (isOpen !== previousIsOpenRef.current) {
+      previousIsOpenRef.current = isOpen;
+      previousActiveElementRef.current = document.activeElement;
+    }
+
+    element.focus();
+
+    return () => {
+      if (previousActiveElementRef.current instanceof HTMLElement) {
+        previousActiveElementRef.current.focus();
+      }
+    };
+  }, [initialFocusSelector, isOpen]);
 
   if (isSSR() || !isOpen) {
     return null;

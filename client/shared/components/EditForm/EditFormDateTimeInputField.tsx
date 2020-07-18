@@ -21,10 +21,11 @@ function convertIntoDateString(value: DateTime | null): string {
 }
 
 export const EditFormDateTimeInputField: React.FunctionComponent<{
+  id: string;
   label: string;
   onChange: (value: DateTime | null) => void;
   value: DateTime | null;
-}> = ({ label, onChange, value }) => {
+}> = ({ id, label, onChange, value }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
@@ -37,9 +38,10 @@ export const EditFormDateTimeInputField: React.FunctionComponent<{
   const dateString = React.useMemo(() => convertIntoDateString(value), [value]);
 
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <Input
+          id={id}
           type="datetime-local"
           value={dateString}
           onChange={handleChange}

@@ -44,14 +44,20 @@ export const CheckpointEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneCheckpoint }];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#checkpoint-edit-name"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <EditFormDateTimeInputField
+          id="checkpoint-edit-end-at"
           label="EndAt"
           value={checkpointEditFormState.endAt}
           onChange={onChangeEndAt}
         />
         <EditFormInputField
+          id="checkpoint-edit-name"
           label="Name"
           value={checkpointEditFormState.name ?? ''}
           onChange={onChangeName}

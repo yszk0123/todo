@@ -19,6 +19,7 @@ export function TodoEditFormCategoryField({
     <EditFormSelectField
       getDisplayName={getDisplayNameFromCategory}
       getValue={getValueFromCategory}
+      id="todo-edit-category"
       items={categories}
       label="Category"
       rightElement={!category ? <Badge text="preserved" /> : null}

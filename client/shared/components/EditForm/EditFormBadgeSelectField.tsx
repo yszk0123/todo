@@ -11,6 +11,7 @@ export function EditFormBadgeSelectField<T>({
   getColor,
   getDisplayName,
   getValue,
+  id,
   items,
   label,
   onDeselect,
@@ -21,6 +22,7 @@ export function EditFormBadgeSelectField<T>({
   getColor: (item: T) => Color;
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   label: string;
   onDeselect: (item: T) => void;
@@ -45,7 +47,7 @@ export function EditFormBadgeSelectField<T>({
   const isEmpty = selectedItems.length === 0;
 
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <MiniList>
         {selectedItems.map((item, i) => {
           return (
@@ -63,6 +65,7 @@ export function EditFormBadgeSelectField<T>({
         <Select
           getDisplayName={getDisplayName}
           getValue={getValue}
+          id={id}
           items={selectableItems}
           selectedItem={null}
           onChange={handleSelect}

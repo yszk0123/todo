@@ -21,6 +21,7 @@ export const TodoStatusBarStatusSelect: React.FunctionComponent<{
     <IconSelect
       getDisplayIcon={getDisplayIconFromTodoStatus}
       getValue={getValue}
+      id="todo-status"
       items={STATUSES}
       selectedItem={status}
       onChange={onChange}

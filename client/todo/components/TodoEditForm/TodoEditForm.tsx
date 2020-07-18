@@ -50,7 +50,11 @@ const NoneForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#todo-edit-text"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}
@@ -116,7 +120,11 @@ const SingleForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#todo-edit-text"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}
@@ -180,7 +188,11 @@ const MultiForm: React.FunctionComponent<{
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#todo-edit-text"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}

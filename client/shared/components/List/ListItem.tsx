@@ -3,7 +3,6 @@ import { Box, Flex, Text } from 'rebass';
 
 export function ListItem<T>({
   isActive = false,
-  isDim = false,
   item,
   leftElement,
   mainElement,
@@ -11,7 +10,6 @@ export function ListItem<T>({
   rightElement,
 }: {
   isActive?: boolean;
-  isDim?: boolean;
   item: T;
   leftElement?: JSX.Element | null;
   mainElement: JSX.Element | string;
@@ -35,7 +33,6 @@ export function ListItem<T>({
       flex="1 1 auto"
       p={2}
       sx={{
-        opacity: isDim ? 0.3 : undefined,
         cursor: 'pointer',
         borderBottom: '1px dotted',
         borderColor: 'gray',

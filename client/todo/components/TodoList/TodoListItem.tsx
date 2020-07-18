@@ -87,7 +87,6 @@ export const TodoListItem: React.FunctionComponent<{
   return (
     <ListItem
       isActive={selected}
-      isDim={isDone}
       item={todo}
       leftElement={
         expanded ? (
@@ -108,6 +107,7 @@ export const TodoListItem: React.FunctionComponent<{
       }
       mainElement={
         <TodoListText
+          isDone={isDone}
           subElement={
             <>
               <TodoListTags tags={todo.tags} onClick={onClickTag} />

@@ -4,12 +4,14 @@ import { Flex } from 'rebass';
 type Props = {
   icon: JSX.Element;
   isSelected?: boolean;
+  label: string;
   onClick?: () => void;
 };
 
 export function MiniListIconButton({
   icon,
   isSelected = false,
+  label,
   onClick,
 }: Props): JSX.Element {
   const handleClick = React.useCallback(
@@ -25,6 +27,7 @@ export function MiniListIconButton({
   return (
     <Flex
       alignItems="center"
+      aria-label={label}
       color={isSelected ? 'primary' : 'gray'}
       fontSize={24}
       justifyContent="center"

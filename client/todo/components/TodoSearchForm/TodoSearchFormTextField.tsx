@@ -9,6 +9,11 @@ type Props = {
 
 export function TodoSearchFormTextField({ onChangeText, text }: Props) {
   return (
-    <EditFormInputField label="Text" value={text} onChange={onChangeText} />
+    <EditFormInputField
+      id="todo-search-text"
+      label="Text"
+      value={text}
+      onChange={onChangeText}
+    />
   );
 }

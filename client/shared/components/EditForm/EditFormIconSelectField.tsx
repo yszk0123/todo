@@ -7,6 +7,7 @@ import { EditFormField } from './EditFormField';
 export function EditFormIconSelectField<T>({
   getDisplayIcon,
   getValue,
+  id,
   items,
   label,
   onChange,
@@ -15,6 +16,7 @@ export function EditFormIconSelectField<T>({
 }: {
   getDisplayIcon: (item: T) => JSX.Element;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   label: string;
   onChange: (item: T | null) => void;
@@ -22,11 +24,12 @@ export function EditFormIconSelectField<T>({
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <IconSelect
           getDisplayIcon={getDisplayIcon}
           getValue={getValue}
+          id={id}
           items={items}
           selectedItem={selectedItem}
           onChange={onChange}

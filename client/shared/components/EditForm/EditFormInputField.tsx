@@ -5,10 +5,11 @@ import { Box } from 'rebass';
 import { EditFormField } from './EditFormField';
 
 export const EditFormInputField: React.FunctionComponent<{
+  id: string;
   label: string;
   onChange: (value: string) => void;
   value: string;
-}> = ({ label, onChange, value }) => {
+}> = ({ id, label, onChange, value }) => {
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
@@ -18,9 +19,9 @@ export const EditFormInputField: React.FunctionComponent<{
   );
 
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
-        <Input value={value} onChange={handleChange} />
+        <Input id={id} value={value} onChange={handleChange} />
       </Box>
     </EditFormField>
   );
