@@ -105,6 +105,7 @@ export const THEME = {
         bg: 'white',
         color: 'black',
       },
+      height: 44,
     },
     listItem: {
       ':hover': {
@@ -124,6 +125,7 @@ export const THEME = {
         cursor: 'pointer',
         opacity: 0.8,
       },
+      height: 44,
     },
     outline: {
       variant: 'buttons.primary',
@@ -134,6 +136,7 @@ export const THEME = {
         cursor: 'pointer',
         opacity: 0.8,
       },
+      height: 44,
     },
     secondary: {
       variant: 'buttons.primary',
@@ -143,6 +146,7 @@ export const THEME = {
         cursor: 'pointer',
         opacity: 0.8,
       },
+      height: 44,
     },
   },
   styles: {

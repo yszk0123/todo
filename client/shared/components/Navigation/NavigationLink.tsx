@@ -18,7 +18,12 @@ export const NavigationLink: React.FunctionComponent<{
         bg={isActive ? 'white' : undefined}
         color={isActive ? 'black' : undefined}
         pr={1}
-        sx={{ flexGrow: 1, textAlign: 'center' }}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexGrow: 1,
+          justifyContent: 'center',
+        }}
         variant="nav"
       >
         <Text fontWeight="bold">{text}</Text>
