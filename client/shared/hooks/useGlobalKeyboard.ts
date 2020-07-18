@@ -3,7 +3,7 @@ import React from 'react';
 export function useGlobalKeyboard<T extends keyof WindowEventMap>(
   key: T,
   listener: (event: WindowEventMap[T]) => unknown,
-  isEnabled: boolean
+  isEnabled = true
 ): void {
   React.useEffect(() => {
     if (!isEnabled) {
