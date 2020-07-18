@@ -19,7 +19,11 @@ export const ListText: React.FunctionComponent<Props> = ({
       }}
     >
       {children}
-      {subElement != null && <Flex sx={{ float: 'right' }}>{subElement}</Flex>}
+      {subElement != null && (
+        <Flex justifyContent="flex-end" sx={{ float: 'right' }}>
+          {subElement}
+        </Flex>
+      )}
     </Text>
   );
 };

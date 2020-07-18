@@ -1,8 +1,5 @@
-// FIXME: Use layout components instead of using rebass directly
 import React from 'react';
-import { Flex } from 'rebass';
 
-import { Label } from '../../../shared/components/Label';
 import { ListItem } from '../../../shared/components/List';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import {
@@ -57,14 +54,6 @@ export const TodoListItem: React.FunctionComponent<{
     [todo, onClickStatus]
   );
 
-  const handleClickCategory = React.useCallback(
-    (event: React.MouseEvent) => {
-      event.stopPropagation();
-      onClickCategory(todo.category);
-    },
-    [onClickCategory, todo.category]
-  );
-
   const isDone = todo.status === TodoStatus.Done;
   const selected = React.useMemo(() => isSelected(todoSelection, todo.id), [
     todoSelection,
@@ -101,14 +90,13 @@ export const TodoListItem: React.FunctionComponent<{
         <TodoListText
           isDone={isDone}
           subElement={
-            <>
-              <TodoListTags tags={todo.tags} onClick={onClickTag} />
-              {isCategoryNameShown && (
-                <Flex ml={1} onClick={handleClickCategory}>
-                  <Label text={todo.category.name} />
-                </Flex>
-              )}
-            </>
+            <TodoListTags
+              category={todo.category}
+              isCategoryNameShown={isCategoryNameShown}
+              tags={todo.tags}
+              onClickCategory={onClickCategory}
+              onClickTag={onClickTag}
+            />
           }
           text={todo.text}
         />
