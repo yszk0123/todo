@@ -5,3 +5,4 @@ export { ListIcon } from './ListIcon';
 export { ListCheckbox } from './ListCheckbox';
 export { ListIconCheckbox } from './ListIconCheckbox';
 export { ListBadges } from './ListBadges';
+export { ListLabel } from './ListLabel';
