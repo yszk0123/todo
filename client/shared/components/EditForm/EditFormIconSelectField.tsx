@@ -14,7 +14,7 @@ export function EditFormIconSelectField<T>({
   rightElement,
   selectedItem,
 }: {
-  getDisplayIcon: (item: T) => JSX.Element;
+  getDisplayIcon: (item: T) => React.ElementType;
   getValue: (item: T) => string;
   id: string;
   items: T[];

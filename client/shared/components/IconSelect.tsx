@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MiniList, MiniListIconButton } from './MiniList';
+import { MiniList, MiniListIconCheckbox } from './MiniList';
 
 export function IconSelect<T>({
   getDisplayIcon,
@@ -10,7 +10,7 @@ export function IconSelect<T>({
   onChange,
   selectedItem,
 }: {
-  getDisplayIcon: (item: T) => JSX.Element | null;
+  getDisplayIcon: (item: T) => React.ElementType | null;
   getValue: (item: T) => string;
   id: string;
   items: T[];
@@ -28,7 +28,7 @@ export function IconSelect<T>({
         const value = getValue(item);
 
         return (
-          <MiniListIconButton
+          <MiniListIconCheckbox
             icon={icon}
             isSelected={item === selectedItem}
             key={value}

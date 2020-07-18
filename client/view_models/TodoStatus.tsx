@@ -9,14 +9,15 @@ import {
 } from '../todo/components/TodoStatusIcon';
 
 const iconMap = {
-  [TodoStatus.Todo]: <TodoStatusTodoIcon />,
-  [TodoStatus.InProgress]: <TodoStatusInProgressIcon />,
-  [TodoStatus.Done]: <TodoStatusDoneIcon />,
-  [TodoStatus.Waiting]: <TodoStatusWaitingIcon />,
+  [TodoStatus.Todo]: TodoStatusTodoIcon,
+  [TodoStatus.InProgress]: TodoStatusInProgressIcon,
+  [TodoStatus.Done]: TodoStatusDoneIcon,
+  [TodoStatus.Waiting]: TodoStatusWaitingIcon,
 };
 
-export const getDisplayIconFromTodoStatus = (status: TodoStatus) =>
-  iconMap[status];
+export const getDisplayIconFromTodoStatus = (
+  status: TodoStatus
+): React.ElementType => iconMap[status];
 
 export function printTodoStatus(status: TodoStatus) {
   switch (status) {
