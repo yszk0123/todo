@@ -28,10 +28,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   isSyncing: boolean;
   onChangeStatus: (status: TodoStatus | null) => void;
   onClickArchive: () => void;
-  onClickCategory: (category: RootCategoryFragment | null) => void;
-  onClickCategoryInSub: (category: RootCategoryFragment | null) => void;
   onClickEdit: () => void;
+  onClickEditCategory: (category: RootCategoryFragment | null) => void;
   onClickSearch: () => void;
+  onClickSearchCategory: (category: RootCategoryFragment | null) => void;
   onClickUnarchive: () => void;
   selectMode: SelectMode;
   status: TodoStatus | null;
@@ -43,10 +43,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   isSyncing,
   onChangeStatus,
   onClickArchive,
-  onClickCategory,
-  onClickCategoryInSub,
   onClickEdit,
+  onClickEditCategory,
   onClickSearch,
+  onClickSearchCategory,
   onClickUnarchive,
   selectMode,
   status,
@@ -61,7 +61,7 @@ export const TodoStatusBar: React.FunctionComponent<{
             <TodoStatusBarCategorySelect
               categories={categories}
               category={category}
-              onClickCategory={onClickCategory}
+              onClickCategory={onClickSearchCategory}
             />
           </StatusBarItem>
           <StatusBarText text={`${count} todos`} />
@@ -112,7 +112,7 @@ export const TodoStatusBar: React.FunctionComponent<{
             <TodoStatusBarCategorySelect
               categories={categories}
               category={category}
-              onClickCategory={onClickCategoryInSub}
+              onClickCategory={onClickEditCategory}
             />
           </StatusBarItem>
         </StatusBarSecondaryRow>

@@ -305,10 +305,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         status={status}
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
-        onClickCategory={handleSearchByRootCategory}
-        onClickCategoryInSub={handleUpdateCategory}
         onClickEdit={onOpenEdit}
+        onClickEditCategory={handleUpdateCategory}
         onClickSearch={onOpenSearch}
+        onClickSearchCategory={handleSearchByRootCategory}
         onClickUnarchive={handleUnarchiveTodosById}
       />
       <TodoGroupedList
