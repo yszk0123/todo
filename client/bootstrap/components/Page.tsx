@@ -3,6 +3,7 @@ import { Flex } from 'rebass';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { Navigation } from '../../shared/components/Navigation';
+import { FOOTER_ID } from '../../shared/constants/FOOTER_ID';
 import { EmptyProps } from '../../view_models/EmptyProps';
 
 const Wrapper: React.FunctionComponent<EmptyProps> = ({ children }) => {
@@ -30,6 +31,16 @@ export const Page: React.FunctionComponent<{
       <Flex as="main" flexGrow={1} role="main">
         {isLoading ? <LoadingIndicator /> : hasSession && content}
       </Flex>
+      <Flex
+        as="footer"
+        id={FOOTER_ID}
+        sx={{
+          position: 'sticky',
+          zIndex: 2,
+          bottom: 0,
+          boxShadow: 2,
+        }}
+      />
     </Wrapper>
   );
 };

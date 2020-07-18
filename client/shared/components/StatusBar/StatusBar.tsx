@@ -4,28 +4,22 @@ import { Flex } from 'rebass';
 
 import { EmptyProps } from '../../../view_models/EmptyProps';
 import { isSSR } from '../../helpers/isSSR';
+import { useFooter } from '../../hooks/useFooter';
 import { stopPropagation } from '../../view_helpers/stopPropagation';
 
 export const StatusBar: React.FunctionComponent<EmptyProps> = ({
   children,
 }) => {
-  if (isSSR()) {
+  const footer = useFooter();
+
+  if (isSSR() || footer === null) {
     return null;
   }
 
   return ReactDOM.createPortal(
-    <Flex
-      flexDirection="column-reverse"
-      sx={{
-        position: 'sticky',
-        zIndex: 2,
-        bottom: 0,
-        boxShadow: 2,
-      }}
-      onClick={stopPropagation}
-    >
+    <Flex flexDirection="column-reverse" width="100%" onClick={stopPropagation}>
       {children}
     </Flex>,
-    document.body
+    footer
   );
 };
