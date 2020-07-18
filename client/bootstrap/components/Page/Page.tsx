@@ -1,10 +1,10 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
-import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
-import { Navigation } from '../../shared/components/Navigation';
-import { FOOTER_ID } from '../../shared/constants/FOOTER_ID';
-import { EmptyProps } from '../../view_models/EmptyProps';
+import { Navigation } from '../../../shared/components/Navigation';
+import { EmptyProps } from '../../../view_models/EmptyProps';
+import { FooterPlaceholder } from './FooterPlaceholder';
+import { Main } from './Main';
 
 const Wrapper: React.FunctionComponent<EmptyProps> = ({ children }) => {
   return (
@@ -28,19 +28,8 @@ export const Page: React.FunctionComponent<{
         hasSession={hasSession}
         username={username}
       />
-      <Flex as="main" flexGrow={1} role="main">
-        {isLoading ? <LoadingIndicator /> : hasSession && content}
-      </Flex>
-      <Flex
-        as="footer"
-        id={FOOTER_ID}
-        sx={{
-          position: 'sticky',
-          zIndex: 2,
-          bottom: 0,
-          boxShadow: 2,
-        }}
-      />
+      <Main content={content} hasSession={hasSession} isLoading={isLoading} />
+      <FooterPlaceholder />
     </Wrapper>
   );
 };
