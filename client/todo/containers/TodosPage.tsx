@@ -6,8 +6,13 @@ import { RootCategoryFragment } from '../../category/graphql/__generated__/Categ
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
+import { KeyCode } from '../../shared/constants/KeyCode';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
+import {
+  Shortcut,
+  useGlobalShortcut,
+} from '../../shared/hooks/useGlobalShortcut';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
@@ -232,6 +237,36 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectTodo : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
+  useGlobalShortcut((shortcut) => {
+    const command = translateShortcut(shortcut);
+    switch (command) {
+      case Command.OPEN_EDIT: {
+        onOpenEdit();
+        break;
+      }
+      case Command.OPEN_SEARCH: {
+        onOpenSearch();
+        break;
+      }
+      case Command.CHANGE_STATUS_TO_DONE: {
+        handleUpdateStatus(TodoStatus.Done);
+        break;
+      }
+      case Command.CHANGE_STATUS_TO_WAITING: {
+        handleUpdateStatus(TodoStatus.Waiting);
+        break;
+      }
+      case Command.CHANGE_STATUS_TO_IN_PROGRESS: {
+        handleUpdateStatus(TodoStatus.InProgress);
+        break;
+      }
+      case Command.CHANGE_STATUS_TO_TODO: {
+        handleUpdateStatus(TodoStatus.Todo);
+        break;
+      }
+    }
+  });
+
   React.useEffect(
     () => {
       dispatch(todoEditFormReset());
@@ -336,4 +371,35 @@ function useModalType() {
   }, []);
 
   return { onCloseModal, onOpenSearch, onOpenEdit, modalType };
+}
+
+enum Command {
+  CHANGE_STATUS_TO_DONE,
+  CHANGE_STATUS_TO_WAITING,
+  CHANGE_STATUS_TO_IN_PROGRESS,
+  CHANGE_STATUS_TO_TODO,
+  OPEN_EDIT,
+  OPEN_SEARCH,
+  NONE,
+}
+
+function translateShortcut(shortcut: Shortcut): Command {
+  switch (shortcut.code) {
+    case KeyCode.E:
+      return Command.OPEN_EDIT;
+    case KeyCode.S:
+      return Command.OPEN_SEARCH;
+    case KeyCode.X:
+      return Command.CHANGE_STATUS_TO_WAITING;
+    case KeyCode.Minus:
+      return Command.CHANGE_STATUS_TO_WAITING;
+    case KeyCode.Period:
+      return shortcut.shift
+        ? Command.CHANGE_STATUS_TO_IN_PROGRESS
+        : Command.NONE;
+    case KeyCode.O:
+      return Command.CHANGE_STATUS_TO_TODO;
+    default:
+      return Command.NONE;
+  }
 }

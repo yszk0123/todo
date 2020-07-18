@@ -2,7 +2,7 @@ import React from 'react';
 
 import { isKeyCode, KeyCode } from '../constants/KeyCode';
 
-type Shortcut = {
+export type Shortcut = {
   alt: boolean;
   code: KeyCode;
   ctrl: boolean;
