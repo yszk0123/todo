@@ -7,6 +7,7 @@ schema.extendType({
   definition(t) {
     t.crud.todos({
       filtering: true,
+      ordering: true,
       authorize(_root, _args, ctx) {
         return !!ctx.user?.id;
       },
@@ -19,6 +20,7 @@ schema.extendType({
             ...args.where,
             ownerId: { equals: ctx.user.id },
           },
+          orderBy: args.where?.archivedAt ? { archivedAt: 'desc' } : undefined,
           first: TODO_LIMIT,
         };
         return originalResolve(root, newArgs, ctx, info);

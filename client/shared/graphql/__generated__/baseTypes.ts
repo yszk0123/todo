@@ -7,7 +7,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** Use JavaScript Date object for date/time fields. */
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: string & {readonly __opaque__: 'DateTime'};
   /** The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   Json: any;
@@ -33,6 +33,7 @@ export type QueryCategoriesArgs = {
   before?: Maybe<CategoryWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<CategoryOrderByInput>;
   where?: Maybe<CategoryWhereInput>;
 };
 
@@ -47,6 +48,7 @@ export type QueryCheckpointsArgs = {
   before?: Maybe<CheckpointWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<CheckpointOrderByInput>;
   where?: Maybe<CheckpointWhereInput>;
 };
 
@@ -61,6 +63,7 @@ export type QueryTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<TagOrderByInput>;
   where?: Maybe<TagWhereInput>;
 };
 
@@ -70,6 +73,7 @@ export type QueryTodosArgs = {
   before?: Maybe<TodoWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<TodoOrderByInput>;
   where?: Maybe<TodoWhereInput>;
 };
 
@@ -274,6 +278,14 @@ export type CategoryFilter = {
   some?: Maybe<CategoryWhereInput>;
 };
 
+export type CategoryOrderByInput = {
+  archivedAt?: Maybe<OrderByArg>;
+  createdAt?: Maybe<OrderByArg>;
+  id?: Maybe<OrderByArg>;
+  name?: Maybe<OrderByArg>;
+  ownerId?: Maybe<OrderByArg>;
+};
+
 export type CategoryScalarWhereInput = {
   AND?: Maybe<Array<CategoryScalarWhereInput>>;
   archivedAt?: Maybe<NullableDateTimeFilter>;
@@ -460,6 +472,14 @@ export type CheckpointFilter = {
   every?: Maybe<CheckpointWhereInput>;
   none?: Maybe<CheckpointWhereInput>;
   some?: Maybe<CheckpointWhereInput>;
+};
+
+export type CheckpointOrderByInput = {
+  archivedAt?: Maybe<OrderByArg>;
+  endAt?: Maybe<OrderByArg>;
+  id?: Maybe<OrderByArg>;
+  name?: Maybe<OrderByArg>;
+  ownerId?: Maybe<OrderByArg>;
 };
 
 export type CheckpointScalarWhereInput = {

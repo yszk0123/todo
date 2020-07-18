@@ -23,6 +23,7 @@ schema.extendType({
 
     t.crud.tags({
       filtering: true,
+      ordering: true,
       authorize(_root, _args, ctx) {
         return !!ctx.user?.id;
       },
@@ -37,6 +38,7 @@ schema.extendType({
             // FIXME: Set from client
             archivedAt: { equals: null },
           },
+          orderBy: args.where?.archivedAt ? { archivedAt: 'desc' } : undefined,
         };
         return originalResolve(root, newArgs, ctx, info);
       },

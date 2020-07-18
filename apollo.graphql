@@ -3,15 +3,15 @@ schema {
   mutation: Mutation
 }
 type Query {
-  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, where: CategoryWhereInput): [Category!]!
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, orderBy: CategoryOrderByInput, where: CategoryWhereInput): [Category!]!
   category(where: CategoryWhereUniqueInput!): Category
-  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, where: CheckpointWhereInput): [Checkpoint!]!
+  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, orderBy: CheckpointOrderByInput, where: CheckpointWhereInput): [Checkpoint!]!
   me: User
   page: Page
   stats: Stats
   tag(where: TagWhereUniqueInput!): Tag
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, where: TagWhereInput): [Tag!]!
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, where: TodoWhereInput): [Todo!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput, where: TagWhereInput): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
 }
 type Page {
   isSyncing: Boolean
@@ -170,6 +170,13 @@ input CategoryFilter {
   every: CategoryWhereInput
   none: CategoryWhereInput
   some: CategoryWhereInput
+}
+input CategoryOrderByInput {
+  archivedAt: OrderByArg
+  createdAt: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  ownerId: OrderByArg
 }
 input CategoryScalarWhereInput {
   AND: [CategoryScalarWhereInput!]
@@ -334,6 +341,13 @@ input CheckpointFilter {
   none: CheckpointWhereInput
   some: CheckpointWhereInput
 }
+input CheckpointOrderByInput {
+  archivedAt: OrderByArg
+  endAt: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  ownerId: OrderByArg
+}
 input CheckpointScalarWhereInput {
   AND: [CheckpointScalarWhereInput!]
   archivedAt: NullableDateTimeFilter
@@ -432,7 +446,7 @@ enum Color {
   RED
   YELLOW
 }
-"""Use JavaScript Date object for date/time fields."""
+"""A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."""
 scalar DateTime
 input DateTimeFilter {
   equals: DateTime
