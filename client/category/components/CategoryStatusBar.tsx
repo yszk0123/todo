@@ -29,7 +29,12 @@ export const CategoryStatusBar: React.FunctionComponent<{
           </StatusBarItem>
         </StatusBarLeft>
         <StatusBarRight>
-          <StatusBarButton isPrimary label="Edit" onClick={onClickEdit} />
+          <StatusBarButton
+            isPrimary
+            isSelected={selected}
+            label="Edit"
+            onClick={onClickEdit}
+          />
         </StatusBarRight>
       </StatusBarPrimaryRow>
     </StatusBar>

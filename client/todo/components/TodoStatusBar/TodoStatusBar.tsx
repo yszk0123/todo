@@ -78,15 +78,21 @@ export const TodoStatusBar: React.FunctionComponent<{
           {selected && (
             <TodoStatusBarArchiveButton
               archiveStatus={archiveStatus}
+              isSelected={selected}
               onClickArchive={onClickArchive}
               onClickUnarchive={onClickUnarchive}
             />
           )}
           {!selected && (
-            <StatusBarButton label="Search" onClick={onClickSearch} />
+            <StatusBarButton
+              isSelected={selected}
+              label="Search"
+              onClick={onClickSearch}
+            />
           )}
           <StatusBarButton
             isPrimary
+            isSelected={selected}
             label={selected ? 'Edit' : 'Create'}
             onClick={onClickEdit}
           />

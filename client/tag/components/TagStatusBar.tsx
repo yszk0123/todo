@@ -31,6 +31,7 @@ export const TagStatusBar: React.FunctionComponent<{
         <StatusBarRight>
           <StatusBarButton
             isPrimary
+            isSelected={selected}
             label={selected ? 'Edit' : 'Create'}
             onClick={onClickEdit}
           />
