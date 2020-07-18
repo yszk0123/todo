@@ -13,6 +13,7 @@ module.exports = {
     'plugin:typescript-sort-keys/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
     'prettier/react',
     'prettier/@typescript-eslint',
