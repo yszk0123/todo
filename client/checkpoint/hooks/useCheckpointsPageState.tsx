@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
@@ -28,7 +29,7 @@ export function useCheckpointsPageState() {
   return {
     now,
     checkpointEditFormState,
-    checkpoints: data?.checkpoints ?? [],
+    checkpoints: data?.checkpoints ?? EMPTY,
     isLoading: !data && loading,
     selectMode: getSelectMode(checkpointEditFormState.selectedCheckpointIds),
     userId: data?.me?.id,

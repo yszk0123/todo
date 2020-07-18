@@ -2,9 +2,8 @@ import React from 'react';
 
 import { Badge } from '../../../shared/components/Badge';
 import { EditFormBadgeSelectField } from '../../../shared/components/EditForm';
+import { EMPTY } from '../../../shared/constants/EMPTY';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
-
-const EMPTY_TAGS: TodoTagFragment[] = [];
 
 const getColor = (tag: TodoTagFragment) => tag.color;
 const getValue = (tag: TodoTagFragment) => tag.id;
@@ -32,7 +31,7 @@ export function TodoEditFormTagsField({
       items={categoryTags}
       label="Tags"
       rightElement={!tags ? <Badge text="preserved" /> : null}
-      selectedItems={tags ?? EMPTY_TAGS}
+      selectedItems={tags ?? EMPTY}
       onDeselect={onToggleTag}
       onSelect={onToggleTag}
     />

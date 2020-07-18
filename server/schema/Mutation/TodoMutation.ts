@@ -1,5 +1,7 @@
 import { schema } from 'nexus';
 
+import { EMPTY } from '../../../client/shared/constants/EMPTY';
+
 schema.inputObjectType({
   name: 'DeleteTodoInput',
   definition(t) {
@@ -117,7 +119,7 @@ schema.extendType({
       async resolve(_root, args, ctx, _info) {
         const todoId = args.data.id;
         const text = args.data.text ?? undefined;
-        const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const tags = (args.data.tags ?? EMPTY).map((id) => ({ id }));
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
@@ -157,7 +159,7 @@ schema.extendType({
       async resolve(_root, args, ctx, _info) {
         const todoIds = args.data.ids;
         const text = args.data.text ?? undefined;
-        const tags = (args.data.tags ?? []).map((id) => ({ id }));
+        const tags = (args.data.tags ?? EMPTY).map((id) => ({ id }));
         const hasTags = !!args.data.tags;
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt;

@@ -1,3 +1,4 @@
+import { EMPTY } from '../shared/constants/EMPTY';
 import { ID } from './ID';
 
 export enum TodoSelectionType {
@@ -20,7 +21,7 @@ export type TodoSelection =
 export function getSelectedTodoIds(selection: TodoSelection): ID[] {
   return selection.type === TodoSelectionType.SELECT
     ? selection.selectedTodoIds
-    : [];
+    : EMPTY;
 }
 
 export function isSelected(selection: TodoSelection, todoId: ID): boolean {

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.graphql';
@@ -59,14 +60,14 @@ export function useTodosPageState() {
   }, [todoSearchQuery.categoryId, data?.categories]);
 
   const archiveStatus = React.useMemo(
-    () => getArchiveStatus(data?.todos ?? []),
+    () => getArchiveStatus(data?.todos ?? EMPTY),
     [data?.todos]
   );
 
   const selectedTodoIds = getSelectedTodoIds(todoEditFormState.selection);
 
   const status = React.useMemo(
-    () => getStatus(data?.todos ?? [], selectedTodoIds),
+    () => getStatus(data?.todos ?? EMPTY, selectedTodoIds),
     [data?.todos, selectedTodoIds]
   );
 
@@ -80,10 +81,10 @@ export function useTodosPageState() {
   const count = selectedTodoIds.length;
 
   return {
-    categories: data?.categories ?? [],
+    categories: data?.categories ?? EMPTY,
     category,
-    categoryTags: data?.tags ?? [],
-    checkpoints: data?.checkpoints ?? [],
+    categoryTags: data?.tags ?? EMPTY,
+    checkpoints: data?.checkpoints ?? EMPTY,
     isCategoryNameShown: todoSearchQuery.categoryId == null,
     isLoading: !data && loading,
     isSyncing: loading || (pageData?.page?.isSyncing ?? false),
@@ -91,7 +92,7 @@ export function useTodosPageState() {
     now,
     status,
     todoEditFormState,
-    todos: data?.todos ?? [],
+    todos: data?.todos ?? EMPTY,
     userId: data?.me?.id ?? null,
     todoSearchFormDraft: todoSearchFormState.draft,
     todoSearchQuery,

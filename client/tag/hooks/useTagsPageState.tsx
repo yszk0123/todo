@@ -1,3 +1,4 @@
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
@@ -22,9 +23,9 @@ export function useTagsPageState() {
     currentTagId: tagEditFormState.selectedTagIds[0] ?? null,
     isLoading: !data && loading,
     selectMode: getSelectMode(tagEditFormState.selectedTagIds),
-    rootCategories: data?.categories ?? [],
+    rootCategories: data?.categories ?? EMPTY,
     tagEditFormState,
-    tags: data?.tags ?? [],
+    tags: data?.tags ?? EMPTY,
     userId: data?.me?.id ?? null,
   };
 }

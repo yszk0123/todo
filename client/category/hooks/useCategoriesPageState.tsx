@@ -1,3 +1,4 @@
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
@@ -20,7 +21,7 @@ export function useCategoriesPageState() {
   }, UPDATE_INTERVAL);
 
   return {
-    categories: data?.categories ?? [],
+    categories: data?.categories ?? EMPTY,
     categoryEditFormState,
     currentCategoryId: categoryEditFormState.selectedCategoryIds[0] ?? null,
     isLoading: !data && loading,

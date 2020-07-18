@@ -1,5 +1,6 @@
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
 import { DateTime } from '../../view_models/DateTime';
@@ -91,7 +92,7 @@ export function todoSearchFormReducer(
     }
     case TodoSearchFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
-      const oldTags = state.draft.tags ?? [];
+      const oldTags = state.draft.tags ?? EMPTY;
       const newTags = toggleWith(oldTags, tag, (t) => t.id);
       return {
         ...state,
