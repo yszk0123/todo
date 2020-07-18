@@ -6,6 +6,7 @@ const DEFAULT_VALUE = '__DEFAULT__';
 export function Select<T>({
   getDisplayName,
   getValue,
+  id,
   items,
   label,
   labelledBy,
@@ -14,6 +15,7 @@ export function Select<T>({
 }: {
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   label?: string;
   labelledBy?: string;
@@ -33,6 +35,7 @@ export function Select<T>({
     <RebassSelect
       aria-label={label}
       aria-labelledby={labelledBy}
+      id={id}
       value={selectedItem !== null ? getValue(selectedItem) : ''}
       onChange={handleChange}
     >

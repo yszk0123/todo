@@ -5,18 +5,20 @@ import { MiniList, MiniListIconButton } from './MiniList';
 export function IconSelect<T>({
   getDisplayIcon,
   getValue,
+  id,
   items,
   onChange,
   selectedItem,
 }: {
   getDisplayIcon: (item: T) => JSX.Element | null;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   onChange: (item: T) => void;
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <MiniList>
+    <MiniList id={id}>
       {items.map((item) => {
         const icon = getDisplayIcon(item);
         if (icon === null) {

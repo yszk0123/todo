@@ -9,6 +9,11 @@ type Props = {
 
 export function TodoEditFormTextField({ onChangeText, text }: Props) {
   return (
-    <EditFormInputField label="Text" value={text} onChange={onChangeText} />
+    <EditFormInputField
+      id="todo-edit-text"
+      label="Text"
+      value={text}
+      onChange={onChangeText}
+    />
   );
 }

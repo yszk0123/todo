@@ -15,6 +15,7 @@ export const TodoStatusBarCategorySelect: React.FunctionComponent<{
     <LabelledSelect
       getDisplayName={getDisplayName}
       getValue={getValue}
+      id="todo-status-category"
       items={categories}
       label="Category"
       labelId="category"

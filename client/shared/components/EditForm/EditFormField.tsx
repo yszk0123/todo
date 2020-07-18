@@ -4,13 +4,15 @@ import { Box, Flex, Text } from 'rebass';
 const LABEL_WIDTH = 100;
 
 export const EditFormField: React.FunctionComponent<{
+  id?: string;
   label?: string;
   rightElement?: JSX.Element | null;
-}> = ({ children, label, rightElement }) => {
+}> = ({ children, id, label, rightElement }) => {
   return (
     <Flex
       alignItems="center"
       flexWrap="wrap"
+      id={id}
       mb={1}
       pb={1}
       sx={{

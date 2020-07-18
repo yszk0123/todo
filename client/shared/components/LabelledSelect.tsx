@@ -7,6 +7,7 @@ import { Select } from './Select';
 export function LabelledSelect<T>({
   getDisplayName,
   getValue,
+  id,
   items,
   label,
   labelId,
@@ -15,6 +16,7 @@ export function LabelledSelect<T>({
 }: {
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   label: string;
   labelId: string;
@@ -29,6 +31,7 @@ export function LabelledSelect<T>({
       <Select
         getDisplayName={getDisplayName}
         getValue={getValue}
+        id={id}
         items={items}
         labelledBy={labelId}
         selectedItem={selectedItem}

@@ -7,6 +7,7 @@ import { EditFormField } from './EditFormField';
 export function EditFormSelectField<T>({
   getDisplayName,
   getValue,
+  id,
   items,
   label,
   onChange,
@@ -15,6 +16,7 @@ export function EditFormSelectField<T>({
 }: {
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
+  id: string;
   items: T[];
   label: string;
   onChange: (item: T | null) => void;
@@ -27,6 +29,7 @@ export function EditFormSelectField<T>({
         <Select
           getDisplayName={getDisplayName}
           getValue={getValue}
+          id={id}
           items={items}
           selectedItem={selectedItem}
           onChange={onChange}

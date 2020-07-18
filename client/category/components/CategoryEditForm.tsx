@@ -40,6 +40,7 @@ export const CategoryEditForm: React.FunctionComponent<{
     <Modal isOpen={isOpen} onClose={onCloseModal}>
       <EditForm>
         <EditFormInputField
+          id="category-edit-name"
           label="Name"
           value={categoryEditFormState.name}
           onChange={onChangeName}

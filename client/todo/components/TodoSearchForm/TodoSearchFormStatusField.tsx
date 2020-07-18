@@ -25,6 +25,7 @@ export function TodoSearchFormStatusField({
     <EditFormIconSelectField
       getDisplayIcon={getDisplayIconFromTodoStatus}
       getValue={getValue}
+      id="todo-search-status"
       items={statuses}
       label="Status"
       rightElement={!status ? <Badge text="preserved" /> : null}

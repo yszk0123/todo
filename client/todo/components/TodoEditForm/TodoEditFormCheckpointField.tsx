@@ -19,6 +19,7 @@ export function TodoEditFormCheckpointField({
     <EditFormSelectField
       getDisplayName={getDisplayNameFromCheckpoint}
       getValue={getValueFromCheckpoint}
+      id="todo-edit-checkpoint"
       items={checkpoints}
       label="Checkpoint"
       rightElement={!checkpoint ? <Badge text="preserved" /> : null}

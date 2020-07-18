@@ -28,6 +28,7 @@ export function TodoSearchFormTagsField({
       getColor={getColor}
       getDisplayName={getDisplayName}
       getValue={getValue}
+      id="todo-search-tags"
       items={categoryTags}
       label="Tags"
       rightElement={!tags ? <Badge text="preserved" /> : null}

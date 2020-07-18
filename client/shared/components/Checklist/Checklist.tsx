@@ -7,10 +7,12 @@ import { ChecklistItem } from './ChecklistItem';
 
 export function Checklist<T extends Displayable>({
   checkedItems,
+  id,
   items,
   onClick,
 }: {
   checkedItems: T[];
+  id: string;
   items: T[];
   onClick: (item: T) => void;
 }): JSX.Element {
@@ -19,7 +21,7 @@ export function Checklist<T extends Displayable>({
   ]);
 
   return (
-    <Flex alignItems="center" flexWrap="wrap">
+    <Flex alignItems="center" flexWrap="wrap" id={id}>
       {items.map((item, i) => {
         const isChecked = lookupTable[item.id] === true;
 
