@@ -78,6 +78,9 @@ export const THEME = {
     textarea: {
       fontSize: 18,
     },
+    checkbox: {
+      fontSize: 24,
+    },
   },
   variants: {
     avatar: {

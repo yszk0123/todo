@@ -21,7 +21,6 @@ export function ListIcon({ icon, onClick }: Props): JSX.Element {
     <Flex
       alignItems="center"
       color="gray"
-      fontSize={24}
       justifyContent="center"
       sx={{ ':hover': { opacity: 0.7 } }}
       onClick={handleClick}

@@ -29,7 +29,6 @@ export function MiniListIconRadio({
     <Radio
       aria-label={label}
       color={isSelected ? 'primary' : 'gray'}
-      fontSize={24}
       icon={icon}
       onClick={handleClick}
     />

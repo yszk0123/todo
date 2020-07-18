@@ -28,7 +28,6 @@ export function ListIconCheckbox<T>({
       aria-label={label}
       checked={isSelected}
       color="gray"
-      fontSize={24}
       icon={icon}
       marginRight={0}
       readOnly

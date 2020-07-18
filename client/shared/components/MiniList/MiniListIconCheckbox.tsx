@@ -29,7 +29,6 @@ export function MiniListIconCheckbox({
     <Checkbox
       aria-label={label}
       checked={isSelected}
-      fontSize={24}
       icon={icon}
       readOnly
       onClick={handleClick}

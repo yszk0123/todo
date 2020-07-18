@@ -21,7 +21,6 @@ export function MiniListIcon({ icon, onClick }: Props): JSX.Element {
     <Flex
       alignItems="center"
       color="gray"
-      fontSize={24}
       justifyContent="center"
       mr={1}
       sx={{ ':hover': { opacity: 0.7 } }}

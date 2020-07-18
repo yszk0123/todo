@@ -29,7 +29,6 @@ export function MiniListIconButton({
       alignItems="center"
       aria-label={label}
       color={isSelected ? 'primary' : 'gray'}
-      fontSize={24}
       justifyContent="center"
       mr={2}
       role="button"
