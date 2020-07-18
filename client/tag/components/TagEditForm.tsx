@@ -56,7 +56,11 @@ export const TagEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneTag }];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#tag-edit-name"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <EditFormChecklistField
           checkedItems={tagCategories}

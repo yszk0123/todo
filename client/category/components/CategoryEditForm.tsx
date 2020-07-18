@@ -37,7 +37,11 @@ export const CategoryEditForm: React.FunctionComponent<{
     : [{ label: 'Create', onClick: onCreateOneCategory }];
 
   return (
-    <Modal isOpen={isOpen} onClose={onCloseModal}>
+    <Modal
+      initialFocusSelector="#category-edit-name"
+      isOpen={isOpen}
+      onClose={onCloseModal}
+    >
       <EditForm>
         <EditFormInputField
           id="category-edit-name"
