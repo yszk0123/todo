@@ -7,12 +7,16 @@ export function Select<T>({
   getDisplayName,
   getValue,
   items,
+  label,
+  labelledBy,
   onChange,
   selectedItem,
 }: {
   getDisplayName: (item: T) => string;
   getValue: (item: T) => string;
   items: T[];
+  label?: string;
+  labelledBy?: string;
   onChange: (item: T | null) => void;
   selectedItem: T | null;
 }): JSX.Element {
@@ -27,6 +31,8 @@ export function Select<T>({
 
   return (
     <RebassSelect
+      aria-label={label}
+      aria-labelledby={labelledBy}
       value={selectedItem !== null ? getValue(selectedItem) : ''}
       onChange={handleChange}
     >
