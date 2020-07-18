@@ -18,7 +18,6 @@ export const TodoStatusBarCategorySelect: React.FunctionComponent<{
       id="todo-status-category"
       items={categories}
       label="Category"
-      labelId="category"
       selectedItem={category}
       onChange={onClickCategory}
     />

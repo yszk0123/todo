@@ -10,7 +10,6 @@ export function LabelledSelect<T>({
   id,
   items,
   label,
-  labelId,
   onChange,
   selectedItem,
 }: {
@@ -19,13 +18,12 @@ export function LabelledSelect<T>({
   id: string;
   items: T[];
   label: string;
-  labelId: string;
   onChange: (item: T | null) => void;
   selectedItem: T | null;
 }): JSX.Element {
   return (
     <Flex alignItems="center">
-      <Label id={labelId} mr={2} width="initial">
+      <Label htmlFor={id} mr={2} width="initial">
         {label}
       </Label>
       <Select
@@ -33,7 +31,6 @@ export function LabelledSelect<T>({
         getValue={getValue}
         id={id}
         items={items}
-        labelledBy={labelId}
         selectedItem={selectedItem}
         onChange={onChange}
       />
