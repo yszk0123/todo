@@ -27,15 +27,9 @@ export function ListIconCheckbox<T>({
     <Checkbox
       aria-label={label}
       checked={isSelected}
-      color="gray"
       icon={icon}
       marginRight={0}
       readOnly
-      sx={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        ':hover': { opacity: 0.7 },
-      }}
       onClick={handleClick}
     />
   );
