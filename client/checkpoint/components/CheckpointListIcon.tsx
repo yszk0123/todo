@@ -22,6 +22,7 @@ export const CheckpointListIcon: React.FunctionComponent<Props> = ({
       icon={isSelectMode ? null : CheckpointIcon}
       isSelected={isSelected}
       item={checkpoint}
+      label="selected"
       onClick={onClick}
     />
   );

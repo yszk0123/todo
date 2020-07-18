@@ -22,6 +22,7 @@ export const TagListIcon: React.FunctionComponent<Props> = ({
       icon={isSelectMode ? null : TagIcon}
       isSelected={isSelected}
       item={tag}
+      label="selected"
       onClick={onClick}
     />
   );

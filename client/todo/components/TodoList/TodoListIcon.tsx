@@ -22,6 +22,7 @@ export const TodoListIcon: React.FunctionComponent<Props> = ({
       icon={isSelectMode ? null : getTodoStatusIcon(todo.status)}
       isSelected={isSelected}
       item={todo}
+      label={todo.status}
       onClick={onClick}
     />
   );

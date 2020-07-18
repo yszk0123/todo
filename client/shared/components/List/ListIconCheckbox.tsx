@@ -6,11 +6,13 @@ export function ListIconCheckbox<T>({
   icon,
   isSelected,
   item,
+  label,
   onClick,
 }: {
   icon: React.ElementType | null;
   isSelected: boolean;
   item: T;
+  label: string;
   onClick: (item: T) => void;
 }): JSX.Element {
   const handleClick = React.useCallback(
@@ -23,6 +25,7 @@ export function ListIconCheckbox<T>({
 
   return (
     <Checkbox
+      aria-label={label}
       checked={isSelected}
       color="gray"
       fontSize={24}

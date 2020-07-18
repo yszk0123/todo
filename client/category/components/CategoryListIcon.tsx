@@ -22,6 +22,7 @@ export const CategoryListIcon: React.FunctionComponent<Props> = ({
       icon={isSelectMode ? null : CategoryIcon}
       isSelected={isSelected}
       item={category}
+      label="selected"
       onClick={onClick}
     />
   );
