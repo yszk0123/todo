@@ -102,8 +102,8 @@ export const THEME = {
       color: 'inherit',
       textDecoration: 'none',
       ':hover,:focus,.active': {
-        bg: 'light',
-        color: 'primary',
+        bg: 'white',
+        color: 'black',
       },
     },
     listItem: {
