@@ -26,7 +26,7 @@ export const NavigationLink: React.FunctionComponent<{
         }}
         variant="nav"
       >
-        <Text fontWeight="bold">{text}</Text>
+        <Text>{text}</Text>
       </RebassLink>
     </NextLink>
   );

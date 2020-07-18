@@ -31,7 +31,7 @@ export const THEME = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   sizes: {
     icon: 24,
-    avatar: 48,
+    avatar: 44,
   },
   radii: {
     default: 4,

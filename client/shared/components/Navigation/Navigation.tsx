@@ -30,21 +30,14 @@ export const Navigation: React.FunctionComponent<{
         role="navigation"
         width="100%"
       >
-        <Flex
-          alignItems="center"
-          bg="black"
-          color="white"
-          height={48}
-          px={2}
-          width={1}
-        >
+        <Flex alignItems="center" bg="black" color="white" px={2} width={1}>
           <Flex as="h1">
             <NavigationLink href="/" text="Todo" />
           </Flex>
           <Box mx="auto" />
           {username && <Text p={2}>{username}</Text>}
           {avatarUrl && <Avatar alt={username || 'avatar'} url={avatarUrl} />}
-          <Box p={2}>
+          <Flex>
             {hasSession ? (
               <NavigationLink
                 href="/api/auth/signout"
@@ -58,7 +51,7 @@ export const Navigation: React.FunctionComponent<{
                 text="Sign in"
               />
             )}
-          </Box>
+          </Flex>
         </Flex>
         <Flex
           alignItems="center"
