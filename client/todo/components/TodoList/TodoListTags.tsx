@@ -13,13 +13,9 @@ export const TodoListTags: React.FunctionComponent<{
   onClickTag: (tag: TodoTagFragment) => void;
   tags: TodoTagFragment[];
 }> = ({ category, isCategoryNameShown, onClickCategory, onClickTag, tags }) => {
-  if (tags.length === 0) {
-    return null;
-  }
-
   return (
     <>
-      <ListBadges items={tags} onClick={onClickTag} />
+      {tags.length !== 0 && <ListBadges items={tags} onClick={onClickTag} />}
       {isCategoryNameShown && (
         <ListLabel item={category} onClick={onClickCategory} />
       )}
