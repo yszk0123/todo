@@ -20,7 +20,7 @@ export function EditFormChecklistField<T extends Displayable>({
   rightElement?: JSX.Element | null;
 }): JSX.Element {
   return (
-    <EditFormField label={label} rightElement={rightElement}>
+    <EditFormField htmlFor={id} label={label} rightElement={rightElement}>
       <Checklist
         checkedItems={checkedItems}
         id={id}

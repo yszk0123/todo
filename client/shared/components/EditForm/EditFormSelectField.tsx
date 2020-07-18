@@ -24,7 +24,7 @@ export function EditFormSelectField<T>({
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <Select
           getDisplayName={getDisplayName}

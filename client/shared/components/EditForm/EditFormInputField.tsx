@@ -19,7 +19,7 @@ export const EditFormInputField: React.FunctionComponent<{
   );
 
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <Input id={id} value={value} onChange={handleChange} />
       </Box>

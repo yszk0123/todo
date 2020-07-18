@@ -1,18 +1,18 @@
+import { Label } from '@rebass/forms';
 import React from 'react';
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex } from 'rebass';
 
 const LABEL_WIDTH = 100;
 
 export const EditFormField: React.FunctionComponent<{
-  id?: string;
+  htmlFor?: string;
   label?: string;
   rightElement?: JSX.Element | null;
-}> = ({ children, id, label, rightElement }) => {
+}> = ({ children, htmlFor, label, rightElement }) => {
   return (
     <Flex
       alignItems="center"
       flexWrap="wrap"
-      id={id}
       mb={1}
       pb={1}
       sx={{
@@ -21,9 +21,14 @@ export const EditFormField: React.FunctionComponent<{
       }}
     >
       {label !== undefined && (
-        <Text minWidth={LABEL_WIDTH} mr={2} textAlign="right">
+        <Label
+          htmlFor={htmlFor}
+          justifyContent="flex-end"
+          mr={2}
+          width={LABEL_WIDTH}
+        >
           {label}
-        </Text>
+        </Label>
       )}
       {children}
       {rightElement != null ? (

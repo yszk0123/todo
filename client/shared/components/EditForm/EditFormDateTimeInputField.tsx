@@ -38,7 +38,7 @@ export const EditFormDateTimeInputField: React.FunctionComponent<{
   const dateString = React.useMemo(() => convertIntoDateString(value), [value]);
 
   return (
-    <EditFormField label={label}>
+    <EditFormField htmlFor={id} label={label}>
       <Box sx={{ flexGrow: 1 }}>
         <Input
           id={id}
