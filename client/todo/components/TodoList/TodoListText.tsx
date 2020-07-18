@@ -3,6 +3,7 @@ import React from 'react';
 import Linkify from 'react-linkify';
 
 import { ListText } from '../../../shared/components/List';
+import { replaceURLSchemeWithChrome } from '../../../shared/helpers/replaceURLSchemeWithChrome';
 import { simplifyURL } from '../../../shared/view_helpers/simplifyURL';
 
 function linkifyComponentDecorator(
@@ -10,8 +11,9 @@ function linkifyComponentDecorator(
   decoratedText: string,
   key: number
 ): React.ReactNode {
+  const replacedHref = replaceURLSchemeWithChrome(decoratedHref);
   return (
-    <a href={decoratedHref} key={key} rel="noreferrer" target="_blank">
+    <a href={replacedHref} key={key} rel="noreferrer" target="_blank">
       {decoratedText}
     </a>
   );
