@@ -4,14 +4,15 @@ import { Flex } from 'rebass';
 export const Badge: React.FunctionComponent<{
   color?: string;
   icon?: JSX.Element;
+  isReverseColor?: boolean;
   onClick?: () => void;
   text: string;
-}> = ({ color = 'gray', icon, onClick, text }) => {
+}> = ({ color = 'gray', icon, isReverseColor = false, onClick, text }) => {
   return (
     <Flex
       alignItems="center"
       sx={{
-        color: 'white',
+        color: isReverseColor ? 'black' : 'white',
         bg: color,
         whiteSpace: 'nowrap',
         px: 2,

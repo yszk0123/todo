@@ -19,3 +19,7 @@ export function getColorCode(color: Color): string {
       return 'goldenrod';
   }
 }
+
+export function isLightColor(color: Color): boolean {
+  return color === Color.Yellow;
+}
