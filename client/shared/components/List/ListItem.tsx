@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Flex, Text } from 'rebass';
 
+import { Key } from '../../constants/KeyCode';
+
 export function ListItem<T>({
   isActive = false,
   item,
@@ -25,6 +27,16 @@ export function ListItem<T>({
     },
     [item, onClick]
   );
+  const handleSpace = React.useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.keyCode === Key.Space && onClick) {
+        event.stopPropagation();
+        event.preventDefault();
+        onClick(item);
+      }
+    },
+    [item, onClick]
+  );
 
   return (
     <Flex
@@ -38,8 +50,10 @@ export function ListItem<T>({
         borderColor: 'gray',
         ':last-child': { borderBottom: 'none' },
       }}
+      tabIndex={0}
       variant="listItem"
       onClick={handleClick}
+      onKeyDown={handleSpace}
     >
       {leftElement != null && (
         <Flex alignItems="center" flexShrink={0} mr={2}>

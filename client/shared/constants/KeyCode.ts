@@ -1,3 +1,7 @@
+export enum Key {
+  Space = 32,
+}
+
 export enum KeyCode {
   A = 'KeyA',
   B = 'KeyB',
