@@ -152,7 +152,11 @@ export class TodoUsecase {
     );
   }
 
-  updateCategory(todoIds: ID[], category: RootCategoryFragment) {
+  updateCategory(
+    todoIds: ID[],
+    category: RootCategoryFragment,
+    todoSearchQuery: TodoSearchQuery | null
+  ) {
     this.dispatch(todoEditFormDeselect());
 
     this.sync(() =>
@@ -164,6 +168,7 @@ export class TodoUsecase {
             categoryId: category.id,
           },
         },
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
       })
     );
   }

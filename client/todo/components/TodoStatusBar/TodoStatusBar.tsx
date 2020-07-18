@@ -15,6 +15,7 @@ import {
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
 import { TodoArchiveStatus } from '../../../view_models/Todo';
+import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
@@ -32,9 +33,11 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickEditCategory: (category: RootCategoryFragment | null) => void;
   onClickSearch: () => void;
   onClickSearchCategory: (category: RootCategoryFragment | null) => void;
+  onClickSearchStatus: (status: TodoStatus | null) => void;
   onClickUnarchive: () => void;
   selectMode: SelectMode;
   status: TodoStatus | null;
+  todoSearchQuery: TodoSearchQuery;
 }> = ({
   archiveStatus,
   categories,
@@ -47,23 +50,22 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickEditCategory,
   onClickSearch,
   onClickSearchCategory,
+  onClickSearchStatus,
   onClickUnarchive,
   selectMode,
   status,
+  todoSearchQuery,
 }) => {
   const selected = isSelected(selectMode);
+  const searchCategory = React.useMemo(
+    () => categories.find((c) => c.id === todoSearchQuery.categoryId) ?? null,
+    [categories, todoSearchQuery]
+  );
 
   return (
     <StatusBar>
       <StatusBarPrimaryRow isSelected={selected}>
         <StatusBarLeft>
-          <StatusBarItem>
-            <TodoStatusBarCategorySelect
-              categories={categories}
-              category={category}
-              onClickCategory={onClickSearchCategory}
-            />
-          </StatusBarItem>
           <StatusBarText text={`${count} todos`} />
           <StatusBarItem>
             <TodoStatusBarSyncStatus isSyncing={isSyncing} />
@@ -100,7 +102,7 @@ export const TodoStatusBar: React.FunctionComponent<{
           />
         </StatusBarRight>
       </StatusBarPrimaryRow>
-      {selected && (
+      {selected ? (
         <StatusBarSecondaryRow>
           <StatusBarItem>
             <TodoStatusBarStatusSelect
@@ -113,6 +115,22 @@ export const TodoStatusBar: React.FunctionComponent<{
               categories={categories}
               category={category}
               onClickCategory={onClickEditCategory}
+            />
+          </StatusBarItem>
+        </StatusBarSecondaryRow>
+      ) : (
+        <StatusBarSecondaryRow>
+          <StatusBarItem>
+            <TodoStatusBarStatusSelect
+              status={todoSearchQuery.status}
+              onChange={onClickSearchStatus}
+            />
+          </StatusBarItem>
+          <StatusBarItem>
+            <TodoStatusBarCategorySelect
+              categories={categories}
+              category={searchCategory}
+              onClickCategory={onClickSearchCategory}
             />
           </StatusBarItem>
         </StatusBarSecondaryRow>

@@ -190,6 +190,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [todoUsecase]
   );
 
+  const handleSearchByStatus = React.useCallback(
+    (status: TodoStatus | null) => {
+      todoUsecase.search({ status });
+    },
+    [todoUsecase]
+  );
+
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
     todoUsecase.createOneTodo(userId, todoEditFormState, todoSearchQuery);
@@ -223,10 +230,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleUpdateCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
       if (category !== null) {
-        todoUsecase.updateCategory(selectedTodoIds, category);
+        todoUsecase.updateCategory(selectedTodoIds, category, todoSearchQuery);
       }
     },
-    [selectedTodoIds, todoUsecase]
+    [selectedTodoIds, todoSearchQuery, todoUsecase]
   );
 
   const handleArchiveTodosById = React.useCallback(() => {
@@ -303,12 +310,14 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isSyncing={isSyncing}
         selectMode={selectMode}
         status={status}
+        todoSearchQuery={todoSearchQuery}
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
         onClickEdit={onOpenEdit}
         onClickEditCategory={handleUpdateCategory}
         onClickSearch={onOpenSearch}
         onClickSearchCategory={handleSearchByRootCategory}
+        onClickSearchStatus={handleSearchByStatus}
         onClickUnarchive={handleUnarchiveTodosById}
       />
       <TodoGroupedList
