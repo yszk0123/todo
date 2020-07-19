@@ -1,6 +1,6 @@
+import { EMPTY } from '../../shared/constants/EMPTY';
 import { toggle } from '../../shared/helpers/toggle';
 import {
-  createSelection,
   getSelectedIds,
   Selection,
   SelectionType,
@@ -107,7 +107,8 @@ export function todoSelectionSet(
 }
 
 export const todoSelectionInitialState: TodoSelectionState = {
-  type: SelectionType.NONE,
+  type: SelectionType.SELECT,
+  ids: EMPTY,
 };
 
 export function todoSelectionReducer(
@@ -116,7 +117,7 @@ export function todoSelectionReducer(
 ): TodoSelectionState {
   switch (action.type) {
     case TodoSelectionActionType.DESELECT: {
-      return { type: SelectionType.NONE };
+      return { type: SelectionType.SELECT, ids: EMPTY };
     }
     case TodoSelectionActionType.SET: {
       return action.payload.state;
@@ -142,7 +143,7 @@ export function todoSelectionReducer(
       const todoIds = todos
         .filter((todo) => todo.tags.includes(tag))
         .map((todo) => todo.id);
-      return createSelection(todoIds);
+      return { type: SelectionType.SELECT, ids: todoIds };
     }
     case TodoSelectionActionType.SELECT_BY_CATEGORY: {
       const { category, todos } = action.payload;
@@ -150,7 +151,7 @@ export function todoSelectionReducer(
       const todoIds = todos
         .filter((todo) => todo.category === category)
         .map((todo) => todo.id);
-      return createSelection(todoIds);
+      return { type: SelectionType.SELECT, ids: todoIds };
     }
     default: {
       return state;

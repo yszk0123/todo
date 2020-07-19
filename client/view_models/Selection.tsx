@@ -3,12 +3,10 @@ import { ID } from './ID';
 
 export enum SelectionType {
   EXPAND = 'EXPAND',
-  NONE = 'NONE',
   SELECT = 'SELECT',
 }
 
 export type Selection =
-  | { type: SelectionType.NONE }
   | {
       id: ID;
       type: SelectionType.EXPAND;
@@ -34,10 +32,4 @@ export function isSelectedSome(selection: Selection): boolean {
 
 export function isExpanded(selection: Selection, todoId: ID): boolean {
   return selection.type === SelectionType.EXPAND && selection.id === todoId;
-}
-
-export function createSelection(newIds: ID[]): Selection {
-  return newIds.length === 0
-    ? { type: SelectionType.NONE }
-    : { type: SelectionType.SELECT, ids: newIds };
 }

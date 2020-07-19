@@ -20,10 +20,17 @@ export function getSelectMode<T>(items: T[]): SelectMode {
 }
 
 export function getSelectModeFromSelection(selection: Selection): SelectMode {
-  return selection.type === SelectionType.NONE ||
-    selection.type === SelectionType.EXPAND
-    ? SelectMode.NONE
-    : selection.ids.length === 1
-    ? SelectMode.SINGLE
-    : SelectMode.MULTI;
+  switch (selection.type) {
+    case SelectionType.EXPAND: {
+      return SelectMode.NONE;
+    }
+    case SelectionType.SELECT: {
+      const count = selection.ids.length;
+      return count === 0
+        ? SelectMode.NONE
+        : count === 1
+        ? SelectMode.SINGLE
+        : SelectMode.MULTI;
+    }
+  }
 }
