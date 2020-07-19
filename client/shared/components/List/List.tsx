@@ -46,7 +46,7 @@ export const List: React.FunctionComponent<Props> = ({
               : 'flex-end'
           }
           sx={{
-            position: 'absolute',
+            position: 'relative',
             top: -2,
             cursor: onClickHeader ? 'pointer' : undefined,
           }}
