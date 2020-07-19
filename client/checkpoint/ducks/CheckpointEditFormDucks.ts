@@ -1,3 +1,4 @@
+import { DateTime } from '../../view_models/DateTime';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 import {
@@ -23,7 +24,11 @@ export type CheckpointEditFormAction =
       type: CheckpointEditFormActionType.SET;
     }
   | {
-      payload: { checkpoints: RootCheckpointFragment[]; selection: Selection };
+      payload: {
+        checkpoints: RootCheckpointFragment[];
+        now: DateTime;
+        selection: Selection;
+      };
       type: CheckpointEditFormActionType.OPEN;
     };
 
@@ -35,11 +40,12 @@ export function checkpointEditFormReset(): CheckpointEditFormAction {
 
 export function checkpointEditFormOpen(
   checkpoints: RootCheckpointFragment[],
-  selection: Selection
+  selection: Selection,
+  now: DateTime
 ): CheckpointEditFormAction {
   return {
     type: CheckpointEditFormActionType.OPEN,
-    payload: { checkpoints, selection },
+    payload: { checkpoints, selection, now },
   };
 }
 
@@ -72,18 +78,24 @@ export function checkpointEditFormReducer(
       };
     }
     case CheckpointEditFormActionType.OPEN: {
-      const { checkpoints, selection } = action.payload;
+      const { checkpoints, now, selection } = action.payload;
 
       const selectedTodoIds = getSelectedIds(selection);
-      if (selectedTodoIds.length === 1) {
+      const count = selectedTodoIds.length;
+      if (count === 1) {
         const todoId = selectedTodoIds[0];
         const todo = checkpoints.find((todo) => todo.id === todoId);
         return todo
           ? getCheckpointEditFormValues(todo)
           : checkpointEditFormInitialState;
-      } else {
-        return checkpointEditFormInitialState;
       }
+      if (count === 0) {
+        return {
+          ...checkpointEditFormInitialState,
+          endAt: now,
+        };
+      }
+      return checkpointEditFormInitialState;
     }
     default: {
       return state;

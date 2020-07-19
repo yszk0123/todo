@@ -9,7 +9,7 @@ import {
   Shortcut,
   useGlobalShortcut,
 } from '../../shared/hooks/useGlobalShortcut';
-import { DateTime } from '../../view_models/DateTime';
+import { DateTime, toDateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { CheckpointEditForm } from '../components/CheckpointEditForm';
@@ -155,7 +155,8 @@ function useModalType(
   }, []);
 
   const onOpenEdit = React.useCallback(() => {
-    dispatch(checkpointEditFormOpen(checkpoints, checkpointSelection));
+    const now = toDateTime(new Date());
+    dispatch(checkpointEditFormOpen(checkpoints, checkpointSelection, now));
     setModalType(ModalType.EDIT);
   }, [checkpointSelection, checkpoints, dispatch]);
 
