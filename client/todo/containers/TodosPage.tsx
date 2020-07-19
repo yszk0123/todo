@@ -16,7 +16,7 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
-import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
+import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';

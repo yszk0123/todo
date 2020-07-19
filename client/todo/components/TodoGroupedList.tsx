@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
+import { Selection } from '../../view_models/Selection';
 import { groupTodoByCheckpoint } from '../../view_models/Todo';
-import { Selection } from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,

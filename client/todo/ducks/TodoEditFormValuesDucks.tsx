@@ -1,6 +1,6 @@
 import { EMPTY } from '../../shared/constants/EMPTY';
 import { toggleWith } from '../../shared/helpers/toggle';
-import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
+import { getSelectedIds, Selection } from '../../view_models/Selection';
 import {
   RootTodoFragment,
   TodoTagFragment,

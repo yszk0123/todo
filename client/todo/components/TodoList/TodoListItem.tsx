@@ -7,7 +7,7 @@ import {
   isSelected,
   isSelectedSome,
   Selection,
-} from '../../../view_models/TodoSelection';
+} from '../../../view_models/Selection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,

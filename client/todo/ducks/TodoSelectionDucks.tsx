@@ -5,7 +5,7 @@ import {
   getSelectedIds,
   Selection,
   SelectionType,
-} from '../../view_models/TodoSelection';
+} from '../../view_models/Selection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,

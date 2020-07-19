@@ -8,9 +8,9 @@ import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.g
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
+import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { getSelectModeFromSelection } from '../../view_models/SelectMode';
 import { getArchiveStatus } from '../../view_models/Todo';
-import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodosPageQueryVariables,

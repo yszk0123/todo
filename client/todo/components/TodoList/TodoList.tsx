@@ -4,8 +4,8 @@ import { List } from '../../../shared/components/List';
 import { Note } from '../../../shared/components/Note';
 import { RelativeDateTimeText } from '../../../shared/components/RelativeDateTimeText';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { Selection } from '../../../view_models/Selection';
 import { isPast, TodoGroup } from '../../../view_models/Todo';
-import { Selection } from '../../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,

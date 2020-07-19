@@ -1,4 +1,4 @@
-import { Selection, SelectionType } from './TodoSelection';
+import { Selection, SelectionType } from './Selection';
 
 export enum SelectMode {
   NONE,
