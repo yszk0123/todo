@@ -13,7 +13,7 @@ import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
-import { todoEditFormValuesSet } from '../ducks/TodoEditFormValuesDucks';
+import { todoEditFormSet } from '../ducks/TodoEditFormDucks';
 import { todoSelectionDeselect } from '../ducks/TodoSelectionDucks';
 import {
   CreateOneTodoDocument,
@@ -65,7 +65,7 @@ export class TodoUsecase {
     const checkpointIdToCreate =
       checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
 
-    this.dispatch(todoEditFormValuesSet({ text: '' }));
+    this.dispatch(todoEditFormSet({ text: '' }));
 
     await this.client.mutate<unknown, CreateOneTodoMutationVariables>({
       mutation: CreateOneTodoDocument,

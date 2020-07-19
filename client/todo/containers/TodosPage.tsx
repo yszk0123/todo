@@ -22,10 +22,10 @@ import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
-  todoEditFormValuesOpen,
-  todoEditFormValuesSet,
-  todoEditFormValuesToggleTag,
-} from '../ducks/TodoEditFormValuesDucks';
+  todoEditFormOpen,
+  todoEditFormSet,
+  todoEditFormToggleTag,
+} from '../ducks/TodoEditFormDucks';
 import {
   todoSearchFormReset,
   todoSearchFormSet,
@@ -85,14 +85,14 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleToggleTag = React.useCallback(
     (tag: TodoTagFragment) => {
-      dispatch(todoEditFormValuesToggleTag(tag));
+      dispatch(todoEditFormToggleTag(tag));
     },
     [dispatch]
   );
 
   const handleSetText = React.useCallback(
     (text: string) => {
-      dispatch(todoEditFormValuesSet({ text }));
+      dispatch(todoEditFormSet({ text }));
     },
     [dispatch]
   );
@@ -110,21 +110,21 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSetStatus = React.useCallback(
     (status: TodoStatus | null) => {
-      dispatch(todoEditFormValuesSet({ status }));
+      dispatch(todoEditFormSet({ status }));
     },
     [dispatch]
   );
 
   const handleSetCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      dispatch(todoEditFormValuesSet({ checkpoint }));
+      dispatch(todoEditFormSet({ checkpoint }));
     },
     [dispatch]
   );
 
   const handleSetCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
-      dispatch(todoEditFormValuesSet({ category }));
+      dispatch(todoEditFormSet({ category }));
     },
     [dispatch]
   );
@@ -405,7 +405,7 @@ function useModalType(todos: RootTodoFragment[], todoSelection: Selection) {
   }, []);
 
   const onOpenEdit = React.useCallback(() => {
-    dispatch(todoEditFormValuesOpen(todos, todoSelection));
+    dispatch(todoEditFormOpen(todos, todoSelection));
     setModalType(ModalType.EDIT);
   }, [dispatch, todoSelection, todos]);
 

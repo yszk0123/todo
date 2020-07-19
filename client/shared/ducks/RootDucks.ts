@@ -13,9 +13,9 @@ import {
   TagEditFormState,
 } from '../../tag/ducks/TagEditFormDucks';
 import {
-  todoEditFormValuesReducer,
-  TodoEditFormValuesState,
-} from '../../todo/ducks/TodoEditFormValuesDucks';
+  todoEditFormReducer,
+  TodoEditFormState,
+} from '../../todo/ducks/TodoEditFormDucks';
 import {
   todoSearchFormReducer,
   TodoSearchFormState,
@@ -29,7 +29,7 @@ export type RootState = {
   categoryEditForm: CategoryEditFormState;
   checkpointEditForm: CheckpointEditFormState;
   tagEditForm: TagEditFormState;
-  todoEditFormValues: TodoEditFormValuesState;
+  todoEditFormValues: TodoEditFormState;
   todoSearchForm: TodoSearchFormState;
   todoSelection: TodoSelectionState;
 };
@@ -38,7 +38,7 @@ export const rootReducer = combineReducers<RootState>({
   checkpointEditForm: checkpointEditFormReducer,
   categoryEditForm: categoryEditFormReducer,
   tagEditForm: tagEditFormReducer,
-  todoEditFormValues: todoEditFormValuesReducer,
+  todoEditFormValues: todoEditFormReducer,
   todoSelection: todoSelectionReducer,
   todoSearchForm: todoSearchFormReducer,
 });
