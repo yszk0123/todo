@@ -7,7 +7,6 @@ import {
   StatusBarButton,
   StatusBarItem,
   StatusBarLeft,
-  StatusBarLink,
   StatusBarPrimaryRow,
   StatusBarRight,
   StatusBarSecondaryRow,
@@ -77,13 +76,6 @@ export const TodoStatusBar: React.FunctionComponent<{
           </StatusBarItem>
         </StatusBarLeft>
         <StatusBarRight>
-          {!!category && (
-            <StatusBarLink
-              as={`/categories/${category.id}/todos/report`}
-              href="/categories/[categoryId]/todos/report"
-              text="See report"
-            />
-          )}
           {selected && (
             <TodoStatusBarArchiveButton
               archiveStatus={archiveStatus}
