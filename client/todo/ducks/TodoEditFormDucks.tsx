@@ -191,10 +191,10 @@ export function todoEditFormReducer(
       };
       const count = newSelection.ids.length;
       if (count === 1) {
-        const newFields = getTodoEditFormFields(todo);
+        const newValues = getTodoEditFormValues(todo);
         return {
           ...state,
-          ...newFields,
+          ...newValues,
           selection: newSelection,
         };
       } else {
@@ -259,10 +259,10 @@ function selectTodos(
 
   if (count === 1) {
     const todo = newSelectedTodos[0];
-    const newFields = getTodoEditFormFields(todo);
+    const newValues = getTodoEditFormValues(todo);
     return {
       ...state,
-      ...newFields,
+      ...newValues,
       selection: newSelection,
     };
   } else {
@@ -273,7 +273,7 @@ function selectTodos(
   }
 }
 
-function getTodoEditFormFields(
+function getTodoEditFormValues(
   todo: RootTodoFragment
 ): Pick<
   TodoEditFormState,
