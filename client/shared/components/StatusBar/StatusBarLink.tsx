@@ -1,11 +1,12 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
+import { URL } from '../../view_models/URL';
 import { Link } from '../Link';
 
 export const StatusBarLink: React.FunctionComponent<{
   as: string;
-  href: string;
+  href: URL;
   text: string;
 }> = ({ as, href, text }) => {
   return (

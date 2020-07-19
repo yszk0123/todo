@@ -1,11 +1,12 @@
 import React from 'react';
 import { Flex } from 'rebass';
 
+import { URL } from '../../view_models/URL';
 import { Link } from '../Link';
 
 type Props = {
   as: string;
-  href: string;
+  href: URL;
   icon: JSX.Element;
 };
 
