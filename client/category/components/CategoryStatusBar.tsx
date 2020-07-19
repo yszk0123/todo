@@ -14,9 +14,10 @@ import { CategoryIcon } from './CategoryIcon';
 
 export const CategoryStatusBar: React.FunctionComponent<{
   count: number;
+  onClickArchive: () => void;
   onClickEdit: () => void;
   selectMode: SelectMode;
-}> = ({ count, onClickEdit, selectMode }) => {
+}> = ({ count, onClickArchive, onClickEdit, selectMode }) => {
   const selected = isSelected(selectMode);
 
   return (
@@ -29,6 +30,13 @@ export const CategoryStatusBar: React.FunctionComponent<{
           </StatusBarItem>
         </StatusBarLeft>
         <StatusBarRight>
+          {selected && (
+            <StatusBarButton
+              isSelected={selected}
+              label="Archive"
+              onClick={onClickArchive}
+            />
+          )}
           <StatusBarButton
             isPrimary
             isSelected={selected}

@@ -1,5 +1,6 @@
 import { ApolloClient } from '@apollo/client';
 
+import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
 import {
   CategoryEditFormAction,
@@ -82,7 +83,9 @@ export class CategoryUsecase {
   }
 
   async archiveOneCategory(categoryIds: ID[]) {
-    if (categoryIds.length !== 1) return;
+    const count = categoryIds.length;
+    if (count !== 1) return;
+    if (!confirm(`Archive ${count} items?`)) return;
     const categoryId = categoryIds[0];
 
     await this.client.mutate<unknown, UpdateOneCategoryMutationVariables>({
@@ -92,8 +95,7 @@ export class CategoryUsecase {
           id: categoryId,
         },
         data: {
-          // FIXME: Implement
-          // archivedAt: toDateTime(new Date()),
+          archivedAt: toDateTime(new Date()),
         },
       },
       refetchQueries: [refetchGetCategoriesQuery()],

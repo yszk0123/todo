@@ -63,12 +63,11 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     categoryUsecase.updateOneCategory(categoryEditFormState);
   }, [categoryUsecase, categoryEditFormState]);
 
-  // FIXME: Implement
-  // const handleArchiveOneCategory = React.useCallback(() => {
-  //   categoryUsecase.archiveOneCategory(
-  //     categoryEditFormState.selectedCategoryIds
-  //   );
-  // }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
+  const handleArchiveOneCategory = React.useCallback(() => {
+    categoryUsecase.archiveOneCategory(
+      categoryEditFormState.selectedCategoryIds
+    );
+  }, [categoryUsecase, categoryEditFormState.selectedCategoryIds]);
 
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectCategory : onCloseModal;
@@ -83,6 +82,7 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
       <CategoryStatusBar
         count={categories.length}
         selectMode={selectMode}
+        onClickArchive={handleArchiveOneCategory}
         onClickEdit={onOpenEdit}
       />
       <CategoryList
