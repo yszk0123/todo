@@ -38,7 +38,9 @@ export function useTodosPageState() {
     () => parseTodoSearchRawQuery(router.query),
     [router.query]
   );
-  const todoSearchFormState = useTypedSelector((state) => state.todoSearchForm);
+  const todoSearchFormValues = useTypedSelector(
+    (state) => state.todoSearchForm
+  );
   const variables = React.useMemo(() => getQueryVariables(todoSearchQuery), [
     todoSearchQuery,
   ]);
@@ -93,7 +95,7 @@ export function useTodosPageState() {
     todoSelection,
     todos: data?.todos ?? EMPTY,
     userId: data?.me?.id ?? null,
-    todoSearchFormState,
+    todoSearchFormValues,
     todoSearchQuery,
     selectMode: getSelectModeFromSelection(todoSelection),
   };

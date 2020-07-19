@@ -16,7 +16,7 @@ export type TodoSearchFormAction =
       type: TodoSearchFormActionType.RESET;
     }
   | {
-      payload: { state: Partial<TodoSearchFormState> };
+      payload: { state: Partial<TodoSearchFormValues> };
       type: TodoSearchFormActionType.SET;
     }
   | {
@@ -40,7 +40,7 @@ export function todoSearchFormToggleTag(
 }
 
 export function todoSearchFormSet(
-  state: Partial<TodoSearchFormState>
+  state: Partial<TodoSearchFormValues>
 ): TodoSearchFormAction {
   return {
     type: TodoSearchFormActionType.SET,

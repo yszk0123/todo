@@ -9,8 +9,8 @@ import {
 import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { DateTime } from '../../../view_models/DateTime';
-import { TodoSearchFormState } from '../../ducks/TodoSearchFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
+import { TodoSearchFormValues } from '../../view_models/TodoSearchFormValues';
 import { TodoSearchFormArchivedAtField } from './TodoSearchFormArchivedAtField';
 import { TodoSearchFormCheckpointField } from './TodoSearchFormCheckpointField';
 import { TodoSearchFormStatusField } from './TodoSearchFormStatusField';
@@ -29,7 +29,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
-  todoSearchFormState: TodoSearchFormState;
+  todoSearchFormValues: TodoSearchFormValues;
 }> = ({
   categoryTags,
   checkpoints,
@@ -42,7 +42,7 @@ export const TodoSearchForm: React.FunctionComponent<{
   onSelectCheckpoint,
   onSelectStatus,
   onToggleTag,
-  todoSearchFormState,
+  todoSearchFormValues,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Reset', onClick: onReset },
@@ -57,25 +57,25 @@ export const TodoSearchForm: React.FunctionComponent<{
     >
       <EditForm>
         <TodoSearchFormCheckpointField
-          checkpoint={todoSearchFormState.checkpoint}
+          checkpoint={todoSearchFormValues.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
         />
         <TodoSearchFormTagsField
           categoryTags={categoryTags}
-          tags={todoSearchFormState.tags}
+          tags={todoSearchFormValues.tags}
           onToggleTag={onToggleTag}
         />
         <TodoSearchFormStatusField
-          status={todoSearchFormState.status}
+          status={todoSearchFormValues.status}
           onSelectStatus={onSelectStatus}
         />
         <TodoSearchFormArchivedAtField
-          value={todoSearchFormState.archivedAt}
+          value={todoSearchFormValues.archivedAt}
           onChange={onChangeArchivedAt}
         />
         <TodoSearchFormTextField
-          text={todoSearchFormState.text}
+          text={todoSearchFormValues.text}
           onChangeText={onChangeText}
         />
         <EditFormActionsField actions={actions} />

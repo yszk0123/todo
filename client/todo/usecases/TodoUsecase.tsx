@@ -13,7 +13,6 @@ import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { todoEditFormValuesSet } from '../ducks/TodoEditFormValuesDucks';
-import { TodoSearchFormState } from '../ducks/TodoSearchFormDucks';
 import { todoSelectionDeselect } from '../ducks/TodoSelectionDucks';
 import {
   CreateOneTodoDocument,
@@ -25,8 +24,9 @@ import {
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
 import { TodoEditFormValues } from '../view_models/TodoEditFormValues';
+import { TodoSearchFormValues } from '../view_models/TodoSearchFormValues';
 import {
-  fromTodoSearchFormState,
+  fromTodoSearchFormValues,
   TodoSearchQuery,
 } from '../view_models/TodoSearchQuery';
 import { getTodoWhereInput } from '../view_models/TodoWhereInput';
@@ -43,8 +43,8 @@ export class TodoUsecase {
     private dispatch: Dispatch
   ) {}
 
-  search(todoSearchFormState: Partial<TodoSearchFormState>) {
-    const query = fromTodoSearchFormState(todoSearchFormState);
+  search(todoSearchFormValues: Partial<TodoSearchFormValues>) {
+    const query = fromTodoSearchFormValues(todoSearchFormValues);
     Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
   }
 
