@@ -42,7 +42,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
 
   return (
     <Modal
-      initialFocusSelector="#checkpoint-edit-name"
+      initialFocusSelector="#checkpoint-edit-end-at"
       isOpen={isOpen}
       onClose={onCloseModal}
     >
