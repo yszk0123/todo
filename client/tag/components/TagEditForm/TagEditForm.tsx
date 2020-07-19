@@ -1,20 +1,20 @@
 import React from 'react';
 
-import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
-import { ColorBox } from '../../shared/components/ColorBox';
+import { RootCategoryFragment } from '../../../category/graphql/__generated__/Category.graphql';
+import { ColorBox } from '../../../shared/components/ColorBox';
 import {
   EditForm,
   EditFormAction,
   EditFormActionsField,
-  EditFormChecklistField,
   EditFormInputField,
   EditFormSelectField,
-} from '../../shared/components/EditForm';
-import { Modal } from '../../shared/components/Modal';
-import { Color } from '../../shared/graphql/__generated__/baseTypes';
-import { identity } from '../../shared/helpers/identity';
-import { isSelected, SelectMode } from '../../view_models/SelectMode';
-import { TagEditFormState } from '../ducks/TagEditFormDucks';
+} from '../../../shared/components/EditForm';
+import { Modal } from '../../../shared/components/Modal';
+import { Color } from '../../../shared/graphql/__generated__/baseTypes';
+import { identity } from '../../../shared/helpers/identity';
+import { isSelected, SelectMode } from '../../../view_models/SelectMode';
+import { TagEditFormState } from '../../ducks/TagEditFormDucks';
+import { TagEditFormCategoriesField } from './TagEditFormCategoriesField';
 
 const colors = Object.values(Color);
 
@@ -62,12 +62,10 @@ export const TagEditForm: React.FunctionComponent<{
       onClose={onCloseModal}
     >
       <EditForm>
-        <EditFormChecklistField
-          checkedItems={tagCategories}
-          id="tag-edit-categories"
-          items={categories}
-          label="Categories"
-          onClick={onToggleCategory}
+        <TagEditFormCategoriesField
+          categories={categories}
+          selectedCategories={tagCategories}
+          onToggle={onToggleCategory}
         />
         <EditFormInputField
           id="tag-edit-name"
