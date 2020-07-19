@@ -15,7 +15,7 @@ export function parseDateTime(dateTime: DateTime): Date {
   return new Date(dateTime);
 }
 
-export function parseDateTimeOptional(dateTime?: DateTime): Date | null {
+export function parseDateTimeOptional(dateTime?: DateTime | null): Date | null {
   if (dateTime == null) {
     return null;
   }
