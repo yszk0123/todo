@@ -6,3 +6,4 @@ export { ListCheckbox } from './ListCheckbox';
 export { ListIconCheckbox } from './ListIconCheckbox';
 export { ListBadges } from './ListBadges';
 export { ListLabel } from './ListLabel';
+export { ListIconLink } from './ListIconLink';
