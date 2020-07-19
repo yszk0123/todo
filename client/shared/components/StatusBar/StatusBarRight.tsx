@@ -8,12 +8,7 @@ export const StatusBarRight: React.FunctionComponent<EmptyProps> = ({
   children,
 }) => {
   return (
-    <Flex
-      alignItems="center"
-      flexGrow={1}
-      flexShrink={0}
-      justifyContent="flex-end"
-    >
+    <Flex alignItems="center" flexGrow={1} justifyContent="flex-end">
       <MiniList>{children}</MiniList>
     </Flex>
   );

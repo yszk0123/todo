@@ -10,6 +10,7 @@ export const StatusBarSecondaryRow: React.FunctionComponent<EmptyProps> = ({
     <Flex
       bg="background"
       color="gray"
+      flexWrap="wrap"
       fontSize={2}
       justifyContent="space-between"
       p={2}

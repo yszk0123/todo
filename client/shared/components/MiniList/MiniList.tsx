@@ -7,7 +7,7 @@ type Props = {
 
 export const MiniList: React.FunctionComponent<Props> = ({ children, id }) => {
   return (
-    <Flex alignItems="center" id={id}>
+    <Flex alignItems="center" flexWrap="wrap" id={id}>
       {children}
     </Flex>
   );
