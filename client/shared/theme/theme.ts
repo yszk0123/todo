@@ -3,6 +3,7 @@
 export const THEME = {
   colors: {
     text: '#080818',
+    secondaryText: '#888',
     background: '#fff',
     primary: '#07c',
     secondary: '#30c',
