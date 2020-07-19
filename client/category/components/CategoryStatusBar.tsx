@@ -32,7 +32,7 @@ export const CategoryStatusBar: React.FunctionComponent<{
           <StatusBarButton
             isPrimary
             isSelected={selected}
-            label="Edit"
+            label={selected ? 'Edit' : 'Create'}
             onClick={onClickEdit}
           />
         </StatusBarRight>
