@@ -4,6 +4,7 @@ import { ListItem, ListText } from '../../shared/components/List';
 import { RelativeDateTimeText } from '../../shared/components/RelativeDateTimeText';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 import { CheckpointListIcon } from './CheckpointListIcon';
+import { CheckpointListLink } from './CheckpointListLink';
 
 export const CheckpointListItem: React.FunctionComponent<{
   checkpoint: RootCheckpointFragment;
@@ -41,6 +42,7 @@ export const CheckpointListItem: React.FunctionComponent<{
           {checkpoint.name ?? ''}
         </ListText>
       }
+      rightElement={<CheckpointListLink checkpoint={checkpoint} />}
       onClick={onClick}
     />
   );
