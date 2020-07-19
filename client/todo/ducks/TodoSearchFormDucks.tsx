@@ -1,19 +1,9 @@
-import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
-import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { EMPTY } from '../../shared/constants/EMPTY';
-import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { toggleWith } from '../../shared/helpers/toggle';
-import { DateTime } from '../../view_models/DateTime';
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
+import { TodoSearchFormValues } from '../view_models/TodoSearchFormValues';
 
-export type TodoSearchFormState = {
-  archivedAt: DateTime | null;
-  category: RootCategoryFragment | null;
-  checkpoint: RootCheckpointFragment | null;
-  status: TodoStatus | null;
-  tags: TodoTagFragment[] | null;
-  text: string;
-};
+export type TodoSearchFormState = TodoSearchFormValues;
 
 enum TodoSearchFormActionType {
   RESET = 'todoSearchForm/RESET',
