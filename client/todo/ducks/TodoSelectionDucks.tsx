@@ -17,7 +17,6 @@ enum TodoSelectionActionType {
   DESELECT = 'todoSelection/DESELECT',
   EXPAND = 'todoSelection/EXPAND',
   RESET = 'todoSelection/RESET',
-  SELECT = 'todoSelection/SELECT',
   SELECT_BY_CATEGORY = 'todoSelection/SELECT_BY_CATEGORY',
   SELECT_BY_TAG = 'todoSelection/SELECT_BY_TAG',
   SELECT_MANY = 'todoSelection/SELECT_MANY',
@@ -35,10 +34,6 @@ export type TodoSelectionAction =
   | {
       payload: { state: TodoSelectionState };
       type: TodoSelectionActionType.SET;
-    }
-  | {
-      payload: { todo: RootTodoFragment };
-      type: TodoSelectionActionType.SELECT;
     }
   | {
       payload: { todo: RootTodoFragment };
