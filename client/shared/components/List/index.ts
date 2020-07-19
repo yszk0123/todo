@@ -7,3 +7,4 @@ export { ListIconCheckbox } from './ListIconCheckbox';
 export { ListBadges } from './ListBadges';
 export { ListLabel } from './ListLabel';
 export { ListIconLink } from './ListIconLink';
+export { ListTextExternalLink } from './ListTextExternalLink';

@@ -2,7 +2,10 @@ import React from 'react';
 // @ts-ignore
 import Linkify from 'react-linkify';
 
-import { ListText } from '../../../shared/components/List';
+import {
+  ListText,
+  ListTextExternalLink,
+} from '../../../shared/components/List';
 import { replaceURLSchemeWithChrome } from '../../../shared/helpers/replaceURLSchemeWithChrome';
 import { simplifyURL } from '../../../shared/view_helpers/simplifyURL';
 
@@ -13,9 +16,9 @@ function linkifyComponentDecorator(
 ): React.ReactNode {
   const replacedHref = replaceURLSchemeWithChrome(decoratedHref);
   return (
-    <a href={replacedHref} key={key} rel="noreferrer" target="_blank">
+    <ListTextExternalLink href={replacedHref} key={key}>
       {decoratedText}
-    </a>
+    </ListTextExternalLink>
   );
 }
 
