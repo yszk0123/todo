@@ -27,9 +27,6 @@ enum TodoSelectionActionType {
 
 export type TodoSelectionAction =
   | {
-      type: TodoSelectionActionType.RESET;
-    }
-  | {
       type: TodoSelectionActionType.DESELECT;
     }
   | {
@@ -56,12 +53,6 @@ export type TodoSelectionAction =
       payload: { category: TodoCategoryFragment; todos: RootTodoFragment[] };
       type: TodoSelectionActionType.SELECT_BY_CATEGORY;
     };
-
-export function todoSelectionReset(): TodoSelectionAction {
-  return {
-    type: TodoSelectionActionType.RESET,
-  };
-}
 
 export function todoSelectionDeselect(): TodoSelectionAction {
   return {
@@ -125,9 +116,6 @@ export function todoSelectionReducer(
   action: TodoSelectionAction
 ): TodoSelectionState {
   switch (action.type) {
-    case TodoSelectionActionType.RESET: {
-      return todoSelectionInitialState;
-    }
     case TodoSelectionActionType.DESELECT: {
       return { type: SelectionType.NONE };
     }

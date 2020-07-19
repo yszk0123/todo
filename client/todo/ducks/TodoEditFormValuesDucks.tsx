@@ -1,10 +1,6 @@
 import { EMPTY } from '../../shared/constants/EMPTY';
-import { toggle, toggleWith } from '../../shared/helpers/toggle';
-import {
-  getSelectedIds,
-  Selection,
-  SelectionType,
-} from '../../view_models/TodoSelection';
+import { toggleWith } from '../../shared/helpers/toggle';
+import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoTagFragment,
@@ -32,7 +28,7 @@ export type TodoEditFormValuesAction =
       type: TodoEditFormValuesActionType.SET;
     }
   | {
-      payload: { selection: Selection; todo: RootTodoFragment };
+      payload: { selection: Selection; todos: RootTodoFragment[] };
       type: TodoEditFormValuesActionType.OPEN;
     }
   | {
@@ -47,12 +43,12 @@ export function todoEditFormValuesReset(): TodoEditFormValuesAction {
 }
 
 export function todoEditFormValuesOpen(
-  todo: RootTodoFragment,
+  todos: RootTodoFragment[],
   selection: Selection
 ): TodoEditFormValuesAction {
   return {
     type: TodoEditFormValuesActionType.OPEN,
-    payload: { todo, selection },
+    payload: { todos, selection },
   };
 }
 
@@ -62,6 +58,15 @@ export function todoEditFormValuesSet(
   return {
     type: TodoEditFormValuesActionType.SET,
     payload: { state },
+  };
+}
+
+export function todoEditFormValuesToggleTag(
+  tag: TodoTagFragment
+): TodoEditFormValuesAction {
+  return {
+    type: TodoEditFormValuesActionType.TOGGLE_TAG,
+    payload: { tag },
   };
 }
 
@@ -88,16 +93,15 @@ export function todoEditFormValuesReducer(
       };
     }
     case TodoEditFormValuesActionType.OPEN: {
-      const { selection, todo } = action.payload;
+      const { selection, todos } = action.payload;
 
       const selectedTodoIds = getSelectedIds(selection);
-      const newSelection: Selection = {
-        type: SelectionType.SELECT,
-        ids: toggle(selectedTodoIds, todo.id),
-      };
-      const count = newSelection.ids.length;
-      if (count === 1) {
-        return getTodoEditFormValues(todo);
+      if (selectedTodoIds.length === 1) {
+        const todoId = selectedTodoIds[0];
+        const todo = todos.find((todo) => todo.id === todoId);
+        return todo
+          ? getTodoEditFormValues(todo)
+          : todoEditFormValuesInitialState;
       } else {
         return todoEditFormValuesInitialState;
       }

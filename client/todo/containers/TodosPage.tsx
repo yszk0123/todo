@@ -16,23 +16,26 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
-import { getSelectedIds } from '../../view_models/TodoSelection';
+import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
 import {
-  todoEditFormExpandTodo,
-  todoEditFormReset,
-  todoEditFormSelectMany,
-  todoEditFormSet,
-  todoEditFormToggleTag,
-} from '../ducks/TodoEditFormDucks';
+  todoEditFormValuesOpen,
+  todoEditFormValuesSet,
+  todoEditFormValuesToggleTag,
+} from '../ducks/TodoEditFormValuesDucks';
 import {
   todoSearchFormReset,
   todoSearchFormSet,
   todoSearchFormToggleTag,
 } from '../ducks/TodoSearchFormDucks';
+import {
+  todoSelectionDeselect,
+  todoSelectionExpandTodo,
+  todoSelectionSelectMany,
+} from '../ducks/TodoSelectionDucks';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -56,36 +59,40 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     now,
     selectMode,
     status,
-    todoEditFormState,
+    todoEditFormValues,
     todoSearchFormState,
     todoSearchQuery,
+    todoSelection,
     todos,
     userId,
   } = useTodosPageState();
-  const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
-  const selectedTodoIds = getSelectedIds(todoEditFormState.selection);
+  const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType(
+    todos,
+    todoSelection
+  );
+  const selectedTodoIds = getSelectedIds(todoSelection);
 
   const handleSelectManyTodo = React.useCallback(
     (todo: RootTodoFragment) => {
-      dispatch(todoEditFormSelectMany(todo));
+      dispatch(todoSelectionSelectMany(todo));
     },
     [dispatch]
   );
 
   const handleDeselectTodo = React.useCallback(() => {
-    dispatch(todoEditFormReset());
+    dispatch(todoSelectionDeselect());
   }, [dispatch]);
 
   const handleToggleTag = React.useCallback(
     (tag: TodoTagFragment) => {
-      dispatch(todoEditFormToggleTag(tag));
+      dispatch(todoEditFormValuesToggleTag(tag));
     },
     [dispatch]
   );
 
   const handleSetText = React.useCallback(
     (text: string) => {
-      dispatch(todoEditFormSet({ text }));
+      dispatch(todoEditFormValuesSet({ text }));
     },
     [dispatch]
   );
@@ -103,21 +110,21 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSetStatus = React.useCallback(
     (status: TodoStatus | null) => {
-      dispatch(todoEditFormSet({ status }));
+      dispatch(todoEditFormValuesSet({ status }));
     },
     [dispatch]
   );
 
   const handleSetCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      dispatch(todoEditFormSet({ checkpoint }));
+      dispatch(todoEditFormValuesSet({ checkpoint }));
     },
     [dispatch]
   );
 
   const handleSetCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
-      dispatch(todoEditFormSet({ category }));
+      dispatch(todoEditFormValuesSet({ category }));
     },
     [dispatch]
   );
@@ -152,7 +159,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleExpandTodo = React.useCallback(
     (todo: RootTodoFragment) => {
-      dispatch(todoEditFormExpandTodo(todo));
+      dispatch(todoSelectionExpandTodo(todo));
     },
     [dispatch]
   );
@@ -199,17 +206,27 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
-    todoUsecase.createOneTodo(userId, todoEditFormState, todoSearchQuery);
-  }, [todoEditFormState, todoSearchQuery, todoUsecase, userId]);
+    todoUsecase.createOneTodo(userId, todoEditFormValues, todoSearchQuery);
+  }, [todoEditFormValues, todoSearchQuery, todoUsecase, userId]);
 
   const handleDeleteTodosById = React.useCallback(() => {
     todoUsecase.deleteTodosById(selectedTodoIds, todoSearchQuery);
   }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
 
   const handleUpdateTodosById = React.useCallback(() => {
-    todoUsecase.updateTodosById(todoEditFormState, todoSearchQuery);
+    todoUsecase.updateTodosById(
+      todoEditFormValues,
+      todoSelection,
+      todoSearchQuery
+    );
     onCloseModal();
-  }, [onCloseModal, todoEditFormState, todoSearchQuery, todoUsecase]);
+  }, [
+    onCloseModal,
+    todoEditFormValues,
+    todoSearchQuery,
+    todoSelection,
+    todoUsecase,
+  ]);
 
   const handleToggleStatus = React.useCallback(
     (todo: RootTodoFragment, status: TodoStatus) => {
@@ -283,13 +300,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     }
   });
 
-  React.useEffect(
-    () => {
-      dispatch(todoEditFormReset());
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [todoSearchQuery]
-  );
+  React.useEffect(() => {
+    dispatch(todoSelectionDeselect());
+  }, [dispatch, todoSearchQuery]);
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -324,7 +337,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isCategoryNameShown={isCategoryNameShown}
         now={now}
         todos={todos}
-        todoSelection={todoEditFormState.selection}
+        todoSelection={todoSelection}
         onClick={handleSelectManyTodo}
         onClickCategory={handleSearchByTodoCategory}
         onClickCheckpoint={handleSearchByRootCheckpoint}
@@ -339,7 +352,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         checkpoints={checkpointsWithDummy}
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
-        todoEditFormState={todoEditFormState}
+        todoEditFormValues={todoEditFormValues}
         onChangeText={handleSetText}
         onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}
@@ -374,8 +387,9 @@ enum ModalType {
   EDIT,
 }
 
-function useModalType() {
+function useModalType(todos: RootTodoFragment[], todoSelection: Selection) {
   const [modalType, setModalType] = React.useState(ModalType.NONE);
+  const dispatch = useDispatch();
 
   const onCloseModal = React.useCallback(() => {
     setModalType(ModalType.NONE);
@@ -386,8 +400,9 @@ function useModalType() {
   }, []);
 
   const onOpenEdit = React.useCallback(() => {
+    dispatch(todoEditFormValuesOpen(todos, todoSelection));
     setModalType(ModalType.EDIT);
-  }, []);
+  }, [dispatch, todoSelection, todos]);
 
   return { onCloseModal, onOpenSearch, onOpenEdit, modalType };
 }

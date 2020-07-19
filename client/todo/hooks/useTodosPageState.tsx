@@ -8,10 +8,9 @@ import { usePageIsSyncingQuery } from '../../shared/graphql/__generated__/Page.g
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
-import { ID } from '../../view_models/ID';
-import { SelectMode } from '../../view_models/SelectMode';
+import { getSelectModeFromSelection } from '../../view_models/SelectMode';
 import { getArchiveStatus } from '../../view_models/Todo';
-import { getSelectedIds } from '../../view_models/TodoSelection';
+import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodosPageQueryVariables,
@@ -48,7 +47,10 @@ export function useTodosPageState() {
     fetchPolicy: 'cache-and-network',
   });
   const { data: pageData } = usePageIsSyncingQuery();
-  const todoEditFormState = useTypedSelector((state) => state.todoEditForm);
+  const todoEditFormValues = useTypedSelector(
+    (state) => state.todoEditFormValues
+  );
+  const todoSelection = useTypedSelector((state) => state.todoSelection);
 
   const [now, setNow] = React.useState(() => Date.now());
 
@@ -64,11 +66,9 @@ export function useTodosPageState() {
     [data?.todos]
   );
 
-  const selectedTodoIds = getSelectedIds(todoEditFormState.selection);
-
   const status = React.useMemo(
-    () => getStatus(data?.todos ?? EMPTY, selectedTodoIds),
-    [data?.todos, selectedTodoIds]
+    () => getStatus(data?.todos ?? EMPTY, todoSelection),
+    [data?.todos, todoSelection]
   );
 
   useInterval(() => {
@@ -77,8 +77,6 @@ export function useTodosPageState() {
       setNow(Date.now());
     }
   }, UPDATE_INTERVAL);
-
-  const count = selectedTodoIds.length;
 
   return {
     categories: data?.categories ?? EMPTY,
@@ -91,24 +89,21 @@ export function useTodosPageState() {
     archiveStatus,
     now,
     status,
-    todoEditFormState,
+    todoEditFormValues,
+    todoSelection,
     todos: data?.todos ?? EMPTY,
     userId: data?.me?.id ?? null,
     todoSearchFormState,
     todoSearchQuery,
-    selectMode:
-      count === 0
-        ? SelectMode.NONE
-        : count === 1
-        ? SelectMode.SINGLE
-        : SelectMode.MULTI,
+    selectMode: getSelectModeFromSelection(todoSelection),
   };
 }
 
 function getStatus(
   todos: RootTodoFragment[],
-  selectedTodoIds: ID[]
+  selection: Selection
 ): TodoStatus | null {
+  const selectedTodoIds = getSelectedIds(selection);
   const selectedTodos = todos.filter((todo) =>
     selectedTodoIds.includes(todo.id)
   );

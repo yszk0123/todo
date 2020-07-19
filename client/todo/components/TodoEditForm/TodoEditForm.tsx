@@ -10,8 +10,8 @@ import {
 import { Modal } from '../../../shared/components/Modal';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { SelectMode } from '../../../view_models/SelectMode';
-import { TodoEditFormState } from '../../ducks/TodoEditFormDucks';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
+import { TodoEditFormValues } from '../../view_models/TodoEditFormValues';
 import { TodoEditFormCategoryField } from './TodoEditFormCategoryField';
 import { TodoEditFormCheckpointField } from './TodoEditFormCheckpointField';
 import { TodoEditFormStatusField } from './TodoEditFormStatusField';
@@ -30,7 +30,7 @@ const NoneForm: React.FunctionComponent<{
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
-  todoEditFormState: TodoEditFormState;
+  todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
@@ -43,7 +43,7 @@ const NoneForm: React.FunctionComponent<{
   onSelectCheckpoint,
   onSelectStatus,
   onToggleTag,
-  todoEditFormState,
+  todoEditFormValues,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Create', onClick: onCreateOneTodo },
@@ -58,25 +58,25 @@ const NoneForm: React.FunctionComponent<{
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}
-          category={todoEditFormState.category}
+          category={todoEditFormValues.category}
           onSelectCategory={onSelectCategory}
         />
         <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
+          checkpoint={todoEditFormValues.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
         />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
-          tags={todoEditFormState.tags}
+          tags={todoEditFormValues.tags}
           onToggleTag={onToggleTag}
         />
         <TodoEditFormStatusField
-          status={todoEditFormState.status}
+          status={todoEditFormValues.status}
           onSelectStatus={onSelectStatus}
         />
         <TodoEditFormTextField
-          text={todoEditFormState.text}
+          text={todoEditFormValues.text}
           onChangeText={onChangeText}
         />
         <EditFormActionsField actions={actions} />
@@ -98,7 +98,7 @@ const SingleForm: React.FunctionComponent<{
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
-  todoEditFormState: TodoEditFormState;
+  todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
@@ -112,7 +112,7 @@ const SingleForm: React.FunctionComponent<{
   onSelectStatus,
   onToggleTag,
   onUpdateOneTodo,
-  todoEditFormState,
+  todoEditFormValues,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
@@ -128,25 +128,25 @@ const SingleForm: React.FunctionComponent<{
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}
-          category={todoEditFormState.category}
+          category={todoEditFormValues.category}
           onSelectCategory={onSelectCategory}
         />
         <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
+          checkpoint={todoEditFormValues.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
         />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
-          tags={todoEditFormState.tags}
+          tags={todoEditFormValues.tags}
           onToggleTag={onToggleTag}
         />
         <TodoEditFormStatusField
-          status={todoEditFormState.status}
+          status={todoEditFormValues.status}
           onSelectStatus={onSelectStatus}
         />
         <TodoEditFormTextField
-          text={todoEditFormState.text}
+          text={todoEditFormValues.text}
           onChangeText={onChangeText}
         />
         <EditFormActionsField actions={actions} />
@@ -167,7 +167,7 @@ const MultiForm: React.FunctionComponent<{
   onSelectStatus: (status: TodoStatus | null) => void;
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
-  todoEditFormState: TodoEditFormState;
+  todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
@@ -180,7 +180,7 @@ const MultiForm: React.FunctionComponent<{
   onSelectStatus,
   onToggleTag,
   onUpdateOneTodo,
-  todoEditFormState,
+  todoEditFormValues,
 }) => {
   const actions: EditFormAction[] = [
     { label: 'Delete', onClick: onDeleteOneTodo },
@@ -196,21 +196,21 @@ const MultiForm: React.FunctionComponent<{
       <EditForm>
         <TodoEditFormCategoryField
           categories={categories}
-          category={todoEditFormState.category}
+          category={todoEditFormValues.category}
           onSelectCategory={onSelectCategory}
         />
         <TodoEditFormCheckpointField
-          checkpoint={todoEditFormState.checkpoint}
+          checkpoint={todoEditFormValues.checkpoint}
           checkpoints={checkpoints}
           onSelectCheckpoint={onSelectCheckpoint}
         />
         <TodoEditFormTagsField
           categoryTags={categoryTags}
-          tags={todoEditFormState.tags}
+          tags={todoEditFormValues.tags}
           onToggleTag={onToggleTag}
         />
         <TodoEditFormStatusField
-          status={todoEditFormState.status}
+          status={todoEditFormValues.status}
           onSelectStatus={onSelectStatus}
         />
         <EditFormActionsField actions={actions} />
@@ -234,7 +234,7 @@ export const TodoEditForm: React.FunctionComponent<{
   onToggleTag: (tag: TodoTagFragment) => void;
   onUpdateOneTodo: () => void;
   selectMode: SelectMode;
-  todoEditFormState: TodoEditFormState;
+  todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
@@ -250,7 +250,7 @@ export const TodoEditForm: React.FunctionComponent<{
   onToggleTag,
   onUpdateOneTodo,
   selectMode,
-  todoEditFormState,
+  todoEditFormValues,
 }) => {
   switch (selectMode) {
     case SelectMode.NONE: {
@@ -260,7 +260,7 @@ export const TodoEditForm: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           isOpen={isOpen}
-          todoEditFormState={todoEditFormState}
+          todoEditFormValues={todoEditFormValues}
           onChangeText={onChangeText}
           onCloseModal={onCloseModal}
           onCreateOneTodo={onCreateOneTodo}
@@ -278,7 +278,7 @@ export const TodoEditForm: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           isOpen={isOpen}
-          todoEditFormState={todoEditFormState}
+          todoEditFormValues={todoEditFormValues}
           onChangeText={onChangeText}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
@@ -297,7 +297,7 @@ export const TodoEditForm: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           isOpen={isOpen}
-          todoEditFormState={todoEditFormState}
+          todoEditFormValues={todoEditFormValues}
           onCloseModal={onCloseModal}
           onDeleteOneTodo={onDeleteOneTodo}
           onSelectCategory={onSelectCategory}

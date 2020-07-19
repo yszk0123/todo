@@ -1,3 +1,5 @@
+import { Selection, SelectionType } from './TodoSelection';
+
 export enum SelectMode {
   NONE,
   SINGLE,
@@ -13,6 +15,15 @@ export function getSelectMode<T>(items: T[]): SelectMode {
   return count === 0
     ? SelectMode.NONE
     : count === 1
+    ? SelectMode.SINGLE
+    : SelectMode.MULTI;
+}
+
+export function getSelectModeFromSelection(selection: Selection): SelectMode {
+  return selection.type === SelectionType.NONE ||
+    selection.type === SelectionType.EXPAND
+    ? SelectMode.NONE
+    : selection.ids.length === 1
     ? SelectMode.SINGLE
     : SelectMode.MULTI;
 }

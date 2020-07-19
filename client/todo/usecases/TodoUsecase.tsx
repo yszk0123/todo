@@ -1,5 +1,6 @@
 import { ApolloClient } from '@apollo/client';
 import Router from 'next/router';
+import { Dispatch } from 'redux';
 
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
@@ -10,15 +11,10 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
-import { getSelectedIds } from '../../view_models/TodoSelection';
-import {
-  TodoEditFormAction,
-  todoEditFormDeselect,
-  todoEditFormReset,
-  todoEditFormSet,
-  TodoEditFormState,
-} from '../ducks/TodoEditFormDucks';
+import { getSelectedIds, Selection } from '../../view_models/TodoSelection';
+import { todoEditFormValuesSet } from '../ducks/TodoEditFormValuesDucks';
 import { TodoSearchFormState } from '../ducks/TodoSearchFormDucks';
+import { todoSelectionDeselect } from '../ducks/TodoSelectionDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
@@ -28,6 +24,7 @@ import {
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
+import { TodoEditFormValues } from '../view_models/TodoEditFormValues';
 import {
   fromTodoSearchFormState,
   TodoSearchQuery,
@@ -43,7 +40,7 @@ function getRefetchQuery(todoSearchQuery: TodoSearchQuery | null) {
 export class TodoUsecase {
   constructor(
     private client: ApolloClient<unknown>,
-    private dispatch: (action: TodoEditFormAction) => void
+    private dispatch: Dispatch
   ) {}
 
   search(todoSearchFormState: Partial<TodoSearchFormState>) {
@@ -53,13 +50,13 @@ export class TodoUsecase {
 
   async createOneTodo(
     userId: string,
-    todoEditFormState: TodoEditFormState,
+    todoEditFormValues: TodoEditFormValues,
     todoSearchQuery: TodoSearchQuery | null
   ) {
-    const { checkpoint, status, tags, text } = todoEditFormState;
+    const { checkpoint, status, tags, text } = todoEditFormValues;
     const newTags = tags ? tags.map((tag) => ({ id: tag.id })) : undefined;
     const categoryIdToCreate =
-      todoEditFormState.category?.id ?? todoSearchQuery?.categoryId ?? null;
+      todoEditFormValues.category?.id ?? todoSearchQuery?.categoryId ?? null;
     if (categoryIdToCreate === null) {
       alert('CategoryId required');
       return;
@@ -67,7 +64,7 @@ export class TodoUsecase {
     const checkpointIdToCreate =
       checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
 
-    this.dispatch(todoEditFormSet({ text: '' }));
+    this.dispatch(todoEditFormValuesSet({ text: '' }));
 
     await this.client.mutate<unknown, CreateOneTodoMutationVariables>({
       mutation: CreateOneTodoDocument,
@@ -88,7 +85,8 @@ export class TodoUsecase {
   }
 
   updateTodosById(
-    { category, checkpoint, selection, status, tags, text }: TodoEditFormState,
+    { category, checkpoint, status, tags, text }: TodoEditFormValues,
+    selection: Selection,
     todoSearchQuery: TodoSearchQuery | null
   ) {
     const selectedTodoIds = getSelectedIds(selection);
@@ -97,7 +95,7 @@ export class TodoUsecase {
 
     const tagIds = tags ? tags.map((tag) => tag.id) : undefined;
 
-    this.dispatch(todoEditFormDeselect());
+    this.dispatch(todoSelectionDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
@@ -126,7 +124,7 @@ export class TodoUsecase {
     const count = todoIds.length;
     if (count === 0) return;
     if (!confirm(`Delete ${count} items?`)) return;
-    this.dispatch(todoEditFormReset());
+    this.dispatch(todoSelectionDeselect());
     this.sync(() =>
       this.client.mutate<unknown, DeleteTodosByIdMutationVariables>({
         mutation: DeleteTodosByIdDocument,
@@ -137,7 +135,7 @@ export class TodoUsecase {
   }
 
   updateStatus(todoIds: ID[], status: TodoStatus) {
-    this.dispatch(todoEditFormDeselect());
+    this.dispatch(todoSelectionDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
@@ -157,7 +155,7 @@ export class TodoUsecase {
     category: RootCategoryFragment,
     todoSearchQuery: TodoSearchQuery | null
   ) {
-    this.dispatch(todoEditFormDeselect());
+    this.dispatch(todoSelectionDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
@@ -174,7 +172,7 @@ export class TodoUsecase {
   }
 
   archiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
-    this.dispatch(todoEditFormDeselect());
+    this.dispatch(todoSelectionDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
@@ -191,7 +189,7 @@ export class TodoUsecase {
   }
 
   unarchiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
-    this.dispatch(todoEditFormDeselect());
+    this.dispatch(todoSelectionDeselect());
 
     this.sync(() =>
       this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
