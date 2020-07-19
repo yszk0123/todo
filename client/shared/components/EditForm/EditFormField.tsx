@@ -12,7 +12,6 @@ export const EditFormField: React.FunctionComponent<{
   return (
     <Flex
       alignItems="center"
-      flexWrap="wrap"
       mb={1}
       pb={1}
       sx={{
@@ -25,6 +24,7 @@ export const EditFormField: React.FunctionComponent<{
           htmlFor={htmlFor}
           justifyContent="flex-end"
           mr={2}
+          sx={{ flexShrink: 0 }}
           width={LABEL_WIDTH}
         >
           {label}

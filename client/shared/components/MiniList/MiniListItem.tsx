@@ -13,7 +13,7 @@ export const MiniListItem: React.FunctionComponent<Props> = ({
     <Flex
       alignItems="center"
       mr={1}
-      sx={{ flexGrow: isPrimary ? 1 : undefined }}
+      sx={{ flexShrink: 0, flexGrow: isPrimary ? 1 : undefined }}
     >
       {children}
     </Flex>

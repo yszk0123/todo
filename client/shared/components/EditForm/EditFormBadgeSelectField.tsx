@@ -47,7 +47,7 @@ export function EditFormBadgeSelectField<T>({
   const isEmpty = selectedItems.length === 0;
 
   return (
-    <EditFormField htmlFor={id} label={label}>
+    <EditFormField htmlFor={id} label={label} rightElement={rightElement}>
       <MiniList>
         {selectedItems.map((item, i) => {
           return (
@@ -71,7 +71,6 @@ export function EditFormBadgeSelectField<T>({
           onChange={handleSelect}
         />
       </Box>
-      {rightElement != null && <Box ml={2}>{rightElement}</Box>}
     </EditFormField>
   );
 }

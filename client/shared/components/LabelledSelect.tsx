@@ -23,7 +23,7 @@ export function LabelledSelect<T>({
 }): JSX.Element {
   return (
     <Flex alignItems="center">
-      <Label htmlFor={id} mr={2} width="initial">
+      <Label htmlFor={id} mr={2} sx={{ flexShrink: 0 }} width="initial">
         {label}
       </Label>
       <Select

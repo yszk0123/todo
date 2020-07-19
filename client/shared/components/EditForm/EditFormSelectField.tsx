@@ -24,7 +24,7 @@ export function EditFormSelectField<T>({
   selectedItem: T | null;
 }): JSX.Element {
   return (
-    <EditFormField htmlFor={id} label={label}>
+    <EditFormField htmlFor={id} label={label} rightElement={rightElement}>
       <Box sx={{ flexGrow: 1 }}>
         <Select
           getDisplayName={getDisplayName}
@@ -35,7 +35,6 @@ export function EditFormSelectField<T>({
           onChange={onChange}
         />
       </Box>
-      {rightElement != null && <Box ml={2}>{rightElement}</Box>}
     </EditFormField>
   );
 }
