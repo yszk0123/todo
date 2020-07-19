@@ -17,7 +17,9 @@ schema.extendType({
             // FIXME: Set from client
             archivedAt: { equals: null },
           },
-          orderBy: args.where?.archivedAt ? { archivedAt: 'desc' } : undefined,
+          orderBy: args.where?.archivedAt
+            ? { archivedAt: 'desc' }
+            : { endAt: 'asc' },
         };
         return originalResolve(root, newArgs, ctx, info);
       },
