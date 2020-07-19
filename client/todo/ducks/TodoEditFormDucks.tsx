@@ -171,9 +171,13 @@ export function todoEditFormReducer(
     }
     case TodoEditFormActionType.EXPAND: {
       const todo = action.payload.todo;
+      const newSelection = {
+        type: TodoSelectionType.EXPAND,
+        expandedTodoId: todo.id,
+      } as const;
       return {
         ...state,
-        selection: { type: TodoSelectionType.EXPAND, expandedTodoId: todo.id },
+        selection: newSelection,
       };
     }
     case TodoEditFormActionType.SELECT_MANY: {
@@ -185,26 +189,18 @@ export function todoEditFormReducer(
         type: TodoSelectionType.SELECT,
         selectedTodoIds: toggle(selectedTodoIds, todo.id),
       } as const;
-      const isSingle = newSelection.selectedTodoIds.length === 1;
-      if (isSingle) {
+      const count = newSelection.selectedTodoIds.length;
+      if (count === 1) {
+        const newFields = getTodoEditFormFields(todo);
         return {
           ...state,
-          category: todo.category,
-          checkpoint: todo.checkpoint ?? null,
+          ...newFields,
           selection: newSelection,
-          status: todo.status,
-          tags: todo.tags,
-          text: todo.text,
         };
       } else {
         return {
-          ...state,
-          category: null,
-          checkpoint: null,
+          ...todoEditFormInitialState,
           selection: newSelection,
-          status: null,
-          tags: null,
-          text: '',
         };
       }
     }
@@ -241,47 +237,53 @@ export function todoEditFormReducer(
 
 function selectTodos(
   state: TodoEditFormState,
-  selectedTodos: RootTodoFragment[]
+  newSelectedTodos: RootTodoFragment[]
 ): TodoEditFormState {
   const { selection } = state;
-  const count = selectedTodos.length;
+  const count = newSelectedTodos.length;
   if (count === 0) {
     return todoEditFormInitialState;
   }
 
   const selectedTodoIds = getSelectedTodoIds(selection);
-  const newSelectedTodoIds = selectedTodos.map((todo) => todo.id);
+  const newSelectedTodoIds = newSelectedTodos.map((todo) => todo.id);
   const isIdentical = shallowEqual(selectedTodoIds, newSelectedTodoIds);
   if (isIdentical) {
     return todoEditFormInitialState;
   }
 
+  const newSelection = {
+    type: TodoSelectionType.SELECT,
+    selectedTodoIds: newSelectedTodoIds,
+  } as const;
+
   if (count === 1) {
-    const todo = selectedTodos[0];
+    const todo = newSelectedTodos[0];
+    const newFields = getTodoEditFormFields(todo);
     return {
       ...state,
-      category: todo.category,
-      checkpoint: todo.checkpoint ?? null,
-      selection: {
-        type: TodoSelectionType.SELECT,
-        selectedTodoIds: [todo.id],
-      },
-      status: todo.status,
-      tags: todo.tags,
-      text: todo.text,
+      ...newFields,
+      selection: newSelection,
     };
   } else {
     return {
-      ...state,
-      category: null,
-      checkpoint: null,
-      selection: {
-        type: TodoSelectionType.SELECT,
-        selectedTodoIds: newSelectedTodoIds,
-      },
-      status: null,
-      tags: null,
-      text: '',
+      ...todoEditFormInitialState,
+      selection: newSelection,
     };
   }
+}
+
+function getTodoEditFormFields(
+  todo: RootTodoFragment
+): Pick<
+  TodoEditFormState,
+  'category' | 'checkpoint' | 'status' | 'tags' | 'text'
+> {
+  return {
+    category: todo.category,
+    checkpoint: todo.checkpoint ?? null,
+    status: todo.status,
+    tags: todo.tags,
+    text: todo.text,
+  };
 }
