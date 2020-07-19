@@ -3,6 +3,7 @@ import React from 'react';
 import { ListItem } from '../../shared/components/List';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagListIcon } from './TagListIcon';
+import { TagListLink } from './TagListLink';
 
 export const TagListItem: React.FunctionComponent<{
   isSelectMode: boolean;
@@ -23,6 +24,7 @@ export const TagListItem: React.FunctionComponent<{
         />
       }
       mainElement={tag.name}
+      rightElement={<TagListLink tag={tag} />}
       onClick={onClick}
     />
   );
