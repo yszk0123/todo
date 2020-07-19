@@ -3,6 +3,7 @@ import Router from 'next/router';
 import { Dispatch } from 'redux';
 
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
+import { RootCheckpointFragment } from '../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import {
   PageIsSyncingDocument,
@@ -164,6 +165,27 @@ export class TodoUsecase {
           input: {
             ids: todoIds,
             categoryId: category.id,
+          },
+        },
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
+      })
+    );
+  }
+
+  updateCheckpoint(
+    todoIds: ID[],
+    checkpoint: RootCheckpointFragment,
+    todoSearchQuery: TodoSearchQuery | null
+  ) {
+    this.dispatch(todoSelectionDeselect());
+
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            checkpointId: checkpoint.id,
           },
         },
         refetchQueries: [getRefetchQuery(todoSearchQuery)],

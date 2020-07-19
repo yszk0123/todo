@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { RootCategoryFragment } from '../../../category/graphql/__generated__/Category.graphql';
+import { RootCheckpointFragment } from '../../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import {
   StatusBar,
   StatusBarButton,
@@ -18,6 +19,7 @@ import { TodoArchiveStatus } from '../../../view_models/Todo';
 import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
+import { TodoStatusBarCheckpointSelect } from './TodoStatusBarCheckpointSelect';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
 import { TodoStatusBarSyncStatus } from './TodoStatusBarSyncStatus';
 
@@ -25,12 +27,13 @@ export const TodoStatusBar: React.FunctionComponent<{
   archiveStatus: TodoArchiveStatus;
   categories: RootCategoryFragment[];
   category: RootCategoryFragment | null;
+  checkpoints: RootCheckpointFragment[];
   count: number;
   isSyncing: boolean;
   onChangeStatus: (status: TodoStatus | null) => void;
   onClickArchive: () => void;
   onClickEdit: () => void;
-  onClickEditCategory: (category: RootCategoryFragment | null) => void;
+  onClickEditCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onClickSearch: () => void;
   onClickSearchCategory: (category: RootCategoryFragment | null) => void;
   onClickSearchStatus: (status: TodoStatus | null) => void;
@@ -42,12 +45,13 @@ export const TodoStatusBar: React.FunctionComponent<{
   archiveStatus,
   categories,
   category,
+  checkpoints,
   count,
   isSyncing,
   onChangeStatus,
   onClickArchive,
   onClickEdit,
-  onClickEditCategory,
+  onClickEditCheckpoint,
   onClickSearch,
   onClickSearchCategory,
   onClickSearchStatus,
@@ -57,9 +61,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   todoSearchQuery,
 }) => {
   const selected = isSelected(selectMode);
-  const searchCategory = React.useMemo(
-    () => categories.find((c) => c.id === todoSearchQuery.categoryId) ?? null,
-    [categories, todoSearchQuery]
+  const searchCheckpoints = React.useMemo(
+    () =>
+      checkpoints.find((c) => c.id === todoSearchQuery.checkpointId) ?? null,
+    [checkpoints, todoSearchQuery]
   );
 
   return (
@@ -104,35 +109,35 @@ export const TodoStatusBar: React.FunctionComponent<{
       </StatusBarPrimaryRow>
       {selected ? (
         <StatusBarSecondaryRow>
-          <StatusBarItem>
+          <StatusBarLeft>
             <TodoStatusBarStatusSelect
               status={status}
               onChange={onChangeStatus}
             />
-          </StatusBarItem>
-          <StatusBarItem>
-            <TodoStatusBarCategorySelect
-              categories={categories}
-              category={category}
-              onClickCategory={onClickEditCategory}
+          </StatusBarLeft>
+          <StatusBarRight>
+            <TodoStatusBarCheckpointSelect
+              checkpoint={searchCheckpoints}
+              checkpoints={checkpoints}
+              onClickCheckpoint={onClickEditCheckpoint}
             />
-          </StatusBarItem>
+          </StatusBarRight>
         </StatusBarSecondaryRow>
       ) : (
         <StatusBarSecondaryRow>
-          <StatusBarItem>
+          <StatusBarLeft>
             <TodoStatusBarStatusSelect
               status={todoSearchQuery.status}
               onChange={onClickSearchStatus}
             />
-          </StatusBarItem>
-          <StatusBarItem>
+          </StatusBarLeft>
+          <StatusBarRight>
             <TodoStatusBarCategorySelect
               categories={categories}
-              category={searchCategory}
+              category={category}
               onClickCategory={onClickSearchCategory}
             />
-          </StatusBarItem>
+          </StatusBarRight>
         </StatusBarSecondaryRow>
       )}
     </StatusBar>

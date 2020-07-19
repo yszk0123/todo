@@ -244,10 +244,14 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [selectedTodoIds, todoUsecase]
   );
 
-  const handleUpdateCategory = React.useCallback(
-    (category: RootCategoryFragment | null) => {
-      if (category !== null) {
-        todoUsecase.updateCategory(selectedTodoIds, category, todoSearchQuery);
+  const handleEditByRootCheckpoint = React.useCallback(
+    (checkpoint: RootCheckpointFragment | null) => {
+      if (checkpoint !== null) {
+        todoUsecase.updateCheckpoint(
+          selectedTodoIds,
+          checkpoint,
+          todoSearchQuery
+        );
       }
     },
     [selectedTodoIds, todoSearchQuery, todoUsecase]
@@ -319,6 +323,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         archiveStatus={archiveStatus}
         categories={categories}
         category={category}
+        checkpoints={checkpointsWithDummy}
         count={todos.length}
         isSyncing={isSyncing}
         selectMode={selectMode}
@@ -327,7 +332,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
         onClickEdit={onOpenEdit}
-        onClickEditCategory={handleUpdateCategory}
+        onClickEditCheckpoint={handleEditByRootCheckpoint}
         onClickSearch={onOpenSearch}
         onClickSearchCategory={handleSearchByRootCategory}
         onClickSearchStatus={handleSearchByStatus}
