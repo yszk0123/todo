@@ -1,7 +1,6 @@
-import { shallowEqual } from '../../shared/helpers/shallowEqual';
 import { toggle } from '../../shared/helpers/toggle';
-import { ID } from '../../view_models/ID';
 import {
+  createSelection,
   getSelectedIds,
   Selection,
   SelectionType,
@@ -140,36 +139,21 @@ export function todoSelectionReducer(
     case TodoSelectionActionType.SELECT_BY_TAG: {
       const { tag, todos } = action.payload;
 
-      const selectedTodosByTag = todos
+      const todoIds = todos
         .filter((todo) => todo.tags.includes(tag))
         .map((todo) => todo.id);
-      return selectTodos(state, selectedTodosByTag);
+      return createSelection(todoIds);
     }
     case TodoSelectionActionType.SELECT_BY_CATEGORY: {
       const { category, todos } = action.payload;
 
-      const selectedTodosByCategory = todos
+      const todoIds = todos
         .filter((todo) => todo.category === category)
         .map((todo) => todo.id);
-      return selectTodos(state, selectedTodosByCategory);
+      return createSelection(todoIds);
     }
     default: {
       return state;
     }
   }
-}
-
-function selectTodos(
-  state: TodoSelectionState,
-  newIds: ID[]
-): TodoSelectionState {
-  const oldIds = getSelectedIds(state);
-  const isIdentical = shallowEqual(oldIds, newIds);
-  if (isIdentical) {
-    return state;
-  }
-
-  return newIds.length === 0
-    ? { type: SelectionType.NONE }
-    : { type: SelectionType.SELECT, ids: newIds };
 }

@@ -35,3 +35,9 @@ export function isSelectedSome(selection: Selection): boolean {
 export function isExpanded(selection: Selection, todoId: ID): boolean {
   return selection.type === SelectionType.EXPAND && selection.id === todoId;
 }
+
+export function createSelection(newIds: ID[]): Selection {
+  return newIds.length === 0
+    ? { type: SelectionType.NONE }
+    : { type: SelectionType.SELECT, ids: newIds };
+}
