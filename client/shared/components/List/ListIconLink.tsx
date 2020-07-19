@@ -5,7 +5,7 @@ import { URL } from '../../view_models/URL';
 import { Link } from '../Link';
 
 type Props = {
-  as: string;
+  as?: string;
   href: URL;
   icon: JSX.Element;
 };

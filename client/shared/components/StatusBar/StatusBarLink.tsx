@@ -5,7 +5,7 @@ import { URL } from '../../view_models/URL';
 import { Link } from '../Link';
 
 export const StatusBarLink: React.FunctionComponent<{
-  as: string;
+  as?: string;
   href: URL;
   text: string;
 }> = ({ as, href, text }) => {

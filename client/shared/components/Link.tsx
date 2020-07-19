@@ -6,7 +6,7 @@ import { stopPropagation } from '../view_helpers/stopPropagation';
 import { URL } from '../view_models/URL';
 
 export const Link: React.FunctionComponent<{
-  as: string;
+  as?: string;
   href: URL;
 }> = ({ as, children, href }) => {
   return (
