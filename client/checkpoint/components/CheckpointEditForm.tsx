@@ -10,10 +10,10 @@ import {
 import { Modal } from '../../shared/components/Modal';
 import { DateTime } from '../../view_models/DateTime';
 import { isSelected, SelectMode } from '../../view_models/SelectMode';
-import { CheckpointEditFormState } from '../ducks/CheckpointEditFormStateDucks';
+import { CheckpointEditFormValues } from '../view_models/CheckpointEditFormValues';
 
 export const CheckpointEditForm: React.FunctionComponent<{
-  checkpointEditFormState: CheckpointEditFormState;
+  checkpointEditFormValues: CheckpointEditFormValues;
   isOpen: boolean;
   onChangeEndAt: (endAt: DateTime | null) => void;
   onChangeName: (name: string) => void;
@@ -23,7 +23,7 @@ export const CheckpointEditForm: React.FunctionComponent<{
   onUpdateCheckpointsById: () => void;
   selectMode: SelectMode;
 }> = ({
-  checkpointEditFormState,
+  checkpointEditFormValues,
   isOpen,
   onChangeEndAt,
   onChangeName,
@@ -50,13 +50,13 @@ export const CheckpointEditForm: React.FunctionComponent<{
         <EditFormDateTimeInputField
           id="checkpoint-edit-end-at"
           label="EndAt"
-          value={checkpointEditFormState.endAt}
+          value={checkpointEditFormValues.endAt}
           onChange={onChangeEndAt}
         />
         <EditFormInputField
           id="checkpoint-edit-name"
           label="Name"
-          value={checkpointEditFormState.name ?? ''}
+          value={checkpointEditFormValues.name ?? ''}
           onChange={onChangeName}
         />
         <EditFormActionsField actions={actions} />

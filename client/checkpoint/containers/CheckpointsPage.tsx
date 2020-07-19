@@ -11,14 +11,18 @@ import {
 } from '../../shared/hooks/useGlobalShortcut';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
+import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { CheckpointEditForm } from '../components/CheckpointEditForm';
 import { CheckpointList } from '../components/CheckpointList';
 import { CheckpointStatusBar } from '../components/CheckpointStatusBar';
 import {
-  checkpointEditFormReset,
-  checkpointEditFormSelectMany,
+  checkpointEditFormOpen,
   checkpointEditFormSet,
-} from '../ducks/CheckpointEditFormStateDucks';
+} from '../ducks/CheckpointEditFormDucks';
+import {
+  checkpointSelectionDeselect,
+  checkpointSelectionSelectMany,
+} from '../ducks/CheckpointSelectionDucks';
 import { RootCheckpointFragment } from '../graphql/__generated__/Checkpoint.graphql';
 import { useCheckpointsPageState } from '../hooks/useCheckpointsPageState';
 import { useCheckpointUsecase } from '../hooks/useCheckpointUsecase';
@@ -27,24 +31,29 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
   const dispatch = useDispatch();
   const checkpointUsecase = useCheckpointUsecase();
   const {
-    checkpointEditFormState,
+    checkpointEditFormValues,
+    checkpointSelection,
     checkpoints,
     isLoading,
     now,
     selectMode,
     userId,
   } = useCheckpointsPageState();
-  const { modalType, onCloseModal, onOpenEdit } = useModalType();
+  const { modalType, onCloseModal, onOpenEdit } = useModalType(
+    checkpoints,
+    checkpointSelection
+  );
+  const selectedCheckpointIds = getSelectedIds(checkpointSelection);
 
   const handleSelectManyCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment) => {
-      dispatch(checkpointEditFormSelectMany(checkpoint));
+      dispatch(checkpointSelectionSelectMany(checkpoint));
     },
     [dispatch]
   );
 
   const handleDeselectCheckpoint = React.useCallback(() => {
-    dispatch(checkpointEditFormReset());
+    dispatch(checkpointSelectionDeselect());
   }, [dispatch]);
 
   const handleSetName = React.useCallback(
@@ -63,24 +72,23 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleCreateOneCheckpoint = React.useCallback(() => {
     if (!userId) return;
-    checkpointUsecase.createOneCheckpoint(userId, checkpointEditFormState);
-  }, [userId, checkpointUsecase, checkpointEditFormState]);
+    checkpointUsecase.createOneCheckpoint(userId, checkpointEditFormValues);
+  }, [userId, checkpointUsecase, checkpointEditFormValues]);
 
   const handleDeleteCheckpointsById = React.useCallback(() => {
-    checkpointUsecase.deleteCheckpointsById(
-      checkpointEditFormState.selectedCheckpointIds
-    );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
+    checkpointUsecase.deleteCheckpointsById(selectedCheckpointIds);
+  }, [checkpointUsecase, selectedCheckpointIds]);
 
   const handleUpdateCheckpointsById = React.useCallback(() => {
-    checkpointUsecase.updateCheckpointsById(checkpointEditFormState);
-  }, [checkpointUsecase, checkpointEditFormState]);
+    checkpointUsecase.updateCheckpointsById(
+      checkpointEditFormValues,
+      selectedCheckpointIds
+    );
+  }, [checkpointUsecase, checkpointEditFormValues, selectedCheckpointIds]);
 
   const handleArchiveOneCheckpoint = React.useCallback(() => {
-    checkpointUsecase.archiveCheckpointsById(
-      checkpointEditFormState.selectedCheckpointIds
-    );
-  }, [checkpointUsecase, checkpointEditFormState.selectedCheckpointIds]);
+    checkpointUsecase.archiveCheckpointsById(selectedCheckpointIds);
+  }, [checkpointUsecase, selectedCheckpointIds]);
 
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectCheckpoint : onCloseModal;
@@ -111,12 +119,12 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
       <CheckpointList
         checkpoints={checkpoints}
         now={now}
-        selectedCheckpointIds={checkpointEditFormState.selectedCheckpointIds}
+        selectedCheckpointIds={selectedCheckpointIds}
         onClick={handleSelectManyCheckpoint}
         onClickCheckbox={handleSelectManyCheckpoint}
       />
       <CheckpointEditForm
-        checkpointEditFormState={checkpointEditFormState}
+        checkpointEditFormValues={checkpointEditFormValues}
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
         onChangeEndAt={handleSetEndAt}
@@ -135,16 +143,21 @@ enum ModalType {
   EDIT,
 }
 
-function useModalType() {
+function useModalType(
+  checkpoints: RootCheckpointFragment[],
+  checkpointSelection: Selection
+) {
   const [modalType, setModalType] = React.useState(ModalType.NONE);
+  const dispatch = useDispatch();
 
   const onCloseModal = React.useCallback(() => {
     setModalType(ModalType.NONE);
   }, []);
 
   const onOpenEdit = React.useCallback(() => {
+    dispatch(checkpointEditFormOpen(checkpoints, checkpointSelection));
     setModalType(ModalType.EDIT);
-  }, []);
+  }, [checkpointSelection, checkpoints, dispatch]);
 
   return { onCloseModal, onOpenEdit, modalType };
 }

@@ -5,7 +5,7 @@ import { UPDATE_INTERVAL } from '../../shared/constants/UPDATE_INTERVAL';
 import { useInterval } from '../../shared/hooks/useInterval';
 import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
-import { getSelectMode } from '../../view_models/SelectMode';
+import { getSelectModeFromSelection } from '../../view_models/SelectMode';
 import { useCheckpointsPageQuery } from '../graphql/__generated__/CheckpointsPage.graphql';
 
 export function useCheckpointsPageState() {
@@ -13,8 +13,11 @@ export function useCheckpointsPageState() {
     fetchPolicy: 'cache-and-network',
   });
 
-  const checkpointEditFormState = useTypedSelector(
+  const checkpointEditFormValues = useTypedSelector(
     (state) => state.checkpointEditForm
+  );
+  const checkpointSelection = useTypedSelector(
+    (state) => state.checkpointSelection
   );
 
   const [now, setNow] = React.useState(() => Date.now());
@@ -28,10 +31,11 @@ export function useCheckpointsPageState() {
 
   return {
     now,
-    checkpointEditFormState,
+    checkpointEditFormValues,
+    checkpointSelection,
     checkpoints: data?.checkpoints ?? EMPTY,
     isLoading: !data && loading,
-    selectMode: getSelectMode(checkpointEditFormState.selectedCheckpointIds),
+    selectMode: getSelectModeFromSelection(checkpointSelection),
     userId: data?.me?.id,
   };
 }

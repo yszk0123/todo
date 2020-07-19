@@ -1,13 +1,13 @@
 import { ApolloClient } from '@apollo/client';
+import { Dispatch } from 'redux';
 
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
 import {
-  CheckpointEditFormAction,
-  checkpointEditFormReset,
   checkpointEditFormSet,
   CheckpointEditFormState,
-} from '../ducks/CheckpointEditFormStateDucks';
+} from '../ducks/CheckpointEditFormDucks';
+import { checkpointSelectionDeselect } from '../ducks/CheckpointSelectionDucks';
 import {
   CreateOneCheckpointDocument,
   CreateOneCheckpointMutationVariables,
@@ -23,7 +23,7 @@ import {
 export class CheckpointUsecase {
   constructor(
     private client: ApolloClient<unknown>,
-    private dispatch: (action: CheckpointEditFormAction) => void
+    private dispatch: Dispatch
   ) {}
 
   async createOneCheckpoint(
@@ -51,12 +51,11 @@ export class CheckpointUsecase {
     });
   }
 
-  async updateCheckpointsById({
-    endAt,
-    name,
-    selectedCheckpointIds,
-  }: CheckpointEditFormState) {
-    this.dispatch(checkpointEditFormSet({ selectedCheckpointIds: [] }));
+  async updateCheckpointsById(
+    { endAt, name }: CheckpointEditFormState,
+    selectedCheckpointIds: ID[]
+  ) {
+    this.dispatch(checkpointSelectionDeselect());
 
     await this.client.mutate<unknown, UpdateCheckpointsByIdMutationVariables>({
       mutation: UpdateCheckpointsByIdDocument,
@@ -76,7 +75,7 @@ export class CheckpointUsecase {
     if (!confirm(`Delete ${count} items?`)) return;
     const checkpointId = checkpointIds[0];
 
-    this.dispatch(checkpointEditFormReset());
+    this.dispatch(checkpointSelectionDeselect());
 
     await this.client.mutate<unknown, DeleteOneCheckpointMutationVariables>({
       mutation: DeleteOneCheckpointDocument,
@@ -89,7 +88,7 @@ export class CheckpointUsecase {
     const count = checkpointIds.length;
     if (!confirm(`Delete ${count} items?`)) return;
 
-    this.dispatch(checkpointEditFormReset());
+    this.dispatch(checkpointSelectionDeselect());
 
     await this.client.mutate<unknown, DeleteCheckpointsByIdMutationVariables>({
       mutation: DeleteCheckpointsByIdDocument,

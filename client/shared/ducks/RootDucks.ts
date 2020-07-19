@@ -7,7 +7,11 @@ import {
 import {
   checkpointEditFormReducer,
   CheckpointEditFormState,
-} from '../../checkpoint/ducks/CheckpointEditFormStateDucks';
+} from '../../checkpoint/ducks/CheckpointEditFormDucks';
+import {
+  checkpointSelectionReducer,
+  CheckpointSelectionState,
+} from '../../checkpoint/ducks/CheckpointSelectionDucks';
 import {
   tagEditFormReducer,
   TagEditFormState,
@@ -28,6 +32,7 @@ import {
 export type RootState = {
   categoryEditForm: CategoryEditFormState;
   checkpointEditForm: CheckpointEditFormState;
+  checkpointSelection: CheckpointSelectionState;
   tagEditForm: TagEditFormState;
   todoEditFormValues: TodoEditFormState;
   todoSearchForm: TodoSearchFormState;
@@ -37,6 +42,7 @@ export type RootState = {
 export const rootReducer = combineReducers<RootState>({
   checkpointEditForm: checkpointEditFormReducer,
   categoryEditForm: categoryEditFormReducer,
+  checkpointSelection: checkpointSelectionReducer,
   tagEditForm: tagEditFormReducer,
   todoEditFormValues: todoEditFormReducer,
   todoSelection: todoSelectionReducer,
