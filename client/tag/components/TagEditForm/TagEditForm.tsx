@@ -21,7 +21,6 @@ const colors = Object.values(Color);
 export const TagEditForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   isOpen: boolean;
-  onArchiveOneTag: () => void;
   onChangeColor: (color: Color | null) => void;
   onChangeName: (name: string) => void;
   onCloseModal: () => void;
@@ -35,7 +34,6 @@ export const TagEditForm: React.FunctionComponent<{
 }> = ({
   categories,
   isOpen,
-  onArchiveOneTag,
   onChangeColor,
   onChangeName,
   onCloseModal,
@@ -50,7 +48,6 @@ export const TagEditForm: React.FunctionComponent<{
   const actions: EditFormAction[] = isSelected(selectMode)
     ? [
         { label: 'Delete', onClick: onDeleteOneTag },
-        { label: 'Archive', onClick: onArchiveOneTag },
         { label: 'Update', onClick: onUpdateOneTag },
       ]
     : [{ label: 'Create', onClick: onCreateOneTag }];

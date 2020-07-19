@@ -86,7 +86,9 @@ export class TagUsecase {
   }
 
   async archiveOneTag(tagIds: ID[]) {
-    if (tagIds.length !== 1) return;
+    const count = tagIds.length;
+    if (count !== 1) return;
+    if (!confirm(`Archive ${count} items?`)) return;
     const tagId = tagIds[0];
 
     await this.client.mutate<unknown, UpdateOneTagMutationVariables>({

@@ -85,11 +85,6 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     tagUsecase.updateOneTag(tagEditFormState);
   }, [tagUsecase, tagEditFormState]);
 
-  // FIXME: Implement
-  // const handleArchiveOneTag = React.useCallback(() => {
-  //   tagUsecase.archiveOneTag(tagEditFormState.selectedTagIds);
-  // }, [tagUsecase, tagEditFormState.selectedTagIds]);
-
   const handleEscape =
     modalType === ModalType.NONE ? handleDeselectTag : onCloseModal;
   useGlobalEscapeKey(handleEscape);
@@ -103,6 +98,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       <TagStatusBar
         count={tags.length}
         selectMode={selectMode}
+        onClickArchive={handleArchiveOneTag}
         onClickEdit={onOpenEdit}
       />
       <TagList
@@ -116,7 +112,6 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         selectMode={selectMode}
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
-        onArchiveOneTag={handleArchiveOneTag}
         onChangeColor={handleSetColor}
         onChangeName={handleSetName}
         onCloseModal={onCloseModal}
