@@ -10,7 +10,8 @@ export const GoToReportLink: React.FunctionComponent<{
     <Link
       as={`/categories/${categoryId}/todos/report`}
       href="/categories/[categoryId]/todos/report"
-      text="See report"
-    />
+    >
+      See report
+    </Link>
   );
 };

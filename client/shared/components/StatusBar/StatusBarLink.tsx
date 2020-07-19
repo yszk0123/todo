@@ -10,7 +10,9 @@ export const StatusBarLink: React.FunctionComponent<{
 }> = ({ as, href, text }) => {
   return (
     <Flex alignItems="center" mr={2}>
-      <Link as={as} href={href} text={text} />
+      <Link as={as} href={href}>
+        {text}
+      </Link>
     </Flex>
   );
 };

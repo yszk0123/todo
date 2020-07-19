@@ -7,11 +7,10 @@ import { stopPropagation } from '../view_helpers/stopPropagation';
 export const Link: React.FunctionComponent<{
   as: string;
   href: string;
-  text: string;
-}> = ({ as, href, text }) => {
+}> = ({ as, children, href }) => {
   return (
     <NextLink as={as} href={href} passHref>
-      <RebassLink onClick={stopPropagation}>{text}</RebassLink>
+      <RebassLink onClick={stopPropagation}>{children}</RebassLink>
     </NextLink>
   );
 };
