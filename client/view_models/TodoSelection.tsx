@@ -1,46 +1,37 @@
 import { EMPTY } from '../shared/constants/EMPTY';
 import { ID } from './ID';
 
-export enum TodoSelectionType {
+export enum SelectionType {
   EXPAND = 'EXPAND',
   NONE = 'NONE',
   SELECT = 'SELECT',
 }
 
-export type TodoSelection =
-  | { type: TodoSelectionType.NONE }
+export type Selection =
+  | { type: SelectionType.NONE }
   | {
-      expandedTodoId: ID;
-      type: TodoSelectionType.EXPAND;
+      id: ID;
+      type: SelectionType.EXPAND;
     }
   | {
-      selectedTodoIds: ID[];
-      type: TodoSelectionType.SELECT;
+      ids: ID[];
+      type: SelectionType.SELECT;
     };
 
-export function getSelectedTodoIds(selection: TodoSelection): ID[] {
-  return selection.type === TodoSelectionType.SELECT
-    ? selection.selectedTodoIds
-    : EMPTY;
+export function getSelectedIds(selection: Selection): ID[] {
+  return selection.type === SelectionType.SELECT ? selection.ids : EMPTY;
 }
 
-export function isSelected(selection: TodoSelection, todoId: ID): boolean {
+export function isSelected(selection: Selection, todoId: ID): boolean {
   return (
-    selection.type === TodoSelectionType.SELECT &&
-    selection.selectedTodoIds.includes(todoId)
+    selection.type === SelectionType.SELECT && selection.ids.includes(todoId)
   );
 }
 
-export function isSelectedSome(selection: TodoSelection): boolean {
-  return (
-    selection.type === TodoSelectionType.SELECT &&
-    selection.selectedTodoIds.length > 0
-  );
+export function isSelectedSome(selection: Selection): boolean {
+  return selection.type === SelectionType.SELECT && selection.ids.length > 0;
 }
 
-export function isExpanded(selection: TodoSelection, todoId: ID): boolean {
-  return (
-    selection.type === TodoSelectionType.EXPAND &&
-    selection.expandedTodoId === todoId
-  );
+export function isExpanded(selection: Selection, todoId: ID): boolean {
+  return selection.type === SelectionType.EXPAND && selection.id === todoId;
 }

@@ -11,7 +11,7 @@ import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
 import { ID } from '../../view_models/ID';
 import { SelectMode } from '../../view_models/SelectMode';
 import { getArchiveStatus } from '../../view_models/Todo';
-import { getSelectedTodoIds } from '../../view_models/TodoSelection';
+import { getSelectedIds } from '../../view_models/TodoSelection';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodosPageQueryVariables,
@@ -64,7 +64,7 @@ export function useTodosPageState() {
     [data?.todos]
   );
 
-  const selectedTodoIds = getSelectedTodoIds(todoEditFormState.selection);
+  const selectedTodoIds = getSelectedIds(todoEditFormState.selection);
 
   const status = React.useMemo(
     () => getStatus(data?.todos ?? EMPTY, selectedTodoIds),

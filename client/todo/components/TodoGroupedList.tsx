@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { groupTodoByCheckpoint } from '../../view_models/Todo';
-import { TodoSelection } from '../../view_models/TodoSelection';
+import { Selection } from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -21,7 +21,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
-  todoSelection: TodoSelection;
+  todoSelection: Selection;
   todos: RootTodoFragment[];
 }> = ({
   isCategoryNameShown,

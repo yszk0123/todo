@@ -10,7 +10,7 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
-import { getSelectedTodoIds } from '../../view_models/TodoSelection';
+import { getSelectedIds } from '../../view_models/TodoSelection';
 import {
   TodoEditFormAction,
   todoEditFormDeselect,
@@ -91,7 +91,7 @@ export class TodoUsecase {
     { category, checkpoint, selection, status, tags, text }: TodoEditFormState,
     todoSearchQuery: TodoSearchQuery | null
   ) {
-    const selectedTodoIds = getSelectedTodoIds(selection);
+    const selectedTodoIds = getSelectedIds(selection);
     const count = selectedTodoIds.length;
     if (count === 0) return;
 

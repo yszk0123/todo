@@ -16,7 +16,7 @@ import {
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
-import { getSelectedTodoIds } from '../../view_models/TodoSelection';
+import { getSelectedIds } from '../../view_models/TodoSelection';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
@@ -63,7 +63,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     userId,
   } = useTodosPageState();
   const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType();
-  const selectedTodoIds = getSelectedTodoIds(todoEditFormState.selection);
+  const selectedTodoIds = getSelectedIds(todoEditFormState.selection);
 
   const handleSelectManyTodo = React.useCallback(
     (todo: RootTodoFragment) => {

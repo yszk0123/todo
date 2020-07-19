@@ -5,7 +5,7 @@ import { Note } from '../../../shared/components/Note';
 import { RelativeDateTimeText } from '../../../shared/components/RelativeDateTimeText';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isPast, TodoGroup } from '../../../view_models/Todo';
-import { TodoSelection } from '../../../view_models/TodoSelection';
+import { Selection } from '../../../view_models/TodoSelection';
 import {
   RootTodoFragment,
   TodoCategoryFragment,
@@ -37,7 +37,7 @@ export function TodoList({
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
-  todoSelection: TodoSelection;
+  todoSelection: Selection;
 }): JSX.Element {
   const header = group.header;
   const todos = group.todos;

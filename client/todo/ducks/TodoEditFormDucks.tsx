@@ -5,9 +5,9 @@ import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { shallowEqual } from '../../shared/helpers/shallowEqual';
 import { toggle, toggleWith } from '../../shared/helpers/toggle';
 import {
-  getSelectedTodoIds,
-  TodoSelection,
-  TodoSelectionType,
+  getSelectedIds,
+  Selection,
+  SelectionType,
 } from '../../view_models/TodoSelection';
 import {
   RootTodoFragment,
@@ -18,7 +18,7 @@ import {
 export type TodoEditFormState = {
   category: RootCategoryFragment | null;
   checkpoint: RootCheckpointFragment | null;
-  selection: TodoSelection;
+  selection: Selection;
   status: TodoStatus | null;
   tags: TodoTagFragment[] | null;
   text: string;
@@ -143,7 +143,7 @@ export function todoEditFormSet(
 export const todoEditFormInitialState: TodoEditFormState = {
   category: null,
   checkpoint: null,
-  selection: { type: TodoSelectionType.NONE },
+  selection: { type: SelectionType.NONE },
   status: null,
   tags: null,
   text: '',
@@ -160,7 +160,7 @@ export function todoEditFormReducer(
     case TodoEditFormActionType.DESELECT: {
       return {
         ...state,
-        selection: { type: TodoSelectionType.NONE },
+        selection: { type: SelectionType.NONE },
       };
     }
     case TodoEditFormActionType.SET: {
@@ -171,10 +171,10 @@ export function todoEditFormReducer(
     }
     case TodoEditFormActionType.EXPAND: {
       const todo = action.payload.todo;
-      const newSelection = {
-        type: TodoSelectionType.EXPAND,
-        expandedTodoId: todo.id,
-      } as const;
+      const newSelection: Selection = {
+        type: SelectionType.EXPAND,
+        id: todo.id,
+      };
       return {
         ...state,
         selection: newSelection,
@@ -184,12 +184,12 @@ export function todoEditFormReducer(
       const { selection } = state;
       const { todo } = action.payload;
 
-      const selectedTodoIds = getSelectedTodoIds(selection);
-      const newSelection = {
-        type: TodoSelectionType.SELECT,
-        selectedTodoIds: toggle(selectedTodoIds, todo.id),
-      } as const;
-      const count = newSelection.selectedTodoIds.length;
+      const selectedTodoIds = getSelectedIds(selection);
+      const newSelection: Selection = {
+        type: SelectionType.SELECT,
+        ids: toggle(selectedTodoIds, todo.id),
+      };
+      const count = newSelection.ids.length;
       if (count === 1) {
         const newFields = getTodoEditFormFields(todo);
         return {
@@ -245,17 +245,17 @@ function selectTodos(
     return todoEditFormInitialState;
   }
 
-  const selectedTodoIds = getSelectedTodoIds(selection);
+  const selectedTodoIds = getSelectedIds(selection);
   const newSelectedTodoIds = newSelectedTodos.map((todo) => todo.id);
   const isIdentical = shallowEqual(selectedTodoIds, newSelectedTodoIds);
   if (isIdentical) {
     return todoEditFormInitialState;
   }
 
-  const newSelection = {
-    type: TodoSelectionType.SELECT,
-    selectedTodoIds: newSelectedTodoIds,
-  } as const;
+  const newSelection: Selection = {
+    type: SelectionType.SELECT,
+    ids: newSelectedTodoIds,
+  };
 
   if (count === 1) {
     const todo = newSelectedTodos[0];

@@ -6,7 +6,7 @@ import {
   isExpanded,
   isSelected,
   isSelectedSome,
-  TodoSelection,
+  Selection,
 } from '../../../view_models/TodoSelection';
 import {
   RootTodoFragment,
@@ -27,7 +27,7 @@ export const TodoListItem: React.FunctionComponent<{
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
   todo: RootTodoFragment;
-  todoSelection: TodoSelection;
+  todoSelection: Selection;
 }> = ({
   isCategoryNameShown,
   onClick,
