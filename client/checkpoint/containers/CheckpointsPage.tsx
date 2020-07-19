@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import { LoadingIndicator } from '../../shared/components/LoadingIndicator';
 import { PageContent } from '../../shared/components/PageContent';
+import { KeyCode } from '../../shared/constants/KeyCode';
 import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
+import {
+  Shortcut,
+  useGlobalShortcut,
+} from '../../shared/hooks/useGlobalShortcut';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { CheckpointEditForm } from '../components/CheckpointEditForm';
@@ -81,6 +86,16 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectCheckpoint : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
+  useGlobalShortcut((shortcut) => {
+    const command = translateShortcut(shortcut);
+    switch (command) {
+      case Command.OPEN_EDIT: {
+        onOpenEdit();
+        break;
+      }
+    }
+  });
+
   if (isLoading) {
     return <LoadingIndicator />;
   }
@@ -132,4 +147,18 @@ function useModalType() {
   }, []);
 
   return { onCloseModal, onOpenEdit, modalType };
+}
+
+enum Command {
+  OPEN_EDIT,
+  NONE,
+}
+
+function translateShortcut(shortcut: Shortcut): Command {
+  switch (shortcut.code) {
+    case KeyCode.E:
+      return Command.OPEN_EDIT;
+    default:
+      return Command.NONE;
+  }
 }
