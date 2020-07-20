@@ -98,6 +98,8 @@ export class CheckpointUsecase {
   }
 
   async archiveCheckpointsById(checkpointIds: ID[]) {
+    this.dispatch(checkpointSelectionDeselect());
+
     await this.client.mutate<unknown, UpdateCheckpointsByIdMutationVariables>({
       mutation: UpdateCheckpointsByIdDocument,
       variables: {

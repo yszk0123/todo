@@ -91,6 +91,8 @@ export class TagUsecase {
     if (!confirm(`Archive ${count} items?`)) return;
     const tagId = tagIds[0];
 
+    this.dispatch(tagEditFormReset());
+
     await this.client.mutate<unknown, UpdateOneTagMutationVariables>({
       mutation: UpdateOneTagDocument,
       variables: {

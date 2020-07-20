@@ -88,6 +88,8 @@ export class CategoryUsecase {
     if (!confirm(`Archive ${count} items?`)) return;
     const categoryId = categoryIds[0];
 
+    this.dispatch(categoryEditFormReset());
+
     await this.client.mutate<unknown, UpdateOneCategoryMutationVariables>({
       mutation: UpdateOneCategoryDocument,
       variables: {
