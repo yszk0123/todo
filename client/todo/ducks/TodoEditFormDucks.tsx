@@ -9,6 +9,7 @@ import {
   getTodoEditFormValues,
   TodoEditFormValues,
 } from '../view_models/TodoEditFormValues';
+import { parseDateTimeOptional } from '../../view_models/DateTime';
 
 export type TodoEditFormState = TodoEditFormValues;
 
@@ -96,13 +97,25 @@ export function todoEditFormReducer(
       const { selection, todos } = action.payload;
 
       const selectedTodoIds = getSelectedIds(selection);
-      if (selectedTodoIds.length === 1) {
+      const count = selectedTodoIds.length;
+      if (count === 1) {
         const todoId = selectedTodoIds[0];
         const todo = todos.find((todo) => todo.id === todoId);
         return todo ? getTodoEditFormValues(todo) : todoEditFormInitialState;
-      } else {
-        return todoEditFormInitialState;
       }
+      if (count === 0) {
+        // FIXME: pass `now` from action (useCallback)
+        const now = Date.now();
+        const checkpoint =
+          sortByCheckpointEndAtInAsc(todos).find(
+            (todo) => getEndAtInNumber(todo) >= now
+          )?.checkpoint ?? null;
+        return {
+          ...todoEditFormInitialState,
+          checkpoint,
+        };
+      }
+      return todoEditFormInitialState;
     }
     case TodoEditFormActionType.TOGGLE_TAG: {
       const { tag } = action.payload;
@@ -117,4 +130,18 @@ export function todoEditFormReducer(
       return state;
     }
   }
+}
+
+function sortByCheckpointEndAtInAsc(
+  todos: RootTodoFragment[]
+): RootTodoFragment[] {
+  return [...todos].sort((a, b) => {
+    const t1 = getEndAtInNumber(a);
+    const t2 = getEndAtInNumber(b);
+    return t1 - t2;
+  });
+}
+
+function getEndAtInNumber(todo: RootTodoFragment): number {
+  return Number(parseDateTimeOptional(todo.checkpoint?.endAt) ?? Infinity);
 }
