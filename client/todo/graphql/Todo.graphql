@@ -36,6 +36,7 @@ mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
 fragment RootTodo on Todo {
   id
   text
+  createdAt
   categoryId
   tags {
     ...TodoTag

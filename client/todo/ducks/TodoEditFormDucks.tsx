@@ -1,5 +1,7 @@
 import { EMPTY } from '../../shared/constants/EMPTY';
+import { first } from '../../shared/helpers/first';
 import { toggleWith } from '../../shared/helpers/toggle';
+import { parseDateTimeOptional } from '../../view_models/DateTime';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import {
   RootTodoFragment,
@@ -9,7 +11,6 @@ import {
   getTodoEditFormValues,
   TodoEditFormValues,
 } from '../view_models/TodoEditFormValues';
-import { parseDateTimeOptional } from '../../view_models/DateTime';
 
 export type TodoEditFormState = TodoEditFormValues;
 
@@ -110,9 +111,15 @@ export function todoEditFormReducer(
           sortByCheckpointEndAtInAsc(todos).find(
             (todo) => getEndAtInNumber(todo) >= now
           )?.checkpoint ?? null;
+        const latestTodo = first(sortByCreatedAtInDesc(todos)) ?? null;
+        const category = latestTodo?.category ?? null;
+        const tags = latestTodo?.tags ?? null;
+
         return {
           ...todoEditFormInitialState,
+          category,
           checkpoint,
+          tags,
         };
       }
       return todoEditFormInitialState;
@@ -142,6 +149,18 @@ function sortByCheckpointEndAtInAsc(
   });
 }
 
+function sortByCreatedAtInDesc(todos: RootTodoFragment[]): RootTodoFragment[] {
+  return [...todos].sort((a, b) => {
+    const t1 = getCreatedAtInNumber(a);
+    const t2 = getCreatedAtInNumber(b);
+    return t2 - t1;
+  });
+}
+
 function getEndAtInNumber(todo: RootTodoFragment): number {
   return Number(parseDateTimeOptional(todo.checkpoint?.endAt) ?? Infinity);
+}
+
+function getCreatedAtInNumber(todo: RootTodoFragment): number {
+  return Number(parseDateTimeOptional(todo.createdAt) ?? Infinity);
 }

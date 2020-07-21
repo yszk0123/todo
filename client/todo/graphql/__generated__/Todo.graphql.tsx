@@ -81,7 +81,7 @@ export type UpdateTodosByIdMutation = (
 
 export type RootTodoFragment = (
   { __typename?: 'Todo' }
-  & Pick<Types.Todo, 'id' | 'text' | 'categoryId' | 'status' | 'archivedAt'>
+  & Pick<Types.Todo, 'id' | 'text' | 'createdAt' | 'categoryId' | 'status' | 'archivedAt'>
   & { tags: Array<(
     { __typename?: 'Tag' }
     & TodoTagFragment
@@ -133,6 +133,7 @@ export const RootTodoFragmentDoc = gql`
     fragment RootTodo on Todo {
   id
   text
+  createdAt
   categoryId
   tags {
     ...TodoTag
