@@ -1,7 +1,12 @@
 import 'normalize.css';
 
-import { createApp, injectReactAxe } from '../client/bootstrap';
+import {
+  createApp,
+  injectReactAxe,
+  injectWhyDidYouRender,
+} from '../client/bootstrap';
 
+injectWhyDidYouRender();
 injectReactAxe();
 
 const App = createApp();
