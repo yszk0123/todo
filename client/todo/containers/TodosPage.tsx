@@ -329,6 +329,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         selectMode={selectMode}
         status={status}
         todoSearchQuery={todoSearchQuery}
+        todoSelection={todoSelection}
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
         onClickEdit={onOpenEdit}

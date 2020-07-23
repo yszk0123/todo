@@ -10,15 +10,16 @@ import {
   StatusBarPrimaryRow,
   StatusBarRight,
   StatusBarSecondaryRow,
-  StatusBarText,
 } from '../../../shared/components/StatusBar';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { getSelectedCount, Selection } from '../../../view_models/Selection';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
 import { TodoArchiveStatus } from '../../../view_models/Todo';
 import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
 import { TodoStatusBarCheckpointSelect } from './TodoStatusBarCheckpointSelect';
+import { TodoStatusBarCount } from './TodoStatusBarCount';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
 import { TodoStatusBarSyncStatus } from './TodoStatusBarSyncStatus';
 
@@ -40,6 +41,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   selectMode: SelectMode;
   status: TodoStatus | null;
   todoSearchQuery: TodoSearchQuery;
+  todoSelection: Selection;
 }> = ({
   archiveStatus,
   categories,
@@ -58,6 +60,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   selectMode,
   status,
   todoSearchQuery,
+  todoSelection,
 }) => {
   const selected = isSelected(selectMode);
   const searchCheckpoints = React.useMemo(
@@ -65,12 +68,16 @@ export const TodoStatusBar: React.FunctionComponent<{
       checkpoints.find((c) => c.id === todoSearchQuery.checkpointId) ?? null,
     [checkpoints, todoSearchQuery]
   );
+  const selectedCount = getSelectedCount(todoSelection);
 
   return (
     <StatusBar>
       <StatusBarPrimaryRow isSelected={selected}>
         <StatusBarLeft>
-          <StatusBarText text={`${count} todos`} />
+          <TodoStatusBarCount
+            selectedCount={selectedCount}
+            totalCount={count}
+          />
           <StatusBarItem>
             <TodoStatusBarSyncStatus isSyncing={isSyncing} />
           </StatusBarItem>
