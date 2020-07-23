@@ -20,6 +20,10 @@ export function getSelectedIds(selection: Selection): ID[] {
   return selection.type === SelectionType.SELECT ? selection.ids : EMPTY;
 }
 
+export function getSelectedCount(selection: Selection): number {
+  return selection.type === SelectionType.SELECT ? selection.ids.length : 0;
+}
+
 export function isSelected(selection: Selection, todoId: ID): boolean {
   return (
     selection.type === SelectionType.SELECT && selection.ids.includes(todoId)
