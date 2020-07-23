@@ -10,7 +10,6 @@ import {
   StatusBarPrimaryRow,
   StatusBarRight,
   StatusBarSecondaryRow,
-  StatusBarText,
 } from '../../../shared/components/StatusBar';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
@@ -19,6 +18,7 @@ import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
 import { TodoStatusBarCheckpointSelect } from './TodoStatusBarCheckpointSelect';
+import { TodoStatusBarCount } from './TodoStatusBarCount';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
 import { TodoStatusBarSyncStatus } from './TodoStatusBarSyncStatus';
 
@@ -70,7 +70,7 @@ export const TodoStatusBar: React.FunctionComponent<{
     <StatusBar>
       <StatusBarPrimaryRow isSelected={selected}>
         <StatusBarLeft>
-          <StatusBarText text={`${count} todos`} />
+          <TodoStatusBarCount count={count} />
           <StatusBarItem>
             <TodoStatusBarSyncStatus isSyncing={isSyncing} />
           </StatusBarItem>
