@@ -45,6 +45,7 @@
     "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
+    "@welldone-software/why-did-you-render": "^4.2.7",
     "apollo": "^2.30.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
