@@ -30,15 +30,21 @@ export const TodoListText: React.FunctionComponent<{
   isDone: boolean;
   subElement?: JSX.Element | null;
   text: string;
-}> = React.memo(({ isDone, subElement, text }) => {
-  return (
-    <ListText hasStrikeThrough={isDone} subElement={subElement}>
+}> = ({ isDone, subElement, text }) => {
+  const content = React.useMemo(() => {
+    return (
       <Linkify
         componentDecorator={linkifyComponentDecorator}
         textDecorator={linkifyTextDecorator}
       >
         {text}
       </Linkify>
+    );
+  }, [text]);
+
+  return (
+    <ListText hasStrikeThrough={isDone} subElement={subElement}>
+      {content}
     </ListText>
   );
-});
+};
