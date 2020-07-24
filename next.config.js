@@ -2,6 +2,9 @@
 const withPWA = require('next-pwa');
 
 // eslint-disable-next-line no-undef
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+// eslint-disable-next-line no-undef
 module.exports = withPWA({
   pwa: {
     // eslint-disable-next-line no-undef
@@ -21,6 +24,12 @@ module.exports = withPWA({
           ? 'react-redux/lib'
           : 'react-redux',
     };
+
+    // eslint-disable-next-line no-undef
+    if (process.env.ENABLE_WEBPACK_BUNDLE_ANALYZE === 'true') {
+      config.plugins = config.plugins || [];
+      config.plugins.push(new BundleAnalyzerPlugin());
+    }
 
     return config;
   },
