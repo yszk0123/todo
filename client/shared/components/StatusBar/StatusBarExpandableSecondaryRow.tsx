@@ -23,6 +23,7 @@ const StatusBarExpansionButton: React.FunctionComponent<{
 }> = ({ isExpanded, onClick }) => {
   return (
     <Flex
+      aria-label="toggle"
       justifyContent="center"
       mb={2}
       p={1}
