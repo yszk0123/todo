@@ -72,6 +72,39 @@ export const TodoStatusBar: React.FunctionComponent<{
 
   return (
     <StatusBar>
+      {selected ? (
+        <StatusBarSecondaryRow>
+          <StatusBarLeft>
+            <TodoStatusBarStatusSelect
+              status={status}
+              onChange={onChangeStatus}
+            />
+          </StatusBarLeft>
+          <StatusBarRight>
+            <TodoStatusBarCheckpointSelect
+              checkpoint={searchCheckpoints}
+              checkpoints={checkpoints}
+              onClickCheckpoint={onClickEditCheckpoint}
+            />
+          </StatusBarRight>
+        </StatusBarSecondaryRow>
+      ) : (
+        <StatusBarSecondaryRow>
+          <StatusBarLeft>
+            <TodoStatusBarStatusSelect
+              status={todoSearchQuery.status}
+              onChange={onClickSearchStatus}
+            />
+          </StatusBarLeft>
+          <StatusBarRight>
+            <TodoStatusBarCategorySelect
+              categories={categories}
+              category={category}
+              onClickCategory={onClickSearchCategory}
+            />
+          </StatusBarRight>
+        </StatusBarSecondaryRow>
+      )}
       <StatusBarPrimaryRow isSelected={selected}>
         <StatusBarLeft>
           <TodoStatusBarCount
@@ -106,39 +139,6 @@ export const TodoStatusBar: React.FunctionComponent<{
           />
         </StatusBarRight>
       </StatusBarPrimaryRow>
-      {selected ? (
-        <StatusBarSecondaryRow>
-          <StatusBarLeft>
-            <TodoStatusBarStatusSelect
-              status={status}
-              onChange={onChangeStatus}
-            />
-          </StatusBarLeft>
-          <StatusBarRight>
-            <TodoStatusBarCheckpointSelect
-              checkpoint={searchCheckpoints}
-              checkpoints={checkpoints}
-              onClickCheckpoint={onClickEditCheckpoint}
-            />
-          </StatusBarRight>
-        </StatusBarSecondaryRow>
-      ) : (
-        <StatusBarSecondaryRow>
-          <StatusBarLeft>
-            <TodoStatusBarStatusSelect
-              status={todoSearchQuery.status}
-              onChange={onClickSearchStatus}
-            />
-          </StatusBarLeft>
-          <StatusBarRight>
-            <TodoStatusBarCategorySelect
-              categories={categories}
-              category={category}
-              onClickCategory={onClickSearchCategory}
-            />
-          </StatusBarRight>
-        </StatusBarSecondaryRow>
-      )}
     </StatusBar>
   );
 };
