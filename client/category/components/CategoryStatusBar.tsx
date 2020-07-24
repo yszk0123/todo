@@ -32,6 +32,17 @@ export const CategoryStatusBar: React.FunctionComponent<{
 
   return (
     <StatusBar>
+      {currentCategoryId !== null && (
+        <StatusBarSecondaryRow>
+          <StatusBarLeft>
+            <StatusBarLink
+              as={`/categories/${currentCategoryId}/todos/report`}
+              href="/categories/[categoryId]/todos/report"
+              text="See report"
+            />
+          </StatusBarLeft>
+        </StatusBarSecondaryRow>
+      )}
       <StatusBarPrimaryRow isSelected={selected}>
         <StatusBarLeft>
           <StatusBarText text={`${count} categories`} />
@@ -55,17 +66,6 @@ export const CategoryStatusBar: React.FunctionComponent<{
           />
         </StatusBarRight>
       </StatusBarPrimaryRow>
-      {currentCategoryId !== null && (
-        <StatusBarSecondaryRow>
-          <StatusBarLeft>
-            <StatusBarLink
-              as={`/categories/${currentCategoryId}/todos/report`}
-              href="/categories/[categoryId]/todos/report"
-              text="See report"
-            />
-          </StatusBarLeft>
-        </StatusBarSecondaryRow>
-      )}
     </StatusBar>
   );
 };

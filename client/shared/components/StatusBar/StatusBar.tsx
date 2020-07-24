@@ -17,7 +17,7 @@ export const StatusBar: React.FunctionComponent<EmptyProps> = ({
   }
 
   return ReactDOM.createPortal(
-    <Flex flexDirection="column-reverse" width="100%" onClick={stopPropagation}>
+    <Flex flexDirection="column" width="100%" onClick={stopPropagation}>
       {children}
     </Flex>,
     footer

@@ -81,6 +81,9 @@ export const THEME = {
     },
     checkbox: {
       fontSize: 24,
+      ':hover': {
+        bg: 'highlight',
+      },
     },
   },
   variants: {
@@ -96,6 +99,9 @@ export const THEME = {
     },
     link: {
       color: 'primary',
+      ':hover': {
+        bg: 'highlight',
+      },
     },
     nav: {
       variant: 'text.caps',

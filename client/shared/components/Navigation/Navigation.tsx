@@ -58,7 +58,6 @@ export const Navigation: React.FunctionComponent<{
           bg="gray"
           color="white"
           justifyContent="space-between"
-          px={2}
           width={1}
         >
           <NavigationLink href="/categories" text="Category" />
