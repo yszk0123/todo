@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flex } from 'rebass';
 
 import { URL } from '../../view_models/URL';
 import { Link } from '../Link';
@@ -12,7 +13,9 @@ type Props = {
 export function ListIconLink({ as, href }: Props): JSX.Element {
   return (
     <Link as={as} href={href}>
-      <LinkToIcon />
+      <Flex p={1}>
+        <LinkToIcon />
+      </Flex>
     </Link>
   );
 }
