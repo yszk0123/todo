@@ -18,10 +18,6 @@ export function TodoSearchFormTagsField({
   onToggleTag: (tag: TodoTagFragment) => void;
   tags: TodoTagFragment[] | null;
 }): JSX.Element | null {
-  if (categoryTags.length === 0) {
-    return null;
-  }
-
   return (
     <EditFormBadgeSelectField
       getColor={getColor}

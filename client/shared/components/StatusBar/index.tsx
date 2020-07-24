@@ -1,6 +1,7 @@
 export { StatusBar } from './StatusBar';
 export { StatusBarPrimaryRow } from './StatusBarPrimaryRow';
 export { StatusBarSecondaryRow } from './StatusBarSecondaryRow';
+export { StatusBarExpandableSecondaryRow } from './StatusBarExpandableSecondaryRow';
 export { StatusBarButton } from './StatusBarButton';
 export { StatusBarItem } from './StatusBarItem';
 export { StatusBarText } from './StatusBarText';

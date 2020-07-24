@@ -44,8 +44,14 @@ export class TodoUsecase {
     private dispatch: Dispatch
   ) {}
 
-  search(todoSearchFormValues: Partial<TodoSearchFormValues>) {
-    const query = fromTodoSearchFormValues(todoSearchFormValues);
+  search(
+    todoSearchFormValues: Partial<TodoSearchFormValues>,
+    todoSearchQuery?: TodoSearchQuery
+  ) {
+    const query = {
+      ...todoSearchQuery,
+      ...fromTodoSearchFormValues(todoSearchFormValues),
+    };
     Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
   }
 

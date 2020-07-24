@@ -308,10 +308,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(todoSelectionDeselect());
   }, [dispatch, todoSearchQuery]);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent onClick={handleDeselectTodo}>
       {category !== null && (
@@ -323,6 +319,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         archiveStatus={archiveStatus}
         categories={categories}
         category={category}
+        categoryTags={categoryTags}
         checkpoints={checkpointsWithDummy}
         count={todos.length}
         isSyncing={isSyncing}
@@ -338,20 +335,28 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickSearchCategory={handleSearchByRootCategory}
         onClickSearchStatus={handleSearchByStatus}
         onClickUnarchive={handleUnarchiveTodosById}
+        onSearchChangeStatus={handleSearchByStatus}
+        onSearchSelectCategory={handleSearchByRootCategory}
+        onSearchSelectCheckpoint={handleSearchByRootCheckpoint}
+        onSearchToggleTag={handleToggleTagInSearch}
       />
-      <TodoGroupedList
-        isCategoryNameShown={isCategoryNameShown}
-        now={now}
-        todos={todos}
-        todoSelection={todoSelection}
-        onClick={handleSelectManyTodo}
-        onClickCategory={handleSearchByTodoCategory}
-        onClickCheckpoint={handleSearchByRootCheckpoint}
-        onClickExpand={handleExpandTodo}
-        onClickStatus={handleToggleStatus}
-        onClickTag={handleSearchByTodoTag}
-        onClickToggle={handleSelectManyTodo}
-      />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <TodoGroupedList
+          isCategoryNameShown={isCategoryNameShown}
+          now={now}
+          todos={todos}
+          todoSelection={todoSelection}
+          onClick={handleSelectManyTodo}
+          onClickCategory={handleSearchByTodoCategory}
+          onClickCheckpoint={handleSearchByRootCheckpoint}
+          onClickExpand={handleExpandTodo}
+          onClickStatus={handleToggleStatus}
+          onClickTag={handleSearchByTodoTag}
+          onClickToggle={handleSelectManyTodo}
+        />
+      )}
       <TodoEditForm
         categories={categories}
         categoryTags={categoryTags}
