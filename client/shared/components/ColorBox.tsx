@@ -3,6 +3,8 @@ import { Box } from 'rebass';
 
 import { Color, getColorCode } from '../../view_models/Color';
 
+const BOX_SIZE = 24;
+
 export const ColorBox: React.FunctionComponent<{
   color: Color;
 }> = ({ color }) => {
@@ -12,8 +14,8 @@ export const ColorBox: React.FunctionComponent<{
       sx={{
         bg: colorCode,
         p: 1,
-        width: 24,
-        height: 24,
+        width: BOX_SIZE,
+        height: BOX_SIZE,
         border: '1px solid black',
       }}
     />
