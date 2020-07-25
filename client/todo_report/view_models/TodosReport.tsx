@@ -57,7 +57,7 @@ function sortTodosByContent(
     });
 }
 
-export function printTodosReport(
+export function printTodosReportAsMarkdown(
   todos: RootTodoForReportFragment[],
   tags: RootTagForReportFragment[]
 ): string {
