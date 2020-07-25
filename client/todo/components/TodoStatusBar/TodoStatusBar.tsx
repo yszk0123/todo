@@ -146,12 +146,17 @@ export const TodoStatusBar: React.FunctionComponent<{
           ) : (
             <>
               <StatusBarLeft>
+                <StatusBarButton
+                  isSelected={selected}
+                  label="Search"
+                  onClick={onClickSearch}
+                />
+              </StatusBarLeft>
+              <StatusBarRight>
                 <TodoStatusBarStatusSelect
                   status={todoSearchQuery.status}
                   onChange={onClickSearchStatus}
                 />
-              </StatusBarLeft>
-              <StatusBarRight>
                 {searchCheckpoint?.name != null && (
                   <>
                     <StatusBarItem onClick={handleSearchDeselectCheckpoint}>
@@ -194,13 +199,6 @@ export const TodoStatusBar: React.FunctionComponent<{
               isSelected={selected}
               onClickArchive={onClickArchive}
               onClickUnarchive={onClickUnarchive}
-            />
-          )}
-          {!selected && (
-            <StatusBarButton
-              isSelected={selected}
-              label="Search"
-              onClick={onClickSearch}
             />
           )}
           <StatusBarButton
