@@ -1,6 +1,6 @@
 // @see https://github.com/rebassjs/rebass/blob/93754aaaab99eab305415e1610e0e0f84bdfafca/packages/preset-material/src/index.js
 
-export function createTheme(_isMobile: boolean) {
+export function createTheme(isMobile: boolean) {
   return {
     colors: {
       text: '#080818',
@@ -32,7 +32,7 @@ export function createTheme(_isMobile: boolean) {
     },
     space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
     sizes: {
-      icon: 24,
+      icon: isMobile ? 32 : 24,
       avatar: 44,
     },
     radii: {
@@ -81,7 +81,7 @@ export function createTheme(_isMobile: boolean) {
         fontSize: 18,
       },
       checkbox: {
-        fontSize: 24,
+        fontSize: isMobile ? 32 : 24,
         ':hover': {
           bg: 'highlight',
         },
@@ -95,12 +95,13 @@ export function createTheme(_isMobile: boolean) {
       },
       listText: {
         display: 'inline',
+        lineHeight: isMobile ? 2 : undefined,
       },
       label: {
         display: 'inline-block',
         whiteSpace: 'nowrap',
         px: 2,
-        py: 1,
+        py: isMobile ? 2 : 1,
         fontSize: 0,
         borderRadius: 2,
         border: '1px solid',
@@ -108,7 +109,7 @@ export function createTheme(_isMobile: boolean) {
       },
       badge: {
         px: 2,
-        py: 1,
+        py: isMobile ? 2 : 1,
         whiteSpace: 'nowrap',
         fontSize: 0,
         borderRadius: 9999,
