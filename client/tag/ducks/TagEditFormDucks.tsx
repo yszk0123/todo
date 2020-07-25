@@ -1,7 +1,7 @@
 import { RootCategoryFragment } from '../../category/graphql/__generated__/Category.graphql';
 import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { first } from '../../shared/helpers/first';
-import { toggle, toggleWith } from '../../shared/helpers/toggle';
+import { toggle } from '../../shared/helpers/toggle';
 import { ID } from '../../view_models/ID';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 
@@ -18,8 +18,6 @@ enum TagEditFormActionType {
   SELECT_MANY = 'tagEditForm/SELECT_MANY',
   SELECT_ONE = 'tagEditForm/SELECT_ONE',
   SET = 'tagEditForm/SET',
-  // FIXME: Remove
-  TOGGLE_CATEGORY = 'tagEditForm/TOGGLE_CATEGORY',
 }
 
 export type TagEditFormAction =
@@ -35,10 +33,6 @@ export type TagEditFormAction =
       type: TagEditFormActionType.SELECT;
     }
   | {
-      payload: { category: RootCategoryFragment };
-      type: TagEditFormActionType.TOGGLE_CATEGORY;
-    }
-  | {
       payload: { tag: RootTagFragment };
       type: TagEditFormActionType.SELECT_ONE;
     }
@@ -50,15 +44,6 @@ export type TagEditFormAction =
 export function tagEditFormReset(): TagEditFormAction {
   return {
     type: TagEditFormActionType.RESET,
-  };
-}
-
-export function tagEditFormToggleCategory(
-  category: RootCategoryFragment
-): TagEditFormAction {
-  return {
-    type: TagEditFormActionType.TOGGLE_CATEGORY,
-    payload: { category },
   };
 }
 
@@ -144,15 +129,6 @@ export function tagEditFormReducer(
           selectedTagIds: newSelectedTodoIds,
         };
       }
-    }
-    case TagEditFormActionType.TOGGLE_CATEGORY: {
-      const { tagCategories } = state;
-      const { category } = action.payload;
-      const newCategories = toggleWith(tagCategories, category, (c) => c.id);
-      return {
-        ...state,
-        tagCategories: newCategories,
-      };
     }
     default: {
       return state;

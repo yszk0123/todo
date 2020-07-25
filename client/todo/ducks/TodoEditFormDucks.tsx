@@ -1,12 +1,7 @@
-import { EMPTY } from '../../shared/constants/EMPTY';
 import { first } from '../../shared/helpers/first';
-import { toggleWith } from '../../shared/helpers/toggle';
 import { parseDateTimeOptional } from '../../view_models/DateTime';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
-import {
-  RootTodoFragment,
-  TodoTagFragment,
-} from '../graphql/__generated__/Todo.graphql';
+import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   getTodoEditFormValues,
   TodoEditFormValues,
@@ -18,8 +13,6 @@ enum TodoEditFormActionType {
   OPEN = 'todoEditForm/OPEN',
   RESET = 'todoEditForm/RESET',
   SET = 'todoEditForm/SET',
-  // FIXME: Remove
-  TOGGLE_TAG = 'todoEditForm/TOGGLE_TAG',
 }
 
 export type TodoEditFormAction =
@@ -33,10 +26,6 @@ export type TodoEditFormAction =
   | {
       payload: { selection: Selection; todos: RootTodoFragment[] };
       type: TodoEditFormActionType.OPEN;
-    }
-  | {
-      payload: { tag: TodoTagFragment };
-      type: TodoEditFormActionType.TOGGLE_TAG;
     };
 
 export function todoEditFormReset(): TodoEditFormAction {
@@ -61,15 +50,6 @@ export function todoEditFormSet(
   return {
     type: TodoEditFormActionType.SET,
     payload: { state },
-  };
-}
-
-export function todoEditFormToggleTag(
-  tag: TodoTagFragment
-): TodoEditFormAction {
-  return {
-    type: TodoEditFormActionType.TOGGLE_TAG,
-    payload: { tag },
   };
 }
 
@@ -124,15 +104,6 @@ export function todoEditFormReducer(
         };
       }
       return todoEditFormInitialState;
-    }
-    case TodoEditFormActionType.TOGGLE_TAG: {
-      const { tag } = action.payload;
-      const oldTags = state.tags ?? EMPTY;
-      const newTags = toggleWith(oldTags, tag, (t) => t.id);
-      return {
-        ...state,
-        tags: newTags,
-      };
     }
     default: {
       return state;

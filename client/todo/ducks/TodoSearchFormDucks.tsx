@@ -1,6 +1,3 @@
-import { EMPTY } from '../../shared/constants/EMPTY';
-import { toggleWith } from '../../shared/helpers/toggle';
-import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 import { TodoSearchFormValues } from '../view_models/TodoSearchFormValues';
 
 export type TodoSearchFormState = TodoSearchFormValues;
@@ -8,8 +5,6 @@ export type TodoSearchFormState = TodoSearchFormValues;
 enum TodoSearchFormActionType {
   RESET = 'todoSearchForm/RESET',
   SET = 'todoSearchForm/SET',
-  // FIXME: Remove
-  TOGGLE_TAG = 'todoSearchForm/TOGGLE_TAG',
 }
 
 export type TodoSearchFormAction =
@@ -19,24 +14,11 @@ export type TodoSearchFormAction =
   | {
       payload: { state: Partial<TodoSearchFormValues> };
       type: TodoSearchFormActionType.SET;
-    }
-  | {
-      payload: { tag: TodoTagFragment };
-      type: TodoSearchFormActionType.TOGGLE_TAG;
     };
 
 export function todoSearchFormReset(): TodoSearchFormAction {
   return {
     type: TodoSearchFormActionType.RESET,
-  };
-}
-
-export function todoSearchFormToggleTag(
-  tag: TodoTagFragment
-): TodoSearchFormAction {
-  return {
-    type: TodoSearchFormActionType.TOGGLE_TAG,
-    payload: { tag },
   };
 }
 
@@ -70,15 +52,6 @@ export function todoSearchFormReducer(
       return {
         ...state,
         ...action.payload.state,
-      };
-    }
-    case TodoSearchFormActionType.TOGGLE_TAG: {
-      const { tag } = action.payload;
-      const oldTags = state.tags ?? EMPTY;
-      const newTags = toggleWith(oldTags, tag, (t) => t.id);
-      return {
-        ...state,
-        tags: newTags,
       };
     }
     default: {
