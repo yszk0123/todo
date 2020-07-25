@@ -1,17 +1,22 @@
 import React from 'react';
 
 import { RootCategoryFragment } from '../../../category/graphql/__generated__/Category.graphql';
+import { CheckpointIcon } from '../../../checkpoint/components/CheckpointIcon';
 import { RootCheckpointFragment } from '../../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import {
   StatusBar,
+  StatusBarBadges,
   StatusBarButton,
   StatusBarExpandableSecondaryRow,
   StatusBarItem,
+  StatusBarLabel,
   StatusBarLeft,
   StatusBarPrimaryRow,
   StatusBarRight,
+  StatusBarText,
 } from '../../../shared/components/StatusBar';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { isNotUndefined } from '../../../shared/helpers/isNotUndefined';
 import { DateTime } from '../../../view_models/DateTime';
 import { getSelectedCount, Selection } from '../../../view_models/Selection';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
@@ -20,7 +25,6 @@ import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoSearchFormAsInline } from '../TodoSearchForm';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
-import { TodoStatusBarCategorySelect } from './TodoStatusBarCategorySelect';
 import { TodoStatusBarCheckpointSelect } from './TodoStatusBarCheckpointSelect';
 import { TodoStatusBarCount } from './TodoStatusBarCount';
 import { TodoStatusBarStatusSelect } from './TodoStatusBarStatusSelect';
@@ -39,7 +43,6 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickEdit: () => void;
   onClickEditCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onClickSearch: () => void;
-  onClickSearchCategory: (category: RootCategoryFragment | null) => void;
   onClickSearchStatus: (status: TodoStatus | null) => void;
   onClickUnarchive: () => void;
   onSearchChangeArchivedAt: (archivedAt: DateTime | null) => void;
@@ -64,7 +67,6 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickEdit,
   onClickEditCheckpoint,
   onClickSearch,
-  onClickSearchCategory,
   onClickSearchStatus,
   onClickUnarchive,
   onSearchChangeArchivedAt,
@@ -83,7 +85,20 @@ export const TodoStatusBar: React.FunctionComponent<{
       checkpoints.find((c) => c.id === todoSearchQuery.checkpointId) ?? null,
     [checkpoints, todoSearchQuery]
   );
+  const selectedTags = React.useMemo(() => {
+    return (
+      todoSearchQuery.tagIds
+        ?.map((tagId) => categoryTags.find((tag) => tag.id === tagId))
+        .filter(isNotUndefined) ?? null
+    );
+  }, [todoSearchQuery, categoryTags]);
   const selectedCount = getSelectedCount(todoSelection);
+  const handleSearchDeselectCategory = React.useCallback(() => {
+    onSearchSelectCategory(null);
+  }, [onSearchSelectCategory]);
+  const handleSearchDeselectCheckpoint = React.useCallback(() => {
+    onSearchSelectCheckpoint(null);
+  }, [onSearchSelectCheckpoint]);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   const handleToggle = React.useCallback(() => {
@@ -137,11 +152,26 @@ export const TodoStatusBar: React.FunctionComponent<{
                 />
               </StatusBarLeft>
               <StatusBarRight>
-                <TodoStatusBarCategorySelect
-                  categories={categories}
-                  category={category}
-                  onClickCategory={onClickSearchCategory}
-                />
+                {searchCheckpoint?.name != null && (
+                  <>
+                    <StatusBarItem onClick={handleSearchDeselectCheckpoint}>
+                      <CheckpointIcon />
+                    </StatusBarItem>
+                    <StatusBarText text={searchCheckpoint.name} />
+                  </>
+                )}
+                {selectedTags !== null && (
+                  <StatusBarBadges
+                    items={selectedTags}
+                    onClick={onSearchToggleTag}
+                  />
+                )}
+                {category !== null && (
+                  <StatusBarLabel
+                    item={category}
+                    onClick={handleSearchDeselectCategory}
+                  />
+                )}
               </StatusBarRight>
             </>
           )}

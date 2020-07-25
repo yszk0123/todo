@@ -19,7 +19,13 @@ export function ListLabel<T extends { name: string }>({
   );
 
   return (
-    <Flex ml={1} onClick={handleClick}>
+    <Flex
+      ml={1}
+      sx={{
+        cursor: 'pointer',
+      }}
+      onClick={handleClick}
+    >
       <Label text={item.name} />
     </Flex>
   );

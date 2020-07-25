@@ -339,7 +339,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickEdit={onOpenEdit}
         onClickEditCheckpoint={handleEditByRootCheckpoint}
         onClickSearch={onOpenSearch}
-        onClickSearchCategory={handleSearchByRootCategory}
         onClickSearchStatus={handleSearchByStatus}
         onClickUnarchive={handleUnarchiveTodosById}
         onSearchChangeArchivedAt={handleSearchByArchivedAt}

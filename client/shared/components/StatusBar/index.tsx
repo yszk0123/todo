@@ -8,3 +8,5 @@ export { StatusBarText } from './StatusBarText';
 export { StatusBarLeft } from './StatusBarLeft';
 export { StatusBarRight } from './StatusBarRight';
 export { StatusBarLink } from './StatusBarLink';
+export { StatusBarBadges } from './StatusBarBadges';
+export { StatusBarLabel } from './StatusBarLabel';

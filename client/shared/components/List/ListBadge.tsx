@@ -20,7 +20,12 @@ export function ListBadge<T extends { color: Color; name: string }>({
   );
 
   return (
-    <Box display="inline-block" ml={1} onClick={handleClick}>
+    <Box
+      display="inline-block"
+      ml={1}
+      sx={{ cursor: 'pointer' }}
+      onClick={handleClick}
+    >
       <ColorBadge color={item.color} text={item.name} />
     </Box>
   );
