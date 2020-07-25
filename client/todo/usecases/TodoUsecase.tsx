@@ -216,6 +216,28 @@ export class TodoUsecase {
     );
   }
 
+  updateTagToggle(
+    todoIds: ID[],
+    tags: TodoTagFragment[],
+    todoSearchQuery: TodoSearchQuery | null
+  ) {
+    this.dispatch(todoSelectionDeselect());
+    const tagIds = tags.map((tag) => tag.id);
+
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            tags: tagIds,
+          },
+        },
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
+      })
+    );
+  }
+
   archiveTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
     this.dispatch(todoSelectionDeselect());
 

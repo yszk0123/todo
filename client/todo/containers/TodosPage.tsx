@@ -251,6 +251,24 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [selectedTodoIds, todoUsecase]
   );
 
+  const handleEditToggleTag = React.useCallback(
+    (tag: TodoTagFragment | null) => {
+      if (tag !== null) {
+        todoUsecase.updateTagToggle(selectedTodoIds, [tag], todoSearchQuery);
+      }
+    },
+    [selectedTodoIds, todoSearchQuery, todoUsecase]
+  );
+
+  const handleEditByRootCategory = React.useCallback(
+    (category: RootCategoryFragment | null) => {
+      if (category !== null) {
+        todoUsecase.updateCategory(selectedTodoIds, category, todoSearchQuery);
+      }
+    },
+    [selectedTodoIds, todoSearchQuery, todoUsecase]
+  );
+
   const handleEditByRootCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
       if (checkpoint !== null) {
@@ -332,6 +350,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isSyncing={isSyncing}
         selectMode={selectMode}
         status={status}
+        todos={todos}
         todoSearchQuery={todoSearchQuery}
         todoSelection={todoSelection}
         onChangeStatus={handleUpdateStatus}
@@ -341,6 +360,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickSearch={onOpenSearch}
         onClickSearchStatus={handleSearchByStatusToggle}
         onClickUnarchive={handleUnarchiveTodosById}
+        onEditCategory={handleEditByRootCategory}
+        onEditToggleTag={handleEditToggleTag}
         onSearchChangeArchivedAt={handleSearchByArchivedAt}
         onSearchChangeStatus={handleSearchByStatusToggle}
         onSearchSelectCategory={handleSearchByRootCategory}

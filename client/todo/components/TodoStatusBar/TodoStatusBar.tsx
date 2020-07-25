@@ -18,11 +18,20 @@ import {
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
 import { isNotUndefined } from '../../../shared/helpers/isNotUndefined';
 import { DateTime } from '../../../view_models/DateTime';
-import { getSelectedCount, Selection } from '../../../view_models/Selection';
+import {
+  getSelectedCount,
+  getSelectedIds,
+  Selection,
+} from '../../../view_models/Selection';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
 import { TodoArchiveStatus } from '../../../view_models/Todo';
-import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../../graphql/__generated__/Todo.graphql';
+import { getTodoEditFormValuesFromTodos } from '../../view_models/TodoEditFormValues';
 import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
+import { TodoEditFormAsInline } from '../TodoEditForm';
 import { TodoSearchFormAsInline } from '../TodoSearchForm';
 import { TodoStatusBarArchiveButton } from './TodoStatusBarArchiveButton';
 import { TodoStatusBarCheckpointSelect } from './TodoStatusBarCheckpointSelect';
@@ -45,6 +54,8 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearch: () => void;
   onClickSearchStatus: (status: TodoStatus | null) => void;
   onClickUnarchive: () => void;
+  onEditCategory: (category: RootCategoryFragment | null) => void;
+  onEditToggleTag: (tag: TodoTagFragment) => void;
   onSearchChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onSearchChangeStatus: (status: TodoStatus | null) => void;
   onSearchSelectCategory: (category: RootCategoryFragment | null) => void;
@@ -54,6 +65,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   status: TodoStatus | null;
   todoSearchQuery: TodoSearchQuery;
   todoSelection: Selection;
+  todos: RootTodoFragment[];
 }> = ({
   archiveStatus,
   categories,
@@ -69,6 +81,8 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearch,
   onClickSearchStatus,
   onClickUnarchive,
+  onEditCategory,
+  onEditToggleTag,
   onSearchChangeArchivedAt,
   onSearchChangeStatus,
   onSearchSelectCategory,
@@ -78,6 +92,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   status,
   todoSearchQuery,
   todoSelection,
+  todos,
 }) => {
   const selected = isSelected(selectMode);
   const searchCheckpoint = React.useMemo(
@@ -92,6 +107,11 @@ export const TodoStatusBar: React.FunctionComponent<{
         .filter(isNotUndefined) ?? null
     );
   }, [todoSearchQuery, categoryTags]);
+  const todoEditFormValues = React.useMemo(() => {
+    const todoIds = getSelectedIds(todoSelection);
+    const selectedTodos = todos.filter((todo) => todoIds.includes(todo.id));
+    return getTodoEditFormValuesFromTodos(selectedTodos);
+  }, [todos, todoSelection]);
   const selectedCount = getSelectedCount(todoSelection);
   const handleSearchDeselectCategory = React.useCallback(() => {
     onSearchSelectCategory(null);
@@ -112,19 +132,35 @@ export const TodoStatusBar: React.FunctionComponent<{
           isExpanded={isExpanded}
           onToggle={handleToggle}
         >
-          <StatusBarLeft>
-            <TodoStatusBarStatusSelect
-              status={status}
-              onChange={onChangeStatus}
-            />
-          </StatusBarLeft>
-          <StatusBarRight>
-            <TodoStatusBarCheckpointSelect
-              checkpoint={searchCheckpoint}
+          {isExpanded ? (
+            <TodoEditFormAsInline
+              categories={categories}
+              categoryTags={categoryTags}
               checkpoints={checkpoints}
-              onClickCheckpoint={onClickEditCheckpoint}
+              selectMode={selectMode}
+              todoEditFormValues={todoEditFormValues}
+              onSelectCategory={onEditCategory}
+              onSelectCheckpoint={onClickEditCheckpoint}
+              onSelectStatus={onChangeStatus}
+              onToggleTag={onEditToggleTag}
             />
-          </StatusBarRight>
+          ) : (
+            <>
+              <StatusBarLeft>
+                <TodoStatusBarStatusSelect
+                  status={status}
+                  onChange={onChangeStatus}
+                />
+              </StatusBarLeft>
+              <StatusBarRight>
+                <TodoStatusBarCheckpointSelect
+                  checkpoint={searchCheckpoint}
+                  checkpoints={checkpoints}
+                  onClickCheckpoint={onClickEditCheckpoint}
+                />
+              </StatusBarRight>
+            </>
+          )}
         </StatusBarExpandableSecondaryRow>
       ) : (
         <StatusBarExpandableSecondaryRow
