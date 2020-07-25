@@ -204,6 +204,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [todoSearchQuery, todoUsecase]
   );
 
+  const handleSearchByArchivedAt = React.useCallback(
+    (archivedAt: DateTime | null) => {
+      todoUsecase.search({ archivedAt }, todoSearchQuery);
+    },
+    [todoSearchQuery, todoUsecase]
+  );
+
   const handleCreateOneTodo = React.useCallback(() => {
     if (!userId) return;
     todoUsecase.createOneTodo(userId, todoEditFormValues, todoSearchQuery);
@@ -335,6 +342,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickSearchCategory={handleSearchByRootCategory}
         onClickSearchStatus={handleSearchByStatus}
         onClickUnarchive={handleUnarchiveTodosById}
+        onSearchChangeArchivedAt={handleSearchByArchivedAt}
         onSearchChangeStatus={handleSearchByStatus}
         onSearchSelectCategory={handleSearchByRootCategory}
         onSearchSelectCheckpoint={handleSearchByRootCheckpoint}

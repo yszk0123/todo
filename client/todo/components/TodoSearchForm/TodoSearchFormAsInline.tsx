@@ -5,8 +5,10 @@ import { RootCheckpointFragment } from '../../../checkpoint/graphql/__generated_
 import { EditForm } from '../../../shared/components/EditForm';
 import { EMPTY } from '../../../shared/constants/EMPTY';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { DateTime } from '../../../view_models/DateTime';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
+import { TodoSearchFormArchivedAtField } from './TodoSearchFormArchivedAtField';
 import { TodoSearchFormCategoryField } from './TodoSearchFormCategoryField';
 import { TodoSearchFormCheckpointField } from './TodoSearchFormCheckpointField';
 import { TodoSearchFormStatusField } from './TodoSearchFormStatusField';
@@ -20,6 +22,7 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
+  onChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onChangeStatus: (status: TodoStatus | null) => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
@@ -29,6 +32,7 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
   categories,
   categoryTags,
   checkpoints,
+  onChangeArchivedAt,
   onChangeStatus,
   onSelectCategory,
   onSelectCheckpoint,
@@ -77,6 +81,10 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
       <TodoSearchFormStatusField
         status={todoSearchQuery.status}
         onSelectStatus={onChangeStatus}
+      />
+      <TodoSearchFormArchivedAtField
+        value={todoSearchQuery.archivedAt}
+        onChange={onChangeArchivedAt}
       />
     </EditForm>
   );

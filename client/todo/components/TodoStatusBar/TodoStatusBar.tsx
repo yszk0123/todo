@@ -12,6 +12,7 @@ import {
   StatusBarRight,
 } from '../../../shared/components/StatusBar';
 import { TodoStatus } from '../../../shared/graphql/__generated__/baseTypes';
+import { DateTime } from '../../../view_models/DateTime';
 import { getSelectedCount, Selection } from '../../../view_models/Selection';
 import { isSelected, SelectMode } from '../../../view_models/SelectMode';
 import { TodoArchiveStatus } from '../../../view_models/Todo';
@@ -41,6 +42,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearchCategory: (category: RootCategoryFragment | null) => void;
   onClickSearchStatus: (status: TodoStatus | null) => void;
   onClickUnarchive: () => void;
+  onSearchChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onSearchChangeStatus: (status: TodoStatus | null) => void;
   onSearchSelectCategory: (category: RootCategoryFragment | null) => void;
   onSearchSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
@@ -65,6 +67,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearchCategory,
   onClickSearchStatus,
   onClickUnarchive,
+  onSearchChangeArchivedAt,
   onSearchChangeStatus,
   onSearchSelectCategory,
   onSearchSelectCheckpoint,
@@ -119,6 +122,7 @@ export const TodoStatusBar: React.FunctionComponent<{
               categoryTags={categoryTags}
               checkpoints={checkpoints}
               todoSearchQuery={todoSearchQuery}
+              onChangeArchivedAt={onSearchChangeArchivedAt}
               onChangeStatus={onSearchChangeStatus}
               onSelectCategory={onSearchSelectCategory}
               onSelectCheckpoint={onSearchSelectCheckpoint}
