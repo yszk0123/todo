@@ -4,6 +4,7 @@ export type { EditFormAction } from './EditFormActionsField';
 export { EditFormChecklistField } from './EditFormChecklistField';
 export { EditFormInputField } from './EditFormInputField';
 export { EditFormDateTimeInputField } from './EditFormDateTimeInputField';
+export { EditFormDateInputField } from './EditFormDateInputField';
 export { EditFormRadioField } from './EditFormRadioField';
 export { EditFormSelectField } from './EditFormSelectField';
 export { EditFormBadgeSelectField } from './EditFormBadgeSelectField';

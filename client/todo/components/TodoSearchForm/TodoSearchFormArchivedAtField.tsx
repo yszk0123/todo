@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EditFormDateTimeInputField } from '../../../shared/components/EditForm';
+import { EditFormDateInputField } from '../../../shared/components/EditForm';
 import { DateTime } from '../../../view_models/DateTime';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 export function TodoSearchFormArchivedAtField({ onChange, value }: Props) {
   return (
-    <EditFormDateTimeInputField
+    <EditFormDateInputField
       id="todo-search-archived-at"
       label="ArchivedAt"
       value={value}
