@@ -17,7 +17,7 @@ export const Badge: React.FunctionComponent<{
         whiteSpace: 'nowrap',
         px: 2,
         py: 1,
-        fontSize: 10,
+        fontSize: 1,
         borderRadius: 9999,
         border: '1px solid',
         borderColor: 'dark',
