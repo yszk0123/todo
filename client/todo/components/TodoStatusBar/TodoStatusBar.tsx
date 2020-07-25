@@ -78,7 +78,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   todoSelection,
 }) => {
   const selected = isSelected(selectMode);
-  const searchCheckpoints = React.useMemo(
+  const searchCheckpoint = React.useMemo(
     () =>
       checkpoints.find((c) => c.id === todoSearchQuery.checkpointId) ?? null,
     [checkpoints, todoSearchQuery]
@@ -105,7 +105,7 @@ export const TodoStatusBar: React.FunctionComponent<{
           </StatusBarLeft>
           <StatusBarRight>
             <TodoStatusBarCheckpointSelect
-              checkpoint={searchCheckpoints}
+              checkpoint={searchCheckpoint}
               checkpoints={checkpoints}
               onClickCheckpoint={onClickEditCheckpoint}
             />
