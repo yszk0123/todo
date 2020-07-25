@@ -73,8 +73,13 @@ function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
 
 export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
   const groupsById: Record<string, TodoGroup> = {};
+  let hasArchivedAt = false;
 
   sortTodosByContent(todos).forEach((todo) => {
+    if (todo.archivedAt != null) {
+      hasArchivedAt = true;
+    }
+
     const key = todo.checkpoint?.id ?? '__DEFAULT__';
     let group = groupsById[key];
     if (!group) {
@@ -90,13 +95,24 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
     groupsById[key] = group;
   });
 
-  return Object.values(groupsById).sort((a, b) => {
+  const defaultTime = hasArchivedAt ? -Infinity : Infinity;
+
+  const todoGroups = Object.values(groupsById).sort((a, b) => {
     const d1 = a.header.endAt
       ? parseDateTime(a.header.endAt).getTime()
-      : Infinity;
+      : defaultTime;
     const d2 = b.header.endAt
       ? parseDateTime(b.header.endAt).getTime()
-      : Infinity;
+      : defaultTime;
     return d1 - d2;
   });
+
+  if (hasArchivedAt) {
+    todoGroups.reverse();
+    todoGroups.forEach((group) => {
+      group.todos.reverse();
+    });
+  }
+
+  return todoGroups;
 }
