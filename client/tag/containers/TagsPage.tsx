@@ -89,10 +89,6 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectTag : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent onClick={handleDeselectTag}>
       <TagStatusBar
@@ -101,11 +97,15 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         onClickArchive={handleArchiveOneTag}
         onClickEdit={onOpenEdit}
       />
-      <TagList
-        currentTagId={currentTagId}
-        tags={tags}
-        onClick={handleSelectOneTag}
-      />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <TagList
+          currentTagId={currentTagId}
+          tags={tags}
+          onClick={handleSelectOneTag}
+        />
+      )}
       <TagEditForm
         categories={rootCategories}
         isOpen={modalType === ModalType.EDIT}

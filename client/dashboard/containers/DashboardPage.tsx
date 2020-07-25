@@ -26,10 +26,6 @@ export const DashboardPage: React.FunctionComponent<EmptyProps> = () => {
     todoCountByDate,
   } = useDashboardPageState();
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent>
       <VerticalStack>
@@ -42,7 +38,11 @@ export const DashboardPage: React.FunctionComponent<EmptyProps> = () => {
           </List>
         </VerticalStackItem>
         <VerticalStackMainItem>
-          <TodoCountByDateChart data={todoCountByDate} />
+          {isLoading ? (
+            <LoadingIndicator />
+          ) : (
+            <TodoCountByDateChart data={todoCountByDate} />
+          )}
         </VerticalStackMainItem>
       </VerticalStack>
     </PageContent>

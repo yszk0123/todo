@@ -104,10 +104,6 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
     }
   });
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent onClick={handleDeselectCheckpoint}>
       <CheckpointStatusBar
@@ -116,13 +112,17 @@ export const CheckpointsPage: React.FunctionComponent<EmptyProps> = () => {
         onClickArchive={handleArchiveOneCheckpoint}
         onClickEdit={onOpenEdit}
       />
-      <CheckpointList
-        checkpoints={checkpoints}
-        now={now}
-        selectedCheckpointIds={selectedCheckpointIds}
-        onClick={handleSelectManyCheckpoint}
-        onClickCheckbox={handleSelectManyCheckpoint}
-      />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <CheckpointList
+          checkpoints={checkpoints}
+          now={now}
+          selectedCheckpointIds={selectedCheckpointIds}
+          onClick={handleSelectManyCheckpoint}
+          onClickCheckbox={handleSelectManyCheckpoint}
+        />
+      )}
       <CheckpointEditForm
         checkpointEditFormValues={checkpointEditFormValues}
         isOpen={modalType === ModalType.EDIT}

@@ -15,13 +15,13 @@ export const TodosReportPage: React.FunctionComponent<Props> = ({
 }) => {
   const { isLoading, tags, todos } = useTodosReportPageState(categoryId);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent>
-      <TodosReport tags={tags} todos={todos} />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <TodosReport tags={tags} todos={todos} />
+      )}
     </PageContent>
   );
 };

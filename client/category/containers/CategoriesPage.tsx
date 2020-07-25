@@ -73,10 +73,6 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectCategory : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   return (
     <PageContent onClick={handleDeselectCategory}>
       <CategoryStatusBar
@@ -86,11 +82,15 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
         onClickArchive={handleArchiveOneCategory}
         onClickEdit={onOpenEdit}
       />
-      <CategoryList
-        categories={categories}
-        currentCategoryId={currentCategoryId}
-        onClick={handleSelectOneCategory}
-      />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <CategoryList
+          categories={categories}
+          currentCategoryId={currentCategoryId}
+          onClick={handleSelectOneCategory}
+        />
+      )}
       <CategoryEditForm
         categoryEditFormState={categoryEditFormState}
         isOpen={modalType === ModalType.EDIT}
