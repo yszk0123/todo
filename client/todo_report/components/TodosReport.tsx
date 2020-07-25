@@ -3,7 +3,7 @@ import React from 'react';
 import { ReportArea } from '../../shared/components/ReportArea';
 import { RootTagForReportFragment } from '../graphql/__generated__/TagForReport.graphql';
 import { RootTodoForReportFragment } from '../graphql/__generated__/TodoForReport.graphql';
-import { printTodosReport } from '../helpers/printTodosReport';
+import { printTodosReport } from '../view_models/TodosReport';
 
 export const TodosReport: React.FunctionComponent<{
   tags: RootTagForReportFragment[];
