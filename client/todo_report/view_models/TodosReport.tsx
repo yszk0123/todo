@@ -101,3 +101,55 @@ export function printTodosReportAsMarkdown(
 
   return `\`\`\`\n${text}\n\`\`\``;
 }
+
+export function printTodosReportAsCSV(
+  todos: RootTodoForReportFragment[]
+): string {
+  const filteredTodos = sortTodosByContent(
+    todos
+      .filter((todo) => !IGNORE_RE.test(todo.text))
+      .map((todo) => {
+        const text = todo.text.replace(
+          /(^|\s)(https?:\/\/[^\s]+)/g,
+          (_, prefix, url) => `${prefix}${simplifyURL(url)}`
+        );
+        return { ...todo, text };
+      })
+  );
+  const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
+  const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
+
+  const tasksString = tasks
+    .map((todo) => {
+      const text = todo.text;
+      const status = printTodoStatusInPlainText(todo.status);
+      return [status, text].join('\t');
+    })
+    .join('\n');
+
+  const schedulesString = schedules
+    .map((todo) => {
+      const text = todo.text;
+      const match = TIME_WHOLE_RE.exec(todo.text);
+      const finalText = match ? match[2] : text;
+      const status = printTodoStatusInPlainText(todo.status);
+      return [status, finalText].join('\t');
+    })
+    .join('\n');
+
+  const text = [tasksString, schedulesString].join('\n');
+  return text;
+}
+
+function printTodoStatusInPlainText(status: TodoStatus): string {
+  switch (status) {
+    case TodoStatus.Todo:
+      return 'Todo';
+    case TodoStatus.InProgress:
+      return 'In Progress';
+    case TodoStatus.Waiting:
+      return 'Waiting';
+    case TodoStatus.Done:
+      return 'Done';
+  }
+}

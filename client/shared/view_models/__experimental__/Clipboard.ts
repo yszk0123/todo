@@ -3,7 +3,7 @@ type SupportedMineType = 'text/plain' | 'text/csv';
 
 declare global {
   class ClipboardItem {
-    constructor(params: { [K in SupportedMineType]?: string });
+    constructor(params: { [K in SupportedMineType]?: Blob });
   }
 
   interface Clipboard {
@@ -12,6 +12,8 @@ declare global {
 }
 
 export async function setCSVToClipboard(text: string): Promise<void> {
-  const data = [new ClipboardItem({ 'text/csv': text })];
+  // text/csv is not supported yet
+  const blob = new Blob([text], { type: 'text/plain' });
+  const data = [new ClipboardItem({ 'text/plain': blob })];
   await navigator.clipboard.write(data);
 }
