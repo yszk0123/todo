@@ -63,6 +63,15 @@ export class TodoUsecase {
     Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
   }
 
+  searchToggleStatus(
+    status: TodoStatus | null,
+    todoSearchQuery: TodoSearchQuery
+  ) {
+    const query = { ...todoSearchQuery };
+    query.status = query.status === status ? null : status;
+    Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
+  }
+
   async createOneTodo(
     userId: string,
     todoEditFormValues: TodoEditFormValues,

@@ -197,9 +197,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [todoSearchQuery, todoUsecase]
   );
 
-  const handleSearchByStatus = React.useCallback(
+  const handleSearchByStatusToggle = React.useCallback(
     (status: TodoStatus | null) => {
-      todoUsecase.search({ status }, todoSearchQuery);
+      todoUsecase.searchToggleStatus(status, todoSearchQuery);
     },
     [todoSearchQuery, todoUsecase]
   );
@@ -339,10 +339,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickEdit={onOpenEdit}
         onClickEditCheckpoint={handleEditByRootCheckpoint}
         onClickSearch={onOpenSearch}
-        onClickSearchStatus={handleSearchByStatus}
+        onClickSearchStatus={handleSearchByStatusToggle}
         onClickUnarchive={handleUnarchiveTodosById}
         onSearchChangeArchivedAt={handleSearchByArchivedAt}
-        onSearchChangeStatus={handleSearchByStatus}
+        onSearchChangeStatus={handleSearchByStatusToggle}
         onSearchSelectCategory={handleSearchByRootCategory}
         onSearchSelectCheckpoint={handleSearchByRootCheckpoint}
         onSearchToggleTag={handleSearchByTodoTag}
