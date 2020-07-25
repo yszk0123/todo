@@ -29,6 +29,7 @@ import {
 import {
   todoSelectionDeselect,
   todoSelectionExpandTodo,
+  todoSelectionSelectAll,
   todoSelectionSelectMany,
 } from '../ducks/TodoSelectionDucks';
 import {
@@ -158,6 +159,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     },
     [dispatch]
   );
+
+  const handleSelectAll = React.useCallback(() => {
+    dispatch(todoSelectionSelectAll(todos));
+  }, [dispatch, todos]);
 
   const handleSearch = React.useCallback(() => {
     todoUsecase.search(todoSearchFormValues);
@@ -310,6 +315,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onOpenSearch();
         break;
       }
+      case Command.SELECT_ALL: {
+        handleSelectAll();
+        break;
+      }
       case Command.CHANGE_STATUS_TO_DONE: {
         handleUpdateStatus(TodoStatus.Done);
         break;
@@ -454,11 +463,14 @@ enum Command {
   CHANGE_STATUS_TO_TODO,
   OPEN_EDIT,
   OPEN_SEARCH,
+  SELECT_ALL,
   NONE,
 }
 
 function translateShortcut(shortcut: Shortcut): Command {
   switch (shortcut.code) {
+    case KeyCode.A:
+      return shortcut.cmd ? Command.SELECT_ALL : Command.NONE;
     case KeyCode.E:
       return Command.OPEN_EDIT;
     case KeyCode.S:

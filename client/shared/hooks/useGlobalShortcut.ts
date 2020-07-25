@@ -4,6 +4,7 @@ import { isKeyCode, KeyCode } from '../constants/KeyCode';
 
 export type Shortcut = {
   alt: boolean;
+  cmd: boolean;
   code: KeyCode;
   ctrl: boolean;
   shift: boolean;
@@ -51,6 +52,7 @@ export function useGlobalShortcut(
         shift: event.shiftKey,
         ctrl: event.ctrlKey,
         alt: event.altKey,
+        cmd: event.metaKey,
       };
       onShortcutRef.current(shortcut);
     },

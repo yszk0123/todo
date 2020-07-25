@@ -17,6 +17,7 @@ enum TodoSelectionActionType {
   DESELECT = 'todoSelection/DESELECT',
   EXPAND = 'todoSelection/EXPAND',
   RESET = 'todoSelection/RESET',
+  SELECT_ALL = 'todoSelection/SELECT_ALL',
   SELECT_BY_CATEGORY = 'todoSelection/SELECT_BY_CATEGORY',
   SELECT_BY_TAG = 'todoSelection/SELECT_BY_TAG',
   SELECT_MANY = 'todoSelection/SELECT_MANY',
@@ -24,6 +25,10 @@ enum TodoSelectionActionType {
 }
 
 export type TodoSelectionAction =
+  | {
+      payload: { todos: RootTodoFragment[] };
+      type: TodoSelectionActionType.SELECT_ALL;
+    }
   | {
       type: TodoSelectionActionType.DESELECT;
     }
@@ -60,6 +65,15 @@ export function todoSelectionExpandTodo(
   return {
     type: TodoSelectionActionType.EXPAND,
     payload: { todo },
+  };
+}
+
+export function todoSelectionSelectAll(
+  todos: RootTodoFragment[]
+): TodoSelectionAction {
+  return {
+    type: TodoSelectionActionType.SELECT_ALL,
+    payload: { todos },
   };
 }
 
@@ -146,6 +160,12 @@ export function todoSelectionReducer(
       const todoIds = todos
         .filter((todo) => todo.category === category)
         .map((todo) => todo.id);
+      return { type: SelectionType.SELECT, ids: todoIds };
+    }
+    case TodoSelectionActionType.SELECT_ALL: {
+      const { todos } = action.payload;
+
+      const todoIds = todos.map((todo) => todo.id);
       return { type: SelectionType.SELECT, ids: todoIds };
     }
     default: {
