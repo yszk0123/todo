@@ -18,6 +18,7 @@ enum TodoEditFormActionType {
   OPEN = 'todoEditForm/OPEN',
   RESET = 'todoEditForm/RESET',
   SET = 'todoEditForm/SET',
+  // FIXME: Remove
   TOGGLE_TAG = 'todoEditForm/TOGGLE_TAG',
 }
 

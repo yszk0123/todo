@@ -24,9 +24,9 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
   checkpoints: RootCheckpointFragment[];
   onChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onChangeStatus: (status: TodoStatus | null) => void;
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
-  onToggleTag: (tag: TodoTagFragment) => void;
   todoSearchQuery: TodoSearchQuery;
 }> = ({
   categories,
@@ -34,9 +34,9 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
   checkpoints,
   onChangeArchivedAt,
   onChangeStatus,
+  onChangeTags,
   onSelectCategory,
   onSelectCheckpoint,
-  onToggleTag,
   todoSearchQuery,
 }) => {
   const category = React.useMemo(
@@ -76,7 +76,7 @@ export const TodoSearchFormAsInline: React.FunctionComponent<{
       <TodoSearchFormTagsField
         categoryTags={categoryTags}
         tags={tags}
-        onToggleTag={onToggleTag}
+        onChangeTags={onChangeTags}
       />
       <TodoSearchFormStatusField
         status={todoSearchQuery.status}

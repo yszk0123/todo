@@ -8,6 +8,7 @@ export type TodoSearchFormState = TodoSearchFormValues;
 enum TodoSearchFormActionType {
   RESET = 'todoSearchForm/RESET',
   SET = 'todoSearchForm/SET',
+  // FIXME: Remove
   TOGGLE_TAG = 'todoSearchForm/TOGGLE_TAG',
 }
 

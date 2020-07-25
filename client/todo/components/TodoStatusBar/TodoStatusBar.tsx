@@ -55,9 +55,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearchStatus: (status: TodoStatus | null) => void;
   onClickUnarchive: () => void;
   onEditCategory: (category: RootCategoryFragment | null) => void;
-  onEditToggleTag: (tag: TodoTagFragment) => void;
+  onEditTags: (tags: TodoTagFragment[]) => void;
   onSearchChangeArchivedAt: (archivedAt: DateTime | null) => void;
   onSearchChangeStatus: (status: TodoStatus | null) => void;
+  onSearchChangeTags: (tags: TodoTagFragment[]) => void;
   onSearchSelectCategory: (category: RootCategoryFragment | null) => void;
   onSearchSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSearchToggleTag: (tag: TodoTagFragment) => void;
@@ -82,9 +83,10 @@ export const TodoStatusBar: React.FunctionComponent<{
   onClickSearchStatus,
   onClickUnarchive,
   onEditCategory,
-  onEditToggleTag,
+  onEditTags,
   onSearchChangeArchivedAt,
   onSearchChangeStatus,
+  onSearchChangeTags,
   onSearchSelectCategory,
   onSearchSelectCheckpoint,
   onSearchToggleTag,
@@ -139,10 +141,10 @@ export const TodoStatusBar: React.FunctionComponent<{
               checkpoints={checkpoints}
               selectMode={selectMode}
               todoEditFormValues={todoEditFormValues}
+              onChangeTags={onEditTags}
               onSelectCategory={onEditCategory}
               onSelectCheckpoint={onClickEditCheckpoint}
               onSelectStatus={onChangeStatus}
-              onToggleTag={onEditToggleTag}
             />
           ) : (
             <>
@@ -175,9 +177,9 @@ export const TodoStatusBar: React.FunctionComponent<{
               todoSearchQuery={todoSearchQuery}
               onChangeArchivedAt={onSearchChangeArchivedAt}
               onChangeStatus={onSearchChangeStatus}
+              onChangeTags={onSearchChangeTags}
               onSelectCategory={onSearchSelectCategory}
               onSelectCheckpoint={onSearchSelectCheckpoint}
-              onToggleTag={onSearchToggleTag}
             />
           ) : (
             <>

@@ -11,11 +11,11 @@ const getDisplayName = (tag: TodoTagFragment) => tag.name;
 
 export function TodoEditFormTagsField({
   categoryTags,
-  onToggleTag,
+  onChangeTags,
   tags,
 }: {
   categoryTags: TodoTagFragment[];
-  onToggleTag: (tag: TodoTagFragment) => void;
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   tags: TodoTagFragment[] | null;
 }): JSX.Element | null {
   if (categoryTags.length === 0) {
@@ -32,8 +32,7 @@ export function TodoEditFormTagsField({
       label="Tags"
       rightElement={!tags ? <Badge text="preserved" /> : null}
       selectedItems={tags ?? EMPTY}
-      onDeselect={onToggleTag}
-      onSelect={onToggleTag}
+      onChange={onChangeTags}
     />
   );
 }

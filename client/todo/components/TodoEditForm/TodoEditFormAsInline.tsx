@@ -16,19 +16,19 @@ const SingleForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
-  onToggleTag: (tag: TodoTagFragment) => void;
   todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
   checkpoints,
+  onChangeTags,
   onSelectCategory,
   onSelectCheckpoint,
   onSelectStatus,
-  onToggleTag,
   todoEditFormValues,
 }) => {
   return (
@@ -46,7 +46,7 @@ const SingleForm: React.FunctionComponent<{
       <TodoEditFormTagsField
         categoryTags={categoryTags}
         tags={todoEditFormValues.tags}
-        onToggleTag={onToggleTag}
+        onChangeTags={onChangeTags}
       />
       <TodoEditFormStatusField
         status={todoEditFormValues.status}
@@ -60,19 +60,19 @@ const MultiForm: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
-  onToggleTag: (tag: TodoTagFragment) => void;
   todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
   checkpoints,
+  onChangeTags,
   onSelectCategory,
   onSelectCheckpoint,
   onSelectStatus,
-  onToggleTag,
   todoEditFormValues,
 }) => {
   return (
@@ -90,7 +90,7 @@ const MultiForm: React.FunctionComponent<{
       <TodoEditFormTagsField
         categoryTags={categoryTags}
         tags={todoEditFormValues.tags}
-        onToggleTag={onToggleTag}
+        onChangeTags={onChangeTags}
       />
       <TodoEditFormStatusField
         status={todoEditFormValues.status}
@@ -104,20 +104,20 @@ export const TodoEditFormAsInline: React.FunctionComponent<{
   categories: RootCategoryFragment[];
   categoryTags: TodoTagFragment[];
   checkpoints: RootCheckpointFragment[];
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   onSelectCategory: (category: RootCategoryFragment | null) => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
-  onToggleTag: (tag: TodoTagFragment) => void;
   selectMode: SelectMode;
   todoEditFormValues: TodoEditFormValues;
 }> = ({
   categories,
   categoryTags,
   checkpoints,
+  onChangeTags,
   onSelectCategory,
   onSelectCheckpoint,
   onSelectStatus,
-  onToggleTag,
   selectMode,
   todoEditFormValues,
 }) => {
@@ -132,10 +132,10 @@ export const TodoEditFormAsInline: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           todoEditFormValues={todoEditFormValues}
+          onChangeTags={onChangeTags}
           onSelectCategory={onSelectCategory}
           onSelectCheckpoint={onSelectCheckpoint}
           onSelectStatus={onSelectStatus}
-          onToggleTag={onToggleTag}
         />
       );
     }
@@ -146,10 +146,10 @@ export const TodoEditFormAsInline: React.FunctionComponent<{
           categoryTags={categoryTags}
           checkpoints={checkpoints}
           todoEditFormValues={todoEditFormValues}
+          onChangeTags={onChangeTags}
           onSelectCategory={onSelectCategory}
           onSelectCheckpoint={onSelectCheckpoint}
           onSelectStatus={onSelectStatus}
-          onToggleTag={onToggleTag}
         />
       );
     }

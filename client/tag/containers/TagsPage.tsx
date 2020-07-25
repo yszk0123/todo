@@ -14,7 +14,6 @@ import {
   tagEditFormReset,
   tagEditFormSelectOne,
   tagEditFormSet,
-  tagEditFormToggleCategory,
 } from '../ducks/TagEditFormDucks';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { useTagsPageState } from '../hooks/useTagsPageState';
@@ -45,9 +44,9 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(tagEditFormReset());
   }, [dispatch]);
 
-  const handleToggleRootCategory = React.useCallback(
-    (category: RootCategoryFragment) => {
-      dispatch(tagEditFormToggleCategory(category));
+  const handleChangeRootCategories = React.useCallback(
+    (tagCategories: RootCategoryFragment[]) => {
+      dispatch(tagEditFormSet({ tagCategories }));
     },
     [dispatch]
   );
@@ -112,12 +111,12 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
         selectMode={selectMode}
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
+        onChangeCategories={handleChangeRootCategories}
         onChangeColor={handleSetColor}
         onChangeName={handleSetName}
         onCloseModal={onCloseModal}
         onCreateOneTag={handleCreateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
-        onToggleCategory={handleToggleRootCategory}
         onUpdateOneTag={handleUpdateOneTag}
       />
     </PageContent>

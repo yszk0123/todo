@@ -22,26 +22,26 @@ export const TodoSearchForm: React.FunctionComponent<{
   checkpoints: RootCheckpointFragment[];
   isOpen: boolean;
   onChangeArchivedAt: (archivedAt: DateTime | null) => void;
+  onChangeTags: (tags: TodoTagFragment[]) => void;
   onChangeText: (text: string) => void;
   onCloseModal: () => void;
   onCommit: () => void;
   onReset: () => void;
   onSelectCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onSelectStatus: (status: TodoStatus | null) => void;
-  onToggleTag: (tag: TodoTagFragment) => void;
   todoSearchFormValues: TodoSearchFormValues;
 }> = ({
   categoryTags,
   checkpoints,
   isOpen,
   onChangeArchivedAt,
+  onChangeTags,
   onChangeText,
   onCloseModal,
   onCommit,
   onReset,
   onSelectCheckpoint,
   onSelectStatus,
-  onToggleTag,
   todoSearchFormValues,
 }) => {
   const actions: EditFormAction[] = [
@@ -64,7 +64,7 @@ export const TodoSearchForm: React.FunctionComponent<{
         <TodoSearchFormTagsField
           categoryTags={categoryTags}
           tags={todoSearchFormValues.tags}
-          onToggleTag={onToggleTag}
+          onChangeTags={onChangeTags}
         />
         <TodoSearchFormStatusField
           status={todoSearchFormValues.status}

@@ -12,11 +12,11 @@ const getDisplayName = (category: RootCategoryFragment) => category.name;
 
 export function TagEditFormCategoriesField({
   categories,
-  onToggle,
+  onChange,
   selectedCategories,
 }: {
   categories: RootCategoryFragment[];
-  onToggle: (category: RootCategoryFragment) => void;
+  onChange: (categories: RootCategoryFragment[]) => void;
   selectedCategories: RootCategoryFragment[] | null;
 }): JSX.Element | null {
   if (categories.length === 0) {
@@ -33,8 +33,7 @@ export function TagEditFormCategoriesField({
       label="Categories"
       rightElement={!selectedCategories ? <Badge text="preserved" /> : null}
       selectedItems={selectedCategories ?? EMPTY}
-      onDeselect={onToggle}
-      onSelect={onToggle}
+      onChange={onChange}
     />
   );
 }

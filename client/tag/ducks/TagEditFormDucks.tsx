@@ -18,6 +18,7 @@ enum TagEditFormActionType {
   SELECT_MANY = 'tagEditForm/SELECT_MANY',
   SELECT_ONE = 'tagEditForm/SELECT_ONE',
   SET = 'tagEditForm/SET',
+  // FIXME: Remove
   TOGGLE_CATEGORY = 'tagEditForm/TOGGLE_CATEGORY',
 }
 

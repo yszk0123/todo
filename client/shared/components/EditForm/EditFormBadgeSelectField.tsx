@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from 'rebass';
 
 import { Color } from '../../../view_models/Color';
+import { toggleWith } from '../../helpers/toggle';
 import { ClosableBadge } from '../ClosableBadge';
 import { MiniList, MiniListItem } from '../MiniList';
 import { Select } from '../Select';
@@ -14,8 +15,7 @@ export function EditFormBadgeSelectField<T>({
   id,
   items,
   label,
-  onDeselect,
-  onSelect,
+  onChange,
   rightElement,
   selectedItems,
 }: {
@@ -25,8 +25,7 @@ export function EditFormBadgeSelectField<T>({
   id: string;
   items: T[];
   label: string;
-  onDeselect: (item: T) => void;
-  onSelect: (item: T) => void;
+  onChange: (items: T[]) => void;
   rightElement?: JSX.Element | null;
   selectedItems: T[];
 }): JSX.Element {
@@ -35,13 +34,14 @@ export function EditFormBadgeSelectField<T>({
     return items.filter((item) => !set.has(getValue(item)));
   }, [getValue, items, selectedItems]);
 
-  const handleSelect = React.useCallback(
+  const handleChange = React.useCallback(
     (item: T | null) => {
       if (item !== null) {
-        onSelect(item);
+        const newItems = toggleWith(selectedItems, item, getValue);
+        onChange(newItems);
       }
     },
-    [onSelect]
+    [getValue, selectedItems, onChange]
   );
 
   const isEmpty = selectedItems.length === 0;
@@ -55,7 +55,7 @@ export function EditFormBadgeSelectField<T>({
               <ClosableBadge
                 color={getColor(item)}
                 text={getDisplayName(item)}
-                onClick={() => onDeselect(item)}
+                onClick={() => handleChange(item)}
               />
             </MiniListItem>
           );
@@ -68,7 +68,7 @@ export function EditFormBadgeSelectField<T>({
           id={id}
           items={selectableItems}
           selectedItem={null}
-          onChange={handleSelect}
+          onChange={handleChange}
         />
       </Box>
     </EditFormField>

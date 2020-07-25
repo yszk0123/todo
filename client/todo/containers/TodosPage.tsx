@@ -21,15 +21,10 @@ import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
 import { TodoStatusBar } from '../components/TodoStatusBar';
-import {
-  todoEditFormOpen,
-  todoEditFormSet,
-  todoEditFormToggleTag,
-} from '../ducks/TodoEditFormDucks';
+import { todoEditFormOpen, todoEditFormSet } from '../ducks/TodoEditFormDucks';
 import {
   todoSearchFormReset,
   todoSearchFormSet,
-  todoSearchFormToggleTag,
 } from '../ducks/TodoSearchFormDucks';
 import {
   todoSelectionDeselect,
@@ -83,9 +78,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     dispatch(todoSelectionDeselect());
   }, [dispatch]);
 
-  const handleToggleTag = React.useCallback(
-    (tag: TodoTagFragment) => {
-      dispatch(todoEditFormToggleTag(tag));
+  const handleChangeTags = React.useCallback(
+    (tags: TodoTagFragment[]) => {
+      dispatch(todoEditFormSet({ tags }));
     },
     [dispatch]
   );
@@ -130,8 +125,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   );
 
   const handleToggleTagInSearch = React.useCallback(
-    (tag: TodoTagFragment) => {
-      dispatch(todoSearchFormToggleTag(tag));
+    (tags: TodoTagFragment[]) => {
+      dispatch(todoSearchFormSet({ tags }));
     },
     [dispatch]
   );
@@ -172,6 +167,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const handleSearchByTodoTag = React.useCallback(
     (tag: TodoTagFragment) => {
       todoUsecase.searchToggleTag(tag, todoSearchQuery);
+    },
+    [todoSearchQuery, todoUsecase]
+  );
+
+  const handleSearchByTodoTags = React.useCallback(
+    (tags: TodoTagFragment[]) => {
+      todoUsecase.search({ tags }, todoSearchQuery);
     },
     [todoSearchQuery, todoUsecase]
   );
@@ -251,11 +253,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [selectedTodoIds, todoUsecase]
   );
 
-  const handleEditToggleTag = React.useCallback(
-    (tag: TodoTagFragment | null) => {
-      if (tag !== null) {
-        todoUsecase.updateTagToggle(selectedTodoIds, [tag], todoSearchQuery);
-      }
+  const handleEditTags = React.useCallback(
+    (tags: TodoTagFragment[]) => {
+      todoUsecase.updateTagToggle(selectedTodoIds, tags, todoSearchQuery);
     },
     [selectedTodoIds, todoSearchQuery, todoUsecase]
   );
@@ -361,9 +361,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onClickSearchStatus={handleSearchByStatusToggle}
         onClickUnarchive={handleUnarchiveTodosById}
         onEditCategory={handleEditByRootCategory}
-        onEditToggleTag={handleEditToggleTag}
+        onEditTags={handleEditTags}
         onSearchChangeArchivedAt={handleSearchByArchivedAt}
         onSearchChangeStatus={handleSearchByStatusToggle}
+        onSearchChangeTags={handleSearchByTodoTags}
         onSearchSelectCategory={handleSearchByRootCategory}
         onSearchSelectCheckpoint={handleSearchByRootCheckpoint}
         onSearchToggleTag={handleSearchByTodoTag}
@@ -392,6 +393,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isOpen={modalType === ModalType.EDIT}
         selectMode={selectMode}
         todoEditFormValues={todoEditFormValues}
+        onChangeTags={handleChangeTags}
         onChangeText={handleSetText}
         onCloseModal={onCloseModal}
         onCreateOneTodo={handleCreateOneTodo}
@@ -399,7 +401,6 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onSelectCategory={handleSetCategory}
         onSelectCheckpoint={handleSetCheckpoint}
         onSelectStatus={handleSetStatus}
-        onToggleTag={handleToggleTag}
         onUpdateOneTodo={handleUpdateTodosById}
       />
       <TodoSearchForm
@@ -408,13 +409,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         isOpen={modalType === ModalType.SEARCH}
         todoSearchFormValues={todoSearchFormValues}
         onChangeArchivedAt={handleSetArchivedAt}
+        onChangeTags={handleToggleTagInSearch}
         onChangeText={handleSetTextInSearch}
         onCloseModal={onCloseModal}
         onCommit={handleSearch}
         onReset={handleResetSearch}
         onSelectCheckpoint={handleSetCheckpointInSearch}
         onSelectStatus={handleSetStatusInSearch}
-        onToggleTag={handleToggleTagInSearch}
       />
     </PageContent>
   );
