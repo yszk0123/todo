@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 
 type Props = {
   hasStrikeThrough?: boolean;
@@ -18,7 +18,7 @@ export const ListText: React.FunctionComponent<Props> = ({
         textDecoration: hasStrikeThrough ? 'line-through double' : undefined,
       }}
     >
-      {children}
+      <Box variant="listText">{children}</Box>
       {subElement != null && (
         <Flex color="secondaryText" sx={{ float: 'right' }}>
           {subElement}

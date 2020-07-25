@@ -93,6 +93,9 @@ export function createTheme(_isMobile: boolean) {
         height: 'avatar',
         borderRadius: 'circle',
       },
+      listText: {
+        display: 'inline',
+      },
       label: {
         display: 'inline-block',
         whiteSpace: 'nowrap',
