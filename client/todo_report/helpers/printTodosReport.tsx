@@ -5,8 +5,8 @@ import { RootTagForReportFragment } from '../graphql/__generated__/TagForReport.
 import { RootTodoForReportFragment } from '../graphql/__generated__/TodoForReport.graphql';
 
 const statusToIndex = {
-  [TodoStatus.Todo]: 0,
-  [TodoStatus.InProgress]: 1,
+  [TodoStatus.InProgress]: 0,
+  [TodoStatus.Todo]: 1,
   [TodoStatus.Waiting]: 2,
   [TodoStatus.Done]: 3,
 };
