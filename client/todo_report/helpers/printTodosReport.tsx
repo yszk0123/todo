@@ -21,30 +21,65 @@ function getTime(text: string): number {
   return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
 }
 
+function compareTag(
+  a: RootTagForReportFragment,
+  b: RootTagForReportFragment
+): number {
+  return a.name.localeCompare(b.name);
+}
+
+function compareTags(
+  a: RootTagForReportFragment[],
+  b: RootTagForReportFragment[]
+): number {
+  const len = Math.min(a.length, b.length);
+  for (let i = 0; i < len; i += 1) {
+    const name = compareTag(a[i], b[i]);
+    if (name !== 0) return name;
+  }
+  return a.length - b.length;
+}
+
+function sortTodosByContent(
+  todos: RootTodoForReportFragment[]
+): RootTodoForReportFragment[] {
+  return [...todos]
+    .sort((a, b) => {
+      const time = getTime(a.text) - getTime(b.text);
+      if (time !== 0) return time;
+      const status = statusToIndex[a.status] - statusToIndex[b.status];
+      if (status !== 0) return status;
+      return compareTags(a.tags, b.tags);
+    })
+    .map((todo) => {
+      const tags = [...todo.tags].sort(compareTag);
+      return { ...todo, tags };
+    });
+}
+
 export function printTodosReport(
   todos: RootTodoForReportFragment[],
   tags: RootTagForReportFragment[]
 ): string {
-  const filteredTodos = todos
-    .filter((todo) => !IGNORE_RE.test(todo.text))
-    .map((todo) => {
-      const text = todo.text.replace(
-        /(^|\s)(https?:\/\/[^\s]+)/g,
-        (_, prefix, url) => `${prefix}${simplifyURL(url)}`
-      );
-      return { ...todo, text };
-    });
+  const filteredTodos = sortTodosByContent(
+    todos
+      .filter((todo) => !IGNORE_RE.test(todo.text))
+      .map((todo) => {
+        const text = todo.text.replace(
+          /(^|\s)(https?:\/\/[^\s]+)/g,
+          (_, prefix, url) => `${prefix}${simplifyURL(url)}`
+        );
+        return { ...todo, text };
+      })
+  );
   const tagsString = tags.map((tag) => tag.name).join(', ');
   const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
   const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
 
   const tasksString = tasks
-    .sort((a, b) => statusToIndex[a.status] - statusToIndex[b.status])
     .map((todo) => {
       const text = todo.text;
-      const tagNames = todo.tags
-        .map((tag) => tag.name)
-        .sort((a, b) => a.localeCompare(b));
+      const tagNames = todo.tags.map((tag) => tag.name);
       const tags = tagNames.length ? `${tagNames.join(', ')}: ` : '';
       const status = printTodoStatus(todo.status);
       return `- [${status}] ${tags}${text}`;
@@ -52,7 +87,6 @@ export function printTodosReport(
     .join('\n');
 
   const schedulesString = schedules
-    .sort((a, b) => getTime(a.text) - getTime(b.text))
     .map((todo) => {
       const text = todo.text;
       const tagNames = todo.tags.map((tag) => tag.name);
