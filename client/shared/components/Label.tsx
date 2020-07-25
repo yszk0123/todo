@@ -10,15 +10,8 @@ export const Label: React.FunctionComponent<{
       sx={{
         color: 'white',
         bg: color,
-        display: 'inline-block',
-        whiteSpace: 'nowrap',
-        px: 2,
-        py: 1,
-        fontSize: 1,
-        borderRadius: 2,
-        border: '1px solid',
-        borderColor: 'dark',
       }}
+      variant="label"
     >
       {text}
     </Box>

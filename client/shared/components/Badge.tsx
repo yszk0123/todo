@@ -14,14 +14,8 @@ export const Badge: React.FunctionComponent<{
       sx={{
         color: isReverseColor ? 'black' : 'white',
         bg: color,
-        whiteSpace: 'nowrap',
-        px: 2,
-        py: 1,
-        fontSize: 1,
-        borderRadius: 9999,
-        border: '1px solid',
-        borderColor: 'dark',
       }}
+      variant="badge"
     >
       {text}
       {!!icon && (
