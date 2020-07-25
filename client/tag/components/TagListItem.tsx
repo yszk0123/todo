@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ListItem } from '../../shared/components/List';
+import { ColorBox } from '../../shared/components/ColorBox';
+import { ListItem, ListText } from '../../shared/components/List';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagListIcon } from './TagListIcon';
 import { TagListLink } from './TagListLink';
@@ -23,7 +24,11 @@ export const TagListItem: React.FunctionComponent<{
           onClick={onClick}
         />
       }
-      mainElement={tag.name}
+      mainElement={
+        <ListText subElement={<ColorBox color={tag.color} />}>
+          {tag.name}
+        </ListText>
+      }
       rightElement={<TagListLink tag={tag} />}
       onClick={onClick}
     />
