@@ -9,6 +9,7 @@ import {
   PageIsSyncingDocument,
   PageIsSyncingQuery,
 } from '../../shared/graphql/__generated__/Page.graphql';
+import { toggle } from '../../shared/helpers/toggle';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
@@ -21,6 +22,7 @@ import {
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
   refetchGetTodosQuery,
+  TodoTagFragment,
   UpdateTodosByIdDocument,
   UpdateTodosByIdMutationVariables,
 } from '../graphql/__generated__/Todo.graphql';
@@ -48,10 +50,16 @@ export class TodoUsecase {
     todoSearchFormValues: Partial<TodoSearchFormValues>,
     todoSearchQuery?: TodoSearchQuery
   ) {
-    const query = {
-      ...todoSearchQuery,
-      ...fromTodoSearchFormValues(todoSearchFormValues),
-    };
+    const query = fromTodoSearchFormValues(
+      todoSearchFormValues,
+      todoSearchQuery
+    );
+    Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
+  }
+
+  searchToggleTag(tag: TodoTagFragment, todoSearchQuery: TodoSearchQuery) {
+    const query = { ...todoSearchQuery };
+    query.tagIds = toggle(query.tagIds ?? [], tag.id);
     Router.push({ pathname: '/todos', query }, undefined, { shallow: true });
   }
 

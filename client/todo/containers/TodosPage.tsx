@@ -171,37 +171,37 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleSearchByTodoTag = React.useCallback(
     (tag: TodoTagFragment) => {
-      todoUsecase.search({ tags: [tag] });
+      todoUsecase.searchToggleTag(tag, todoSearchQuery);
     },
-    [todoUsecase]
+    [todoSearchQuery, todoUsecase]
   );
 
   const handleSearchByTodoCategory = React.useCallback(
     (category: TodoCategoryFragment) => {
-      todoUsecase.search({ category });
+      todoUsecase.search({ category }, todoSearchQuery);
     },
-    [todoUsecase]
+    [todoSearchQuery, todoUsecase]
   );
 
   const handleSearchByRootCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
-      todoUsecase.search({ category });
+      todoUsecase.search({ category }, todoSearchQuery);
     },
-    [todoUsecase]
+    [todoSearchQuery, todoUsecase]
   );
 
   const handleSearchByRootCheckpoint = React.useCallback(
     (checkpoint: RootCheckpointFragment | null) => {
-      todoUsecase.search({ checkpoint });
+      todoUsecase.search({ checkpoint }, todoSearchQuery);
     },
-    [todoUsecase]
+    [todoSearchQuery, todoUsecase]
   );
 
   const handleSearchByStatus = React.useCallback(
     (status: TodoStatus | null) => {
-      todoUsecase.search({ status });
+      todoUsecase.search({ status }, todoSearchQuery);
     },
-    [todoUsecase]
+    [todoSearchQuery, todoUsecase]
   );
 
   const handleCreateOneTodo = React.useCallback(() => {
@@ -338,7 +338,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         onSearchChangeStatus={handleSearchByStatus}
         onSearchSelectCategory={handleSearchByRootCategory}
         onSearchSelectCheckpoint={handleSearchByRootCheckpoint}
-        onSearchToggleTag={handleToggleTagInSearch}
+        onSearchToggleTag={handleSearchByTodoTag}
       />
       {isLoading ? (
         <LoadingIndicator />

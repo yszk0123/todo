@@ -20,14 +20,26 @@ const stringToTodoStatusMap: Record<string, TodoStatus | undefined> = {
 };
 
 export function fromTodoSearchFormValues(
-  value: Partial<TodoSearchFormValues> | null
+  value: Partial<TodoSearchFormValues> | null,
+  query?: TodoSearchQuery
 ): TodoSearchQuery {
-  const archivedAt = value?.archivedAt ?? null;
-  const categoryId = value?.category?.id ?? null;
-  const checkpointId = value?.checkpoint?.id ?? null;
-  const status = value?.status ?? null;
-  const tagIds = value?.tags?.map((tag) => tag.id) ?? null;
-  const text = value?.text ?? null;
+  const archivedAt =
+    (value?.archivedAt !== undefined ? value?.archivedAt : query?.archivedAt) ??
+    null;
+  const categoryId =
+    (value?.category !== undefined ? value?.category?.id : query?.categoryId) ??
+    null;
+  const checkpointId =
+    (value?.checkpoint !== undefined
+      ? value?.checkpoint?.id
+      : query?.checkpointId) ?? null;
+  const status =
+    (value?.status !== undefined ? value?.status : query?.status) ?? null;
+  const tagIds =
+    (value?.tags !== undefined
+      ? value?.tags?.map((tag) => tag.id)
+      : query?.tagIds) ?? null;
+  const text = (value?.text !== undefined ? value?.text : query?.text) ?? null;
   return {
     archivedAt,
     categoryId,
