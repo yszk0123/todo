@@ -42,7 +42,9 @@ export function printTodosReport(
     .sort((a, b) => statusToIndex[a.status] - statusToIndex[b.status])
     .map((todo) => {
       const text = todo.text;
-      const tagNames = todo.tags.map((tag) => tag.name);
+      const tagNames = todo.tags
+        .map((tag) => tag.name)
+        .sort((a, b) => a.localeCompare(b));
       const tags = tagNames.length ? `${tagNames.join(', ')}: ` : '';
       const status = printTodoStatus(todo.status);
       return `- [${status}] ${tags}${text}`;
