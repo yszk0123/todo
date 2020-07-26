@@ -32,8 +32,8 @@ export const DashboardPage: React.FunctionComponent<EmptyProps> = () => {
         <VerticalStackItem>
           <List>
             <CategoryCountListItem count={categoryCount} />
-            <TodoCountListItem count={todoCount} />
             <CheckpointCountListItem count={checkpointCount} />
+            <TodoCountListItem count={todoCount} />
             <TagCountListItem count={tagCount} />
           </List>
         </VerticalStackItem>
