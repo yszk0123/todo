@@ -62,10 +62,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     todos,
     userId,
   } = useTodosPageState();
-  const { modalType, onCloseModal, onOpenEdit, onOpenSearch } = useModalType(
-    todos,
-    todoSelection
-  );
+  const {
+    modalType,
+    onCloseModal,
+    onOpenEdit,
+    onOpenEditWithText,
+    onOpenSearch,
+  } = useModalType(todos, todoSelection);
   const selectedTodoIds = getSelectedIds(todoSelection);
 
   const handleSelectManyTodo = React.useCallback(
@@ -304,6 +307,8 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectTodo : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
+  useDrop(onOpenEditWithText, modalType === ModalType.NONE);
+
   useGlobalShortcut((shortcut) => {
     const command = translateShortcut(shortcut);
     switch (command) {
@@ -453,7 +458,21 @@ function useModalType(todos: RootTodoFragment[], todoSelection: Selection) {
     setModalType(ModalType.EDIT);
   }, [dispatch, todoSelection, todos]);
 
-  return { onCloseModal, onOpenSearch, onOpenEdit, modalType };
+  const onOpenEditWithText = React.useCallback(
+    (text: string) => {
+      dispatch(todoEditFormOpen(todos, todoSelection, text));
+      setModalType(ModalType.EDIT);
+    },
+    [dispatch, todoSelection, todos]
+  );
+
+  return {
+    onCloseModal,
+    onOpenSearch,
+    onOpenEdit,
+    onOpenEditWithText,
+    modalType,
+  };
 }
 
 enum Command {
@@ -488,4 +507,34 @@ function translateShortcut(shortcut: Shortcut): Command {
     default:
       return Command.NONE;
   }
+}
+
+function useDrop(onDrop: (text: string) => void, isEnabled: boolean): void {
+  React.useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
+    const handleDrop = (event: DragEvent) => {
+      event.preventDefault();
+      if (event.dataTransfer?.types.includes('text/plain')) {
+        const text = event.dataTransfer.getData('text/plain');
+        onDrop(text);
+      }
+    };
+    const handleDragOver = (event: DragEvent) => {
+      event.preventDefault();
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'copy';
+      }
+    };
+    const element = document.body;
+    element.addEventListener('drop', handleDrop);
+    element.addEventListener('dragover', handleDragOver);
+
+    return () => {
+      element.removeEventListener('drop', handleDrop);
+      element.removeEventListener('dragover', handleDragOver);
+    };
+  }, [isEnabled, onDrop]);
 }

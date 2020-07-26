@@ -24,7 +24,11 @@ export type TodoEditFormAction =
       type: TodoEditFormActionType.SET;
     }
   | {
-      payload: { selection: Selection; todos: RootTodoFragment[] };
+      payload: {
+        selection: Selection;
+        text?: string;
+        todos: RootTodoFragment[];
+      };
       type: TodoEditFormActionType.OPEN;
     };
 
@@ -36,11 +40,12 @@ export function todoEditFormReset(): TodoEditFormAction {
 
 export function todoEditFormOpen(
   todos: RootTodoFragment[],
-  selection: Selection
+  selection: Selection,
+  text?: string
 ): TodoEditFormAction {
   return {
     type: TodoEditFormActionType.OPEN,
-    payload: { todos, selection },
+    payload: { todos, selection, text },
   };
 }
 
@@ -76,7 +81,7 @@ export function todoEditFormReducer(
       };
     }
     case TodoEditFormActionType.OPEN: {
-      const { selection, todos } = action.payload;
+      const { selection, text, todos } = action.payload;
 
       const selectedTodoIds = getSelectedIds(selection);
       const count = selectedTodoIds.length;
@@ -101,6 +106,7 @@ export function todoEditFormReducer(
           category,
           checkpoint,
           tags,
+          text: text ?? todoEditFormInitialState.text,
         };
       }
       return todoEditFormInitialState;
