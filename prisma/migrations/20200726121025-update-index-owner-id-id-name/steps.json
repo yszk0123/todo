@@ -1,0 +1,197 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Category",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId, id, name]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Category",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[id, name]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Category",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Todo",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId, id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Todo",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Todo",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Tag",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId, id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Tag",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Tag",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Checkpoint",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId, id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Checkpoint",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[id]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "Checkpoint",
+          "arguments": [
+            {
+              "name": "",
+              "value": "[ownerId]"
+            }
+          ]
+        },
+        "directive": "index"
+      }
+    }
+  ]
+}
