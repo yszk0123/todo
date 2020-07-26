@@ -589,6 +589,7 @@ export enum Color {
   Blue = 'BLUE',
   Default = 'DEFAULT',
   Green = 'GREEN',
+  Pink = 'PINK',
   Purple = 'PURPLE',
   Red = 'RED',
   Yellow = 'YELLOW'

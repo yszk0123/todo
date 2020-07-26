@@ -442,6 +442,7 @@ enum Color {
   BLUE
   DEFAULT
   GREEN
+  PINK
   PURPLE
   RED
   YELLOW

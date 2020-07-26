@@ -11,6 +11,8 @@ export function getColorCode(color: Color): string {
       return 'navy';
     case Color.Green:
       return 'green';
+    case Color.Pink:
+      return 'pink';
     case Color.Purple:
       return 'purple';
     case Color.Red:
@@ -21,5 +23,5 @@ export function getColorCode(color: Color): string {
 }
 
 export function isLightColor(color: Color): boolean {
-  return color === Color.Yellow;
+  return color === Color.Yellow || color === Color.Pink;
 }
