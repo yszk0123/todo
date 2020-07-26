@@ -15,6 +15,26 @@ const options = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+    Providers.Credentials({
+      name: 'Username and password',
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'guest' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (
+          credentials.username === 'guest' &&
+          credentials.password === 'test'
+        ) {
+          const client = getPrismaClient();
+          const guestUser = await client.user.findOne({
+            where: { email: 'guest@example.com' },
+          });
+          return guestUser;
+        }
+        return false;
+      },
+    }),
   ],
 
   secret: process.env.SECRET,
