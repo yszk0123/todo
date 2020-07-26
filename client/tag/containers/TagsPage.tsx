@@ -8,7 +8,7 @@ import { Color } from '../../shared/graphql/__generated__/baseTypes';
 import { useGlobalEscapeKey } from '../../shared/hooks/useGlobalEscapeKey';
 import { EmptyProps } from '../../view_models/EmptyProps';
 import { TagEditForm } from '../components/TagEditForm';
-import { TagList } from '../components/TagList';
+import { TagGroupedList } from '../components/TagGroupedList';
 import { TagStatusBar } from '../components/TagStatusBar';
 import {
   tagEditFormReset,
@@ -106,7 +106,7 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       {isLoading ? (
         <LoadingIndicator />
       ) : (
-        <TagList
+        <TagGroupedList
           currentTagId={currentTagId}
           tags={tags}
           onClick={handleSelectOneTag}
