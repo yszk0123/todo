@@ -46,6 +46,9 @@ export function ListItem<T>({
       p={2}
       sx={{
         cursor: 'pointer',
+        borderBottom: '1px dashed',
+        borderColor: 'lightgray',
+        ':last-child': { borderBottom: 'none' },
       }}
       tabIndex={0}
       variant="listItem"
