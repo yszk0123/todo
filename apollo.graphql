@@ -552,6 +552,7 @@ input TagCreateInput {
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
+  parentId: String
   todos: TodoCreateManyWithoutTagsInput
 }
 input TagCreateManyWithoutCategoriesInput {
@@ -573,6 +574,7 @@ input TagCreateWithoutCategoriesInput {
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
+  parentId: String
   todos: TodoCreateManyWithoutTagsInput
 }
 input TagCreateWithoutOwnerInput {
@@ -582,6 +584,7 @@ input TagCreateWithoutOwnerInput {
   createdAt: DateTime
   id: String
   name: String!
+  parentId: String
   todos: TodoCreateManyWithoutTagsInput
 }
 input TagCreateWithoutTodosInput {
@@ -592,6 +595,7 @@ input TagCreateWithoutTodosInput {
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
+  parentId: String
 }
 input TagFilter {
   every: TagWhereInput
@@ -605,6 +609,7 @@ input TagOrderByInput {
   id: OrderByArg
   name: OrderByArg
   ownerId: OrderByArg
+  parentId: OrderByArg
 }
 input TagScalarWhereInput {
   AND: [TagScalarWhereInput!]
@@ -617,6 +622,7 @@ input TagScalarWhereInput {
   NOT: [TagScalarWhereInput!]
   OR: [TagScalarWhereInput!]
   ownerId: StringFilter
+  parentId: NullableStringFilter
   todos: TodoFilter
 }
 input TagUpdateInput {
@@ -627,6 +633,7 @@ input TagUpdateInput {
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
+  parentId: String
   todos: TodoUpdateManyWithoutTagsInput
 }
 input TagUpdateManyDataInput {
@@ -635,6 +642,7 @@ input TagUpdateManyDataInput {
   createdAt: DateTime
   id: String
   name: String
+  parentId: String
 }
 input TagUpdateManyWithoutCategoriesInput {
   connect: [TagWhereUniqueInput!]
@@ -680,6 +688,7 @@ input TagUpdateWithoutCategoriesDataInput {
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
+  parentId: String
   todos: TodoUpdateManyWithoutTagsInput
 }
 input TagUpdateWithoutOwnerDataInput {
@@ -689,6 +698,7 @@ input TagUpdateWithoutOwnerDataInput {
   createdAt: DateTime
   id: String
   name: String
+  parentId: String
   todos: TodoUpdateManyWithoutTagsInput
 }
 input TagUpdateWithoutTodosDataInput {
@@ -699,6 +709,7 @@ input TagUpdateWithoutTodosDataInput {
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
+  parentId: String
 }
 input TagUpdateWithWhereUniqueWithoutCategoriesInput {
   data: TagUpdateWithoutCategoriesDataInput!
@@ -739,6 +750,7 @@ input TagWhereInput {
   OR: [TagWhereInput!]
   owner: UserWhereInput
   ownerId: StringFilter
+  parentId: NullableStringFilter
   todos: TodoFilter
 }
 input TagWhereUniqueInput {

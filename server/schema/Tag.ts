@@ -9,6 +9,7 @@ schema.objectType({
     t.model.color();
     t.model.archivedAt();
     t.model.owner();
+    t.model.parentId();
     t.model.categories();
     t.model.todos();
   },

@@ -811,6 +811,7 @@ export type TagCreateInput = {
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
@@ -836,6 +837,7 @@ export type TagCreateWithoutCategoriesInput = {
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
@@ -846,6 +848,7 @@ export type TagCreateWithoutOwnerInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
@@ -857,6 +860,7 @@ export type TagCreateWithoutTodosInput = {
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
+  parentId?: Maybe<Scalars['String']>;
 };
 
 export type TagFilter = {
@@ -872,6 +876,7 @@ export type TagOrderByInput = {
   id?: Maybe<OrderByArg>;
   name?: Maybe<OrderByArg>;
   ownerId?: Maybe<OrderByArg>;
+  parentId?: Maybe<OrderByArg>;
 };
 
 export type TagScalarWhereInput = {
@@ -885,6 +890,7 @@ export type TagScalarWhereInput = {
   NOT?: Maybe<Array<TagScalarWhereInput>>;
   OR?: Maybe<Array<TagScalarWhereInput>>;
   ownerId?: Maybe<StringFilter>;
+  parentId?: Maybe<NullableStringFilter>;
   todos?: Maybe<TodoFilter>;
 };
 
@@ -896,6 +902,7 @@ export type TagUpdateInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
@@ -905,6 +912,7 @@ export type TagUpdateManyDataInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  parentId?: Maybe<Scalars['String']>;
 };
 
 export type TagUpdateManyWithoutCategoriesInput = {
@@ -955,6 +963,7 @@ export type TagUpdateWithoutCategoriesDataInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
@@ -965,6 +974,7 @@ export type TagUpdateWithoutOwnerDataInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  parentId?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
@@ -976,6 +986,7 @@ export type TagUpdateWithoutTodosDataInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  parentId?: Maybe<Scalars['String']>;
 };
 
 export type TagUpdateWithWhereUniqueWithoutCategoriesInput = {
@@ -1023,6 +1034,7 @@ export type TagWhereInput = {
   OR?: Maybe<Array<TagWhereInput>>;
   owner?: Maybe<UserWhereInput>;
   ownerId?: Maybe<StringFilter>;
+  parentId?: Maybe<NullableStringFilter>;
   todos?: Maybe<TodoFilter>;
 };
 
