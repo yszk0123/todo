@@ -99,5 +99,5 @@ const Circle: React.FunctionComponent<{ radius: number; sx: SxStyleProp }> = ({
 };
 
 export const LoadingIndicator: React.FunctionComponent<EmptyProps> = () => {
-  return <LoadingIndicatorWithSize radius={32} size={64} />;
+  return <LoadingIndicatorWithSize radius={18} size={36} />;
 };
