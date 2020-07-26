@@ -8,6 +8,7 @@ import {
   parseDateTime,
   toDateTime,
 } from '../../../view_models/DateTime';
+import { CloseIcon } from '../CloseIcon';
 import { EditFormField } from './EditFormField';
 
 function parseDate(input: string): DateTime | null {
@@ -32,11 +33,18 @@ export const EditFormDateInputField: React.FunctionComponent<{
     },
     [onChange]
   );
+  const handleReset = React.useCallback(() => {
+    onChange(null);
+  }, [onChange]);
 
   const dateString = React.useMemo(() => convertIntoDateString(value), [value]);
 
   return (
-    <EditFormField htmlFor={id} label={label}>
+    <EditFormField
+      htmlFor={id}
+      label={label}
+      rightElement={<CloseIcon onClick={handleReset} />}
+    >
       <Box sx={{ flexGrow: 1 }}>
         <Input id={id} type="date" value={dateString} onChange={handleChange} />
       </Box>
