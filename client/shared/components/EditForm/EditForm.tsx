@@ -18,7 +18,6 @@ export const EditForm: React.FunctionComponent<Props> = ({
       sx={{
         bg: 'background',
         px: 2,
-        pt: 3,
         pb: 2,
         ...(isInline
           ? {}

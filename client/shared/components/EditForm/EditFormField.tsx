@@ -10,7 +10,7 @@ export const EditFormField: React.FunctionComponent<{
   rightElement?: JSX.Element | null;
 }> = ({ children, htmlFor, label, rightElement }) => {
   return (
-    <Flex alignItems="center" mb={1} pb={1}>
+    <Flex alignItems="center" mt={2}>
       {label !== undefined && (
         <Label
           htmlFor={htmlFor}
