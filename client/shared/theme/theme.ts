@@ -97,8 +97,16 @@ export function createTheme(isMobile: boolean) {
         borderRadius: 'circle',
       },
       listText: {
+        // Align text height
+        '::before': isMobile
+          ? {
+              display: 'inline-block',
+              width: 0,
+              height: '1.5rem',
+              content: '""',
+            }
+          : undefined,
         display: 'inline',
-        lineHeight: isMobile ? 2 : undefined,
       },
       label: {
         display: 'inline-block',
