@@ -63,10 +63,22 @@ export type RootTagFragment = (
     & Pick<Types.Category, 'id' | 'name'>
   )>, parent?: Types.Maybe<(
     { __typename?: 'Tag' }
-    & Pick<Types.Tag, 'id' | 'name' | 'color'>
+    & TagParentFragment
   )> }
 );
 
+export type TagParentFragment = (
+  { __typename?: 'Tag' }
+  & Pick<Types.Tag, 'id' | 'name' | 'color'>
+);
+
+export const TagParentFragmentDoc = gql`
+    fragment TagParent on Tag {
+  id
+  name
+  color
+}
+    `;
 export const RootTagFragmentDoc = gql`
     fragment RootTag on Tag {
   id
@@ -77,12 +89,10 @@ export const RootTagFragmentDoc = gql`
     name
   }
   parent {
-    id
-    name
-    color
+    ...TagParent
   }
 }
-    `;
+    ${TagParentFragmentDoc}`;
 export const GetTagsDocument = gql`
     query GetTags {
   tags(where: {archivedAt: {equals: null}}) {

@@ -31,8 +31,12 @@ fragment RootTag on Tag {
     name
   }
   parent {
-    id
-    name
-    color
+    ...TagParent
   }
+}
+
+fragment TagParent on Tag {
+  id
+  name
+  color
 }
