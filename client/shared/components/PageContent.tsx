@@ -14,7 +14,8 @@ export const PageContent: React.FunctionComponent<Props> = ({
       sx={{
         width: '100vw',
         mx: 'auto',
-        p: 3,
+        px: 3,
+        py: 2,
         overflowX: 'hidden',
       }}
       onClick={onClick}
