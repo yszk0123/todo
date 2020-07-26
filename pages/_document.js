@@ -5,6 +5,14 @@ import Document, { Head, Main, NextScript } from 'next/document';
 const APP_NAME = 'Todo';
 const APP_DESCRIPTION = 'Simple todo app';
 
+// FIXME: Strict settings
+const CSP_CONTENT =
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; object-src 'none'; base-uri 'none';";
+
+const MetaContentSecurityPolicy = () => {
+  return <meta httpEquiv="Content-Security-Policy" content={CSP_CONTENT} />;
+};
+
 export default class extends Document {
   static async getInitialProps(ctx) {
     return await Document.getInitialProps(ctx);
@@ -29,6 +37,7 @@ export default class extends Document {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
+          <MetaContentSecurityPolicy />
 
           <link
             rel="apple-touch-icon"
