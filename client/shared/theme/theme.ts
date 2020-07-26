@@ -73,6 +73,9 @@ export function createTheme(isMobile: boolean) {
     forms: {
       input: {
         fontSize: 18,
+        '&[type="datetime-local"], &[type="datetime"], &[type="date"]': {
+          minHeight: '2.375rem',
+        },
       },
       select: {
         fontSize: 18,
