@@ -784,6 +784,7 @@ export type Tag = {
   id: Scalars['String'];
   name: Scalars['String'];
   owner: User;
+  parent?: Maybe<Tag>;
   todos: Array<Todo>;
 };
 
@@ -806,12 +807,13 @@ export type TagTodosArgs = {
 export type TagCreateInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  children?: Maybe<TagCreateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagCreateOneWithoutChildrenInput>;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
@@ -825,42 +827,79 @@ export type TagCreateManyWithoutOwnerInput = {
   create?: Maybe<Array<TagCreateWithoutOwnerInput>>;
 };
 
+export type TagCreateManyWithoutParentInput = {
+  connect?: Maybe<Array<TagWhereUniqueInput>>;
+  create?: Maybe<Array<TagCreateWithoutParentInput>>;
+};
+
 export type TagCreateManyWithoutTodosInput = {
   connect?: Maybe<Array<TagWhereUniqueInput>>;
   create?: Maybe<Array<TagCreateWithoutTodosInput>>;
 };
 
+export type TagCreateOneWithoutChildrenInput = {
+  connect?: Maybe<TagWhereUniqueInput>;
+  create?: Maybe<TagCreateWithoutChildrenInput>;
+};
+
 export type TagCreateWithoutCategoriesInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  children?: Maybe<TagCreateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagCreateOneWithoutChildrenInput>;
+  todos?: Maybe<TodoCreateManyWithoutTagsInput>;
+};
+
+export type TagCreateWithoutChildrenInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  color?: Maybe<Color>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  owner: UserCreateOneWithoutTagsInput;
+  parent?: Maybe<TagCreateOneWithoutChildrenInput>;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
 export type TagCreateWithoutOwnerInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  children?: Maybe<TagCreateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagCreateOneWithoutChildrenInput>;
+  todos?: Maybe<TodoCreateManyWithoutTagsInput>;
+};
+
+export type TagCreateWithoutParentInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  children?: Maybe<TagCreateManyWithoutParentInput>;
+  color?: Maybe<Color>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  owner: UserCreateOneWithoutTagsInput;
   todos?: Maybe<TodoCreateManyWithoutTagsInput>;
 };
 
 export type TagCreateWithoutTodosInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryCreateManyWithoutTagsInput>;
+  children?: Maybe<TagCreateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   owner: UserCreateOneWithoutTagsInput;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagCreateOneWithoutChildrenInput>;
 };
 
 export type TagFilter = {
@@ -883,6 +922,7 @@ export type TagScalarWhereInput = {
   AND?: Maybe<Array<TagScalarWhereInput>>;
   archivedAt?: Maybe<NullableDateTimeFilter>;
   categories?: Maybe<CategoryFilter>;
+  children?: Maybe<TagFilter>;
   color?: Maybe<Color>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
@@ -897,12 +937,13 @@ export type TagScalarWhereInput = {
 export type TagUpdateInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  children?: Maybe<TagUpdateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagUpdateOneWithoutChildrenInput>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
@@ -912,7 +953,6 @@ export type TagUpdateManyDataInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  parentId?: Maybe<Scalars['String']>;
 };
 
 export type TagUpdateManyWithoutCategoriesInput = {
@@ -939,6 +979,18 @@ export type TagUpdateManyWithoutOwnerInput = {
   upsert?: Maybe<Array<TagUpsertWithWhereUniqueWithoutOwnerInput>>;
 };
 
+export type TagUpdateManyWithoutParentInput = {
+  connect?: Maybe<Array<TagWhereUniqueInput>>;
+  create?: Maybe<Array<TagCreateWithoutParentInput>>;
+  delete?: Maybe<Array<TagWhereUniqueInput>>;
+  deleteMany?: Maybe<Array<TagScalarWhereInput>>;
+  disconnect?: Maybe<Array<TagWhereUniqueInput>>;
+  set?: Maybe<Array<TagWhereUniqueInput>>;
+  update?: Maybe<Array<TagUpdateWithWhereUniqueWithoutParentInput>>;
+  updateMany?: Maybe<Array<TagUpdateManyWithWhereNestedInput>>;
+  upsert?: Maybe<Array<TagUpsertWithWhereUniqueWithoutParentInput>>;
+};
+
 export type TagUpdateManyWithoutTodosInput = {
   connect?: Maybe<Array<TagWhereUniqueInput>>;
   create?: Maybe<Array<TagCreateWithoutTodosInput>>;
@@ -956,37 +1008,73 @@ export type TagUpdateManyWithWhereNestedInput = {
   where: TagScalarWhereInput;
 };
 
+export type TagUpdateOneWithoutChildrenInput = {
+  connect?: Maybe<TagWhereUniqueInput>;
+  create?: Maybe<TagCreateWithoutChildrenInput>;
+  delete?: Maybe<Scalars['Boolean']>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<TagUpdateWithoutChildrenDataInput>;
+  upsert?: Maybe<TagUpsertWithoutChildrenInput>;
+};
+
 export type TagUpdateWithoutCategoriesDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
+  children?: Maybe<TagUpdateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagUpdateOneWithoutChildrenInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
+};
+
+export type TagUpdateWithoutChildrenDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  color?: Maybe<Color>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
+  parent?: Maybe<TagUpdateOneWithoutChildrenInput>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
 export type TagUpdateWithoutOwnerDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  children?: Maybe<TagUpdateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagUpdateOneWithoutChildrenInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
+};
+
+export type TagUpdateWithoutParentDataInput = {
+  archivedAt?: Maybe<Scalars['DateTime']>;
+  categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  children?: Maybe<TagUpdateManyWithoutParentInput>;
+  color?: Maybe<Color>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
   todos?: Maybe<TodoUpdateManyWithoutTagsInput>;
 };
 
 export type TagUpdateWithoutTodosDataInput = {
   archivedAt?: Maybe<Scalars['DateTime']>;
   categories?: Maybe<CategoryUpdateManyWithoutTagsInput>;
+  children?: Maybe<TagUpdateManyWithoutParentInput>;
   color?: Maybe<Color>;
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<UserUpdateOneRequiredWithoutTagsInput>;
-  parentId?: Maybe<Scalars['String']>;
+  parent?: Maybe<TagUpdateOneWithoutChildrenInput>;
 };
 
 export type TagUpdateWithWhereUniqueWithoutCategoriesInput = {
@@ -999,9 +1087,19 @@ export type TagUpdateWithWhereUniqueWithoutOwnerInput = {
   where: TagWhereUniqueInput;
 };
 
+export type TagUpdateWithWhereUniqueWithoutParentInput = {
+  data: TagUpdateWithoutParentDataInput;
+  where: TagWhereUniqueInput;
+};
+
 export type TagUpdateWithWhereUniqueWithoutTodosInput = {
   data: TagUpdateWithoutTodosDataInput;
   where: TagWhereUniqueInput;
+};
+
+export type TagUpsertWithoutChildrenInput = {
+  create: TagCreateWithoutChildrenInput;
+  update: TagUpdateWithoutChildrenDataInput;
 };
 
 export type TagUpsertWithWhereUniqueWithoutCategoriesInput = {
@@ -1016,6 +1114,12 @@ export type TagUpsertWithWhereUniqueWithoutOwnerInput = {
   where: TagWhereUniqueInput;
 };
 
+export type TagUpsertWithWhereUniqueWithoutParentInput = {
+  create: TagCreateWithoutParentInput;
+  update: TagUpdateWithoutParentDataInput;
+  where: TagWhereUniqueInput;
+};
+
 export type TagUpsertWithWhereUniqueWithoutTodosInput = {
   create: TagCreateWithoutTodosInput;
   update: TagUpdateWithoutTodosDataInput;
@@ -1026,6 +1130,7 @@ export type TagWhereInput = {
   AND?: Maybe<Array<TagWhereInput>>;
   archivedAt?: Maybe<NullableDateTimeFilter>;
   categories?: Maybe<CategoryFilter>;
+  children?: Maybe<TagFilter>;
   color?: Maybe<Color>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
@@ -1034,6 +1139,7 @@ export type TagWhereInput = {
   OR?: Maybe<Array<TagWhereInput>>;
   owner?: Maybe<UserWhereInput>;
   ownerId?: Maybe<StringFilter>;
+  parent?: Maybe<TagWhereInput>;
   parentId?: Maybe<NullableStringFilter>;
   todos?: Maybe<TodoFilter>;
 };

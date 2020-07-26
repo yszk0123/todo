@@ -542,17 +542,19 @@ type Tag {
   id: String!
   name: String!
   owner: User!
+  parent: Tag
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
 input TagCreateInput {
   archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
+  children: TagCreateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
-  parentId: String
+  parent: TagCreateOneWithoutChildrenInput
   todos: TodoCreateManyWithoutTagsInput
 }
 input TagCreateManyWithoutCategoriesInput {
@@ -563,39 +565,72 @@ input TagCreateManyWithoutOwnerInput {
   connect: [TagWhereUniqueInput!]
   create: [TagCreateWithoutOwnerInput!]
 }
+input TagCreateManyWithoutParentInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutParentInput!]
+}
 input TagCreateManyWithoutTodosInput {
   connect: [TagWhereUniqueInput!]
   create: [TagCreateWithoutTodosInput!]
 }
+input TagCreateOneWithoutChildrenInput {
+  connect: TagWhereUniqueInput
+  create: TagCreateWithoutChildrenInput
+}
 input TagCreateWithoutCategoriesInput {
   archivedAt: DateTime
+  children: TagCreateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
-  parentId: String
+  parent: TagCreateOneWithoutChildrenInput
+  todos: TodoCreateManyWithoutTagsInput
+}
+input TagCreateWithoutChildrenInput {
+  archivedAt: DateTime
+  categories: CategoryCreateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  parent: TagCreateOneWithoutChildrenInput
   todos: TodoCreateManyWithoutTagsInput
 }
 input TagCreateWithoutOwnerInput {
   archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
+  children: TagCreateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String!
-  parentId: String
+  parent: TagCreateOneWithoutChildrenInput
   todos: TodoCreateManyWithoutTagsInput
 }
-input TagCreateWithoutTodosInput {
+input TagCreateWithoutParentInput {
   archivedAt: DateTime
   categories: CategoryCreateManyWithoutTagsInput
+  children: TagCreateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String!
   owner: UserCreateOneWithoutTagsInput!
-  parentId: String
+  todos: TodoCreateManyWithoutTagsInput
+}
+input TagCreateWithoutTodosInput {
+  archivedAt: DateTime
+  categories: CategoryCreateManyWithoutTagsInput
+  children: TagCreateManyWithoutParentInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String!
+  owner: UserCreateOneWithoutTagsInput!
+  parent: TagCreateOneWithoutChildrenInput
 }
 input TagFilter {
   every: TagWhereInput
@@ -615,6 +650,7 @@ input TagScalarWhereInput {
   AND: [TagScalarWhereInput!]
   archivedAt: NullableDateTimeFilter
   categories: CategoryFilter
+  children: TagFilter
   color: Color
   createdAt: DateTimeFilter
   id: UUIDFilter
@@ -628,12 +664,13 @@ input TagScalarWhereInput {
 input TagUpdateInput {
   archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
+  children: TagUpdateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
-  parentId: String
+  parent: TagUpdateOneWithoutChildrenInput
   todos: TodoUpdateManyWithoutTagsInput
 }
 input TagUpdateManyDataInput {
@@ -642,7 +679,6 @@ input TagUpdateManyDataInput {
   createdAt: DateTime
   id: String
   name: String
-  parentId: String
 }
 input TagUpdateManyWithoutCategoriesInput {
   connect: [TagWhereUniqueInput!]
@@ -666,6 +702,17 @@ input TagUpdateManyWithoutOwnerInput {
   updateMany: [TagUpdateManyWithWhereNestedInput!]
   upsert: [TagUpsertWithWhereUniqueWithoutOwnerInput!]
 }
+input TagUpdateManyWithoutParentInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutParentInput!]
+  delete: [TagWhereUniqueInput!]
+  deleteMany: [TagScalarWhereInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutParentInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutParentInput!]
+}
 input TagUpdateManyWithoutTodosInput {
   connect: [TagWhereUniqueInput!]
   create: [TagCreateWithoutTodosInput!]
@@ -681,35 +728,68 @@ input TagUpdateManyWithWhereNestedInput {
   data: TagUpdateManyDataInput!
   where: TagScalarWhereInput!
 }
+input TagUpdateOneWithoutChildrenInput {
+  connect: TagWhereUniqueInput
+  create: TagCreateWithoutChildrenInput
+  delete: Boolean
+  disconnect: Boolean
+  update: TagUpdateWithoutChildrenDataInput
+  upsert: TagUpsertWithoutChildrenInput
+}
 input TagUpdateWithoutCategoriesDataInput {
   archivedAt: DateTime
+  children: TagUpdateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
-  parentId: String
+  parent: TagUpdateOneWithoutChildrenInput
+  todos: TodoUpdateManyWithoutTagsInput
+}
+input TagUpdateWithoutChildrenDataInput {
+  archivedAt: DateTime
+  categories: CategoryUpdateManyWithoutTagsInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  parent: TagUpdateOneWithoutChildrenInput
   todos: TodoUpdateManyWithoutTagsInput
 }
 input TagUpdateWithoutOwnerDataInput {
   archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
+  children: TagUpdateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String
-  parentId: String
+  parent: TagUpdateOneWithoutChildrenInput
   todos: TodoUpdateManyWithoutTagsInput
 }
-input TagUpdateWithoutTodosDataInput {
+input TagUpdateWithoutParentDataInput {
   archivedAt: DateTime
   categories: CategoryUpdateManyWithoutTagsInput
+  children: TagUpdateManyWithoutParentInput
   color: Color
   createdAt: DateTime
   id: String
   name: String
   owner: UserUpdateOneRequiredWithoutTagsInput
-  parentId: String
+  todos: TodoUpdateManyWithoutTagsInput
+}
+input TagUpdateWithoutTodosDataInput {
+  archivedAt: DateTime
+  categories: CategoryUpdateManyWithoutTagsInput
+  children: TagUpdateManyWithoutParentInput
+  color: Color
+  createdAt: DateTime
+  id: String
+  name: String
+  owner: UserUpdateOneRequiredWithoutTagsInput
+  parent: TagUpdateOneWithoutChildrenInput
 }
 input TagUpdateWithWhereUniqueWithoutCategoriesInput {
   data: TagUpdateWithoutCategoriesDataInput!
@@ -719,9 +799,17 @@ input TagUpdateWithWhereUniqueWithoutOwnerInput {
   data: TagUpdateWithoutOwnerDataInput!
   where: TagWhereUniqueInput!
 }
+input TagUpdateWithWhereUniqueWithoutParentInput {
+  data: TagUpdateWithoutParentDataInput!
+  where: TagWhereUniqueInput!
+}
 input TagUpdateWithWhereUniqueWithoutTodosInput {
   data: TagUpdateWithoutTodosDataInput!
   where: TagWhereUniqueInput!
+}
+input TagUpsertWithoutChildrenInput {
+  create: TagCreateWithoutChildrenInput!
+  update: TagUpdateWithoutChildrenDataInput!
 }
 input TagUpsertWithWhereUniqueWithoutCategoriesInput {
   create: TagCreateWithoutCategoriesInput!
@@ -733,6 +821,11 @@ input TagUpsertWithWhereUniqueWithoutOwnerInput {
   update: TagUpdateWithoutOwnerDataInput!
   where: TagWhereUniqueInput!
 }
+input TagUpsertWithWhereUniqueWithoutParentInput {
+  create: TagCreateWithoutParentInput!
+  update: TagUpdateWithoutParentDataInput!
+  where: TagWhereUniqueInput!
+}
 input TagUpsertWithWhereUniqueWithoutTodosInput {
   create: TagCreateWithoutTodosInput!
   update: TagUpdateWithoutTodosDataInput!
@@ -742,6 +835,7 @@ input TagWhereInput {
   AND: [TagWhereInput!]
   archivedAt: NullableDateTimeFilter
   categories: CategoryFilter
+  children: TagFilter
   color: Color
   createdAt: DateTimeFilter
   id: UUIDFilter
@@ -750,6 +844,7 @@ input TagWhereInput {
   OR: [TagWhereInput!]
   owner: UserWhereInput
   ownerId: StringFilter
+  parent: TagWhereInput
   parentId: NullableStringFilter
   todos: TodoFilter
 }
