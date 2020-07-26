@@ -61,6 +61,9 @@ export type RootTagFragment = (
   & { categories: Array<(
     { __typename?: 'Category' }
     & Pick<Types.Category, 'id' | 'name'>
+  )>, parent?: Types.Maybe<(
+    { __typename?: 'Tag' }
+    & Pick<Types.Tag, 'id' | 'name' | 'color'>
   )> }
 );
 
@@ -72,6 +75,11 @@ export const RootTagFragmentDoc = gql`
   categories {
     id
     name
+  }
+  parent {
+    id
+    name
+    color
   }
 }
     `;

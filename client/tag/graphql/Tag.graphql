@@ -30,4 +30,9 @@ fragment RootTag on Tag {
     id
     name
   }
+  parent {
+    id
+    name
+    color
+  }
 }

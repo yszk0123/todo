@@ -8,6 +8,7 @@ import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 export type TagEditFormState = {
   color: Color;
   name: string;
+  parent: RootTagFragment | null;
   selectedTagIds: ID[];
   tagCategories: RootCategoryFragment[];
 };
@@ -73,6 +74,7 @@ export function tagEditFormSet(
 export const tagEditFormInitialState: TagEditFormState = {
   tagCategories: [],
   selectedTagIds: [],
+  parent: null,
   color: Color.Default,
   name: '',
 };

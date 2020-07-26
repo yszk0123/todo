@@ -25,7 +25,7 @@ export class TagUsecase {
   ) {}
 
   async createOneTag(userId: string, tagEditFormState: TagEditFormState) {
-    const { color, name, tagCategories } = tagEditFormState;
+    const { color, name, parent, tagCategories } = tagEditFormState;
 
     this.dispatch(tagEditFormSet({ name: '' }));
 
@@ -37,6 +37,7 @@ export class TagUsecase {
           name,
           color: color ?? null,
           categories: { connect: tagCategories.map((c) => ({ id: c.id })) },
+          parent: parent ? { connect: { id: parent.id } } : null,
         },
       },
       refetchQueries: [refetchGetTagsQuery()],
@@ -46,6 +47,7 @@ export class TagUsecase {
   async updateOneTag({
     color,
     name,
+    parent,
     selectedTagIds,
     tagCategories,
   }: TagEditFormState) {
@@ -65,6 +67,7 @@ export class TagUsecase {
           name: count === 1 ? name : undefined,
           color: color ? color : undefined,
           categories: { connect: tagCategories.map((c) => ({ id: c.id })) },
+          parent: parent ? { connect: { id: parent.id } } : undefined,
         },
       },
     });

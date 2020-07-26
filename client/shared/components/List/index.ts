@@ -1,9 +1,11 @@
 export { List } from './List';
 export { ListItem } from './ListItem';
 export { ListText } from './ListText';
+export { ListLine } from './ListLine';
 export { ListIcon } from './ListIcon';
 export { ListCheckbox } from './ListCheckbox';
 export { ListIconCheckbox } from './ListIconCheckbox';
+export { ListBadge } from './ListBadge';
 export { ListBadges } from './ListBadges';
 export { ListLabel } from './ListLabel';
 export { ListIconLink } from './ListIconLink';

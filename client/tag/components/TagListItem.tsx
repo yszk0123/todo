@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ColorBox } from '../../shared/components/ColorBox';
-import { ListItem, ListText } from '../../shared/components/List';
+import { ListBadge, ListItem, ListLine } from '../../shared/components/List';
+import { noop } from '../../shared/helpers/noop';
 import { RootTagFragment } from '../graphql/__generated__/Tag.graphql';
 import { TagListIcon } from './TagListIcon';
 import { TagListLink } from './TagListLink';
@@ -25,9 +25,14 @@ export const TagListItem: React.FunctionComponent<{
         />
       }
       mainElement={
-        <ListText subElement={<ColorBox color={tag.color} />}>
-          {tag.name}
-        </ListText>
+        <ListLine
+          leftElement={<ListBadge item={tag} onClick={noop} />}
+          rightElement={
+            tag.parent ? (
+              <ListBadge item={tag.parent} onClick={noop} />
+            ) : undefined
+          }
+        />
       }
       rightElement={<TagListLink tag={tag} />}
       onClick={onClick}

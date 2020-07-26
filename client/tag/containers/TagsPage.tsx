@@ -51,6 +51,13 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
     [dispatch]
   );
 
+  const handleChangeParent = React.useCallback(
+    (parent: RootTagFragment | null) => {
+      dispatch(tagEditFormSet({ parent }));
+    },
+    [dispatch]
+  );
+
   const handleSetName = React.useCallback(
     (name: string) => {
       dispatch(tagEditFormSet({ name }));
@@ -108,12 +115,15 @@ export const TagsPage: React.FunctionComponent<EmptyProps> = () => {
       <TagEditForm
         categories={rootCategories}
         isOpen={modalType === ModalType.EDIT}
+        parent={tagEditFormState.parent}
         selectMode={selectMode}
         tagCategories={tagEditFormState.tagCategories}
         tagEditFormState={tagEditFormState}
+        tags={tags}
         onChangeCategories={handleChangeRootCategories}
         onChangeColor={handleSetColor}
         onChangeName={handleSetName}
+        onChangeParent={handleChangeParent}
         onCloseModal={onCloseModal}
         onCreateOneTag={handleCreateOneTag}
         onDeleteOneTag={handleDeleteOneTag}
