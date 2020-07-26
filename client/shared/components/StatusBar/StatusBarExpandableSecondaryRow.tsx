@@ -25,8 +25,8 @@ const StatusBarExpansionButton: React.FunctionComponent<{
     <Flex
       aria-label="toggle"
       justifyContent="center"
-      mb={2}
-      p={1}
+      mb={1}
+      p={2}
       role="button"
       sx={{ ':hover': { cursor: 'pointer', bg: 'highlight' } }}
       tabIndex={0}
