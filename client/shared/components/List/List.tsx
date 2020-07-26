@@ -23,7 +23,6 @@ export const List: React.FunctionComponent<Props> = ({
     <Box
       mb={2}
       mt={hasHeader ? 3 : 1}
-      pt={hasHeader ? 1 : 0}
       sx={{
         border: hasHeader ? '1px solid' : undefined,
         borderColor: hasHeader ? variant : undefined,
