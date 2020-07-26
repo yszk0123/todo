@@ -476,7 +476,7 @@ function translateShortcut(shortcut: Shortcut): Command {
     case KeyCode.S:
       return Command.OPEN_SEARCH;
     case KeyCode.X:
-      return Command.CHANGE_STATUS_TO_WAITING;
+      return Command.CHANGE_STATUS_TO_DONE;
     case KeyCode.Minus:
       return Command.CHANGE_STATUS_TO_WAITING;
     case KeyCode.Period:
