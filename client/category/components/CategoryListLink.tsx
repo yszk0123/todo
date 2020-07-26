@@ -16,5 +16,10 @@ export const CategoryListLink: React.FunctionComponent<Props> = ({
     [category]
   );
 
-  return <ListIconLink href={{ pathname: '/todos', query: todoSearchQuery }} />;
+  return (
+    <ListIconLink
+      href={{ pathname: '/todos', query: todoSearchQuery }}
+      label="Go to todo"
+    />
+  );
 };

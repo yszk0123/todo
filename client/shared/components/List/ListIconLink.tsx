@@ -8,11 +8,12 @@ import { LinkToIcon } from './LinkToIcon';
 type Props = {
   as?: string;
   href: URL;
+  label?: string;
 };
 
-export function ListIconLink({ as, href }: Props): JSX.Element {
+export function ListIconLink({ as, href, label }: Props): JSX.Element {
   return (
-    <Link as={as} href={href}>
+    <Link as={as} href={href} label={label}>
       <Flex p={1}>
         <LinkToIcon />
       </Flex>
