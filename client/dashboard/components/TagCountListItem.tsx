@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ListItem, ListText } from '../../shared/components/List';
+import { ListIcon, ListItem, ListText } from '../../shared/components/List';
+import { TagIcon } from '../../tag/components/TagIcon';
 
 export function TagCountListItem({
   count,
@@ -14,6 +15,7 @@ export function TagCountListItem({
   return (
     <ListItem
       item={null}
+      leftElement={<ListIcon icon={<TagIcon />} />}
       mainElement={<ListText>{`${count} tags`}</ListText>}
     />
   );

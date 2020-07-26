@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ListItem, ListText } from '../../shared/components/List';
+import { CategoryIcon } from '../../category/components/CategoryIcon';
+import { ListIcon, ListItem, ListText } from '../../shared/components/List';
 
 export function CategoryCountListItem({
   count,
@@ -14,6 +15,7 @@ export function CategoryCountListItem({
   return (
     <ListItem
       item={null}
+      leftElement={<ListIcon icon={<CategoryIcon />} />}
       mainElement={<ListText>{`${count} categories`}</ListText>}
     />
   );

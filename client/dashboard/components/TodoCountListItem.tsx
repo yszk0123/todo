@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ListItem, ListText } from '../../shared/components/List';
+import { ListIcon, ListItem, ListText } from '../../shared/components/List';
+import { TodoIcon } from '../../todo/components/TodoIcon';
 
 export function TodoCountListItem({
   count,
@@ -14,6 +15,7 @@ export function TodoCountListItem({
   return (
     <ListItem
       item={null}
+      leftElement={<ListIcon icon={<TodoIcon />} />}
       mainElement={<ListText>{`${count} todos`}</ListText>}
     />
   );

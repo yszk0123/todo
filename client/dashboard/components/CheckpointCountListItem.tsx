@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { ListItem, ListText } from '../../shared/components/List';
+import { CheckpointIcon } from '../../checkpoint/components/CheckpointIcon';
+import { ListIcon, ListItem, ListText } from '../../shared/components/List';
 
 export function CheckpointCountListItem({
   count,
@@ -14,6 +15,7 @@ export function CheckpointCountListItem({
   return (
     <ListItem
       item={null}
+      leftElement={<ListIcon icon={<CheckpointIcon />} />}
       mainElement={<ListText>{`${count} checkpoints`}</ListText>}
     />
   );
