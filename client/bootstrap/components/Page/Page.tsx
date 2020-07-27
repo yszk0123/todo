@@ -2,9 +2,11 @@ import React from 'react';
 import { Flex } from 'rebass';
 
 import { Navigation } from '../../../shared/components/Navigation';
+import { SideNavigationContainer } from '../../../side_navigation';
 import { EmptyProps } from '../../../view_models/EmptyProps';
 import { FooterPlaceholder } from './FooterPlaceholder';
 import { Main } from './Main';
+import { SideBarPlaceholder } from './SideBarPlaceholder';
 
 const Wrapper: React.FunctionComponent<EmptyProps> = ({ children }) => {
   return (
@@ -28,7 +30,11 @@ export const Page: React.FunctionComponent<{
         hasSession={hasSession}
         username={username}
       />
-      <Main content={content} hasSession={hasSession} isLoading={isLoading} />
+      <Flex flexGrow={1}>
+        <SideBarPlaceholder />
+        <SideNavigationContainer />
+        <Main content={content} hasSession={hasSession} isLoading={isLoading} />
+      </Flex>
       <FooterPlaceholder />
     </Wrapper>
   );

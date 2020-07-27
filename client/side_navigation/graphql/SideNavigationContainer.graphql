@@ -1,0 +1,5 @@
+query SideNavigationContainer {
+  categories {
+    ...RootCategory
+  }
+}
