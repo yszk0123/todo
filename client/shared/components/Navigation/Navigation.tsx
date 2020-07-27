@@ -17,7 +17,7 @@ export const Navigation: React.FunctionComponent<{
       sx={{
         position: 'sticky',
         top: 0,
-        zIndex: 1,
+        zIndex: 2,
         boxShadow: 1,
       }}
     >
