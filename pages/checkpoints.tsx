@@ -3,7 +3,7 @@ import React from 'react';
 
 import { CheckpointsPage } from '../client/checkpoint';
 
-export default () => {
+const Page = () => {
   return (
     <>
       <Head>
@@ -13,3 +13,5 @@ export default () => {
     </>
   );
 };
+
+export default Page;
