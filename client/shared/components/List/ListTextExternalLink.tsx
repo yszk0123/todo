@@ -5,6 +5,10 @@ type Props = {
   href: string;
 };
 
+function handleClick(event: React.MouseEvent): void {
+  event.stopPropagation();
+}
+
 export const ListTextExternalLink: React.FunctionComponent<Props> = ({
   children,
   href,
@@ -22,6 +26,7 @@ export const ListTextExternalLink: React.FunctionComponent<Props> = ({
         verticalAlign: 'middle',
       }}
       target="_blank"
+      onClick={handleClick}
     >
       {children}
     </Link>
