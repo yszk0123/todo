@@ -69,6 +69,7 @@
     "@nexus/schema": "^0.15.0",
     "@prisma/client": "2.4.1",
     "@rebass/forms": "^4.0.6",
+    "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.15.0",
     "emotion-theming": "^10.0.27",
     "next": "^9.5.1",
