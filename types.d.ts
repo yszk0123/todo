@@ -8,6 +8,7 @@ declare module 'next-auth/client' {
   };
 
   type Session = {
+    expires: string;
     user: User;
   };
 
