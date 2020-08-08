@@ -23,12 +23,14 @@ input AccountCreateManyWithoutUserInput {
 input AccountCreateWithoutUserInput {
   accessToken: String!
   accessTokenExpires: DateTime
+  compoundId: String!
   createdAt: DateTime
   id: String
   providerAccountId: String!
   providerId: String!
   providerType: String!
   refreshToken: String
+  updatedAt: DateTime
 }
 input AccountFilter {
   every: AccountWhereInput
@@ -39,6 +41,7 @@ input AccountScalarWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountScalarWhereInput!]
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountScalarWhereInput!]
@@ -47,17 +50,20 @@ input AccountScalarWhereInput {
   providerId: StringFilter
   providerType: StringFilter
   refreshToken: NullableStringFilter
+  updatedAt: DateTimeFilter
   userId: StringFilter
 }
 input AccountUpdateManyDataInput {
   accessToken: String
   accessTokenExpires: DateTime
+  compoundId: String
   createdAt: DateTime
   id: String
   providerAccountId: String
   providerId: String
   providerType: String
   refreshToken: String
+  updatedAt: DateTime
 }
 input AccountUpdateManyWithoutUserInput {
   connect: [AccountWhereUniqueInput!]
@@ -77,12 +83,14 @@ input AccountUpdateManyWithWhereNestedInput {
 input AccountUpdateWithoutUserDataInput {
   accessToken: String
   accessTokenExpires: DateTime
+  compoundId: String
   createdAt: DateTime
   id: String
   providerAccountId: String
   providerId: String
   providerType: String
   refreshToken: String
+  updatedAt: DateTime
 }
 input AccountUpdateWithWhereUniqueWithoutUserInput {
   data: AccountUpdateWithoutUserDataInput!
@@ -97,6 +105,7 @@ input AccountWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountWhereInput!]
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountWhereInput!]
@@ -105,12 +114,16 @@ input AccountWhereInput {
   providerId: StringFilter
   providerType: StringFilter
   refreshToken: NullableStringFilter
+  updatedAt: DateTimeFilter
   user: UserWhereInput
   userId: StringFilter
 }
 input AccountWhereUniqueInput {
+  compoundId: String
   id: String
   providerAccountId: String
+  providerId: String
+  userId: String
 }
 type Category {
   archivedAt: DateTime
@@ -1147,9 +1160,9 @@ input UpdateTodosByIdInput {
   text: String
 }
 type User {
-  avatarUrl: String
   email: String!
   id: String!
+  image: String
   name: String
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
@@ -1171,47 +1184,55 @@ input UserCreateOneWithoutTodosInput {
 }
 input UserCreateWithoutCategoriesInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutCheckpointsInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutTagsInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutTodosInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateOneRequiredWithoutCategoriesInput {
   connect: UserWhereUniqueInput
@@ -1239,47 +1260,55 @@ input UserUpdateOneRequiredWithoutTodosInput {
 }
 input UserUpdateWithoutCategoriesDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutCheckpointsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutTagsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutTodosDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
+  emailVerified: DateTime
   id: String
+  image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpsertWithoutCategoriesInput {
   create: UserCreateWithoutCategoriesInput!
@@ -1300,17 +1329,19 @@ input UserUpsertWithoutTodosInput {
 input UserWhereInput {
   accounts: AccountFilter
   AND: [UserWhereInput!]
-  avatarUrl: NullableStringFilter
   categories: CategoryFilter
   checkpoints: CheckpointFilter
   createdAt: DateTimeFilter
   email: StringFilter
+  emailVerified: NullableDateTimeFilter
   id: UUIDFilter
+  image: NullableStringFilter
   name: NullableStringFilter
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
   tags: TagFilter
   todos: TodoFilter
+  updatedAt: DateTimeFilter
 }
 input UserWhereUniqueInput {
   email: String

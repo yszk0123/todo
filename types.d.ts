@@ -2,12 +2,13 @@ declare module 'next-auth';
 
 declare module 'next-auth/client' {
   type User = {
-    name: string;
     email: string;
     image: string;
+    name: string;
   };
 
   type Session = {
+    expires: string;
     user: User;
   };
 
@@ -15,5 +16,5 @@ declare module 'next-auth/client' {
 }
 
 declare module 'next-auth/jwt' {
-  function getJwt(params: { req: any; secret: string }): Promise<unknown>;
+  function getToken(params: { req: any; secret: string }): Promise<unknown>;
 }

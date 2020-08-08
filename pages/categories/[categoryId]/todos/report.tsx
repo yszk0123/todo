@@ -4,7 +4,7 @@ import React from 'react';
 
 import { TodosReportPage } from '../../../../client/todo_report';
 
-export default () => {
+const Page = () => {
   const router = useRouter();
   const categoryId = String(router.query.categoryId);
 
@@ -17,3 +17,5 @@ export default () => {
     </>
   );
 };
+
+export default Page;

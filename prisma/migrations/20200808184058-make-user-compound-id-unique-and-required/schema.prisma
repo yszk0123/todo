@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -14,6 +14,7 @@ model User {
   id            String       @default(uuid()) @id
   email         String       @unique
   emailVerified DateTime?
+  avatarUrl     String?
   image         String?
   name          String?
   accounts      Account[]
@@ -21,7 +22,6 @@ model User {
   todos         Todo[]
   tags          Tag[]
   createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @default(now())
   checkpoints   Checkpoint[]
 }
 
@@ -38,6 +38,7 @@ model Account {
   accessTokenExpires DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @default(now())
+
 
   @@index([providerAccountId])
   @@index([providerId])

@@ -14,7 +14,7 @@ export const PageContainer: React.FunctionComponent<EmptyProps> = ({
   const isLoading = isSessionLoading || isQueryLoading;
 
   const username = data?.me?.name ?? null;
-  const avatarUrl = data?.me?.avatarUrl ?? null;
+  const avatarUrl = data?.me?.image ?? null;
 
   return (
     <Page

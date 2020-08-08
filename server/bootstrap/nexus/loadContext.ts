@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 import { schema } from 'nexus';
 
+import { getPrismaClient } from '../../plugins/getPrismaClient';
 import { getJWT } from '../helpers/getJWT';
 
 // Prevent nexus build error
@@ -8,12 +9,13 @@ import { getJWT } from '../helpers/getJWT';
 // > 15 interface Context { token: Token; } | { token?: undefined; }
 // @see https://github.com/graphql-nexus/nexus/pull/1057
 const add = schema.addToContext;
-add(async (req) => {
+add(async ({ req }) => {
   try {
-    const token = await getJWT(req);
-    const user = token.user;
-    return { token, user };
-  } catch {
+    const { userId } = await getJWT(req);
+    const client = getPrismaClient();
+    const user = await client.user.findOne({ where: { id: userId } });
+    return { user };
+  } catch (err) {
     return {};
   }
 });

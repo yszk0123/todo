@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
-import { createPrismaAdapter } from '../../../server/plugins/createPrismaAdapter';
+import { Prisma } from 'next-auth/adapters';
 import { getPrismaClient } from '../../../server/plugins/getPrismaClient';
 
 const options = {
@@ -49,8 +49,17 @@ const options = {
     secret: process.env.JWT_SECRET,
   },
 
-  adapter: createPrismaAdapter({
-    client: getPrismaClient(),
+  callbacks: {
+    jwt(decodedJwt, account) {
+      return {
+        userId: account ? account.userId : null,
+        ...decodedJwt,
+      };
+    },
+  },
+
+  adapter: Prisma.Adapter({
+    prisma: getPrismaClient(),
   }),
 };
 

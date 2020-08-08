@@ -20,7 +20,9 @@ schema.extendType({
             ...args.where,
             ownerId: { equals: ctx.user.id },
           },
-          orderBy: args.where?.archivedAt ? { archivedAt: 'desc' } : undefined,
+          orderBy: args.where?.archivedAt
+            ? [{ archivedAt: 'desc' }]
+            : undefined,
           first: TODO_LIMIT,
         };
         return originalResolve(root, newArgs, ctx, info);

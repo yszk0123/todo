@@ -21,8 +21,8 @@ schema.extendType({
             archivedAt: { equals: null },
           },
           orderBy: args.where?.archivedAt
-            ? { archivedAt: 'desc' }
-            : { name: 'asc' },
+            ? [{ archivedAt: 'desc' }]
+            : [{ name: 'asc' }],
         };
         return originalResolve(root, newArgs, ctx, info);
       },

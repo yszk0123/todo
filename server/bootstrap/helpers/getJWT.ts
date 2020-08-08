@@ -1,4 +1,3 @@
-import { Account, User } from '@prisma/client';
 // FIXME: Nexus.js ignores types.d.ts...
 // @ts-ignore
 import jwt from 'next-auth/jwt';
@@ -9,12 +8,13 @@ if (secret === '__NULL__') {
 }
 
 export type Token = {
-  account: Account;
-  user: User;
+  exp: number;
+  iat: number;
+  userId: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getJWT(req: any): Promise<Token> {
-  const token = (await jwt.getJwt({ req, secret })) as Token;
+  const token = (await jwt.getToken({ req, secret })) as Token;
   return token;
 }
