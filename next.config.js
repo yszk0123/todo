@@ -5,10 +5,15 @@ const withPWA = require('next-pwa');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // eslint-disable-next-line no-undef
+const runtimeCaching = require('./next.config.cache');
+
+// eslint-disable-next-line no-undef
 module.exports = withPWA({
   pwa: {
     // eslint-disable-next-line no-undef
     disable: process.env.NODE_ENV === 'development',
+
+    runtimeCaching,
 
     dest: 'public',
   },
