@@ -10,7 +10,7 @@ input AccountCreateManyWithoutUserInput {
 input AccountCreateWithoutUserInput {
   accessToken: String!
   accessTokenExpires: DateTime
-  compoundId: String
+  compoundId: String!
   createdAt: DateTime
   id: String
   providerAccountId: String!
@@ -30,7 +30,7 @@ input AccountScalarWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountScalarWhereInput!]
-  compoundId: NullableStringFilter
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountScalarWhereInput!]
@@ -101,7 +101,7 @@ input AccountWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountWhereInput!]
-  compoundId: NullableStringFilter
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountWhereInput!]
@@ -116,6 +116,7 @@ input AccountWhereInput {
 }
 
 input AccountWhereUniqueInput {
+  compoundId: String
   id: String
   providerAccountId: String
   providerId: String
@@ -1310,9 +1311,9 @@ input UpdateTodosByIdInput {
 }
 
 type User {
-  avatarUrl: String
   email: String!
   id: String!
+  image: String
   name: String
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int): [Todo!]!
 }
@@ -1339,7 +1340,6 @@ input UserCreateOneWithoutTodosInput {
 
 input UserCreateWithoutCategoriesInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
@@ -1349,11 +1349,11 @@ input UserCreateWithoutCategoriesInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutCheckpointsInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   createdAt: DateTime
   email: String!
@@ -1363,11 +1363,11 @@ input UserCreateWithoutCheckpointsInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutTagsInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
@@ -1377,11 +1377,11 @@ input UserCreateWithoutTagsInput {
   image: String
   name: String
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutTodosInput {
   accounts: AccountCreateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryCreateManyWithoutOwnerInput
   checkpoints: CheckpointCreateManyWithoutOwnerInput
   createdAt: DateTime
@@ -1391,6 +1391,7 @@ input UserCreateWithoutTodosInput {
   image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateOneRequiredWithoutCategoriesInput {
@@ -1423,7 +1424,6 @@ input UserUpdateOneRequiredWithoutTodosInput {
 
 input UserUpdateWithoutCategoriesDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
@@ -1433,11 +1433,11 @@ input UserUpdateWithoutCategoriesDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutCheckpointsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   createdAt: DateTime
   email: String
@@ -1447,11 +1447,11 @@ input UserUpdateWithoutCheckpointsDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutTagsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
@@ -1461,11 +1461,11 @@ input UserUpdateWithoutTagsDataInput {
   image: String
   name: String
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutTodosDataInput {
   accounts: AccountUpdateManyWithoutUserInput
-  avatarUrl: String
   categories: CategoryUpdateManyWithoutOwnerInput
   checkpoints: CheckpointUpdateManyWithoutOwnerInput
   createdAt: DateTime
@@ -1475,6 +1475,7 @@ input UserUpdateWithoutTodosDataInput {
   image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpsertWithoutCategoriesInput {
@@ -1500,7 +1501,6 @@ input UserUpsertWithoutTodosInput {
 input UserWhereInput {
   accounts: AccountFilter
   AND: [UserWhereInput!]
-  avatarUrl: NullableStringFilter
   categories: CategoryFilter
   checkpoints: CheckpointFilter
   createdAt: DateTimeFilter
@@ -1513,6 +1513,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   tags: TagFilter
   todos: TodoFilter
+  updatedAt: DateTimeFilter
 }
 
 input UserWhereUniqueInput {

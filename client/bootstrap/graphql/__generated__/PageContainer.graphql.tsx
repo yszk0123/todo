@@ -11,7 +11,7 @@ export type PageContainerQuery = (
   { __typename?: 'Query' }
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
-    & Pick<Types.User, 'id' | 'name' | 'avatarUrl'>
+    & Pick<Types.User, 'id' | 'name' | 'image'>
   )> }
 );
 
@@ -21,7 +21,7 @@ export const PageContainerDocument = gql`
   me {
     id
     name
-    avatarUrl
+    image
   }
 }
     `;

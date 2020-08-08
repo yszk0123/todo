@@ -49,6 +49,15 @@ const options = {
     secret: process.env.JWT_SECRET,
   },
 
+  callbacks: {
+    jwt(decodedJwt, account) {
+      return {
+        userId: account ? account.userId : null,
+        ...decodedJwt,
+      };
+    },
+  },
+
   adapter: Prisma.Adapter({
     prisma: getPrismaClient(),
   }),

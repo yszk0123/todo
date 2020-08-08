@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 import { schema } from 'nexus';
 
+import { getPrismaClient } from '../../plugins/getPrismaClient';
 import { getJWT } from '../helpers/getJWT';
 
 // Prevent nexus build error
@@ -10,9 +11,10 @@ import { getJWT } from '../helpers/getJWT';
 const add = schema.addToContext;
 add(async (req) => {
   try {
-    const token = await getJWT(req);
-    const user = token.user;
-    return { token, user };
+    const { userId } = await getJWT(req);
+    const client = getPrismaClient();
+    const user = await client.user.findOne({ where: { id: userId } });
+    return { user };
   } catch {
     return {};
   }

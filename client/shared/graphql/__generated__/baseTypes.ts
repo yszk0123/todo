@@ -90,7 +90,7 @@ export type AccountCreateManyWithoutUserInput = {
 export type AccountCreateWithoutUserInput = {
   accessToken: Scalars['String'];
   accessTokenExpires?: Maybe<Scalars['DateTime']>;
-  compoundId?: Maybe<Scalars['String']>;
+  compoundId: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   providerAccountId: Scalars['String'];
@@ -110,7 +110,7 @@ export type AccountScalarWhereInput = {
   accessToken?: Maybe<StringFilter>;
   accessTokenExpires?: Maybe<NullableDateTimeFilter>;
   AND?: Maybe<Array<AccountScalarWhereInput>>;
-  compoundId?: Maybe<NullableStringFilter>;
+  compoundId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<AccountScalarWhereInput>>;
@@ -181,7 +181,7 @@ export type AccountWhereInput = {
   accessToken?: Maybe<StringFilter>;
   accessTokenExpires?: Maybe<NullableDateTimeFilter>;
   AND?: Maybe<Array<AccountWhereInput>>;
-  compoundId?: Maybe<NullableStringFilter>;
+  compoundId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<AccountWhereInput>>;
@@ -196,6 +196,7 @@ export type AccountWhereInput = {
 };
 
 export type AccountWhereUniqueInput = {
+  compoundId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   providerAccountId?: Maybe<Scalars['String']>;
   providerId?: Maybe<Scalars['String']>;
@@ -1506,9 +1507,9 @@ export type UpdateTodosByIdInput = {
 
 export type User = {
   __typename?: 'User';
-  avatarUrl?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   id: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   todos: Array<Todo>;
 };
@@ -1543,7 +1544,6 @@ export type UserCreateOneWithoutTodosInput = {
 
 export type UserCreateWithoutCategoriesInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
@@ -1553,11 +1553,11 @@ export type UserCreateWithoutCategoriesInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutCheckpointsInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
@@ -1567,11 +1567,11 @@ export type UserCreateWithoutCheckpointsInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutTagsInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
   checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1581,11 +1581,11 @@ export type UserCreateWithoutTagsInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutTodosInput = {
   accounts?: Maybe<AccountCreateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryCreateManyWithoutOwnerInput>;
   checkpoints?: Maybe<CheckpointCreateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1595,6 +1595,7 @@ export type UserCreateWithoutTodosInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateOneRequiredWithoutCategoriesInput = {
@@ -1627,7 +1628,6 @@ export type UserUpdateOneRequiredWithoutTodosInput = {
 
 export type UserUpdateWithoutCategoriesDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
@@ -1637,11 +1637,11 @@ export type UserUpdateWithoutCategoriesDataInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutCheckpointsDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
@@ -1651,11 +1651,11 @@ export type UserUpdateWithoutCheckpointsDataInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutTagsDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
   checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1665,11 +1665,11 @@ export type UserUpdateWithoutTagsDataInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutTodosDataInput = {
   accounts?: Maybe<AccountUpdateManyWithoutUserInput>;
-  avatarUrl?: Maybe<Scalars['String']>;
   categories?: Maybe<CategoryUpdateManyWithoutOwnerInput>;
   checkpoints?: Maybe<CheckpointUpdateManyWithoutOwnerInput>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1679,6 +1679,7 @@ export type UserUpdateWithoutTodosDataInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpsertWithoutCategoriesInput = {
@@ -1704,7 +1705,6 @@ export type UserUpsertWithoutTodosInput = {
 export type UserWhereInput = {
   accounts?: Maybe<AccountFilter>;
   AND?: Maybe<Array<UserWhereInput>>;
-  avatarUrl?: Maybe<NullableStringFilter>;
   categories?: Maybe<CategoryFilter>;
   checkpoints?: Maybe<CheckpointFilter>;
   createdAt?: Maybe<DateTimeFilter>;
@@ -1717,6 +1717,7 @@ export type UserWhereInput = {
   OR?: Maybe<Array<UserWhereInput>>;
   tags?: Maybe<TagFilter>;
   todos?: Maybe<TodoFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
 };
 
 export type UserWhereUniqueInput = {
