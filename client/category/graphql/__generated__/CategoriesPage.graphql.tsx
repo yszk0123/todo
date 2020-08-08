@@ -1,11 +1,9 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootCategoryFragment } from './Category.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootCategoryFragmentDoc } from './Category.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type CategoriesPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -47,15 +45,15 @@ export const CategoriesPageDocument = gql`
  *   },
  * });
  */
-export function useCategoriesPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CategoriesPageQuery, CategoriesPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<CategoriesPageQuery, CategoriesPageQueryVariables>(CategoriesPageDocument, baseOptions);
+export function useCategoriesPageQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesPageQuery, CategoriesPageQueryVariables>) {
+        return Apollo.useQuery<CategoriesPageQuery, CategoriesPageQueryVariables>(CategoriesPageDocument, baseOptions);
       }
-export function useCategoriesPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CategoriesPageQuery, CategoriesPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<CategoriesPageQuery, CategoriesPageQueryVariables>(CategoriesPageDocument, baseOptions);
+export function useCategoriesPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesPageQuery, CategoriesPageQueryVariables>) {
+          return Apollo.useLazyQuery<CategoriesPageQuery, CategoriesPageQueryVariables>(CategoriesPageDocument, baseOptions);
         }
 export type CategoriesPageQueryHookResult = ReturnType<typeof useCategoriesPageQuery>;
 export type CategoriesPageLazyQueryHookResult = ReturnType<typeof useCategoriesPageLazyQuery>;
-export type CategoriesPageQueryResult = ApolloReactCommon.QueryResult<CategoriesPageQuery, CategoriesPageQueryVariables>;
+export type CategoriesPageQueryResult = Apollo.QueryResult<CategoriesPageQuery, CategoriesPageQueryVariables>;
 export function refetchCategoriesPageQuery(variables?: CategoriesPageQueryVariables) {
       return { query: CategoriesPageDocument, variables: variables }
     }

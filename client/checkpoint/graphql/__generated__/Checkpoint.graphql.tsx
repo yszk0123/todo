@@ -1,9 +1,7 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type GetCheckpointQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -113,15 +111,15 @@ export const GetCheckpointDocument = gql`
  *   },
  * });
  */
-export function useGetCheckpointQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
+export function useGetCheckpointQuery(baseOptions?: Apollo.QueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
+        return Apollo.useQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
       }
-export function useGetCheckpointLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
+export function useGetCheckpointLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCheckpointQuery, GetCheckpointQueryVariables>) {
+          return Apollo.useLazyQuery<GetCheckpointQuery, GetCheckpointQueryVariables>(GetCheckpointDocument, baseOptions);
         }
 export type GetCheckpointQueryHookResult = ReturnType<typeof useGetCheckpointQuery>;
 export type GetCheckpointLazyQueryHookResult = ReturnType<typeof useGetCheckpointLazyQuery>;
-export type GetCheckpointQueryResult = ApolloReactCommon.QueryResult<GetCheckpointQuery, GetCheckpointQueryVariables>;
+export type GetCheckpointQueryResult = Apollo.QueryResult<GetCheckpointQuery, GetCheckpointQueryVariables>;
 export function refetchGetCheckpointQuery(variables?: GetCheckpointQueryVariables) {
       return { query: GetCheckpointDocument, variables: variables }
     }
@@ -132,7 +130,7 @@ export const CreateOneCheckpointDocument = gql`
   }
 }
     ${RootCheckpointFragmentDoc}`;
-export type CreateOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>;
+export type CreateOneCheckpointMutationFn = Apollo.MutationFunction<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>;
 
 /**
  * __useCreateOneCheckpointMutation__
@@ -151,12 +149,12 @@ export type CreateOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<C
  *   },
  * });
  */
-export function useCreateOneCheckpointMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>(CreateOneCheckpointDocument, baseOptions);
+export function useCreateOneCheckpointMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>) {
+        return Apollo.useMutation<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>(CreateOneCheckpointDocument, baseOptions);
       }
 export type CreateOneCheckpointMutationHookResult = ReturnType<typeof useCreateOneCheckpointMutation>;
-export type CreateOneCheckpointMutationResult = ApolloReactCommon.MutationResult<CreateOneCheckpointMutation>;
-export type CreateOneCheckpointMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>;
+export type CreateOneCheckpointMutationResult = Apollo.MutationResult<CreateOneCheckpointMutation>;
+export type CreateOneCheckpointMutationOptions = Apollo.BaseMutationOptions<CreateOneCheckpointMutation, CreateOneCheckpointMutationVariables>;
 export const UpdateOneCheckpointDocument = gql`
     mutation UpdateOneCheckpoint($data: CheckpointUpdateInput!, $where: CheckpointWhereUniqueInput!) {
   updateOneCheckpoint(data: $data, where: $where) {
@@ -164,7 +162,7 @@ export const UpdateOneCheckpointDocument = gql`
   }
 }
     ${RootCheckpointFragmentDoc}`;
-export type UpdateOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>;
+export type UpdateOneCheckpointMutationFn = Apollo.MutationFunction<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>;
 
 /**
  * __useUpdateOneCheckpointMutation__
@@ -184,12 +182,12 @@ export type UpdateOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<U
  *   },
  * });
  */
-export function useUpdateOneCheckpointMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>(UpdateOneCheckpointDocument, baseOptions);
+export function useUpdateOneCheckpointMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>) {
+        return Apollo.useMutation<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>(UpdateOneCheckpointDocument, baseOptions);
       }
 export type UpdateOneCheckpointMutationHookResult = ReturnType<typeof useUpdateOneCheckpointMutation>;
-export type UpdateOneCheckpointMutationResult = ApolloReactCommon.MutationResult<UpdateOneCheckpointMutation>;
-export type UpdateOneCheckpointMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>;
+export type UpdateOneCheckpointMutationResult = Apollo.MutationResult<UpdateOneCheckpointMutation>;
+export type UpdateOneCheckpointMutationOptions = Apollo.BaseMutationOptions<UpdateOneCheckpointMutation, UpdateOneCheckpointMutationVariables>;
 export const UpdateCheckpointsByIdDocument = gql`
     mutation UpdateCheckpointsById($input: UpdateCheckpointsByIdInput!) {
   updateCheckpointsById(data: $input) {
@@ -197,7 +195,7 @@ export const UpdateCheckpointsByIdDocument = gql`
   }
 }
     ${RootCheckpointFragmentDoc}`;
-export type UpdateCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
+export type UpdateCheckpointsByIdMutationFn = Apollo.MutationFunction<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
 
 /**
  * __useUpdateCheckpointsByIdMutation__
@@ -216,12 +214,12 @@ export type UpdateCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction
  *   },
  * });
  */
-export function useUpdateCheckpointsByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>(UpdateCheckpointsByIdDocument, baseOptions);
+export function useUpdateCheckpointsByIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>) {
+        return Apollo.useMutation<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>(UpdateCheckpointsByIdDocument, baseOptions);
       }
 export type UpdateCheckpointsByIdMutationHookResult = ReturnType<typeof useUpdateCheckpointsByIdMutation>;
-export type UpdateCheckpointsByIdMutationResult = ApolloReactCommon.MutationResult<UpdateCheckpointsByIdMutation>;
-export type UpdateCheckpointsByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
+export type UpdateCheckpointsByIdMutationResult = Apollo.MutationResult<UpdateCheckpointsByIdMutation>;
+export type UpdateCheckpointsByIdMutationOptions = Apollo.BaseMutationOptions<UpdateCheckpointsByIdMutation, UpdateCheckpointsByIdMutationVariables>;
 export const DeleteOneCheckpointDocument = gql`
     mutation DeleteOneCheckpoint($where: CheckpointWhereUniqueInput!) {
   deleteOneCheckpoint(where: $where) {
@@ -229,7 +227,7 @@ export const DeleteOneCheckpointDocument = gql`
   }
 }
     `;
-export type DeleteOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>;
+export type DeleteOneCheckpointMutationFn = Apollo.MutationFunction<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>;
 
 /**
  * __useDeleteOneCheckpointMutation__
@@ -248,18 +246,18 @@ export type DeleteOneCheckpointMutationFn = ApolloReactCommon.MutationFunction<D
  *   },
  * });
  */
-export function useDeleteOneCheckpointMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>) {
-        return ApolloReactHooks.useMutation<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>(DeleteOneCheckpointDocument, baseOptions);
+export function useDeleteOneCheckpointMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>) {
+        return Apollo.useMutation<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>(DeleteOneCheckpointDocument, baseOptions);
       }
 export type DeleteOneCheckpointMutationHookResult = ReturnType<typeof useDeleteOneCheckpointMutation>;
-export type DeleteOneCheckpointMutationResult = ApolloReactCommon.MutationResult<DeleteOneCheckpointMutation>;
-export type DeleteOneCheckpointMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>;
+export type DeleteOneCheckpointMutationResult = Apollo.MutationResult<DeleteOneCheckpointMutation>;
+export type DeleteOneCheckpointMutationOptions = Apollo.BaseMutationOptions<DeleteOneCheckpointMutation, DeleteOneCheckpointMutationVariables>;
 export const DeleteCheckpointsByIdDocument = gql`
     mutation DeleteCheckpointsById($data: DeleteCheckpointsByIdInput!) {
   deleteCheckpointsById(data: $data)
 }
     `;
-export type DeleteCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;
+export type DeleteCheckpointsByIdMutationFn = Apollo.MutationFunction<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;
 
 /**
  * __useDeleteCheckpointsByIdMutation__
@@ -278,9 +276,9 @@ export type DeleteCheckpointsByIdMutationFn = ApolloReactCommon.MutationFunction
  *   },
  * });
  */
-export function useDeleteCheckpointsByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>) {
-        return ApolloReactHooks.useMutation<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>(DeleteCheckpointsByIdDocument, baseOptions);
+export function useDeleteCheckpointsByIdMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>) {
+        return Apollo.useMutation<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>(DeleteCheckpointsByIdDocument, baseOptions);
       }
 export type DeleteCheckpointsByIdMutationHookResult = ReturnType<typeof useDeleteCheckpointsByIdMutation>;
-export type DeleteCheckpointsByIdMutationResult = ApolloReactCommon.MutationResult<DeleteCheckpointsByIdMutation>;
-export type DeleteCheckpointsByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;
+export type DeleteCheckpointsByIdMutationResult = Apollo.MutationResult<DeleteCheckpointsByIdMutation>;
+export type DeleteCheckpointsByIdMutationOptions = Apollo.BaseMutationOptions<DeleteCheckpointsByIdMutation, DeleteCheckpointsByIdMutationVariables>;

@@ -1,9 +1,7 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type DashboardPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -66,15 +64,15 @@ export const DashboardPageDocument = gql`
  *   },
  * });
  */
-export function useDashboardPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<DashboardPageQuery, DashboardPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<DashboardPageQuery, DashboardPageQueryVariables>(DashboardPageDocument, baseOptions);
+export function useDashboardPageQuery(baseOptions?: Apollo.QueryHookOptions<DashboardPageQuery, DashboardPageQueryVariables>) {
+        return Apollo.useQuery<DashboardPageQuery, DashboardPageQueryVariables>(DashboardPageDocument, baseOptions);
       }
-export function useDashboardPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<DashboardPageQuery, DashboardPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<DashboardPageQuery, DashboardPageQueryVariables>(DashboardPageDocument, baseOptions);
+export function useDashboardPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DashboardPageQuery, DashboardPageQueryVariables>) {
+          return Apollo.useLazyQuery<DashboardPageQuery, DashboardPageQueryVariables>(DashboardPageDocument, baseOptions);
         }
 export type DashboardPageQueryHookResult = ReturnType<typeof useDashboardPageQuery>;
 export type DashboardPageLazyQueryHookResult = ReturnType<typeof useDashboardPageLazyQuery>;
-export type DashboardPageQueryResult = ApolloReactCommon.QueryResult<DashboardPageQuery, DashboardPageQueryVariables>;
+export type DashboardPageQueryResult = Apollo.QueryResult<DashboardPageQuery, DashboardPageQueryVariables>;
 export function refetchDashboardPageQuery(variables?: DashboardPageQueryVariables) {
       return { query: DashboardPageDocument, variables: variables }
     }

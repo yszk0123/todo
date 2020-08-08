@@ -1,11 +1,9 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootCheckpointFragment } from './Checkpoint.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootCheckpointFragmentDoc } from './Checkpoint.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type CheckpointsPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -47,15 +45,15 @@ export const CheckpointsPageDocument = gql`
  *   },
  * });
  */
-export function useCheckpointsPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CheckpointsPageQuery, CheckpointsPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<CheckpointsPageQuery, CheckpointsPageQueryVariables>(CheckpointsPageDocument, baseOptions);
+export function useCheckpointsPageQuery(baseOptions?: Apollo.QueryHookOptions<CheckpointsPageQuery, CheckpointsPageQueryVariables>) {
+        return Apollo.useQuery<CheckpointsPageQuery, CheckpointsPageQueryVariables>(CheckpointsPageDocument, baseOptions);
       }
-export function useCheckpointsPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CheckpointsPageQuery, CheckpointsPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<CheckpointsPageQuery, CheckpointsPageQueryVariables>(CheckpointsPageDocument, baseOptions);
+export function useCheckpointsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckpointsPageQuery, CheckpointsPageQueryVariables>) {
+          return Apollo.useLazyQuery<CheckpointsPageQuery, CheckpointsPageQueryVariables>(CheckpointsPageDocument, baseOptions);
         }
 export type CheckpointsPageQueryHookResult = ReturnType<typeof useCheckpointsPageQuery>;
 export type CheckpointsPageLazyQueryHookResult = ReturnType<typeof useCheckpointsPageLazyQuery>;
-export type CheckpointsPageQueryResult = ApolloReactCommon.QueryResult<CheckpointsPageQuery, CheckpointsPageQueryVariables>;
+export type CheckpointsPageQueryResult = Apollo.QueryResult<CheckpointsPageQuery, CheckpointsPageQueryVariables>;
 export function refetchCheckpointsPageQuery(variables?: CheckpointsPageQueryVariables) {
       return { query: CheckpointsPageDocument, variables: variables }
     }

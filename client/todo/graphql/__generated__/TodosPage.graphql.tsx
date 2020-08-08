@@ -3,13 +3,11 @@ import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 import { RootTodoFragment, TodoTagFragment } from './Todo.graphql';
 import { RootCheckpointFragment } from '../../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { RootCategoryFragment } from '../../../category/graphql/__generated__/Category.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootTodoFragmentDoc, TodoTagFragmentDoc } from './Todo.graphql';
 import { RootCheckpointFragmentDoc } from '../../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { RootCategoryFragmentDoc } from '../../../category/graphql/__generated__/Category.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type TodosPageQueryVariables = Types.Exact<{
   todoInput: Types.TodoWhereInput;
   tagInput: Types.TagWhereInput;
@@ -77,15 +75,15 @@ ${RootCategoryFragmentDoc}`;
  *   },
  * });
  */
-export function useTodosPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
+export function useTodosPageQuery(baseOptions?: Apollo.QueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
+        return Apollo.useQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
       }
-export function useTodosPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
+export function useTodosPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TodosPageQuery, TodosPageQueryVariables>) {
+          return Apollo.useLazyQuery<TodosPageQuery, TodosPageQueryVariables>(TodosPageDocument, baseOptions);
         }
 export type TodosPageQueryHookResult = ReturnType<typeof useTodosPageQuery>;
 export type TodosPageLazyQueryHookResult = ReturnType<typeof useTodosPageLazyQuery>;
-export type TodosPageQueryResult = ApolloReactCommon.QueryResult<TodosPageQuery, TodosPageQueryVariables>;
+export type TodosPageQueryResult = Apollo.QueryResult<TodosPageQuery, TodosPageQueryVariables>;
 export function refetchTodosPageQuery(variables?: TodosPageQueryVariables) {
       return { query: TodosPageDocument, variables: variables }
     }

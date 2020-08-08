@@ -1,9 +1,7 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type PageContainerQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -41,15 +39,15 @@ export const PageContainerDocument = gql`
  *   },
  * });
  */
-export function usePageContainerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PageContainerQuery, PageContainerQueryVariables>) {
-        return ApolloReactHooks.useQuery<PageContainerQuery, PageContainerQueryVariables>(PageContainerDocument, baseOptions);
+export function usePageContainerQuery(baseOptions?: Apollo.QueryHookOptions<PageContainerQuery, PageContainerQueryVariables>) {
+        return Apollo.useQuery<PageContainerQuery, PageContainerQueryVariables>(PageContainerDocument, baseOptions);
       }
-export function usePageContainerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PageContainerQuery, PageContainerQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PageContainerQuery, PageContainerQueryVariables>(PageContainerDocument, baseOptions);
+export function usePageContainerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PageContainerQuery, PageContainerQueryVariables>) {
+          return Apollo.useLazyQuery<PageContainerQuery, PageContainerQueryVariables>(PageContainerDocument, baseOptions);
         }
 export type PageContainerQueryHookResult = ReturnType<typeof usePageContainerQuery>;
 export type PageContainerLazyQueryHookResult = ReturnType<typeof usePageContainerLazyQuery>;
-export type PageContainerQueryResult = ApolloReactCommon.QueryResult<PageContainerQuery, PageContainerQueryVariables>;
+export type PageContainerQueryResult = Apollo.QueryResult<PageContainerQuery, PageContainerQueryVariables>;
 export function refetchPageContainerQuery(variables?: PageContainerQueryVariables) {
       return { query: PageContainerDocument, variables: variables }
     }
