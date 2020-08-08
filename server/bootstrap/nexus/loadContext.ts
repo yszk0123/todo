@@ -9,13 +9,13 @@ import { getJWT } from '../helpers/getJWT';
 // > 15 interface Context { token: Token; } | { token?: undefined; }
 // @see https://github.com/graphql-nexus/nexus/pull/1057
 const add = schema.addToContext;
-add(async (req) => {
+add(async ({ req }) => {
   try {
     const { userId } = await getJWT(req);
     const client = getPrismaClient();
     const user = await client.user.findOne({ where: { id: userId } });
     return { user };
-  } catch {
+  } catch (err) {
     return {};
   }
 });
