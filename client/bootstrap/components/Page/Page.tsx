@@ -33,7 +33,7 @@ export const Page: React.FunctionComponent<{
       <Flex flexGrow={1}>
         <SideBarPlaceholder />
         <SideNavigationContainer />
-        <Main content={content} hasSession={hasSession} isLoading={isLoading} />
+        <Main content={content} isLoading={isLoading} />
       </Flex>
       <FooterPlaceholder />
     </Wrapper>
