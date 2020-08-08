@@ -90,7 +90,7 @@ export type AccountCreateManyWithoutUserInput = {
 export type AccountCreateWithoutUserInput = {
   accessToken: Scalars['String'];
   accessTokenExpires?: Maybe<Scalars['DateTime']>;
-  compoundId?: Maybe<Scalars['String']>;
+  compoundId: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['String']>;
   providerAccountId: Scalars['String'];
@@ -110,7 +110,7 @@ export type AccountScalarWhereInput = {
   accessToken?: Maybe<StringFilter>;
   accessTokenExpires?: Maybe<NullableDateTimeFilter>;
   AND?: Maybe<Array<AccountScalarWhereInput>>;
-  compoundId?: Maybe<NullableStringFilter>;
+  compoundId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<AccountScalarWhereInput>>;
@@ -181,7 +181,7 @@ export type AccountWhereInput = {
   accessToken?: Maybe<StringFilter>;
   accessTokenExpires?: Maybe<NullableDateTimeFilter>;
   AND?: Maybe<Array<AccountWhereInput>>;
-  compoundId?: Maybe<NullableStringFilter>;
+  compoundId?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   id?: Maybe<UuidFilter>;
   NOT?: Maybe<Array<AccountWhereInput>>;
@@ -196,6 +196,7 @@ export type AccountWhereInput = {
 };
 
 export type AccountWhereUniqueInput = {
+  compoundId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   providerAccountId?: Maybe<Scalars['String']>;
   providerId?: Maybe<Scalars['String']>;

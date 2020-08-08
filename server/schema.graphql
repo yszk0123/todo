@@ -10,7 +10,7 @@ input AccountCreateManyWithoutUserInput {
 input AccountCreateWithoutUserInput {
   accessToken: String!
   accessTokenExpires: DateTime
-  compoundId: String
+  compoundId: String!
   createdAt: DateTime
   id: String
   providerAccountId: String!
@@ -30,7 +30,7 @@ input AccountScalarWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountScalarWhereInput!]
-  compoundId: NullableStringFilter
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountScalarWhereInput!]
@@ -101,7 +101,7 @@ input AccountWhereInput {
   accessToken: StringFilter
   accessTokenExpires: NullableDateTimeFilter
   AND: [AccountWhereInput!]
-  compoundId: NullableStringFilter
+  compoundId: StringFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [AccountWhereInput!]
@@ -116,6 +116,7 @@ input AccountWhereInput {
 }
 
 input AccountWhereUniqueInput {
+  compoundId: String
   id: String
   providerAccountId: String
   providerId: String
