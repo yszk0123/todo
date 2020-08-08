@@ -1350,6 +1350,7 @@ input UserCreateWithoutCategoriesInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutCheckpointsInput {
@@ -1364,6 +1365,7 @@ input UserCreateWithoutCheckpointsInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutTagsInput {
@@ -1378,6 +1380,7 @@ input UserCreateWithoutTagsInput {
   image: String
   name: String
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserCreateWithoutTodosInput {
@@ -1392,6 +1395,7 @@ input UserCreateWithoutTodosInput {
   image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateOneRequiredWithoutCategoriesInput {
@@ -1434,6 +1438,7 @@ input UserUpdateWithoutCategoriesDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutCheckpointsDataInput {
@@ -1448,6 +1453,7 @@ input UserUpdateWithoutCheckpointsDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutTagsDataInput {
@@ -1462,6 +1468,7 @@ input UserUpdateWithoutTagsDataInput {
   image: String
   name: String
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpdateWithoutTodosDataInput {
@@ -1476,6 +1483,7 @@ input UserUpdateWithoutTodosDataInput {
   image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 
 input UserUpsertWithoutCategoriesInput {
@@ -1514,6 +1522,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   tags: TagFilter
   todos: TodoFilter
+  updatedAt: DateTimeFilter
 }
 
 input UserWhereUniqueInput {

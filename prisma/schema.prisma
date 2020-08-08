@@ -22,6 +22,7 @@ model User {
   todos         Todo[]
   tags          Tag[]
   createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now())
   checkpoints   Checkpoint[]
 }
 
@@ -38,7 +39,6 @@ model Account {
   accessTokenExpires DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @default(now())
-
 
   @@index([providerAccountId])
   @@index([providerId])

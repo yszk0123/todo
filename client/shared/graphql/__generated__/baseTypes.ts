@@ -1554,6 +1554,7 @@ export type UserCreateWithoutCategoriesInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutCheckpointsInput = {
@@ -1568,6 +1569,7 @@ export type UserCreateWithoutCheckpointsInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutTagsInput = {
@@ -1582,6 +1584,7 @@ export type UserCreateWithoutTagsInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutTodosInput = {
@@ -1596,6 +1599,7 @@ export type UserCreateWithoutTodosInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagCreateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateOneRequiredWithoutCategoriesInput = {
@@ -1638,6 +1642,7 @@ export type UserUpdateWithoutCategoriesDataInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutCheckpointsDataInput = {
@@ -1652,6 +1657,7 @@ export type UserUpdateWithoutCheckpointsDataInput = {
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutTagsDataInput = {
@@ -1666,6 +1672,7 @@ export type UserUpdateWithoutTagsDataInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   todos?: Maybe<TodoUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpdateWithoutTodosDataInput = {
@@ -1680,6 +1687,7 @@ export type UserUpdateWithoutTodosDataInput = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   tags?: Maybe<TagUpdateManyWithoutOwnerInput>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserUpsertWithoutCategoriesInput = {
@@ -1718,6 +1726,7 @@ export type UserWhereInput = {
   OR?: Maybe<Array<UserWhereInput>>;
   tags?: Maybe<TagFilter>;
   todos?: Maybe<TodoFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
 };
 
 export type UserWhereUniqueInput = {

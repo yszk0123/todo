@@ -1194,6 +1194,7 @@ input UserCreateWithoutCategoriesInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutCheckpointsInput {
   accounts: AccountCreateManyWithoutUserInput
@@ -1207,6 +1208,7 @@ input UserCreateWithoutCheckpointsInput {
   name: String
   tags: TagCreateManyWithoutOwnerInput
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutTagsInput {
   accounts: AccountCreateManyWithoutUserInput
@@ -1220,6 +1222,7 @@ input UserCreateWithoutTagsInput {
   image: String
   name: String
   todos: TodoCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserCreateWithoutTodosInput {
   accounts: AccountCreateManyWithoutUserInput
@@ -1233,6 +1236,7 @@ input UserCreateWithoutTodosInput {
   image: String
   name: String
   tags: TagCreateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateOneRequiredWithoutCategoriesInput {
   connect: UserWhereUniqueInput
@@ -1270,6 +1274,7 @@ input UserUpdateWithoutCategoriesDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutCheckpointsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
@@ -1283,6 +1288,7 @@ input UserUpdateWithoutCheckpointsDataInput {
   name: String
   tags: TagUpdateManyWithoutOwnerInput
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutTagsDataInput {
   accounts: AccountUpdateManyWithoutUserInput
@@ -1296,6 +1302,7 @@ input UserUpdateWithoutTagsDataInput {
   image: String
   name: String
   todos: TodoUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpdateWithoutTodosDataInput {
   accounts: AccountUpdateManyWithoutUserInput
@@ -1309,6 +1316,7 @@ input UserUpdateWithoutTodosDataInput {
   image: String
   name: String
   tags: TagUpdateManyWithoutOwnerInput
+  updatedAt: DateTime
 }
 input UserUpsertWithoutCategoriesInput {
   create: UserCreateWithoutCategoriesInput!
@@ -1342,6 +1350,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   tags: TagFilter
   todos: TodoFilter
+  updatedAt: DateTimeFilter
 }
 input UserWhereUniqueInput {
   email: String
