@@ -11,29 +11,38 @@ generator client {
 }
 
 model User {
-  id          String       @default(uuid()) @id
-  email       String       @unique
-  avatarUrl   String?
-  name        String?
-  accounts    Account[]
-  categories  Category[]
-  todos       Todo[]
-  tags        Tag[]
-  createdAt   DateTime     @default(now())
-  checkpoints Checkpoint[]
+  id            String       @default(uuid()) @id
+  email         String       @unique
+  emailVerified DateTime?
+  avatarUrl     String?
+  image         String?
+  name          String?
+  accounts      Account[]
+  categories    Category[]
+  todos         Todo[]
+  tags          Tag[]
+  createdAt     DateTime     @default(now())
+  checkpoints   Checkpoint[]
 }
 
 model Account {
   id                 String    @default(uuid()) @id
+  compoundId         String?
   userId             String
   user               User      @relation(fields: [userId], references: [id])
   providerId         String
   providerType       String
-  providerAccountId  String    @unique
+  providerAccountId  String
   refreshToken       String?
   accessToken        String
   accessTokenExpires DateTime?
   createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @default(now())
+
+
+  @@index([providerAccountId])
+  @@index([providerId])
+  @@index([userId])
 }
 
 model Category {
