@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String       @default(uuid()) @id
+  email         String       @unique
+  emailVerified DateTime?
+  avatarUrl     String?
+  image         String?
+  name          String?
+  accounts      Account[]
+  categories    Category[]
+  todos         Todo[]
+  tags          Tag[]
+  createdAt     DateTime     @default(now())
+  checkpoints   Checkpoint[]
+}
+
+model Account {
+  id                 String    @default(uuid()) @id
+  compoundId         String?
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  providerId         String
+  providerType       String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @default(now())
+
+
+  @@index([providerAccountId])
+  @@index([providerId])
+  @@index([userId])
+}
+
+model Category {
+  id         String    @default(uuid()) @id
+  createdAt  DateTime  @default(now())
+  name       String
+  archivedAt DateTime?
+  owner      User      @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  todos      Todo[]
+  tags       Tag[]
+
+  @@index([ownerId, id, name])
+}
+
+model Todo {
+  id           String      @default(uuid()) @id
+  createdAt    DateTime    @default(now())
+  text         String
+  owner        User        @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  category     Category    @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  checkpoint   Checkpoint? @relation(fields: [checkpointId], references: [id])
+  checkpointId String?
+  tags         Tag[]
+  status       TodoStatus  @default(TODO)
+  archivedAt   DateTime?
+
+  @@index([ownerId, id])
+}
+
+model Tag {
+  id         String     @default(uuid()) @id
+  createdAt  DateTime   @default(now())
+  name       String
+  color      Color      @default(DEFAULT)
+  archivedAt DateTime?
+  owner      User       @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  categories Category[] @relation(references: [id])
+  todos      Todo[]     @relation(references: [id])
+  parentId   String?
+  parent     Tag?       @relation("TagTree", fields: [parentId], references: [id])
+  children   Tag[]      @relation("TagTree")
+
+  @@index([ownerId, id])
+}
+
+model Checkpoint {
+  id         String    @default(uuid()) @id
+  name       String?
+  endAt      DateTime
+  owner      User      @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  todos      Todo[]
+  archivedAt DateTime?
+
+  @@index([ownerId, id])
+}
+
+enum TodoStatus {
+  TODO
+  IN_PROGRESS
+  WAITING
+  DONE
+}
+
+enum Color {
+  DEFAULT
+  RED
+  PURPLE
+  BLUE
+  GREEN
+  YELLOW
+  PINK
+}
