@@ -23,10 +23,14 @@ export function createApolloClient() {
     resolvers: {},
   });
 
+  initializeCache(cache);
+
+  return client;
+}
+
+function initializeCache(cache: InMemoryCache) {
   cache.writeQuery<PageIsSyncingQuery>({
     query: PageIsSyncingDocument,
     data: { page: { __typename: 'Page', isSyncing: false } },
   });
-
-  return client;
 }
