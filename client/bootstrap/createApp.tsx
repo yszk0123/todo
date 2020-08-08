@@ -1,4 +1,4 @@
-import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'emotion-theming';
 // @ts-ignore
 import { Provider as NextAuthProvider } from 'next-auth/client';
@@ -27,7 +27,7 @@ type Props = {
 };
 
 export function createApp(): React.FunctionComponent<Props> {
-  const client = createApolloClient();
+  const { persist } = createApolloClient();
   const store = createReduxStore();
   const mobile = !isSSR() && isMobile();
   const theme = createTheme(mobile);
@@ -37,22 +37,31 @@ export function createApp(): React.FunctionComponent<Props> {
     pageProps,
   }: Props) => {
     const { session } = pageProps;
+    const [client, setClient] = React.useState<ApolloClient<unknown> | null>(
+      null
+    );
+
+    React.useEffect(() => {
+      persist((client) => setClient(client));
+    }, []);
 
     return (
       <ThemeProvider theme={theme}>
-        <ApolloProvider client={client}>
-          <NextAuthProvider session={session}>
-            <ReactReduxProvider store={store}>
-              <GlobalStyle />
-              <Head>
-                <title>Todo</title>
-              </Head>
-              <PageContainer>
-                <Component {...pageProps} />
-              </PageContainer>
-            </ReactReduxProvider>
-          </NextAuthProvider>
-        </ApolloProvider>
+        <GlobalStyle />
+        <Head>
+          <title>Todo</title>
+        </Head>
+        {client !== null && (
+          <ApolloProvider client={client}>
+            <NextAuthProvider session={session}>
+              <ReactReduxProvider store={store}>
+                <PageContainer>
+                  <Component {...pageProps} />
+                </PageContainer>
+              </ReactReduxProvider>
+            </NextAuthProvider>
+          </ApolloProvider>
+        )}
       </ThemeProvider>
     );
   };
