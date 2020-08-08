@@ -33,7 +33,7 @@ export type QueryCategoriesArgs = {
   before?: Maybe<CategoryWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<CategoryOrderByInput>;
+  orderBy?: Maybe<Array<CategoryOrderByInput>>;
   where?: Maybe<CategoryWhereInput>;
 };
 
@@ -48,7 +48,7 @@ export type QueryCheckpointsArgs = {
   before?: Maybe<CheckpointWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<CheckpointOrderByInput>;
+  orderBy?: Maybe<Array<CheckpointOrderByInput>>;
   where?: Maybe<CheckpointWhereInput>;
 };
 
@@ -63,7 +63,7 @@ export type QueryTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<TagOrderByInput>;
+  orderBy?: Maybe<Array<TagOrderByInput>>;
   where?: Maybe<TagWhereInput>;
 };
 
@@ -73,7 +73,7 @@ export type QueryTodosArgs = {
   before?: Maybe<TodoWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<TodoOrderByInput>;
+  orderBy?: Maybe<Array<TodoOrderByInput>>;
   where?: Maybe<TodoWhereInput>;
 };
 
@@ -220,7 +220,7 @@ export type CategoryTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<TagOrderByInput>;
+  orderBy?: Maybe<Array<TagOrderByInput>>;
 };
 
 
@@ -229,7 +229,7 @@ export type CategoryTodosArgs = {
   before?: Maybe<TodoWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<TodoOrderByInput>;
+  orderBy?: Maybe<Array<TodoOrderByInput>>;
   where?: Maybe<TodoWhereInput>;
 };
 
@@ -292,11 +292,11 @@ export type CategoryFilter = {
 };
 
 export type CategoryOrderByInput = {
-  archivedAt?: Maybe<OrderByArg>;
-  createdAt?: Maybe<OrderByArg>;
-  id?: Maybe<OrderByArg>;
-  name?: Maybe<OrderByArg>;
-  ownerId?: Maybe<OrderByArg>;
+  archivedAt?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  ownerId?: Maybe<SortOrder>;
 };
 
 export type CategoryScalarWhereInput = {
@@ -488,11 +488,11 @@ export type CheckpointFilter = {
 };
 
 export type CheckpointOrderByInput = {
-  archivedAt?: Maybe<OrderByArg>;
-  endAt?: Maybe<OrderByArg>;
-  id?: Maybe<OrderByArg>;
-  name?: Maybe<OrderByArg>;
-  ownerId?: Maybe<OrderByArg>;
+  archivedAt?: Maybe<SortOrder>;
+  endAt?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  ownerId?: Maybe<SortOrder>;
 };
 
 export type CheckpointScalarWhereInput = {
@@ -761,7 +761,7 @@ export type NullableStringFilter = {
   startsWith?: Maybe<Scalars['String']>;
 };
 
-export enum OrderByArg {
+export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
 }
@@ -923,13 +923,13 @@ export type TagFilter = {
 };
 
 export type TagOrderByInput = {
-  archivedAt?: Maybe<OrderByArg>;
-  color?: Maybe<OrderByArg>;
-  createdAt?: Maybe<OrderByArg>;
-  id?: Maybe<OrderByArg>;
-  name?: Maybe<OrderByArg>;
-  ownerId?: Maybe<OrderByArg>;
-  parentId?: Maybe<OrderByArg>;
+  archivedAt?: Maybe<SortOrder>;
+  color?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  name?: Maybe<SortOrder>;
+  ownerId?: Maybe<SortOrder>;
+  parentId?: Maybe<SortOrder>;
 };
 
 export type TagScalarWhereInput = {
@@ -1184,7 +1184,7 @@ export type TodoTagsArgs = {
   before?: Maybe<TagWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<TagOrderByInput>;
+  orderBy?: Maybe<Array<TagOrderByInput>>;
 };
 
 export type TodoCountByDate = {
@@ -1276,14 +1276,14 @@ export type TodoFilter = {
 };
 
 export type TodoOrderByInput = {
-  archivedAt?: Maybe<OrderByArg>;
-  categoryId?: Maybe<OrderByArg>;
-  checkpointId?: Maybe<OrderByArg>;
-  createdAt?: Maybe<OrderByArg>;
-  id?: Maybe<OrderByArg>;
-  ownerId?: Maybe<OrderByArg>;
-  status?: Maybe<OrderByArg>;
-  text?: Maybe<OrderByArg>;
+  archivedAt?: Maybe<SortOrder>;
+  categoryId?: Maybe<SortOrder>;
+  checkpointId?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  id?: Maybe<SortOrder>;
+  ownerId?: Maybe<SortOrder>;
+  status?: Maybe<SortOrder>;
+  text?: Maybe<SortOrder>;
 };
 
 export type TodoScalarWhereInput = {
