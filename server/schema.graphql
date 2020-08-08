@@ -129,8 +129,8 @@ type Category {
   id: String!
   name: String!
   owner: User!
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: [TagOrderByInput!]): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [TodoOrderByInput!], where: TodoWhereInput): [Todo!]!
 }
 
 input CategoryCreateInput {
@@ -192,11 +192,11 @@ input CategoryFilter {
 }
 
 input CategoryOrderByInput {
-  archivedAt: OrderByArg
-  createdAt: OrderByArg
-  id: OrderByArg
-  name: OrderByArg
-  ownerId: OrderByArg
+  archivedAt: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  ownerId: SortOrder
 }
 
 input CategoryScalarWhereInput {
@@ -387,11 +387,11 @@ input CheckpointFilter {
 }
 
 input CheckpointOrderByInput {
-  archivedAt: OrderByArg
-  endAt: OrderByArg
-  id: OrderByArg
-  name: OrderByArg
-  ownerId: OrderByArg
+  archivedAt: SortOrder
+  endAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  ownerId: SortOrder
 }
 
 input CheckpointScalarWhereInput {
@@ -584,20 +584,20 @@ input NullableStringFilter {
   startsWith: String
 }
 
-enum OrderByArg {
-  asc
-  desc
-}
-
 type Query {
-  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, orderBy: CategoryOrderByInput, where: CategoryWhereInput): [Category!]!
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, orderBy: [CategoryOrderByInput!], where: CategoryWhereInput): [Category!]!
   category(where: CategoryWhereUniqueInput!): Category
-  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, orderBy: CheckpointOrderByInput, where: CheckpointWhereInput): [Checkpoint!]!
+  checkpoints(after: CheckpointWhereUniqueInput, before: CheckpointWhereUniqueInput, first: Int, last: Int, orderBy: [CheckpointOrderByInput!], where: CheckpointWhereInput): [Checkpoint!]!
   me: User
   stats: Stats
   tag(where: TagWhereUniqueInput!): Tag
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput, where: TagWhereInput): [Tag!]!
-  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: TodoOrderByInput, where: TodoWhereInput): [Todo!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: [TagOrderByInput!], where: TagWhereInput): [Tag!]!
+  todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [TodoOrderByInput!], where: TodoWhereInput): [Todo!]!
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 type Stats {
@@ -739,13 +739,13 @@ input TagFilter {
 }
 
 input TagOrderByInput {
-  archivedAt: OrderByArg
-  color: OrderByArg
-  createdAt: OrderByArg
-  id: OrderByArg
-  name: OrderByArg
-  ownerId: OrderByArg
-  parentId: OrderByArg
+  archivedAt: SortOrder
+  color: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  ownerId: SortOrder
+  parentId: SortOrder
 }
 
 input TagScalarWhereInput {
@@ -989,7 +989,7 @@ type Todo {
   owner: User!
   ownerId: String!
   status: TodoStatus!
-  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: TagOrderByInput): [Tag!]!
+  tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: [TagOrderByInput!]): [Tag!]!
   text: String!
 }
 
@@ -1081,14 +1081,14 @@ input TodoFilter {
 }
 
 input TodoOrderByInput {
-  archivedAt: OrderByArg
-  categoryId: OrderByArg
-  checkpointId: OrderByArg
-  createdAt: OrderByArg
-  id: OrderByArg
-  ownerId: OrderByArg
-  status: OrderByArg
-  text: OrderByArg
+  archivedAt: SortOrder
+  categoryId: SortOrder
+  checkpointId: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  ownerId: SortOrder
+  status: SortOrder
+  text: SortOrder
 }
 
 input TodoScalarWhereInput {
