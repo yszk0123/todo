@@ -116,3 +116,9 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
 
   return todoGroups;
 }
+
+export function sortTodoTags(tags: TodoTagFragment[]): TodoTagFragment[] {
+  return [...tags].sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+}
