@@ -9,9 +9,9 @@ export function toDateTime(dateOrString: string | Date): DateTime {
 
 // FIXME
 export function fromLocalDateString(localDateString: string): DateTime {
-  const isLocal = !/T[-+]?\d+:\d+(?::\d+)(?:\.\d+)?$|Z$/.test(localDateString);
+  const isLocal = !/[-+]\d+:\d+$|Z$/.test(localDateString);
   return isLocal
-    ? (`${toDateTime(localDateString)}T${getTimezoneString()}` as DateTime)
+    ? (toDateTime(localDateString + getTimezoneString()) as DateTime)
     : toDateTime(localDateString);
 }
 
