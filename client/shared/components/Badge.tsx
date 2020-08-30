@@ -8,13 +8,19 @@ export const Badge: React.FunctionComponent<{
   onClick?: () => void;
   text: string;
 }> = ({ color = 'gray', icon, isReverseColor = false, onClick, text }) => {
+  const isClickable = !!onClick;
+
   return (
     <Flex
       alignItems="center"
+      aria-label={isClickable ? text : undefined}
+      role={isClickable ? 'button' : undefined}
       sx={{
         color: isReverseColor ? 'black' : 'white',
         bg: color,
+        cursor: isClickable ? 'pointer' : undefined,
       }}
+      tabIndex={isClickable ? 0 : undefined}
       variant="badge"
     >
       {text}
