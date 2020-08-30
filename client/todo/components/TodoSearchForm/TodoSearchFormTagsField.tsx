@@ -7,7 +7,8 @@ import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 
 const getColor = (tag: TodoTagFragment) => tag.color;
 const getValue = (tag: TodoTagFragment) => tag.id;
-const getDisplayName = (tag: TodoTagFragment, i: number) =>
+const getBadgeDisplayName = (tag: TodoTagFragment) => tag.name;
+const getSelectDisplayName = (tag: TodoTagFragment, i: number) =>
   `${i + 1}. ${tag.name}`;
 
 export function TodoSearchFormTagsField({
@@ -21,8 +22,9 @@ export function TodoSearchFormTagsField({
 }): JSX.Element | null {
   return (
     <EditFormBadgeSelectField
+      getBadgeDisplayName={getBadgeDisplayName}
       getColor={getColor}
-      getDisplayName={getDisplayName}
+      getSelectDisplayName={getSelectDisplayName}
       getValue={getValue}
       id="todo-search-tags"
       items={categoryTags}

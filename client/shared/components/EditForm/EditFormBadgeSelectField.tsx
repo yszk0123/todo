@@ -9,8 +9,9 @@ import { Select } from '../Select';
 import { EditFormField } from './EditFormField';
 
 export function EditFormBadgeSelectField<T>({
+  getBadgeDisplayName,
   getColor,
-  getDisplayName,
+  getSelectDisplayName,
   getValue,
   id,
   items,
@@ -19,8 +20,9 @@ export function EditFormBadgeSelectField<T>({
   rightElement,
   selectedItems,
 }: {
+  getBadgeDisplayName: (item: T, index: number) => string;
   getColor: (item: T) => Color;
-  getDisplayName: (item: T, index: number) => string;
+  getSelectDisplayName: (item: T, index: number) => string;
   getValue: (item: T) => string;
   id: string;
   items: T[];
@@ -54,7 +56,7 @@ export function EditFormBadgeSelectField<T>({
             <MiniListItem key={i}>
               <ClosableBadge
                 color={getColor(item)}
-                text={getDisplayName(item, i)}
+                text={getBadgeDisplayName(item, i)}
                 onClick={() => handleChange(item)}
               />
             </MiniListItem>
@@ -63,7 +65,7 @@ export function EditFormBadgeSelectField<T>({
       </MiniList>
       <Box ml={isEmpty ? 0 : 1} sx={{ flexGrow: 1 }}>
         <Select
-          getDisplayName={getDisplayName}
+          getDisplayName={getSelectDisplayName}
           getValue={getValue}
           id={id}
           items={selectableItems}

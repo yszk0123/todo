@@ -8,7 +8,8 @@ import { Color } from '../../../view_models/Color';
 
 const getColor = () => Color.Default;
 const getValue = (category: RootCategoryFragment) => category.id;
-const getDisplayName = (category: RootCategoryFragment, i: number) =>
+const getBadgeDisplayName = (category: RootCategoryFragment) => category.name;
+const getSelectDisplayName = (category: RootCategoryFragment, i: number) =>
   `${i + 1}. ${category.name}`;
 
 export function TagEditFormCategoriesField({
@@ -26,8 +27,9 @@ export function TagEditFormCategoriesField({
 
   return (
     <EditFormBadgeSelectField
+      getBadgeDisplayName={getBadgeDisplayName}
       getColor={getColor}
-      getDisplayName={getDisplayName}
+      getSelectDisplayName={getSelectDisplayName}
       getValue={getValue}
       id="tag-edit-categories"
       items={categories}
