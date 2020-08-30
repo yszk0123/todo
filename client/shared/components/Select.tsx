@@ -13,7 +13,7 @@ function Select<T>({
   onChange,
   selectedItem,
 }: {
-  getDisplayName: (item: T) => string;
+  getDisplayName: (item: T, index: number) => string;
   getValue: (item: T) => string;
   id: string;
   items: T[];
@@ -40,11 +40,11 @@ function Select<T>({
       onChange={handleChange}
     >
       <option value={DEFAULT_VALUE}>-</option>
-      {items.map((item) => {
+      {items.map((item, i) => {
         const value = getValue(item);
         return (
           <option key={value} value={value}>
-            {getDisplayName(item)}
+            {getDisplayName(item, i)}
           </option>
         );
       })}

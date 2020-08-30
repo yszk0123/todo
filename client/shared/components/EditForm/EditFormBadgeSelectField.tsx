@@ -20,7 +20,7 @@ export function EditFormBadgeSelectField<T>({
   selectedItems,
 }: {
   getColor: (item: T) => Color;
-  getDisplayName: (item: T) => string;
+  getDisplayName: (item: T, index: number) => string;
   getValue: (item: T) => string;
   id: string;
   items: T[];
@@ -54,7 +54,7 @@ export function EditFormBadgeSelectField<T>({
             <MiniListItem key={i}>
               <ClosableBadge
                 color={getColor(item)}
-                text={getDisplayName(item)}
+                text={getDisplayName(item, i)}
                 onClick={() => handleChange(item)}
               />
             </MiniListItem>

@@ -7,7 +7,8 @@ import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 
 const getColor = (tag: TodoTagFragment) => tag.color;
 const getValue = (tag: TodoTagFragment) => tag.id;
-const getDisplayName = (tag: TodoTagFragment) => tag.name;
+const getDisplayName = (tag: TodoTagFragment, i: number) =>
+  `${i + 1}. ${tag.name}`;
 
 export function TodoEditFormTagsField({
   categoryTags,

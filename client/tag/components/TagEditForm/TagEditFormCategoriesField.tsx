@@ -8,7 +8,8 @@ import { Color } from '../../../view_models/Color';
 
 const getColor = () => Color.Default;
 const getValue = (category: RootCategoryFragment) => category.id;
-const getDisplayName = (category: RootCategoryFragment) => category.name;
+const getDisplayName = (category: RootCategoryFragment, i: number) =>
+  `${i + 1}. ${category.name}`;
 
 export function TagEditFormCategoriesField({
   categories,

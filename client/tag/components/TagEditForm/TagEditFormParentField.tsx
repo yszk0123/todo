@@ -5,7 +5,8 @@ import { EditFormSelectField } from '../../../shared/components/EditForm';
 import { RootTagFragment } from '../../graphql/__generated__/Tag.graphql';
 
 const getValue = (category: RootTagFragment) => category.id;
-const getDisplayName = (category: RootTagFragment) => category.name;
+const getDisplayName = (category: RootTagFragment, i: number) =>
+  `${i + 1}. ${category.name}`;
 
 export function TagEditFormParentField({
   onChange,

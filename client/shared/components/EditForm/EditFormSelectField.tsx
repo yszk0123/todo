@@ -14,7 +14,7 @@ export function EditFormSelectField<T>({
   rightElement,
   selectedItem,
 }: {
-  getDisplayName: (item: T) => string;
+  getDisplayName: (item: T, index: number) => string;
   getValue: (item: T) => string;
   id: string;
   items: T[];

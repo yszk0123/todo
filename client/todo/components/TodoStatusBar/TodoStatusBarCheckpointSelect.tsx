@@ -3,8 +3,8 @@ import React from 'react';
 import { RootCheckpointFragment } from '../../../checkpoint/graphql/__generated__/Checkpoint.graphql';
 import { LabelledSelect } from '../../../shared/components/LabelledSelect';
 
-const getDisplayName = (checkpoint: RootCheckpointFragment) =>
-  checkpoint.name ?? '';
+const getDisplayName = (checkpoint: RootCheckpointFragment, i: number) =>
+  `${i}: ${checkpoint.name ?? ''}`;
 const getValue = (checkpoint: RootCheckpointFragment) => checkpoint.id;
 
 export const TodoStatusBarCheckpointSelect: React.FunctionComponent<{

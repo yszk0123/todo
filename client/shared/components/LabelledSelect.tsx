@@ -13,7 +13,7 @@ export function LabelledSelect<T>({
   onChange,
   selectedItem,
 }: {
-  getDisplayName: (item: T) => string;
+  getDisplayName: (item: T, index: number) => string;
   getValue: (item: T) => string;
   id: string;
   items: T[];
