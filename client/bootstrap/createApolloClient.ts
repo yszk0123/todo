@@ -8,6 +8,8 @@ import {
 } from '../shared/graphql/__generated__/Page.graphql';
 import { isSSR } from '../shared/helpers/isSSR';
 
+const PERSITENCE_DEBOUNCE = 3000;
+
 export function createApolloClient(): {
   initialize: (callback: (client: ApolloClient<unknown>) => void) => void;
 } {
@@ -33,6 +35,8 @@ export function createApolloClient(): {
     : (callback: (client: ApolloClient<unknown>) => void) =>
         persistCache({
           cache,
+          debounce: PERSITENCE_DEBOUNCE,
+
           // @ts-ignore
           storage: window.localStorage,
         }).then(() => {
