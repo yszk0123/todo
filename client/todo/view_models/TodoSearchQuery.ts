@@ -58,31 +58,34 @@ function toDateTimeOrNull(dateString: string): DateTime | null {
   }
 }
 
+function isValidString(value: unknown): value is string {
+  return typeof value === 'string' && value !== '' && value !== 'null';
+}
+
+function parseArrayString(value: string): string[] {
+  return value.split(',');
+}
+
 export function parseTodoSearchRawQuery(
   query: Record<string, string | string[] | undefined>
 ): TodoSearchQuery {
-  const archivedAt =
-    typeof query.archivedAt === 'string' && query.archivedAt !== ''
-      ? toDateTimeOrNull(query.archivedAt)
-      : null;
-  const categoryId =
-    typeof query.categoryId === 'string' && query.categoryId !== ''
-      ? query.categoryId
-      : null;
-  const checkpointId =
-    typeof query.checkpointId === 'string' && query.checkpointId !== ''
-      ? query.checkpointId
-      : null;
-  const status =
-    typeof query.status === 'string' && query.status !== ''
-      ? stringToTodoStatusMap[query.status] ?? null
-      : null;
+  const archivedAt = isValidString(query.archivedAt)
+    ? toDateTimeOrNull(query.archivedAt)
+    : null;
+  const categoryId = isValidString(query.categoryId) ? query.categoryId : null;
+  const checkpointId = isValidString(query.checkpointId)
+    ? query.checkpointId
+    : null;
+  const status = isValidString(query.status)
+    ? stringToTodoStatusMap[query.status] ?? null
+    : null;
   const tagIds = Array.isArray(query.tagIds)
     ? query.tagIds
-    : typeof query.tagIds === 'string' && query.tagIds !== ''
-    ? [query.tagIds]
+    : isValidString(query.tagIds)
+    ? parseArrayString(query.tagIds)
     : null;
-  const text = typeof query.text === 'string' ? query.text : null;
+  // FIXME: currently cannot search "null"
+  const text = isValidString(query.text) ? query.text : null;
 
   return {
     archivedAt,
