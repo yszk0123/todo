@@ -44,7 +44,7 @@ export function createApolloClient(): {
         await cachePersistor.restore();
 
         // Clear old cache
-        cachePersistor.purge();
+        cache.gc();
 
         client.onResetStore(async () => {
           initializeCache(cache);
