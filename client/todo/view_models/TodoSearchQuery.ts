@@ -50,12 +50,20 @@ export function fromTodoSearchFormValues(
   };
 }
 
+function toDateTimeOrNull(dateString: string): DateTime | null {
+  try {
+    return toDateTime(dateString);
+  } catch {
+    return null;
+  }
+}
+
 export function parseTodoSearchRawQuery(
   query: Record<string, string | string[] | undefined>
 ): TodoSearchQuery {
   const archivedAt =
     typeof query.archivedAt === 'string' && query.archivedAt !== ''
-      ? toDateTime(query.archivedAt)
+      ? toDateTimeOrNull(query.archivedAt)
       : null;
   const categoryId =
     typeof query.categoryId === 'string' && query.categoryId !== ''
