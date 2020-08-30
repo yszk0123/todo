@@ -44,7 +44,7 @@ export const EditFormDateTimeInputField: React.FunctionComponent<{
     <EditFormField
       htmlFor={id}
       label={label}
-      rightElement={<CloseIcon onClick={handleReset} />}
+      rightElement={value !== null ? <CloseIcon onClick={handleReset} /> : null}
     >
       <Box sx={{ flexGrow: 1 }}>
         <Input
