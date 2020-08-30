@@ -1,5 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { persistCache } from 'apollo-cache-persist';
+import { CachePersistor } from 'apollo-cache-persist';
 
 import introspectionResult from '../shared/graphql/__generated__/introspectionResult';
 import {
@@ -32,17 +32,26 @@ export function createApolloClient(): {
 
   const initialize = ssr
     ? (callback: (client: ApolloClient<unknown>) => void) => callback(client)
-    : (callback: (client: ApolloClient<unknown>) => void) =>
-        persistCache({
+    : async (callback: (client: ApolloClient<unknown>) => void) => {
+        const cachePersistor = new CachePersistor({
           cache,
           debounce: PERSITENCE_DEBOUNCE,
 
           // @ts-ignore
           storage: window.localStorage,
-        }).then(() => {
-          client.onResetStore(async () => initializeCache(cache));
-          callback(client);
         });
+
+        await cachePersistor.restore();
+
+        // Clear old cache
+        cachePersistor.purge();
+
+        client.onResetStore(async () => {
+          initializeCache(cache);
+        });
+
+        callback(client);
+      };
 
   return { initialize };
 }
