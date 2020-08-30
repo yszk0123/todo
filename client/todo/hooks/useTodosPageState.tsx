@@ -10,7 +10,7 @@ import { useTypedSelector } from '../../shared/hooks/useTypedSelector';
 import { isDocumentVisible } from '../../shared/view_helpers/isDocumentVisible';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { getSelectModeFromSelection } from '../../view_models/SelectMode';
-import { getArchiveStatus } from '../../view_models/Todo';
+import { getArchiveStatus, sortTodoTags } from '../../view_models/Todo';
 import { RootTodoFragment } from '../graphql/__generated__/Todo.graphql';
 import {
   TodosPageQueryVariables,
@@ -73,6 +73,10 @@ export function useTodosPageState() {
     [data?.todos, todoSelection]
   );
 
+  const categoryTags = React.useMemo(() => sortTodoTags(data?.tags ?? EMPTY), [
+    data?.tags,
+  ]);
+
   useInterval(() => {
     if (isDocumentVisible()) {
       refetch();
@@ -83,7 +87,7 @@ export function useTodosPageState() {
   return {
     categories: data?.categories ?? EMPTY,
     category,
-    categoryTags: data?.tags ?? EMPTY,
+    categoryTags,
     checkpoints: data?.checkpoints ?? EMPTY,
     isCategoryNameShown: todoSearchQuery.categoryId == null,
     isLoading: !data && loading,
