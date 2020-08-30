@@ -9,7 +9,7 @@ import {
 import { isSSR } from '../shared/helpers/isSSR';
 
 export function createApolloClient(): {
-  persist: (callback: (client: ApolloClient<unknown>) => void) => void;
+  initialize: (callback: (client: ApolloClient<unknown>) => void) => void;
 } {
   const ssr = isSSR();
 
@@ -28,7 +28,7 @@ export function createApolloClient(): {
 
   initializeCache(cache);
 
-  const persist = ssr
+  const initialize = ssr
     ? (callback: (client: ApolloClient<unknown>) => void) => callback(client)
     : (callback: (client: ApolloClient<unknown>) => void) =>
         persistCache({
@@ -40,7 +40,7 @@ export function createApolloClient(): {
           callback(client);
         });
 
-  return { persist };
+  return { initialize };
 }
 
 function initializeCache(cache: InMemoryCache) {

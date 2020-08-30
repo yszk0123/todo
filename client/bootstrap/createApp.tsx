@@ -27,7 +27,7 @@ type Props = {
 };
 
 export function createApp(): React.FunctionComponent<Props> {
-  const { persist } = createApolloClient();
+  const { initialize } = createApolloClient();
   const store = createReduxStore();
   const mobile = !isSSR() && isMobile();
   const theme = createTheme(mobile);
@@ -42,7 +42,7 @@ export function createApp(): React.FunctionComponent<Props> {
     );
 
     React.useEffect(() => {
-      persist((client) => setClient(client));
+      initialize((client) => setClient(client));
     }, []);
 
     return (
