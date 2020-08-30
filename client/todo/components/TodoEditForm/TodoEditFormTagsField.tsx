@@ -3,13 +3,14 @@ import React from 'react';
 import { Badge } from '../../../shared/components/Badge';
 import { EditFormBadgeSelectField } from '../../../shared/components/EditForm';
 import { EMPTY } from '../../../shared/constants/EMPTY';
+import { getIndexedDisplayName } from '../../../shared/view_helpers/getIndexedDisplayName';
 import { TodoTagFragment } from '../../graphql/__generated__/Todo.graphql';
 
 const getColor = (tag: TodoTagFragment) => tag.color;
 const getValue = (tag: TodoTagFragment) => tag.id;
 const getBadgeDisplayName = (tag: TodoTagFragment) => tag.name;
 const getSelectDisplayName = (tag: TodoTagFragment, i: number) =>
-  `${i + 1}. ${tag.name}`;
+  getIndexedDisplayName(tag.name, i);
 
 export function TodoEditFormTagsField({
   categoryTags,

@@ -2,11 +2,12 @@ import React from 'react';
 
 import { Badge } from '../../../shared/components/Badge';
 import { EditFormSelectField } from '../../../shared/components/EditForm';
+import { getIndexedDisplayName } from '../../../shared/view_helpers/getIndexedDisplayName';
 import { RootTagFragment } from '../../graphql/__generated__/Tag.graphql';
 
 const getValue = (category: RootTagFragment) => category.id;
 const getDisplayName = (category: RootTagFragment, i: number) =>
-  `${i + 1}. ${category.name}`;
+  getIndexedDisplayName(category.name, i);
 
 export function TagEditFormParentField({
   onChange,

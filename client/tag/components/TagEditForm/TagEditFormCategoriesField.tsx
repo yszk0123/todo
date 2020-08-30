@@ -4,13 +4,14 @@ import { RootCategoryFragment } from '../../../category/graphql/__generated__/Ca
 import { Badge } from '../../../shared/components/Badge';
 import { EditFormBadgeSelectField } from '../../../shared/components/EditForm';
 import { EMPTY } from '../../../shared/constants/EMPTY';
+import { getIndexedDisplayName } from '../../../shared/view_helpers/getIndexedDisplayName';
 import { Color } from '../../../view_models/Color';
 
 const getColor = () => Color.Default;
 const getValue = (category: RootCategoryFragment) => category.id;
 const getBadgeDisplayName = (category: RootCategoryFragment) => category.name;
 const getSelectDisplayName = (category: RootCategoryFragment, i: number) =>
-  `${i + 1}. ${category.name}`;
+  getIndexedDisplayName(category.name, i);
 
 export function TagEditFormCategoriesField({
   categories,
