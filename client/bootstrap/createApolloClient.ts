@@ -1,4 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { CachePersistor } from 'apollo-cache-persist';
 
 import introspectionResult from '../shared/graphql/__generated__/introspectionResult';
 import {
@@ -7,7 +8,11 @@ import {
 } from '../shared/graphql/__generated__/Page.graphql';
 import { isSSR } from '../shared/helpers/isSSR';
 
-export function createApolloClient() {
+const PERSITENCE_DEBOUNCE = 3000;
+
+export function createApolloClient(): {
+  initialize: (callback: (client: ApolloClient<unknown>) => void) => void;
+} {
   const ssr = isSSR();
 
   const cache = new InMemoryCache({
@@ -23,10 +28,37 @@ export function createApolloClient() {
     resolvers: {},
   });
 
+  initializeCache(cache);
+
+  const initialize = ssr
+    ? (callback: (client: ApolloClient<unknown>) => void) => callback(client)
+    : async (callback: (client: ApolloClient<unknown>) => void) => {
+        const cachePersistor = new CachePersistor({
+          cache,
+          debounce: PERSITENCE_DEBOUNCE,
+
+          // @ts-ignore
+          storage: window.localStorage,
+        });
+
+        await cachePersistor.restore();
+
+        // Clear old cache
+        cachePersistor.purge();
+
+        client.onResetStore(async () => {
+          initializeCache(cache);
+        });
+
+        callback(client);
+      };
+
+  return { initialize };
+}
+
+function initializeCache(cache: InMemoryCache) {
   cache.writeQuery<PageIsSyncingQuery>({
     query: PageIsSyncingDocument,
     data: { page: { __typename: 'Page', isSyncing: false } },
   });
-
-  return client;
 }
