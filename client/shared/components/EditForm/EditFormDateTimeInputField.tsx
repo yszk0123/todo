@@ -5,14 +5,14 @@ import { Box } from 'rebass';
 
 import {
   DateTime,
+  fromLocalDateString,
   parseDateTime,
-  toDateTime,
 } from '../../../view_models/DateTime';
 import { CloseIcon } from '../CloseIcon';
 import { EditFormField } from './EditFormField';
 
 function parseDate(input: string): DateTime | null {
-  return input !== '' ? toDateTime(input) : null;
+  return input !== '' ? fromLocalDateString(input) : null;
 }
 
 function convertIntoDateString(value: DateTime | null): string {
