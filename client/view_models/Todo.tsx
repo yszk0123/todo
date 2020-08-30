@@ -73,11 +73,11 @@ function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
 
 export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
   const groupsById: Record<string, TodoGroup> = {};
-  let hasArchivedAt = false;
+  let archivedCount = 0;
 
   sortTodosByContent(todos).forEach((todo) => {
     if (todo.archivedAt != null) {
-      hasArchivedAt = true;
+      archivedCount += 1;
     }
 
     const key = todo.checkpoint?.id ?? '__DEFAULT__';
@@ -95,7 +95,8 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
     groupsById[key] = group;
   });
 
-  const defaultTime = hasArchivedAt ? -Infinity : Infinity;
+  const shouldBeReversed = archivedCount >= todos.length / 2;
+  const defaultTime = shouldBeReversed ? -Infinity : Infinity;
 
   const todoGroups = Object.values(groupsById).sort((a, b) => {
     const d1 = a.header.endAt
@@ -107,7 +108,7 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
     return d1 - d2;
   });
 
-  if (hasArchivedAt) {
+  if (shouldBeReversed) {
     todoGroups.reverse();
     todoGroups.forEach((group) => {
       group.todos.reverse();
