@@ -1,9 +1,7 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type GetTagsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -116,15 +114,15 @@ export const GetTagsDocument = gql`
  *   },
  * });
  */
-export function useGetTagsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
+export function useGetTagsQuery(baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+        return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
       }
-export function useGetTagsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
+export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+          return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, baseOptions);
         }
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
-export type GetTagsQueryResult = ApolloReactCommon.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
+export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
 export function refetchGetTagsQuery(variables?: GetTagsQueryVariables) {
       return { query: GetTagsDocument, variables: variables }
     }
@@ -135,7 +133,7 @@ export const CreateOneTagDocument = gql`
   }
 }
     ${RootTagFragmentDoc}`;
-export type CreateOneTagMutationFn = ApolloReactCommon.MutationFunction<CreateOneTagMutation, CreateOneTagMutationVariables>;
+export type CreateOneTagMutationFn = Apollo.MutationFunction<CreateOneTagMutation, CreateOneTagMutationVariables>;
 
 /**
  * __useCreateOneTagMutation__
@@ -154,12 +152,12 @@ export type CreateOneTagMutationFn = ApolloReactCommon.MutationFunction<CreateOn
  *   },
  * });
  */
-export function useCreateOneTagMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateOneTagMutation, CreateOneTagMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateOneTagMutation, CreateOneTagMutationVariables>(CreateOneTagDocument, baseOptions);
+export function useCreateOneTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneTagMutation, CreateOneTagMutationVariables>) {
+        return Apollo.useMutation<CreateOneTagMutation, CreateOneTagMutationVariables>(CreateOneTagDocument, baseOptions);
       }
 export type CreateOneTagMutationHookResult = ReturnType<typeof useCreateOneTagMutation>;
-export type CreateOneTagMutationResult = ApolloReactCommon.MutationResult<CreateOneTagMutation>;
-export type CreateOneTagMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOneTagMutation, CreateOneTagMutationVariables>;
+export type CreateOneTagMutationResult = Apollo.MutationResult<CreateOneTagMutation>;
+export type CreateOneTagMutationOptions = Apollo.BaseMutationOptions<CreateOneTagMutation, CreateOneTagMutationVariables>;
 export const UpdateOneTagDocument = gql`
     mutation UpdateOneTag($data: TagUpdateInput!, $where: TagWhereUniqueInput!) {
   updateOneTag(data: $data, where: $where) {
@@ -167,7 +165,7 @@ export const UpdateOneTagDocument = gql`
   }
 }
     ${RootTagFragmentDoc}`;
-export type UpdateOneTagMutationFn = ApolloReactCommon.MutationFunction<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
+export type UpdateOneTagMutationFn = Apollo.MutationFunction<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
 
 /**
  * __useUpdateOneTagMutation__
@@ -187,12 +185,12 @@ export type UpdateOneTagMutationFn = ApolloReactCommon.MutationFunction<UpdateOn
  *   },
  * });
  */
-export function useUpdateOneTagMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateOneTagMutation, UpdateOneTagMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateOneTagMutation, UpdateOneTagMutationVariables>(UpdateOneTagDocument, baseOptions);
+export function useUpdateOneTagMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneTagMutation, UpdateOneTagMutationVariables>) {
+        return Apollo.useMutation<UpdateOneTagMutation, UpdateOneTagMutationVariables>(UpdateOneTagDocument, baseOptions);
       }
 export type UpdateOneTagMutationHookResult = ReturnType<typeof useUpdateOneTagMutation>;
-export type UpdateOneTagMutationResult = ApolloReactCommon.MutationResult<UpdateOneTagMutation>;
-export type UpdateOneTagMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
+export type UpdateOneTagMutationResult = Apollo.MutationResult<UpdateOneTagMutation>;
+export type UpdateOneTagMutationOptions = Apollo.BaseMutationOptions<UpdateOneTagMutation, UpdateOneTagMutationVariables>;
 export const DeleteOneTagDocument = gql`
     mutation DeleteOneTag($where: TagWhereUniqueInput!) {
   deleteOneTag(where: $where) {
@@ -200,7 +198,7 @@ export const DeleteOneTagDocument = gql`
   }
 }
     `;
-export type DeleteOneTagMutationFn = ApolloReactCommon.MutationFunction<DeleteOneTagMutation, DeleteOneTagMutationVariables>;
+export type DeleteOneTagMutationFn = Apollo.MutationFunction<DeleteOneTagMutation, DeleteOneTagMutationVariables>;
 
 /**
  * __useDeleteOneTagMutation__
@@ -219,9 +217,9 @@ export type DeleteOneTagMutationFn = ApolloReactCommon.MutationFunction<DeleteOn
  *   },
  * });
  */
-export function useDeleteOneTagMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteOneTagMutation, DeleteOneTagMutationVariables>) {
-        return ApolloReactHooks.useMutation<DeleteOneTagMutation, DeleteOneTagMutationVariables>(DeleteOneTagDocument, baseOptions);
+export function useDeleteOneTagMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOneTagMutation, DeleteOneTagMutationVariables>) {
+        return Apollo.useMutation<DeleteOneTagMutation, DeleteOneTagMutationVariables>(DeleteOneTagDocument, baseOptions);
       }
 export type DeleteOneTagMutationHookResult = ReturnType<typeof useDeleteOneTagMutation>;
-export type DeleteOneTagMutationResult = ApolloReactCommon.MutationResult<DeleteOneTagMutation>;
-export type DeleteOneTagMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteOneTagMutation, DeleteOneTagMutationVariables>;
+export type DeleteOneTagMutationResult = Apollo.MutationResult<DeleteOneTagMutation>;
+export type DeleteOneTagMutationOptions = Apollo.BaseMutationOptions<DeleteOneTagMutation, DeleteOneTagMutationVariables>;

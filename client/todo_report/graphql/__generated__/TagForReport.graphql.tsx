@@ -1,7 +1,6 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
-import gql from 'graphql-tag';
-
+import { gql } from '@apollo/client';
 export type RootTagForReportFragment = (
   { __typename?: 'Tag' }
   & Pick<Types.Tag, 'id' | 'name'>

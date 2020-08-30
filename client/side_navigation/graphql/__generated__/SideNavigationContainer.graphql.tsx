@@ -1,11 +1,9 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootCategoryFragment } from '../../../category/graphql/__generated__/Category.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootCategoryFragmentDoc } from '../../../category/graphql/__generated__/Category.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type SideNavigationContainerQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -41,15 +39,15 @@ export const SideNavigationContainerDocument = gql`
  *   },
  * });
  */
-export function useSideNavigationContainerQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>) {
-        return ApolloReactHooks.useQuery<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>(SideNavigationContainerDocument, baseOptions);
+export function useSideNavigationContainerQuery(baseOptions?: Apollo.QueryHookOptions<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>) {
+        return Apollo.useQuery<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>(SideNavigationContainerDocument, baseOptions);
       }
-export function useSideNavigationContainerLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>(SideNavigationContainerDocument, baseOptions);
+export function useSideNavigationContainerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>) {
+          return Apollo.useLazyQuery<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>(SideNavigationContainerDocument, baseOptions);
         }
 export type SideNavigationContainerQueryHookResult = ReturnType<typeof useSideNavigationContainerQuery>;
 export type SideNavigationContainerLazyQueryHookResult = ReturnType<typeof useSideNavigationContainerLazyQuery>;
-export type SideNavigationContainerQueryResult = ApolloReactCommon.QueryResult<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>;
+export type SideNavigationContainerQueryResult = Apollo.QueryResult<SideNavigationContainerQuery, SideNavigationContainerQueryVariables>;
 export function refetchSideNavigationContainerQuery(variables?: SideNavigationContainerQueryVariables) {
       return { query: SideNavigationContainerDocument, variables: variables }
     }

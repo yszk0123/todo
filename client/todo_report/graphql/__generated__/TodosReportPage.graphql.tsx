@@ -2,12 +2,10 @@ import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootTodoForReportFragment } from './TodoForReport.graphql';
 import { RootTagForReportFragment } from './TagForReport.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootTodoForReportFragmentDoc } from './TodoForReport.graphql';
 import { RootTagForReportFragmentDoc } from './TagForReport.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type TodosReportPageQueryVariables = Types.Exact<{
   categoryId: Types.Scalars['String'];
   categoryUUID: Types.Scalars['UUID'];
@@ -62,15 +60,15 @@ ${RootTagForReportFragmentDoc}`;
  *   },
  * });
  */
-export function useTodosReportPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodosReportPageQuery, TodosReportPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<TodosReportPageQuery, TodosReportPageQueryVariables>(TodosReportPageDocument, baseOptions);
+export function useTodosReportPageQuery(baseOptions?: Apollo.QueryHookOptions<TodosReportPageQuery, TodosReportPageQueryVariables>) {
+        return Apollo.useQuery<TodosReportPageQuery, TodosReportPageQueryVariables>(TodosReportPageDocument, baseOptions);
       }
-export function useTodosReportPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodosReportPageQuery, TodosReportPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<TodosReportPageQuery, TodosReportPageQueryVariables>(TodosReportPageDocument, baseOptions);
+export function useTodosReportPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TodosReportPageQuery, TodosReportPageQueryVariables>) {
+          return Apollo.useLazyQuery<TodosReportPageQuery, TodosReportPageQueryVariables>(TodosReportPageDocument, baseOptions);
         }
 export type TodosReportPageQueryHookResult = ReturnType<typeof useTodosReportPageQuery>;
 export type TodosReportPageLazyQueryHookResult = ReturnType<typeof useTodosReportPageLazyQuery>;
-export type TodosReportPageQueryResult = ApolloReactCommon.QueryResult<TodosReportPageQuery, TodosReportPageQueryVariables>;
+export type TodosReportPageQueryResult = Apollo.QueryResult<TodosReportPageQuery, TodosReportPageQueryVariables>;
 export function refetchTodosReportPageQuery(variables?: TodosReportPageQueryVariables) {
       return { query: TodosReportPageDocument, variables: variables }
     }

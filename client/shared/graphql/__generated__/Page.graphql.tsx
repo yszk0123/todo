@@ -1,9 +1,7 @@
 import * as Types from './baseTypes';
 
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type PageIsSyncingQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -39,15 +37,15 @@ export const PageIsSyncingDocument = gql`
  *   },
  * });
  */
-export function usePageIsSyncingQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<PageIsSyncingQuery, PageIsSyncingQueryVariables>) {
-        return ApolloReactHooks.useQuery<PageIsSyncingQuery, PageIsSyncingQueryVariables>(PageIsSyncingDocument, baseOptions);
+export function usePageIsSyncingQuery(baseOptions?: Apollo.QueryHookOptions<PageIsSyncingQuery, PageIsSyncingQueryVariables>) {
+        return Apollo.useQuery<PageIsSyncingQuery, PageIsSyncingQueryVariables>(PageIsSyncingDocument, baseOptions);
       }
-export function usePageIsSyncingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<PageIsSyncingQuery, PageIsSyncingQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<PageIsSyncingQuery, PageIsSyncingQueryVariables>(PageIsSyncingDocument, baseOptions);
+export function usePageIsSyncingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PageIsSyncingQuery, PageIsSyncingQueryVariables>) {
+          return Apollo.useLazyQuery<PageIsSyncingQuery, PageIsSyncingQueryVariables>(PageIsSyncingDocument, baseOptions);
         }
 export type PageIsSyncingQueryHookResult = ReturnType<typeof usePageIsSyncingQuery>;
 export type PageIsSyncingLazyQueryHookResult = ReturnType<typeof usePageIsSyncingLazyQuery>;
-export type PageIsSyncingQueryResult = ApolloReactCommon.QueryResult<PageIsSyncingQuery, PageIsSyncingQueryVariables>;
+export type PageIsSyncingQueryResult = Apollo.QueryResult<PageIsSyncingQuery, PageIsSyncingQueryVariables>;
 export function refetchPageIsSyncingQuery(variables?: PageIsSyncingQueryVariables) {
       return { query: PageIsSyncingDocument, variables: variables }
     }

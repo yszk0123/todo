@@ -1,11 +1,9 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootTagFragment } from './Tag.graphql';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { RootTagFragmentDoc } from './Tag.graphql';
-import * as ApolloReactCommon from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client';
-
+import * as Apollo from '@apollo/client';
 export type TagsPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -54,15 +52,15 @@ export const TagsPageDocument = gql`
  *   },
  * });
  */
-export function useTagsPageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TagsPageQuery, TagsPageQueryVariables>) {
-        return ApolloReactHooks.useQuery<TagsPageQuery, TagsPageQueryVariables>(TagsPageDocument, baseOptions);
+export function useTagsPageQuery(baseOptions?: Apollo.QueryHookOptions<TagsPageQuery, TagsPageQueryVariables>) {
+        return Apollo.useQuery<TagsPageQuery, TagsPageQueryVariables>(TagsPageDocument, baseOptions);
       }
-export function useTagsPageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TagsPageQuery, TagsPageQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<TagsPageQuery, TagsPageQueryVariables>(TagsPageDocument, baseOptions);
+export function useTagsPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagsPageQuery, TagsPageQueryVariables>) {
+          return Apollo.useLazyQuery<TagsPageQuery, TagsPageQueryVariables>(TagsPageDocument, baseOptions);
         }
 export type TagsPageQueryHookResult = ReturnType<typeof useTagsPageQuery>;
 export type TagsPageLazyQueryHookResult = ReturnType<typeof useTagsPageLazyQuery>;
-export type TagsPageQueryResult = ApolloReactCommon.QueryResult<TagsPageQuery, TagsPageQueryVariables>;
+export type TagsPageQueryResult = Apollo.QueryResult<TagsPageQuery, TagsPageQueryVariables>;
 export function refetchTagsPageQuery(variables?: TagsPageQueryVariables) {
       return { query: TagsPageDocument, variables: variables }
     }
