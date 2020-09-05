@@ -13,8 +13,7 @@ import {
   TodoCategoryFragment,
   TodoTagFragment,
 } from '../../graphql/__generated__/Todo.graphql';
-import { TodoStatusBarStatusSelect } from '../TodoStatusBar/TodoStatusBarStatusSelect';
-import { TodoListIcon } from './TodoListIcon';
+import { TodoListStatusSelect } from './TodoListStatusSelect';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
@@ -74,19 +73,15 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
       isActive={selected}
       item={todo}
       leftElement={
-        expanded ? (
-          <TodoStatusBarStatusSelect
-            status={null}
-            onChange={handleClickStatus}
-          />
-        ) : (
-          <TodoListIcon
-            isSelected={selected}
-            isSelectMode={isSelectMode}
-            todo={todo}
-            onClick={isSelectMode ? handleClickToggle : handleClickExpand}
-          />
-        )
+        <TodoListStatusSelect
+          isOpen={expanded}
+          isSelected={selected}
+          isSelectMode={isSelectMode}
+          todo={todo}
+          onChange={handleClickStatus}
+          onClick={isSelectMode ? handleClickToggle : handleClickExpand}
+          onClosePopover={handleClickToggle}
+        />
       }
       mainElement={
         <TodoListText
