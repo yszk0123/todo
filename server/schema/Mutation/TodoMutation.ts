@@ -17,6 +17,13 @@ schema.inputObjectType({
 });
 
 schema.inputObjectType({
+  name: 'DuplicateTodosByIdInput',
+  definition(t) {
+    t.list.id('ids', { required: true });
+  },
+});
+
+schema.inputObjectType({
   name: 'UpdateTodoInput',
   definition(t) {
     t.id('id', { required: true });
@@ -97,6 +104,48 @@ schema.extendType({
           where: { id: { in: todoIds } },
         });
         return todoIds;
+      },
+    });
+
+    t.list.field('duplicateTodosById', {
+      type: 'ID',
+      args: {
+        data: schema.arg({ type: 'DuplicateTodosByIdInput', required: true }),
+      },
+      async authorize(_root, args, ctx) {
+        const todoIds = args.data.ids;
+        const userId = ctx.user?.id;
+
+        const todo = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          select: { ownerId: true },
+        });
+        return !!userId && todo.every((e) => e.ownerId === userId);
+      },
+      async resolve(_root, args, ctx, _info) {
+        const todoIds = args.data.ids;
+        const todos = await ctx.db.todo.findMany({
+          where: { id: { in: todoIds } },
+          include: { tags: { select: { id: true } } },
+        });
+        const duplicatedTodoIds = Promise.all(
+          todos.map(async (todo) => {
+            const duplicatedTodo = await ctx.db.todo.create({
+              data: {
+                text: todo.text,
+                archivedAt: todo.archivedAt,
+                checkpoint: { connect: { id: todo.checkpointId ?? undefined } },
+                // createdAt: todo.createdAt,
+                status: todo.status,
+                tags: { connect: todo.tags.map((tag) => ({ id: tag.id })) },
+                category: { connect: { id: todo.categoryId } },
+                owner: { connect: { id: todo.ownerId } },
+              },
+            });
+            return duplicatedTodo.id;
+          })
+        );
+        return duplicatedTodoIds;
       },
     });
 
