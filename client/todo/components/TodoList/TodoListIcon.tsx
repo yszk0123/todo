@@ -11,19 +11,22 @@ type Props = {
   todo: RootTodoFragment;
 };
 
-export const TodoListIcon: React.FunctionComponent<Props> = ({
-  isSelectMode,
-  isSelected,
-  onClick,
-  todo,
-}) => {
+const TodoListIcon: React.ForwardRefRenderFunction<unknown, Props> = (
+  { isSelectMode, isSelected, onClick, todo },
+  ref
+) => {
   return (
     <ListIconCheckbox
       icon={isSelectMode ? null : getTodoStatusIcon(todo.status)}
       isSelected={isSelected}
       item={todo}
       label={todo.status}
+      ref={ref}
       onClick={onClick}
     />
   );
 };
+
+const ForwardedTodoListIcon = React.forwardRef(TodoListIcon);
+
+export { ForwardedTodoListIcon as TodoListIcon };
