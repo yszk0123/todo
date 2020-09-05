@@ -6,14 +6,14 @@ type Props = {
   subElement?: JSX.Element | null;
 };
 
-export const ListText: React.FunctionComponent<Props> = ({
-  children,
-  hasStrikeThrough = false,
-  subElement,
-}) => {
+const ListText: React.ForwardRefRenderFunction<unknown, Props> = (
+  { children, hasStrikeThrough = false, subElement },
+  ref
+) => {
   return (
     <Text
       lineHeight="1.5"
+      ref={ref}
       sx={{
         textDecoration: hasStrikeThrough ? 'line-through double' : undefined,
       }}
@@ -27,3 +27,7 @@ export const ListText: React.FunctionComponent<Props> = ({
     </Text>
   );
 };
+
+const ForwardedListText = React.forwardRef(ListText);
+
+export { ForwardedListText as ListText };

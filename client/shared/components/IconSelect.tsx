@@ -2,23 +2,21 @@ import React from 'react';
 
 import { MiniList, MiniListIconCheckbox } from './MiniList';
 
-function IconSelect<T>({
-  getDisplayIcon,
-  getValue,
-  id,
-  items,
-  onChange,
-  selectedItem,
-}: {
+type Props<T> = {
   getDisplayIcon: (item: T) => React.ElementType | null;
   getValue: (item: T) => string;
   id: string;
   items: T[];
   onChange: (item: T) => void;
   selectedItem: T | null;
-}): JSX.Element {
+};
+
+function IconSelect<T>(
+  { getDisplayIcon, getValue, id, items, onChange, selectedItem }: Props<T>,
+  ref: React.Ref<unknown>
+): JSX.Element {
   return (
-    <MiniList id={id}>
+    <MiniList id={id} ref={ref}>
       {items.map((item) => {
         const icon = getDisplayIcon(item);
         if (icon === null) {
@@ -41,6 +39,7 @@ function IconSelect<T>({
   );
 }
 
-const MemoizedIconSelect = React.memo(IconSelect) as typeof IconSelect;
+const ForwardedIconSelect = React.forwardRef(IconSelect);
+const MemoizedForwardedIconSelect = React.memo(ForwardedIconSelect);
 
-export { MemoizedIconSelect as IconSelect };
+export { MemoizedForwardedIconSelect as IconSelect };

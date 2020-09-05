@@ -3,21 +3,26 @@ import { Box, Flex, Text } from 'rebass';
 
 import { Key } from '../../constants/KeyCode';
 
-export function ListItem<T>({
-  isActive = false,
-  item,
-  leftElement,
-  mainElement,
-  onClick,
-  rightElement,
-}: {
+type Props<T> = {
   isActive?: boolean;
   item: T;
   leftElement?: JSX.Element | null;
   mainElement: JSX.Element | string;
   onClick?: (item: T) => void;
   rightElement?: JSX.Element | null;
-}): JSX.Element {
+};
+
+function ListItem<T>(
+  {
+    isActive = false,
+    item,
+    leftElement,
+    mainElement,
+    onClick,
+    rightElement,
+  }: Props<T>,
+  ref: React.Ref<unknown>
+): JSX.Element {
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {
       if (onClick) {
@@ -44,6 +49,7 @@ export function ListItem<T>({
       bg={isActive ? 'highlight' : undefined}
       flex="1 1 auto"
       p={2}
+      ref={ref}
       sx={{
         cursor: 'pointer',
         borderBottom: '1px dashed',
@@ -75,3 +81,7 @@ export function ListItem<T>({
     </Flex>
   );
 }
+
+const ForwardedListItem = React.forwardRef(ListItem);
+
+export { ForwardedListItem as ListItem };

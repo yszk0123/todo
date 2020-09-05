@@ -5,10 +5,17 @@ type Props = {
   id?: string;
 };
 
-export const MiniList: React.FunctionComponent<Props> = ({ children, id }) => {
+const MiniList: React.ForwardRefRenderFunction<unknown, Props> = (
+  { children, id },
+  ref
+) => {
   return (
-    <Flex alignItems="center" flexWrap="wrap" id={id}>
+    <Flex alignItems="center" flexWrap="wrap" id={id} ref={ref}>
       {children}
     </Flex>
   );
 };
+
+const ForwardedMiniList = React.forwardRef(MiniList);
+
+export { ForwardedMiniList as MiniList };

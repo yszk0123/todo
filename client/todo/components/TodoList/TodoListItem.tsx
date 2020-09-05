@@ -18,7 +18,7 @@ import { TodoListIcon } from './TodoListIcon';
 import { TodoListTags } from './TodoListTags';
 import { TodoListText } from './TodoListText';
 
-export const TodoListItem: React.FunctionComponent<{
+type Props = {
   isCategoryNameShown: boolean;
   onClick: (todo: RootTodoFragment) => void;
   onClickCategory: (category: TodoCategoryFragment) => void;
@@ -28,7 +28,9 @@ export const TodoListItem: React.FunctionComponent<{
   onClickToggle: (todo: RootTodoFragment) => void;
   todo: RootTodoFragment;
   todoSelection: Selection;
-}> = ({
+};
+
+export const TodoListItem: React.FunctionComponent<Props> = ({
   isCategoryNameShown,
   onClick,
   onClickCategory,
