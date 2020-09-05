@@ -108,7 +108,7 @@ export function printTodosReportAsMarkdown(
 
   const text = [tasksString, '', schedulesString].join('\n');
 
-  return `\`\`\`${text}\n\`\`\``;
+  return `\`\`\`\n${text}\`\`\``;
 }
 
 export function printTodosReportAsCSV(
