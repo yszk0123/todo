@@ -3,11 +3,12 @@ import { Box, Flex, Text } from 'rebass';
 
 type Props = {
   hasStrikeThrough?: boolean;
+  onClick?: () => void;
   subElement?: JSX.Element | null;
 };
 
 const ListText: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, hasStrikeThrough = false, subElement },
+  { children, hasStrikeThrough = false, onClick, subElement },
   ref
 ) => {
   return (
@@ -17,6 +18,7 @@ const ListText: React.ForwardRefRenderFunction<unknown, Props> = (
       sx={{
         textDecoration: hasStrikeThrough ? 'line-through double' : undefined,
       }}
+      onClick={onClick}
     >
       <Box variant="listText">{children}</Box>
       {subElement != null && (

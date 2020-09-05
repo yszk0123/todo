@@ -25,6 +25,7 @@ type Props = {
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
+  onUpdateText: (todo: RootTodoFragment, text: string) => void;
   todo: RootTodoFragment;
   todoSelection: Selection;
 };
@@ -37,6 +38,7 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
   onClickStatus,
   onClickTag,
   onClickToggle,
+  onUpdateText,
   todo,
   todoSelection,
 }) => {
@@ -53,6 +55,13 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
       onClickStatus(todo, status);
     },
     [todo, onClickStatus]
+  );
+
+  const handleUpdateText = React.useCallback(
+    (text: string) => {
+      onUpdateText(todo, text);
+    },
+    [todo, onUpdateText]
   );
 
   const isDone = todo.status === TodoStatus.Done;
@@ -96,6 +105,7 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
             />
           }
           text={todo.text}
+          onUpdate={handleUpdateText}
         />
       }
       onClick={onClick}

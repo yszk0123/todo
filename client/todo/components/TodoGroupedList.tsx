@@ -21,6 +21,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
+  onUpdateText: (todo: RootTodoFragment, text: string) => void;
   todoSelection: Selection;
   todos: RootTodoFragment[];
 }> = ({
@@ -33,6 +34,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClickStatus,
   onClickTag,
   onClickToggle,
+  onUpdateText,
   todoSelection,
   todos,
 }) => {
@@ -55,6 +57,7 @@ export const TodoGroupedList: React.FunctionComponent<{
             onClickStatus={onClickStatus}
             onClickTag={onClickTag}
             onClickToggle={onClickToggle}
+            onUpdateText={onUpdateText}
           />
         );
       })}

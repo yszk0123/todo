@@ -174,6 +174,22 @@ export class TodoUsecase {
     );
   }
 
+  updateText(todoIds: ID[], text: string) {
+    this.dispatch(todoSelectionDeselect());
+
+    this.sync(() =>
+      this.client.mutate<unknown, UpdateTodosByIdMutationVariables>({
+        mutation: UpdateTodosByIdDocument,
+        variables: {
+          input: {
+            ids: todoIds,
+            text,
+          },
+        },
+      })
+    );
+  }
+
   updateCategory(
     todoIds: ID[],
     category: RootCategoryFragment,

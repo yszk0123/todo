@@ -25,6 +25,7 @@ export function TodoList({
   onClickStatus,
   onClickTag,
   onClickToggle,
+  onUpdateText,
   todoSelection,
 }: {
   group: TodoGroup;
@@ -37,6 +38,7 @@ export function TodoList({
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
+  onUpdateText: (todo: RootTodoFragment, text: string) => void;
   todoSelection: Selection;
 }): JSX.Element {
   const header = group.header;
@@ -73,6 +75,7 @@ export function TodoList({
             onClickStatus={onClickStatus}
             onClickTag={onClickTag}
             onClickToggle={onClickToggle}
+            onUpdateText={onUpdateText}
           />
         );
       })}

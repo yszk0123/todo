@@ -3,6 +3,7 @@ import Popoever from 'react-tiny-popover';
 import { Box } from 'rebass';
 
 const WINDOW_BORDER_PADDING = 8;
+const TRANSITION_DURATION = 0;
 
 type Props = {
   // Popover does not accept React.React.Node
@@ -29,6 +30,7 @@ export function Popover({
       }
       isOpen={isOpen}
       position={position}
+      transitionDuration={TRANSITION_DURATION}
       windowBorderPadding={WINDOW_BORDER_PADDING}
       onClickOutside={onClickOutside}
     >

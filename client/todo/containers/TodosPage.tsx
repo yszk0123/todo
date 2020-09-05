@@ -268,6 +268,13 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     [selectedTodoIds, todoSearchQuery, todoUsecase]
   );
 
+  const handleEditText = React.useCallback(
+    (todo: RootTodoFragment, text: string) => {
+      todoUsecase.updateText([todo.id], text);
+    },
+    [todoUsecase]
+  );
+
   const handleEditByRootCategory = React.useCallback(
     (category: RootCategoryFragment | null) => {
       if (category !== null) {
@@ -398,6 +405,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
           onClickStatus={handleToggleStatus}
           onClickTag={handleSearchByTodoTag}
           onClickToggle={handleSelectManyTodo}
+          onUpdateText={handleEditText}
         />
       )}
       <TodoEditForm
