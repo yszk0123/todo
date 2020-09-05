@@ -77,6 +77,16 @@ export type UpdateTodosByIdMutation = (
   )>> }
 );
 
+export type DuplicateTodosByIdMutationVariables = Types.Exact<{
+  input: Types.DuplicateTodosByIdInput;
+}>;
+
+
+export type DuplicateTodosByIdMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Types.Mutation, 'duplicateTodosById'>
+);
+
 export type RootTodoFragment = (
   { __typename?: 'Todo' }
   & Pick<Types.Todo, 'id' | 'text' | 'createdAt' | 'categoryId' | 'status' | 'archivedAt'>
@@ -343,3 +353,33 @@ export function useUpdateTodosByIdMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateTodosByIdMutationHookResult = ReturnType<typeof useUpdateTodosByIdMutation>;
 export type UpdateTodosByIdMutationResult = Apollo.MutationResult<UpdateTodosByIdMutation>;
 export type UpdateTodosByIdMutationOptions = Apollo.BaseMutationOptions<UpdateTodosByIdMutation, UpdateTodosByIdMutationVariables>;
+export const DuplicateTodosByIdDocument = gql`
+    mutation DuplicateTodosById($input: DuplicateTodosByIdInput!) {
+  duplicateTodosById(data: $input)
+}
+    `;
+export type DuplicateTodosByIdMutationFn = Apollo.MutationFunction<DuplicateTodosByIdMutation, DuplicateTodosByIdMutationVariables>;
+
+/**
+ * __useDuplicateTodosByIdMutation__
+ *
+ * To run a mutation, you first call `useDuplicateTodosByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDuplicateTodosByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [duplicateTodosByIdMutation, { data, loading, error }] = useDuplicateTodosByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDuplicateTodosByIdMutation(baseOptions?: Apollo.MutationHookOptions<DuplicateTodosByIdMutation, DuplicateTodosByIdMutationVariables>) {
+        return Apollo.useMutation<DuplicateTodosByIdMutation, DuplicateTodosByIdMutationVariables>(DuplicateTodosByIdDocument, baseOptions);
+      }
+export type DuplicateTodosByIdMutationHookResult = ReturnType<typeof useDuplicateTodosByIdMutation>;
+export type DuplicateTodosByIdMutationResult = Apollo.MutationResult<DuplicateTodosByIdMutation>;
+export type DuplicateTodosByIdMutationOptions = Apollo.BaseMutationOptions<DuplicateTodosByIdMutation, DuplicateTodosByIdMutationVariables>;

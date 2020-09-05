@@ -1,5 +1,6 @@
 import { EMPTY } from '../../shared/constants/EMPTY';
 import { toggle } from '../../shared/helpers/toggle';
+import { ID } from '../../view_models/ID';
 import {
   getSelectedIds,
   Selection,
@@ -19,6 +20,7 @@ enum TodoSelectionActionType {
   RESET = 'todoSelection/RESET',
   SELECT_ALL = 'todoSelection/SELECT_ALL',
   SELECT_BY_CATEGORY = 'todoSelection/SELECT_BY_CATEGORY',
+  SELECT_BY_IDS = 'todoSelection/SELECT_BY_IDS',
   SELECT_BY_TAG = 'todoSelection/SELECT_BY_TAG',
   SELECT_MANY = 'todoSelection/SELECT_MANY',
   SET = 'todoSelection/SET',
@@ -51,6 +53,10 @@ export type TodoSelectionAction =
   | {
       payload: { category: TodoCategoryFragment; todos: RootTodoFragment[] };
       type: TodoSelectionActionType.SELECT_BY_CATEGORY;
+    }
+  | {
+      payload: { todoIds: ID[] };
+      type: TodoSelectionActionType.SELECT_BY_IDS;
     };
 
 export function todoSelectionDeselect(): TodoSelectionAction {
@@ -103,6 +109,13 @@ export function todoSelectionSelectByCategory(
   return {
     type: TodoSelectionActionType.SELECT_BY_CATEGORY,
     payload: { todos, category },
+  };
+}
+
+export function todoSelectionSelectByIds(todoIds: ID[]): TodoSelectionAction {
+  return {
+    type: TodoSelectionActionType.SELECT_BY_IDS,
+    payload: { todoIds },
   };
 }
 
@@ -166,6 +179,11 @@ export function todoSelectionReducer(
       const { todos } = action.payload;
 
       const todoIds = todos.map((todo) => todo.id);
+      return { type: SelectionType.SELECT, ids: todoIds };
+    }
+    case TodoSelectionActionType.SELECT_BY_IDS: {
+      const { todoIds } = action.payload;
+
       return { type: SelectionType.SELECT, ids: todoIds };
     }
     default: {
