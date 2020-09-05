@@ -49,6 +49,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   isSyncing: boolean;
   onChangeStatus: (status: TodoStatus | null) => void;
   onClickArchive: () => void;
+  onClickDuplicate: () => void;
   onClickEdit: () => void;
   onClickEditCheckpoint: (checkpoint: RootCheckpointFragment | null) => void;
   onClickSearch: () => void;
@@ -77,6 +78,7 @@ export const TodoStatusBar: React.FunctionComponent<{
   isSyncing,
   onChangeStatus,
   onClickArchive,
+  onClickDuplicate,
   onClickEdit,
   onClickEditCheckpoint,
   onClickSearch,
@@ -237,6 +239,13 @@ export const TodoStatusBar: React.FunctionComponent<{
               isSelected={selected}
               onClickArchive={onClickArchive}
               onClickUnarchive={onClickUnarchive}
+            />
+          )}
+          {selected && (
+            <StatusBarButton
+              isSelected={selected}
+              label="Dup"
+              onClick={onClickDuplicate}
             />
           )}
           <StatusBarButton

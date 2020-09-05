@@ -15,12 +15,17 @@ import { toDateTime } from '../../view_models/DateTime';
 import { ID } from '../../view_models/ID';
 import { getSelectedIds, Selection } from '../../view_models/Selection';
 import { todoEditFormSet } from '../ducks/TodoEditFormDucks';
-import { todoSelectionDeselect } from '../ducks/TodoSelectionDucks';
+import {
+  todoSelectionDeselect,
+  todoSelectionSelectByIds,
+} from '../ducks/TodoSelectionDucks';
 import {
   CreateOneTodoDocument,
   CreateOneTodoMutationVariables,
   DeleteTodosByIdDocument,
   DeleteTodosByIdMutationVariables,
+  DuplicateTodosByIdDocument,
+  DuplicateTodosByIdMutationVariables,
   refetchGetTodosQuery,
   TodoTagFragment,
   UpdateTodosByIdDocument,
@@ -156,6 +161,21 @@ export class TodoUsecase {
         refetchQueries: [getRefetchQuery(todoSearchQuery)],
       })
     );
+  }
+
+  duplicateTodosById(todoIds: ID[], todoSearchQuery: TodoSearchQuery | null) {
+    const count = todoIds.length;
+    if (count === 0) return;
+    if (!confirm(`Duplicate ${count} items?`)) return;
+    this.dispatch(todoSelectionDeselect());
+    this.sync(async () => {
+      await this.client.mutate<unknown, DuplicateTodosByIdMutationVariables>({
+        mutation: DuplicateTodosByIdDocument,
+        variables: { input: { ids: todoIds } },
+        refetchQueries: [getRefetchQuery(todoSearchQuery)],
+      });
+      this.dispatch(todoSelectionSelectByIds(todoIds));
+    });
   }
 
   updateStatus(todoIds: ID[], status: TodoStatus) {

@@ -33,6 +33,10 @@ mutation UpdateTodosById($input: UpdateTodosByIdInput!) {
   }
 }
 
+mutation DuplicateTodosById($input: DuplicateTodosByIdInput!) {
+  duplicateTodosById(data: $input)
+}
+
 fragment RootTodo on Todo {
   id
   text

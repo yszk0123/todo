@@ -298,6 +298,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     todoUsecase.unarchiveTodosById(selectedTodoIds, todoSearchQuery);
   }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
 
+  const handleDuplicateTodosById = React.useCallback(() => {
+    todoUsecase.duplicateTodosById(selectedTodoIds, todoSearchQuery);
+  }, [selectedTodoIds, todoSearchQuery, todoUsecase]);
+
   const checkpointsWithDummy = React.useMemo(
     () => [DUMMY_CHECKPOINT, ...checkpoints],
     [checkpoints]
@@ -369,6 +373,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         todoSelection={todoSelection}
         onChangeStatus={handleUpdateStatus}
         onClickArchive={handleArchiveTodosById}
+        onClickDuplicate={handleDuplicateTodosById}
         onClickEdit={onOpenEdit}
         onClickEditCheckpoint={handleEditByRootCheckpoint}
         onClickSearch={onOpenSearch}
