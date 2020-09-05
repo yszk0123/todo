@@ -72,17 +72,26 @@ export function printTodosReportAsMarkdown(
         return { ...todo, text };
       })
   );
-  const tagsString = tags.map((tag) => tag.name).join(', ');
   const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
   const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
 
-  const tasksString = tasks
+  const tasksStringByTags = tasks
     .map((todo) => {
       const text = todo.text;
       const tagNames = todo.tags.map((tag) => tag.name);
-      const tags = tagNames.length ? `${tagNames.join(', ')}: ` : '';
+      const tags = tagNames.join(', ');
       const status = printTodoStatus(todo.status);
-      return `- [${status}] ${tags}${text}`;
+      return { tags, status, text };
+    })
+    .sort((a, b) => a.tags.localeCompare(b.tags))
+    .reduce((acc, { status, tags, text }) => {
+      const value = acc[tags] || [];
+      const line = `${tags ? '  ' : ''}- [${status}] ${text}`;
+      return { ...acc, [tags]: [...value, line] };
+    }, {} as { [key: string]: string[] });
+  const tasksString = Object.entries(tasksStringByTags)
+    .map(([key, value]) => {
+      return `${key}\n${value.join('\n')}`;
     })
     .join('\n');
 
@@ -97,9 +106,9 @@ export function printTodosReportAsMarkdown(
     })
     .join('\n');
 
-  const text = [tagsString, tasksString, '', schedulesString].join('\n');
+  const text = [tasksString, '', schedulesString].join('\n');
 
-  return `\`\`\`\n${text}\n\`\`\``;
+  return `\`\`\`${text}\n\`\`\``;
 }
 
 export function printTodosReportAsCSV(
