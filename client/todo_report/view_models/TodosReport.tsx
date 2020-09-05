@@ -79,7 +79,7 @@ export function printTodosReportAsMarkdown(
     .map((todo) => {
       const text = todo.text;
       const tagNames = todo.tags.map((tag) => tag.name);
-      const tags = tagNames.length ? `${tagNames.join(', ')}: ` : '';
+      const tags = tagNames.join(', ');
       const status = printTodoStatus(todo.status);
       return { tags, status, text };
     })
