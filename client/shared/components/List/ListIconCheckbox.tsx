@@ -2,19 +2,18 @@ import React from 'react';
 
 import { Checkbox } from '../Checkbox';
 
-export function ListIconCheckbox<T>({
-  icon,
-  isSelected,
-  item,
-  label,
-  onClick,
-}: {
+type Props<T> = {
   icon: React.ElementType | null;
   isSelected: boolean;
   item: T;
   label: string;
   onClick: (item: T) => void;
-}): JSX.Element {
+};
+
+function ListIconCheckbox<T>(
+  { icon, isSelected, item, label, onClick }: Props<T>,
+  ref: React.Ref<unknown>
+): JSX.Element {
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLInputElement>) => {
       event.stopPropagation();
@@ -30,7 +29,12 @@ export function ListIconCheckbox<T>({
       icon={icon}
       marginRight={0}
       readOnly
+      ref={ref}
       onClick={handleClick}
     />
   );
 }
+
+const ForwardedListIconCheckbox = React.forwardRef(ListIconCheckbox);
+
+export { ForwardedListIconCheckbox as ListIconCheckbox };

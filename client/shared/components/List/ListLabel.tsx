@@ -3,13 +3,15 @@ import { Flex } from 'rebass';
 
 import { Label } from '../Label';
 
-export function ListLabel<T extends { name: string }>({
-  item,
-  onClick,
-}: {
+type Props<T> = {
   item: T;
   onClick: (tag: T) => void;
-}): JSX.Element | null {
+};
+
+function ListLabel<T extends { name: string }>(
+  { item, onClick }: Props<T>,
+  ref: React.Ref<unknown>
+): JSX.Element | null {
   const handleClick = React.useCallback(
     (event: React.MouseEvent) => {
       event.stopPropagation();
@@ -21,6 +23,7 @@ export function ListLabel<T extends { name: string }>({
   return (
     <Flex
       ml={1}
+      ref={ref}
       sx={{
         cursor: 'pointer',
       }}
@@ -30,3 +33,7 @@ export function ListLabel<T extends { name: string }>({
     </Flex>
   );
 }
+
+const ForwardedListLabel = React.forwardRef(ListLabel);
+
+export { ForwardedListLabel as ListLabel };

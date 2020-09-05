@@ -5,19 +5,21 @@ import { Color } from '../../../view_models/Color';
 import { ID } from '../../../view_models/ID';
 import { ListBadge } from './ListBadge';
 
-function ListBadges<T extends { color: Color; id: ID; name: string }>({
-  items,
-  onClick,
-}: {
+type Props<T> = {
   items: T[];
   onClick: (tag: T) => void;
-}): JSX.Element | null {
+};
+
+function ListBadges<T extends { color: Color; id: ID; name: string }>(
+  { items, onClick }: Props<T>,
+  ref: React.Ref<unknown>
+): JSX.Element | null {
   if (items.length === 0) {
     return null;
   }
 
   return (
-    <Flex justifyContent="flex-end">
+    <Flex justifyContent="flex-end" ref={ref}>
       {items.map((item) => (
         <ListBadge item={item} key={item.id} onClick={onClick} />
       ))}
@@ -25,6 +27,7 @@ function ListBadges<T extends { color: Color; id: ID; name: string }>({
   );
 }
 
-const MemoizedListBadges = React.memo(ListBadges) as typeof ListBadges;
+const ForwardedListBadges = React.forwardRef(ListBadges);
+const MemoizedForwardedListBadges = React.memo(ForwardedListBadges);
 
-export { MemoizedListBadges as ListBadges };
+export { MemoizedForwardedListBadges as ListBadges };
