@@ -1,5 +1,6 @@
 import React from 'react';
 import Popoever from 'react-tiny-popover';
+import { Box } from 'rebass';
 
 const WINDOW_BORDER_PADDING = 8;
 
@@ -22,7 +23,10 @@ export function Popover({
 }: Props): JSX.Element {
   return (
     <Popoever
-      content={content}
+      content={
+        // FIXME: Remove Box
+        <Box bg="background">{content}</Box>
+      }
       isOpen={isOpen}
       position={position}
       windowBorderPadding={WINDOW_BORDER_PADDING}
