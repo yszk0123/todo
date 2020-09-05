@@ -72,7 +72,6 @@ export function printTodosReportAsMarkdown(
         return { ...todo, text };
       })
   );
-  const tagsString = tags.map((tag) => tag.name).join(', ');
   const tasks = filteredTodos.filter((todo) => !TIME_RE.test(todo.text));
   const schedules = filteredTodos.filter((todo) => TIME_RE.test(todo.text));
 
@@ -97,7 +96,7 @@ export function printTodosReportAsMarkdown(
     })
     .join('\n');
 
-  const text = [tagsString, tasksString, '', schedulesString].join('\n');
+  const text = [tasksString, '', schedulesString].join('\n');
 
   return `\`\`\`\n${text}\n\`\`\``;
 }
