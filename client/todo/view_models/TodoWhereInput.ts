@@ -1,7 +1,18 @@
-import { TodoWhereInput } from '../../shared/graphql/__generated__/baseTypes';
+import {
+  TodoWhereInput,
+  TodoWhereUniqueInput,
+} from '../../shared/graphql/__generated__/baseTypes';
 import { TodoSearchQuery } from './TodoSearchQuery';
 
 const DEBUG_CHECKPOINT_ID = '_';
+
+export function getTodoWhereUniqueInput(
+  query: TodoSearchQuery | null
+): TodoWhereUniqueInput {
+  return {
+    id: query?.parentId,
+  };
+}
 
 export function getTodoWhereInput(
   query: TodoSearchQuery | null

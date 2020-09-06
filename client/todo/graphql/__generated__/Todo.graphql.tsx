@@ -3,13 +3,17 @@ import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type GetTodosQueryVariables = Types.Exact<{
-  input: Types.TodoWhereInput;
+  todoInput: Types.TodoWhereUniqueInput;
+  todosInput: Types.TodoWhereInput;
 }>;
 
 
 export type GetTodosQuery = (
   { __typename?: 'Query' }
-  & { todos: Array<(
+  & { todo?: Types.Maybe<(
+    { __typename?: 'Todo' }
+    & RootTodoFragment
+  )>, todos: Array<(
     { __typename?: 'Todo' }
     & RootTodoFragment
   )> }
@@ -160,8 +164,11 @@ export const RootTodoFragmentDoc = gql`
 ${TodoCategoryFragmentDoc}
 ${TodoCheckpointFragmentDoc}`;
 export const GetTodosDocument = gql`
-    query GetTodos($input: TodoWhereInput!) {
-  todos(where: $input) {
+    query GetTodos($todoInput: TodoWhereUniqueInput!, $todosInput: TodoWhereInput!) {
+  todo(where: $todoInput) {
+    ...RootTodo
+  }
+  todos(where: $todosInput) {
     ...RootTodo
   }
 }
@@ -179,7 +186,8 @@ export const GetTodosDocument = gql`
  * @example
  * const { data, loading, error } = useGetTodosQuery({
  *   variables: {
- *      input: // value for 'input'
+ *      todoInput: // value for 'todoInput'
+ *      todosInput: // value for 'todosInput'
  *   },
  * });
  */

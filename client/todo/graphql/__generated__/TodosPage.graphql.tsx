@@ -9,8 +9,9 @@ import { RootCheckpointFragmentDoc } from '../../../checkpoint/graphql/__generat
 import { RootCategoryFragmentDoc } from '../../../category/graphql/__generated__/Category.graphql';
 import * as Apollo from '@apollo/client';
 export type TodosPageQueryVariables = Types.Exact<{
-  todoInput: Types.TodoWhereInput;
-  tagInput: Types.TagWhereInput;
+  todoInput: Types.TodoWhereUniqueInput;
+  todosInput: Types.TodoWhereInput;
+  tagsInput: Types.TagWhereInput;
 }>;
 
 
@@ -19,6 +20,9 @@ export type TodosPageQuery = (
   & { me?: Types.Maybe<(
     { __typename?: 'User' }
     & Pick<Types.User, 'id'>
+  )>, todo?: Types.Maybe<(
+    { __typename?: 'Todo' }
+    & RootTodoFragment
   )>, todos: Array<(
     { __typename?: 'Todo' }
     & RootTodoFragment
@@ -36,14 +40,17 @@ export type TodosPageQuery = (
 
 
 export const TodosPageDocument = gql`
-    query TodosPage($todoInput: TodoWhereInput!, $tagInput: TagWhereInput!) {
+    query TodosPage($todoInput: TodoWhereUniqueInput!, $todosInput: TodoWhereInput!, $tagsInput: TagWhereInput!) {
   me {
     id
   }
-  todos(where: $todoInput) {
+  todo(where: $todoInput) {
     ...RootTodo
   }
-  tags(where: $tagInput) {
+  todos(where: $todosInput) {
+    ...RootTodo
+  }
+  tags(where: $tagsInput) {
     ...TodoTag
   }
   checkpoints {
@@ -71,7 +78,8 @@ ${RootCategoryFragmentDoc}`;
  * const { data, loading, error } = useTodosPageQuery({
  *   variables: {
  *      todoInput: // value for 'todoInput'
- *      tagInput: // value for 'tagInput'
+ *      todosInput: // value for 'todosInput'
+ *      tagsInput: // value for 'tagsInput'
  *   },
  * });
  */

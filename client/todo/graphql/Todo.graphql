@@ -1,5 +1,11 @@
-query GetTodos($input: TodoWhereInput!) {
-  todos(where: $input) {
+query GetTodos(
+  $todoInput: TodoWhereUniqueInput!
+  $todosInput: TodoWhereInput!
+) {
+  todo(where: $todoInput) {
+    ...RootTodo
+  }
+  todos(where: $todosInput) {
     ...RootTodo
   }
 }

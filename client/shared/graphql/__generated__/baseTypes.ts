@@ -24,6 +24,7 @@ export type Query = {
   stats?: Maybe<Stats>;
   tag?: Maybe<Tag>;
   tags: Array<Tag>;
+  todo?: Maybe<Todo>;
   todos: Array<Todo>;
 };
 
@@ -65,6 +66,11 @@ export type QueryTagsArgs = {
   last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<TagOrderByInput>>;
   where?: Maybe<TagWhereInput>;
+};
+
+
+export type QueryTodoArgs = {
+  where: TodoWhereUniqueInput;
 };
 
 

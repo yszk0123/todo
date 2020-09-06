@@ -39,7 +39,10 @@ export const TodoGroupedList: React.FunctionComponent<{
   todoSelection,
   todos,
 }) => {
-  const groups = React.useMemo(() => groupTodoByCheckpoint(todos), [todos]);
+  const groups = React.useMemo(() => groupTodoByCheckpoint(todos, query), [
+    query,
+    todos,
+  ]);
 
   return (
     <>

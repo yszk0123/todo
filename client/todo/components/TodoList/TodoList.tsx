@@ -44,6 +44,7 @@ export function TodoList({
 }): JSX.Element {
   const header = group.header;
   const todos = group.todos;
+  const isParent = group.isParent;
   const past = isPast(header.endAt, now);
 
   const handleClickCheckpoint = React.useCallback(() => {
@@ -54,7 +55,11 @@ export function TodoList({
 
   return (
     <List
-      leftElement={header.name ? <Note text={header.name} /> : null}
+      leftElement={
+        header.name ? (
+          <Note text={header.name + (isParent ? ' (Parent)' : '')} />
+        ) : null
+      }
       rightElement={
         header.endAt ? (
           <RelativeDateTimeText now={now} value={header.endAt} />

@@ -1,11 +1,18 @@
-query TodosPage($todoInput: TodoWhereInput!, $tagInput: TagWhereInput!) {
+query TodosPage(
+  $todoInput: TodoWhereUniqueInput!
+  $todosInput: TodoWhereInput!
+  $tagsInput: TagWhereInput!
+) {
   me {
     id
   }
-  todos(where: $todoInput) {
+  todo(where: $todoInput) {
     ...RootTodo
   }
-  tags(where: $tagInput) {
+  todos(where: $todosInput) {
+    ...RootTodo
+  }
+  tags(where: $tagsInput) {
     ...TodoTag
   }
   checkpoints {

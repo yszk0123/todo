@@ -21,14 +21,18 @@ import {
   parseTodoSearchRawQuery,
   TodoSearchQuery,
 } from '../view_models/TodoSearchQuery';
-import { getTodoWhereInput } from '../view_models/TodoWhereInput';
+import {
+  getTodoWhereInput,
+  getTodoWhereUniqueInput,
+} from '../view_models/TodoWhereInput';
 
 function getQueryVariables(
   query: TodoSearchQuery | null
 ): TodosPageQueryVariables {
   return {
-    todoInput: getTodoWhereInput(query),
-    tagInput: getTagWhereInput(query),
+    tagsInput: getTagWhereInput(query),
+    todoInput: getTodoWhereUniqueInput(query),
+    todosInput: getTodoWhereInput(query),
   };
 }
 
@@ -56,6 +60,11 @@ export function useTodosPageState() {
 
   const [now, setNow] = React.useState(() => Date.now());
 
+  const mergedTodos = React.useMemo(
+    () => (data?.todo ? [data.todo, ...data?.todos] : data?.todos) ?? EMPTY,
+    [data?.todo, data?.todos]
+  );
+
   const category = React.useMemo(() => {
     const categoryId = todoSearchQuery.categoryId;
     return (
@@ -63,15 +72,14 @@ export function useTodosPageState() {
     );
   }, [todoSearchQuery.categoryId, data?.categories]);
 
-  const archiveStatus = React.useMemo(
-    () => getArchiveStatus(data?.todos ?? EMPTY),
-    [data?.todos]
-  );
+  const archiveStatus = React.useMemo(() => getArchiveStatus(mergedTodos), [
+    mergedTodos,
+  ]);
 
-  const status = React.useMemo(
-    () => getStatus(data?.todos ?? EMPTY, todoSelection),
-    [data?.todos, todoSelection]
-  );
+  const status = React.useMemo(() => getStatus(mergedTodos, todoSelection), [
+    mergedTodos,
+    todoSelection,
+  ]);
 
   const categoryTags = React.useMemo(() => sortTodoTags(data?.tags ?? EMPTY), [
     data?.tags,
@@ -97,7 +105,7 @@ export function useTodosPageState() {
     status,
     todoEditFormValues,
     todoSelection,
-    todos: data?.todos ?? EMPTY,
+    todos: mergedTodos,
     userId: data?.me?.id ?? null,
     todoSearchFormValues,
     todoSearchQuery,

@@ -4,6 +4,7 @@ import {
   TodoCheckpointFragment,
   TodoTagFragment,
 } from '../todo/graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../todo/view_models/TodoSearchQuery';
 import { DateTime, parseDateTime } from './DateTime';
 
 export enum TodoArchiveStatus {
@@ -27,6 +28,7 @@ export function getArchiveStatus(todos: RootTodoFragment[]): TodoArchiveStatus {
 export type TodoGroup = {
   checkpoint: TodoCheckpointFragment | null;
   header: { endAt: DateTime | null; name: string | null };
+  isParent: boolean;
   todos: RootTodoFragment[];
 };
 
@@ -72,7 +74,11 @@ function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
   });
 }
 
-export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
+export function groupTodoByCheckpoint(
+  todos: RootTodoFragment[],
+  query: TodoSearchQuery
+): TodoGroup[] {
+  const parentId = query.parentId;
   const groupsById: Record<string, TodoGroup> = {};
   let archivedCount = 0;
 
@@ -81,12 +87,16 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
       archivedCount += 1;
     }
 
-    const key = todo.checkpoint?.id ?? '__DEFAULT__';
+    const key =
+      todo.id === parentId
+        ? '__PARENT__'
+        : todo.checkpoint?.id ?? '__DEFAULT__';
     let group = groupsById[key];
     if (!group) {
       const name = todo.checkpoint?.name ?? null;
       const endAt = todo.checkpoint?.endAt ?? null;
       group = {
+        isParent: todo.id === parentId,
         header: { name, endAt },
         todos: [],
         checkpoint: todo.checkpoint ?? null,
@@ -99,15 +109,19 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
   const shouldBeReversed = archivedCount >= todos.length / 2;
   const defaultTime = shouldBeReversed ? -Infinity : Infinity;
 
-  const todoGroups = Object.values(groupsById).sort((a, b) => {
-    const d1 = a.header.endAt
-      ? parseDateTime(a.header.endAt).getTime()
-      : defaultTime;
-    const d2 = b.header.endAt
-      ? parseDateTime(b.header.endAt).getTime()
-      : defaultTime;
-    return d1 - d2;
-  });
+  const groups = Object.values(groupsById);
+  const todoGroups = groups
+    .filter((g) => !g.isParent)
+    .sort((a, b) => {
+      const d1 = a.header.endAt
+        ? parseDateTime(a.header.endAt).getTime()
+        : defaultTime;
+      const d2 = b.header.endAt
+        ? parseDateTime(b.header.endAt).getTime()
+        : defaultTime;
+      return d1 - d2;
+    });
+  const parentGroup = groups.find((g) => g.isParent);
 
   if (shouldBeReversed) {
     todoGroups.reverse();
@@ -116,7 +130,7 @@ export function groupTodoByCheckpoint(todos: RootTodoFragment[]): TodoGroup[] {
     });
   }
 
-  return todoGroups;
+  return parentGroup ? [parentGroup, ...todoGroups] : todoGroups;
 }
 
 export function sortTodoTags(tags: TodoTagFragment[]): TodoTagFragment[] {

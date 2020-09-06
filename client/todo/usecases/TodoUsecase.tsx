@@ -37,11 +37,15 @@ import {
   fromTodoSearchFormValues,
   TodoSearchQuery,
 } from '../view_models/TodoSearchQuery';
-import { getTodoWhereInput } from '../view_models/TodoWhereInput';
+import {
+  getTodoWhereInput,
+  getTodoWhereUniqueInput,
+} from '../view_models/TodoWhereInput';
 
 function getRefetchQuery(todoSearchQuery: TodoSearchQuery | null) {
   return refetchGetTodosQuery({
-    input: getTodoWhereInput(todoSearchQuery),
+    todoInput: getTodoWhereUniqueInput(todoSearchQuery),
+    todosInput: getTodoWhereInput(todoSearchQuery),
   });
 }
 

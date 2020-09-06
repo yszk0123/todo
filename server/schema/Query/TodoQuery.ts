@@ -5,6 +5,18 @@ export const TODO_LIMIT = 100;
 schema.extendType({
   type: 'Query',
   definition(t) {
+    t.crud.todo({
+      authorize(_root, _args, ctx) {
+        return !!ctx.user?.id;
+      },
+      async resolve(root, args, ctx, info, originalResolve) {
+        if (!args.where.id) return null;
+
+        const todo = await originalResolve(root, args, ctx, info);
+        return todo?.ownerId === ctx.user?.id ? todo : null;
+      },
+    });
+
     t.crud.todos({
       filtering: true,
       ordering: true,

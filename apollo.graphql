@@ -11,6 +11,7 @@ type Query {
   stats: Stats
   tag(where: TagWhereUniqueInput!): Tag
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: [TagOrderByInput!], where: TagWhereInput): [Tag!]!
+  todo(where: TodoWhereUniqueInput!): Todo
   todos(after: TodoWhereUniqueInput, before: TodoWhereUniqueInput, first: Int, last: Int, orderBy: [TodoOrderByInput!], where: TodoWhereInput): [Todo!]!
 }
 type Page {
