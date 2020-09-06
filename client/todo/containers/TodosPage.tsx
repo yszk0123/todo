@@ -372,6 +372,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         handlePasteTodo();
         break;
       }
+      case Command.DUPLICATE_TODO: {
+        handleDuplicateTodosById();
+        break;
+      }
     }
   });
 
@@ -518,6 +522,7 @@ enum Command {
   OPEN_EDIT,
   OPEN_SEARCH,
   PASTE_TODO,
+  DUPLICATE_TODO,
   SELECT_ALL,
   NONE,
 }
@@ -530,6 +535,8 @@ function translateShortcut(shortcut: Shortcut): Command {
       return Command.OPEN_EDIT;
     case KeyCode.S:
       return Command.OPEN_SEARCH;
+    case KeyCode.D:
+      return shortcut.cmd ? Command.DUPLICATE_TODO : Command.NONE;
     case KeyCode.X:
       return Command.CHANGE_STATUS_TO_DONE;
     case KeyCode.C:
