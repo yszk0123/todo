@@ -1,8 +1,10 @@
 import { TodoStatus } from '../../shared/graphql/__generated__/baseTypes';
 import { simplifyURL } from '../../shared/view_helpers/simplifyURL';
 import { printTodoStatus } from '../../view_models/TodoStatus';
-import { RootTagForReportFragment } from '../graphql/__generated__/TagForReport.graphql';
-import { RootTodoForReportFragment } from '../graphql/__generated__/TodoForReport.graphql';
+import {
+  RootTodoFragment,
+  TodoTagFragment,
+} from '../graphql/__generated__/Todo.graphql';
 
 const statusToIndex = {
   [TodoStatus.InProgress]: 0,
@@ -21,17 +23,11 @@ function getTime(text: string): number {
   return match && match[1] ? Number(match[1].replace(/:/, '')) : 0;
 }
 
-function compareTag(
-  a: RootTagForReportFragment,
-  b: RootTagForReportFragment
-): number {
+function compareTag(a: TodoTagFragment, b: TodoTagFragment): number {
   return a.name.localeCompare(b.name);
 }
 
-function compareTags(
-  a: RootTagForReportFragment[],
-  b: RootTagForReportFragment[]
-): number {
+function compareTags(a: TodoTagFragment[], b: TodoTagFragment[]): number {
   const len = Math.min(a.length, b.length);
   for (let i = 0; i < len; i += 1) {
     const name = compareTag(a[i], b[i]);
@@ -40,9 +36,7 @@ function compareTags(
   return a.length - b.length;
 }
 
-function sortTodosByContent(
-  todos: RootTodoForReportFragment[]
-): RootTodoForReportFragment[] {
+function sortTodosByContent(todos: RootTodoFragment[]): RootTodoFragment[] {
   return [...todos]
     .sort((a, b) => {
       const time = getTime(a.text) - getTime(b.text);
@@ -57,9 +51,7 @@ function sortTodosByContent(
     });
 }
 
-export function printTodosReportAsMarkdown(
-  todos: RootTodoForReportFragment[]
-): string {
+export function printTodosReportAsMarkdown(todos: RootTodoFragment[]): string {
   const filteredTodos = sortTodosByContent(
     todos
       .filter((todo) => !IGNORE_RE.test(todo.text))
@@ -110,9 +102,7 @@ export function printTodosReportAsMarkdown(
   return `\`\`\`\n${text}\`\`\``;
 }
 
-export function printTodosReportAsCSV(
-  todos: RootTodoForReportFragment[]
-): string {
+export function printTodosReportAsCSV(todos: RootTodoFragment[]): string {
   const filteredTodos = sortTodosByContent(
     todos
       .filter((todo) => !IGNORE_RE.test(todo.text))

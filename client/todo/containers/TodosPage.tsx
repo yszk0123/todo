@@ -14,10 +14,6 @@ import {
   useGlobalShortcut,
 } from '../../shared/hooks/useGlobalShortcut';
 import { setCSVToClipboard } from '../../shared/view_models/__experimental__/Clipboard';
-import {
-  printTodosReportAsCSV,
-  printTodosReportAsMarkdown,
-} from '../../todo_report/view_models/TodosReport';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
@@ -48,6 +44,10 @@ import {
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
+import {
+  printTodosReportAsCSV,
+  printTodosReportAsMarkdown,
+} from '../view_models/TodosReport';
 
 export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const dispatch = useDispatch();
