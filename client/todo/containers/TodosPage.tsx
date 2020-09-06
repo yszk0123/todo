@@ -13,10 +13,15 @@ import {
   Shortcut,
   useGlobalShortcut,
 } from '../../shared/hooks/useGlobalShortcut';
+import { setCSVToClipboard } from '../../shared/view_models/__experimental__/Clipboard';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
-import { getSelectedIds, Selection } from '../../view_models/Selection';
+import {
+  getSelected,
+  getSelectedIds,
+  Selection,
+} from '../../view_models/Selection';
 import { TodoEditForm } from '../components/TodoEditForm';
 import { TodoGroupedList } from '../components/TodoGroupedList';
 import { TodoSearchForm } from '../components/TodoSearchForm';
@@ -39,6 +44,10 @@ import {
 import { TodoTagFragment } from '../graphql/__generated__/Todo.graphql';
 import { useTodosPageState } from '../hooks/useTodosPageState';
 import { useTodoUsecase } from '../hooks/useTodoUsecase';
+import {
+  printTodosReportAsCSV,
+  printTodosReportAsMarkdown,
+} from '../view_models/TodosReport';
 
 export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
   const dispatch = useDispatch();
@@ -311,6 +320,9 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
     modalType === ModalType.NONE ? handleDeselectTodo : onCloseModal;
   useGlobalEscapeKey(handleEscape);
 
+  const handleCopyTodosAsCSV = useCopyTodosAsCSV();
+  const handleCopyTodosAsMarkdown = useCopyTodosAsMarkdown();
+
   useDrop(onOpenEditWithText, modalType === ModalType.NONE);
 
   useGlobalShortcut((shortcut) => {
@@ -342,6 +354,14 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
       }
       case Command.CHANGE_STATUS_TO_TODO: {
         handleUpdateStatus(TodoStatus.Todo);
+        break;
+      }
+      case Command.COPY_TODOS_AS_CSV: {
+        handleCopyTodosAsCSV(todos, todoSelection);
+        break;
+      }
+      case Command.COPY_TODOS_AS_MARKDOWN: {
+        handleCopyTodosAsMarkdown(todos, todoSelection);
         break;
       }
     }
@@ -485,6 +505,8 @@ enum Command {
   CHANGE_STATUS_TO_WAITING,
   CHANGE_STATUS_TO_IN_PROGRESS,
   CHANGE_STATUS_TO_TODO,
+  COPY_TODOS_AS_CSV,
+  COPY_TODOS_AS_MARKDOWN,
   OPEN_EDIT,
   OPEN_SEARCH,
   SELECT_ALL,
@@ -501,6 +523,12 @@ function translateShortcut(shortcut: Shortcut): Command {
       return Command.OPEN_SEARCH;
     case KeyCode.X:
       return Command.CHANGE_STATUS_TO_DONE;
+    case KeyCode.C:
+      return shortcut.cmd && shortcut.alt
+        ? Command.COPY_TODOS_AS_CSV
+        : shortcut.cmd
+        ? Command.COPY_TODOS_AS_MARKDOWN
+        : Command.NONE;
     case KeyCode.Minus:
       return Command.CHANGE_STATUS_TO_WAITING;
     case KeyCode.Period:
@@ -542,4 +570,34 @@ function useDrop(onDrop: (text: string) => void, isEnabled: boolean): void {
       element.removeEventListener('dragover', handleDragOver);
     };
   }, [isEnabled, onDrop]);
+}
+
+function useCopyTodosAsCSV() {
+  return React.useCallback(
+    (todos: RootTodoFragment[], todoSelection: Selection) => {
+      const selectedTodos = getSelected(
+        todos,
+        todoSelection,
+        (todo) => todo.id
+      );
+      const text = printTodosReportAsCSV(selectedTodos);
+      setCSVToClipboard(text);
+    },
+    []
+  );
+}
+
+function useCopyTodosAsMarkdown() {
+  return React.useCallback(
+    (todos: RootTodoFragment[], todoSelection: Selection) => {
+      const selectedTodos = getSelected(
+        todos,
+        todoSelection,
+        (todo) => todo.id
+      );
+      const text = printTodosReportAsMarkdown(selectedTodos);
+      setCSVToClipboard(text);
+    },
+    []
+  );
 }

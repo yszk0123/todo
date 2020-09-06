@@ -1,4 +1,0 @@
-fragment RootTagForReport on Tag {
-  id
-  name
-}

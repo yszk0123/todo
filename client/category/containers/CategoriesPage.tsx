@@ -77,7 +77,6 @@ export const CategoriesPage: React.FunctionComponent<EmptyProps> = () => {
     <PageContent onClick={handleDeselectCategory}>
       <CategoryStatusBar
         count={categories.length}
-        currentCategoryId={currentCategoryId}
         selectMode={selectMode}
         onClickArchive={handleArchiveOneCategory}
         onClickEdit={onOpenEdit}

@@ -20,6 +20,15 @@ export function getSelectedIds(selection: Selection): ID[] {
   return selection.type === SelectionType.SELECT ? selection.ids : EMPTY;
 }
 
+export function getSelected<T>(
+  items: T[],
+  selection: Selection,
+  getId: (item: T) => ID
+): T[] {
+  const ids = getSelectedIds(selection);
+  return items.filter((item) => ids.includes(getId(item)));
+}
+
 export function getSelectedCount(selection: Selection): number {
   return selection.type === SelectionType.SELECT ? selection.ids.length : 0;
 }
