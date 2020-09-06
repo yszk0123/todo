@@ -13,7 +13,10 @@ import {
   Shortcut,
   useGlobalShortcut,
 } from '../../shared/hooks/useGlobalShortcut';
-import { setCSVToClipboard } from '../../shared/view_models/__experimental__/Clipboard';
+import {
+  getTextFromClipboard,
+  setCSVToClipboard,
+} from '../../shared/view_models/__experimental__/Clipboard';
 import { DUMMY_CHECKPOINT } from '../../view_models/Checkpoint';
 import { DateTime } from '../../view_models/DateTime';
 import { EmptyProps } from '../../view_models/EmptyProps';
@@ -322,6 +325,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
 
   const handleCopyTodosAsCSV = useCopyTodosAsCSV();
   const handleCopyTodosAsMarkdown = useCopyTodosAsMarkdown();
+  const handlePasteTodo = usePasteTodo(onOpenEditWithText);
 
   useDrop(onOpenEditWithText, modalType === ModalType.NONE);
 
@@ -362,6 +366,10 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
       }
       case Command.COPY_TODOS_AS_MARKDOWN: {
         handleCopyTodosAsMarkdown(todos, todoSelection);
+        break;
+      }
+      case Command.PASTE_TODO: {
+        handlePasteTodo();
         break;
       }
     }
@@ -509,6 +517,7 @@ enum Command {
   COPY_TODOS_AS_MARKDOWN,
   OPEN_EDIT,
   OPEN_SEARCH,
+  PASTE_TODO,
   SELECT_ALL,
   NONE,
 }
@@ -529,6 +538,8 @@ function translateShortcut(shortcut: Shortcut): Command {
         : shortcut.cmd
         ? Command.COPY_TODOS_AS_MARKDOWN
         : Command.NONE;
+    case KeyCode.V:
+      return shortcut.cmd ? Command.PASTE_TODO : Command.NONE;
     case KeyCode.Minus:
       return Command.CHANGE_STATUS_TO_WAITING;
     case KeyCode.Period:
@@ -600,4 +611,16 @@ function useCopyTodosAsMarkdown() {
     },
     []
   );
+}
+
+function usePasteTodo(onOpenEditWithText: (text: string) => void) {
+  return React.useCallback(async () => {
+    const text = await getTextFromClipboard();
+    const convertedText = convertMarkdownToText(text);
+    onOpenEditWithText(convertedText);
+  }, [onOpenEditWithText]);
+}
+
+function convertMarkdownToText(text: string): string {
+  return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1 $2').replace(/\\/g, '');
 }

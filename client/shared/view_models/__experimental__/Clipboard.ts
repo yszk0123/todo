@@ -17,3 +17,17 @@ export async function setCSVToClipboard(text: string): Promise<void> {
   const data = [new ClipboardItem({ 'text/plain': blob })];
   await navigator.clipboard.write(data);
 }
+
+export function getTextFromClipboard(): Promise<string> {
+  return navigator.permissions
+    .query({
+      // @ts-ignore
+      name: 'clipboard-read',
+    })
+    .then((result) => {
+      if (result.state == 'granted' || result.state == 'prompt') {
+        return navigator.clipboard.readText();
+      }
+      return Promise.reject();
+    });
+}
