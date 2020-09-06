@@ -1,14 +1,11 @@
 import * as Types from '../../../shared/graphql/__generated__/baseTypes';
 
 import { RootTodoForReportFragment } from './TodoForReport.graphql';
-import { RootTagForReportFragment } from './TagForReport.graphql';
 import { gql } from '@apollo/client';
 import { RootTodoForReportFragmentDoc } from './TodoForReport.graphql';
-import { RootTagForReportFragmentDoc } from './TagForReport.graphql';
 import * as Apollo from '@apollo/client';
 export type TodosReportPageQueryVariables = Types.Exact<{
   categoryId: Types.Scalars['String'];
-  categoryUUID: Types.Scalars['UUID'];
 }>;
 
 
@@ -20,15 +17,12 @@ export type TodosReportPageQuery = (
   )>, todos: Array<(
     { __typename?: 'Todo' }
     & RootTodoForReportFragment
-  )>, tags: Array<(
-    { __typename?: 'Tag' }
-    & RootTagForReportFragment
   )> }
 );
 
 
 export const TodosReportPageDocument = gql`
-    query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
+    query TodosReportPage($categoryId: String!) {
   category(where: {id: $categoryId}) {
     id
     name
@@ -36,12 +30,8 @@ export const TodosReportPageDocument = gql`
   todos(where: {categoryId: {equals: $categoryId}, archivedAt: {equals: null}}) {
     ...RootTodoForReport
   }
-  tags(where: {categories: {some: {id: {equals: $categoryUUID}}}}) {
-    ...RootTagForReport
-  }
 }
-    ${RootTodoForReportFragmentDoc}
-${RootTagForReportFragmentDoc}`;
+    ${RootTodoForReportFragmentDoc}`;
 
 /**
  * __useTodosReportPageQuery__
@@ -56,7 +46,6 @@ ${RootTagForReportFragmentDoc}`;
  * const { data, loading, error } = useTodosReportPageQuery({
  *   variables: {
  *      categoryId: // value for 'categoryId'
- *      categoryUUID: // value for 'categoryUUID'
  *   },
  * });
  */
