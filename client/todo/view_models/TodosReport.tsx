@@ -97,9 +97,7 @@ export function printTodosReportAsMarkdown(todos: RootTodoFragment[]): string {
     })
     .join('\n');
 
-  const text = [tasksString, '', schedulesString].join('\n').trim();
-
-  return `\`\`\`\n${text}\n\`\`\``;
+  return [tasksString, '', schedulesString].join('\n').trim();
 }
 
 export function printTodosReportAsCSV(todos: RootTodoFragment[]): string {
