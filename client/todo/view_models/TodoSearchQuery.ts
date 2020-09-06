@@ -7,6 +7,7 @@ export type TodoSearchQuery = {
   archivedAt: DateTime | null;
   categoryId: ID | null;
   checkpointId: ID | null;
+  parentId: ID | null;
   status: TodoStatus | null;
   tagIds: ID[] | null;
   text: string | null;
@@ -17,6 +18,7 @@ const stringToTodoStatusMap: Record<string, TodoStatus | undefined> = {
   [TodoStatus.InProgress]: TodoStatus.InProgress,
   [TodoStatus.Waiting]: TodoStatus.Waiting,
   [TodoStatus.Done]: TodoStatus.Done,
+  [TodoStatus.Comment]: TodoStatus.Comment,
 };
 
 export function fromTodoSearchFormValues(
@@ -33,6 +35,8 @@ export function fromTodoSearchFormValues(
     (value?.checkpoint !== undefined
       ? value?.checkpoint?.id
       : query?.checkpointId) ?? null;
+  const parentId =
+    (value?.parentId !== undefined ? value?.parentId : query?.parentId) ?? null;
   const status =
     (value?.status !== undefined ? value?.status : query?.status) ?? null;
   const tagIds =
@@ -44,6 +48,7 @@ export function fromTodoSearchFormValues(
     archivedAt,
     categoryId,
     checkpointId,
+    parentId,
     status,
     tagIds,
     text,
@@ -76,6 +81,7 @@ export function parseTodoSearchRawQuery(
   const checkpointId = isValidString(query.checkpointId)
     ? query.checkpointId
     : null;
+  const parentId = isValidString(query.parentId) ? query.parentId : null;
   const status = isValidString(query.status)
     ? stringToTodoStatusMap[query.status] ?? null
     : null;
@@ -91,6 +97,7 @@ export function parseTodoSearchRawQuery(
     archivedAt,
     categoryId,
     checkpointId,
+    parentId,
     status,
     tagIds,
     text,

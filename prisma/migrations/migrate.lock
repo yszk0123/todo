@@ -15,3 +15,6 @@
 20200808181832-update-schema-for-next-auth-v3
 20200808184058-make-user-compound-id-unique-and-required
 20200808210550-remove-user-avatar-url
+20200906141612-todo-parent
+20200906141632-todo-status-none
+20200906144713-todo-status-comment

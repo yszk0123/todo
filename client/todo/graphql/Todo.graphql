@@ -42,6 +42,7 @@ fragment RootTodo on Todo {
   text
   createdAt
   categoryId
+  parentId
   tags {
     ...TodoTag
   }

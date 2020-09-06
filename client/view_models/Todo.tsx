@@ -37,10 +37,11 @@ export function isPast(dateString: DateTime | null, now: number): boolean {
 }
 
 const statusToIndex = {
-  [TodoStatus.InProgress]: 0,
-  [TodoStatus.Todo]: 1,
-  [TodoStatus.Waiting]: 2,
-  [TodoStatus.Done]: 3,
+  [TodoStatus.Comment]: 0,
+  [TodoStatus.InProgress]: 1,
+  [TodoStatus.Todo]: 2,
+  [TodoStatus.Waiting]: 3,
+  [TodoStatus.Done]: 4,
 };
 
 const TIME_RE = /^(?:\*\s+)?(\d{2}:\d{2})[-~]/;

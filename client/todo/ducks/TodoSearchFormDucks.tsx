@@ -35,6 +35,7 @@ export const todoSearchFormInitialState: TodoSearchFormState = {
   archivedAt: null,
   category: null,
   checkpoint: null,
+  parentId: undefined,
   status: null,
   tags: null,
   text: '',

@@ -10,6 +10,7 @@ const statuses: TodoStatus[] = [
   TodoStatus.InProgress,
   TodoStatus.Waiting,
   TodoStatus.Done,
+  TodoStatus.Comment,
 ];
 
 const getValue = (status: TodoStatus) => status;

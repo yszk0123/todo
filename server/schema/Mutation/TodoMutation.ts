@@ -31,6 +31,7 @@ schema.inputObjectType({
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
     t.id('checkpointId', {});
+    t.id('parentId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -44,6 +45,7 @@ schema.inputObjectType({
     t.list.id('tags', {});
     t.field('status', { type: 'TodoStatus' });
     t.id('checkpointId', {});
+    t.id('parentId', {});
     t.field('archivedAt', { type: 'DateTime' });
   },
 });
@@ -138,6 +140,7 @@ schema.extendType({
                 // createdAt: todo.createdAt,
                 status: todo.status,
                 tags: { connect: todo.tags.map((tag) => ({ id: tag.id })) },
+                parent: { connect: { id: todo.parentId ?? undefined } },
                 category: { connect: { id: todo.categoryId } },
                 owner: { connect: { id: todo.ownerId } },
               },
@@ -173,6 +176,7 @@ schema.extendType({
         const status = args.data.status ?? undefined;
         const archivedAt = args.data.archivedAt ?? undefined;
         const checkpointId = args.data.checkpointId ?? undefined;
+        const parentId = args.data.parentId ?? undefined;
 
         const updatedTodo = await ctx.db.todo.update({
           data: {
@@ -183,6 +187,7 @@ schema.extendType({
             checkpoint: checkpointId
               ? { connect: { id: checkpointId } }
               : undefined,
+            parent: parentId ? { connect: { id: parentId } } : undefined,
           },
           where: { id: todoId },
         });
@@ -214,6 +219,7 @@ schema.extendType({
         const archivedAt = args.data.archivedAt;
         const categoryId = args.data.categoryId ?? undefined;
         const checkpointId = args.data.checkpointId;
+        const parentId = args.data.parentId ?? undefined;
 
         const updatedTodos = await Promise.all(
           todoIds.map((todoId) =>
@@ -232,6 +238,7 @@ schema.extendType({
                     : checkpointId
                     ? { connect: { id: checkpointId } }
                     : undefined,
+                parent: parentId ? { connect: { id: parentId } } : undefined,
               },
               where: { id: todoId },
             })

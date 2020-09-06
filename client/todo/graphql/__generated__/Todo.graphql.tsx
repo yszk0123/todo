@@ -89,7 +89,7 @@ export type DuplicateTodosByIdMutation = (
 
 export type RootTodoFragment = (
   { __typename?: 'Todo' }
-  & Pick<Types.Todo, 'id' | 'text' | 'createdAt' | 'categoryId' | 'status' | 'archivedAt'>
+  & Pick<Types.Todo, 'id' | 'text' | 'createdAt' | 'categoryId' | 'parentId' | 'status' | 'archivedAt'>
   & { tags: Array<(
     { __typename?: 'Tag' }
     & TodoTagFragment
@@ -143,6 +143,7 @@ export const RootTodoFragmentDoc = gql`
   text
   createdAt
   categoryId
+  parentId
   tags {
     ...TodoTag
   }

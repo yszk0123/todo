@@ -11,6 +11,7 @@ const STATUSES: TodoStatus[] = [
   TodoStatus.InProgress,
   TodoStatus.Done,
   TodoStatus.Waiting,
+  TodoStatus.Comment,
 ];
 
 export const TodoStatusBarStatusSelect: React.FunctionComponent<{

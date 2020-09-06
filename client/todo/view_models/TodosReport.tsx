@@ -7,10 +7,11 @@ import {
 } from '../graphql/__generated__/Todo.graphql';
 
 const statusToIndex = {
-  [TodoStatus.InProgress]: 0,
-  [TodoStatus.Todo]: 1,
-  [TodoStatus.Waiting]: 2,
-  [TodoStatus.Done]: 3,
+  [TodoStatus.Comment]: 0,
+  [TodoStatus.InProgress]: 1,
+  [TodoStatus.Todo]: 2,
+  [TodoStatus.Waiting]: 3,
+  [TodoStatus.Done]: 4,
 };
 
 const TIME_RE = /^(\d{2}:\d{2})[-~]/;
@@ -77,7 +78,8 @@ export function printTodosReportAsMarkdown(todos: RootTodoFragment[]): string {
     .sort((a, b) => a.tags.localeCompare(b.tags))
     .reduce((acc, { status, tags, text }) => {
       const value = acc[tags] || [];
-      const line = `${tags ? '  ' : ''}- [${status}] ${text}`;
+      const statusText = status !== null ? `[${status}] ` : '';
+      const line = `${tags ? '  ' : ''}- ${statusText}${text}`;
       return { ...acc, [tags]: [...value, line] };
     }, {} as { [key: string]: string[] });
   const tasksString = Object.entries(tasksStringByTags)
@@ -147,5 +149,7 @@ function printTodoStatusInPlainText(status: TodoStatus): string {
       return 'Waiting';
     case TodoStatus.Done:
       return 'Done';
+    case TodoStatus.Comment:
+      return 'Comment';
   }
 }
