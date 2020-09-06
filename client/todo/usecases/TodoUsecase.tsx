@@ -92,6 +92,7 @@ export class TodoUsecase {
     }
     const checkpointIdToCreate =
       checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
+    const parentIdToCreate = todoSearchQuery?.parentId ?? undefined;
 
     this.dispatch(todoEditFormSet({ text: '' }));
 
@@ -106,6 +107,9 @@ export class TodoUsecase {
           status: status ?? todoSearchQuery?.status ?? TodoStatus.Todo,
           checkpoint: checkpointIdToCreate
             ? { connect: { id: checkpointIdToCreate } }
+            : undefined,
+          parent: parentIdToCreate
+            ? { connect: { id: parentIdToCreate } }
             : undefined,
         },
       },

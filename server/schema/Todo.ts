@@ -14,6 +14,8 @@ schema.objectType({
     t.model.status();
     t.model.checkpoint();
     t.model.checkpointId();
+    t.model.parent();
+    t.model.parentId();
     t.model.archivedAt();
   },
 });

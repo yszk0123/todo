@@ -9,6 +9,7 @@ export function getTodoWhereInput(
     checkpointId: query?.checkpointId
       ? { equals: query.checkpointId }
       : undefined,
+    parentId: query?.parentId ? { equals: query.parentId } : undefined,
     archivedAt: query?.archivedAt
       ? { lte: query.archivedAt }
       : { equals: null },

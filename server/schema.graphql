@@ -993,6 +993,8 @@ type Todo {
   id: String!
   owner: User!
   ownerId: String!
+  parent: Todo
+  parentId: String
   status: TodoStatus!
   tags(after: TagWhereUniqueInput, before: TagWhereUniqueInput, first: Int, last: Int, orderBy: [TagOrderByInput!]): [Tag!]!
   text: String!
@@ -1007,9 +1009,11 @@ input TodoCreateInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
   checkpoint: CheckpointCreateOneWithoutTodosInput
+  children: TodoCreateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
+  parent: TodoCreateOneWithoutChildrenInput
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
@@ -1030,17 +1034,29 @@ input TodoCreateManyWithoutOwnerInput {
   create: [TodoCreateWithoutOwnerInput!]
 }
 
+input TodoCreateManyWithoutParentInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutParentInput!]
+}
+
 input TodoCreateManyWithoutTagsInput {
   connect: [TodoWhereUniqueInput!]
   create: [TodoCreateWithoutTagsInput!]
 }
 
+input TodoCreateOneWithoutChildrenInput {
+  connect: TodoWhereUniqueInput
+  create: TodoCreateWithoutChildrenInput
+}
+
 input TodoCreateWithoutCategoryInput {
   archivedAt: DateTime
   checkpoint: CheckpointCreateOneWithoutTodosInput
+  children: TodoCreateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
+  parent: TodoCreateOneWithoutChildrenInput
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
@@ -1049,9 +1065,24 @@ input TodoCreateWithoutCategoryInput {
 input TodoCreateWithoutCheckpointInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
+  children: TodoCreateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
+  parent: TodoCreateOneWithoutChildrenInput
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutChildrenInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
+  parent: TodoCreateOneWithoutChildrenInput
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
@@ -1061,8 +1092,23 @@ input TodoCreateWithoutOwnerInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
   checkpoint: CheckpointCreateOneWithoutTodosInput
+  children: TodoCreateManyWithoutParentInput
   createdAt: DateTime
   id: String
+  parent: TodoCreateOneWithoutChildrenInput
+  status: TodoStatus
+  tags: TagCreateManyWithoutTodosInput
+  text: String!
+}
+
+input TodoCreateWithoutParentInput {
+  archivedAt: DateTime
+  category: CategoryCreateOneWithoutTodosInput!
+  checkpoint: CheckpointCreateOneWithoutTodosInput
+  children: TodoCreateManyWithoutParentInput
+  createdAt: DateTime
+  id: String
+  owner: UserCreateOneWithoutTodosInput!
   status: TodoStatus
   tags: TagCreateManyWithoutTodosInput
   text: String!
@@ -1072,9 +1118,11 @@ input TodoCreateWithoutTagsInput {
   archivedAt: DateTime
   category: CategoryCreateOneWithoutTodosInput!
   checkpoint: CheckpointCreateOneWithoutTodosInput
+  children: TodoCreateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserCreateOneWithoutTodosInput!
+  parent: TodoCreateOneWithoutChildrenInput
   status: TodoStatus
   text: String!
 }
@@ -1092,6 +1140,7 @@ input TodoOrderByInput {
   createdAt: SortOrder
   id: SortOrder
   ownerId: SortOrder
+  parentId: SortOrder
   status: SortOrder
   text: SortOrder
 }
@@ -1101,17 +1150,20 @@ input TodoScalarWhereInput {
   archivedAt: NullableDateTimeFilter
   categoryId: StringFilter
   checkpointId: NullableStringFilter
+  children: TodoFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [TodoScalarWhereInput!]
   OR: [TodoScalarWhereInput!]
   ownerId: StringFilter
+  parentId: NullableStringFilter
   status: TodoStatus
   tags: TagFilter
   text: StringFilter
 }
 
 enum TodoStatus {
+  COMMENT
   DONE
   IN_PROGRESS
   TODO
@@ -1162,6 +1214,18 @@ input TodoUpdateManyWithoutOwnerInput {
   upsert: [TodoUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
+input TodoUpdateManyWithoutParentInput {
+  connect: [TodoWhereUniqueInput!]
+  create: [TodoCreateWithoutParentInput!]
+  delete: [TodoWhereUniqueInput!]
+  deleteMany: [TodoScalarWhereInput!]
+  disconnect: [TodoWhereUniqueInput!]
+  set: [TodoWhereUniqueInput!]
+  update: [TodoUpdateWithWhereUniqueWithoutParentInput!]
+  updateMany: [TodoUpdateManyWithWhereNestedInput!]
+  upsert: [TodoUpsertWithWhereUniqueWithoutParentInput!]
+}
+
 input TodoUpdateManyWithoutTagsInput {
   connect: [TodoWhereUniqueInput!]
   create: [TodoCreateWithoutTagsInput!]
@@ -1179,12 +1243,23 @@ input TodoUpdateManyWithWhereNestedInput {
   where: TodoScalarWhereInput!
 }
 
+input TodoUpdateOneWithoutChildrenInput {
+  connect: TodoWhereUniqueInput
+  create: TodoCreateWithoutChildrenInput
+  delete: Boolean
+  disconnect: Boolean
+  update: TodoUpdateWithoutChildrenDataInput
+  upsert: TodoUpsertWithoutChildrenInput
+}
+
 input TodoUpdateWithoutCategoryDataInput {
   archivedAt: DateTime
   checkpoint: CheckpointUpdateOneWithoutTodosInput
+  children: TodoUpdateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserUpdateOneRequiredWithoutTodosInput
+  parent: TodoUpdateOneWithoutChildrenInput
   status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
@@ -1193,9 +1268,24 @@ input TodoUpdateWithoutCategoryDataInput {
 input TodoUpdateWithoutCheckpointDataInput {
   archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
+  children: TodoUpdateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserUpdateOneRequiredWithoutTodosInput
+  parent: TodoUpdateOneWithoutChildrenInput
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+
+input TodoUpdateWithoutChildrenDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
+  parent: TodoUpdateOneWithoutChildrenInput
   status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
@@ -1205,8 +1295,23 @@ input TodoUpdateWithoutOwnerDataInput {
   archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
   checkpoint: CheckpointUpdateOneWithoutTodosInput
+  children: TodoUpdateManyWithoutParentInput
   createdAt: DateTime
   id: String
+  parent: TodoUpdateOneWithoutChildrenInput
+  status: TodoStatus
+  tags: TagUpdateManyWithoutTodosInput
+  text: String
+}
+
+input TodoUpdateWithoutParentDataInput {
+  archivedAt: DateTime
+  category: CategoryUpdateOneRequiredWithoutTodosInput
+  checkpoint: CheckpointUpdateOneWithoutTodosInput
+  children: TodoUpdateManyWithoutParentInput
+  createdAt: DateTime
+  id: String
+  owner: UserUpdateOneRequiredWithoutTodosInput
   status: TodoStatus
   tags: TagUpdateManyWithoutTodosInput
   text: String
@@ -1216,9 +1321,11 @@ input TodoUpdateWithoutTagsDataInput {
   archivedAt: DateTime
   category: CategoryUpdateOneRequiredWithoutTodosInput
   checkpoint: CheckpointUpdateOneWithoutTodosInput
+  children: TodoUpdateManyWithoutParentInput
   createdAt: DateTime
   id: String
   owner: UserUpdateOneRequiredWithoutTodosInput
+  parent: TodoUpdateOneWithoutChildrenInput
   status: TodoStatus
   text: String
 }
@@ -1238,9 +1345,19 @@ input TodoUpdateWithWhereUniqueWithoutOwnerInput {
   where: TodoWhereUniqueInput!
 }
 
+input TodoUpdateWithWhereUniqueWithoutParentInput {
+  data: TodoUpdateWithoutParentDataInput!
+  where: TodoWhereUniqueInput!
+}
+
 input TodoUpdateWithWhereUniqueWithoutTagsInput {
   data: TodoUpdateWithoutTagsDataInput!
   where: TodoWhereUniqueInput!
+}
+
+input TodoUpsertWithoutChildrenInput {
+  create: TodoCreateWithoutChildrenInput!
+  update: TodoUpdateWithoutChildrenDataInput!
 }
 
 input TodoUpsertWithWhereUniqueWithoutCategoryInput {
@@ -1261,6 +1378,12 @@ input TodoUpsertWithWhereUniqueWithoutOwnerInput {
   where: TodoWhereUniqueInput!
 }
 
+input TodoUpsertWithWhereUniqueWithoutParentInput {
+  create: TodoCreateWithoutParentInput!
+  update: TodoUpdateWithoutParentDataInput!
+  where: TodoWhereUniqueInput!
+}
+
 input TodoUpsertWithWhereUniqueWithoutTagsInput {
   create: TodoCreateWithoutTagsInput!
   update: TodoUpdateWithoutTagsDataInput!
@@ -1274,12 +1397,15 @@ input TodoWhereInput {
   categoryId: StringFilter
   checkpoint: CheckpointWhereInput
   checkpointId: NullableStringFilter
+  children: TodoFilter
   createdAt: DateTimeFilter
   id: UUIDFilter
   NOT: [TodoWhereInput!]
   OR: [TodoWhereInput!]
   owner: UserWhereInput
   ownerId: StringFilter
+  parent: TodoWhereInput
+  parentId: NullableStringFilter
   status: TodoStatus
   tags: TagFilter
   text: StringFilter
@@ -1300,6 +1426,7 @@ input UpdateTodoInput {
   archivedAt: DateTime
   checkpointId: ID
   id: ID!
+  parentId: ID
   status: TodoStatus
   tags: [ID!]
   text: String
@@ -1310,6 +1437,7 @@ input UpdateTodosByIdInput {
   categoryId: ID
   checkpointId: ID
   ids: [ID!]!
+  parentId: ID
   status: TodoStatus
   tags: [ID!]
   text: String
