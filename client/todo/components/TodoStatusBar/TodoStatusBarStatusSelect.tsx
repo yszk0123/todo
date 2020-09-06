@@ -9,9 +9,9 @@ const getValue = (status: TodoStatus) => status;
 const STATUSES: TodoStatus[] = [
   TodoStatus.Todo,
   TodoStatus.InProgress,
-  TodoStatus.Done,
-  TodoStatus.Waiting,
   TodoStatus.Comment,
+  TodoStatus.Waiting,
+  TodoStatus.Done,
 ];
 
 export const TodoStatusBarStatusSelect: React.FunctionComponent<{

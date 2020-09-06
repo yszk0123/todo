@@ -21,17 +21,17 @@ export const getDisplayIconFromTodoStatus = (
   status: TodoStatus
 ): React.ElementType => iconMap[status];
 
-export function printTodoStatus(status: TodoStatus): string | null {
+export function printTodoStatus(status: TodoStatus): string {
   switch (status) {
     case TodoStatus.Todo:
       return ' ';
     case TodoStatus.InProgress:
-      return '>';
-    case TodoStatus.Waiting:
       return '-';
+    case TodoStatus.Waiting:
+      return '#';
     case TodoStatus.Done:
       return 'x';
     case TodoStatus.Comment:
-      return null;
+      return '>';
   }
 }

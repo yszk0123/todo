@@ -8,8 +8,8 @@ import { getDisplayIconFromTodoStatus } from '../../../view_models/TodoStatus';
 const statuses: TodoStatus[] = [
   TodoStatus.Todo,
   TodoStatus.InProgress,
-  TodoStatus.Waiting,
   TodoStatus.Done,
+  TodoStatus.Waiting,
   TodoStatus.Comment,
 ];
 
