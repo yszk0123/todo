@@ -12,6 +12,7 @@ import {
   TodoCheckpointFragment,
   TodoTagFragment,
 } from '../../graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoListItem } from './TodoListItem';
 
 export function TodoList({
@@ -25,6 +26,7 @@ export function TodoList({
   onClickStatus,
   onClickTag,
   onClickToggle,
+  query,
   todoSelection,
 }: {
   group: TodoGroup;
@@ -37,6 +39,7 @@ export function TodoList({
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
+  query: TodoSearchQuery;
   todoSelection: Selection;
 }): JSX.Element {
   const header = group.header;
@@ -65,6 +68,7 @@ export function TodoList({
           <TodoListItem
             isCategoryNameShown={isCategoryNameShown}
             key={todo.id}
+            query={query}
             todo={todo}
             todoSelection={todoSelection}
             onClick={onClick}

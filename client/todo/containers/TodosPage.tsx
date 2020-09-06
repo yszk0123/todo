@@ -426,6 +426,7 @@ export const TodosPage: React.FunctionComponent<EmptyProps> = () => {
         <TodoGroupedList
           isCategoryNameShown={isCategoryNameShown}
           now={now}
+          query={todoSearchQuery}
           todos={todos}
           todoSelection={todoSelection}
           onClick={handleSelectManyTodo}

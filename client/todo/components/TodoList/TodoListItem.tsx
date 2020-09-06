@@ -13,6 +13,7 @@ import {
   TodoCategoryFragment,
   TodoTagFragment,
 } from '../../graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../../view_models/TodoSearchQuery';
 import { TodoStatusBarStatusSelect } from '../TodoStatusBar/TodoStatusBarStatusSelect';
 import { TodoListIcon } from './TodoListIcon';
 import { TodoListLink } from './TodoListLink';
@@ -28,6 +29,7 @@ type Props = {
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (todo: RootTodoFragment) => void;
+  query: TodoSearchQuery;
   todo: RootTodoFragment;
   todoSelection: Selection;
 };
@@ -40,6 +42,7 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
   onClickStatus,
   onClickTag,
   onClickToggle,
+  query,
   todo,
   todoSelection,
 }) => {
@@ -77,7 +80,7 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
       item={todo}
       leftElement={
         <>
-          <TodoListParentLink todo={todo} />
+          <TodoListParentLink query={query} todo={todo} />
           {expanded ? (
             <TodoStatusBarStatusSelect
               status={null}
@@ -108,7 +111,7 @@ export const TodoListItem: React.FunctionComponent<Props> = ({
           text={todo.text}
         />
       }
-      rightElement={<TodoListLink todo={todo} />}
+      rightElement={<TodoListLink query={query} todo={todo} />}
       onClick={onClick}
     />
   );

@@ -9,6 +9,7 @@ import {
   TodoCheckpointFragment,
   TodoTagFragment,
 } from '../graphql/__generated__/Todo.graphql';
+import { TodoSearchQuery } from '../view_models/TodoSearchQuery';
 import { TodoList } from './TodoList';
 
 export const TodoGroupedList: React.FunctionComponent<{
@@ -21,6 +22,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClickStatus: (todo: RootTodoFragment, status: TodoStatus) => void;
   onClickTag: (tag: TodoTagFragment) => void;
   onClickToggle: (item: RootTodoFragment) => void;
+  query: TodoSearchQuery;
   todoSelection: Selection;
   todos: RootTodoFragment[];
 }> = ({
@@ -33,6 +35,7 @@ export const TodoGroupedList: React.FunctionComponent<{
   onClickStatus,
   onClickTag,
   onClickToggle,
+  query,
   todoSelection,
   todos,
 }) => {
@@ -47,6 +50,7 @@ export const TodoGroupedList: React.FunctionComponent<{
             isCategoryNameShown={isCategoryNameShown}
             key={`${group.header.name}-${i}`}
             now={now}
+            query={query}
             todoSelection={todoSelection}
             onClick={onClick}
             onClickCategory={onClickCategory}
