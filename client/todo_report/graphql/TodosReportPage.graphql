@@ -1,4 +1,4 @@
-query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
+query TodosReportPage($categoryId: String!) {
   category(where: { id: $categoryId }) {
     id
     name
@@ -7,8 +7,5 @@ query TodosReportPage($categoryId: String!, $categoryUUID: UUID!) {
     where: { categoryId: { equals: $categoryId }, archivedAt: { equals: null } }
   ) {
     ...RootTodoForReport
-  }
-  tags(where: { categories: { some: { id: { equals: $categoryUUID } } } }) {
-    ...RootTagForReport
   }
 }

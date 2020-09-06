@@ -4,11 +4,10 @@ import { useTodosReportPageQuery } from '../graphql/__generated__/TodosReportPag
 
 export function useTodosReportPageState(categoryId: ID) {
   const { data, loading } = useTodosReportPageQuery({
-    variables: { categoryId, categoryUUID: categoryId },
+    variables: { categoryId },
   });
   return {
     isLoading: !data && loading,
     todos: data?.todos ?? EMPTY,
-    tags: data?.tags ?? EMPTY,
   };
 }

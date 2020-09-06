@@ -23,7 +23,7 @@ type Props = {
 export const TodosReportPage: React.FunctionComponent<Props> = ({
   categoryId,
 }) => {
-  const { isLoading, tags, todos } = useTodosReportPageState(categoryId);
+  const { isLoading, todos } = useTodosReportPageState(categoryId);
   const actions: EditFormAction[] = React.useMemo(
     () => [
       {
@@ -38,12 +38,12 @@ export const TodosReportPage: React.FunctionComponent<Props> = ({
         label: 'Copy as Markdown',
         onClick() {
           // FIXME: Extract as TodoReportUsecase
-          const text = printTodosReportAsMarkdown(todos, tags);
+          const text = printTodosReportAsMarkdown(todos);
           setCSVToClipboard(text);
         },
       },
     ],
-    [tags, todos]
+    [todos]
   );
 
   return (
@@ -52,7 +52,7 @@ export const TodosReportPage: React.FunctionComponent<Props> = ({
         <LoadingIndicator />
       ) : (
         <>
-          <TodosReport tags={tags} todos={todos} />
+          <TodosReport todos={todos} />
           <EditForm isInline>
             <EditFormActionsField actions={actions} />
           </EditForm>

@@ -58,8 +58,7 @@ function sortTodosByContent(
 }
 
 export function printTodosReportAsMarkdown(
-  todos: RootTodoForReportFragment[],
-  tags: RootTagForReportFragment[]
+  todos: RootTodoForReportFragment[]
 ): string {
   const filteredTodos = sortTodosByContent(
     todos
