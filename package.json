@@ -21,7 +21,7 @@
     "lint": "eslint pages client server --ext .ts,.tsx",
     "lint:fix": "eslint pages client server --ext .ts,.tsx --fix",
     "typecheck": "tsc --noEmit",
-    "generate": "npm-run-all -p nexus:build codegen:generate:once",
+    "generate": "npm-run-all -s nexus:build codegen:generate:once",
     "dev": "npm-run-all -p nexus:dev codegen:generate:watch next:watch",
     "build": "npm-run-all -s prisma:generate nexus:build next:build",
     "start": "next start"
