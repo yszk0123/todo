@@ -91,7 +91,9 @@ export class TodoUsecase {
       return;
     }
     const checkpointIdToCreate =
-      checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
+      checkpoint === DUMMY_CHECKPOINT
+        ? null
+        : checkpoint?.id ?? todoSearchQuery?.checkpointId ?? null;
     const parentIdToCreate = todoSearchQuery?.parentId ?? undefined;
 
     this.dispatch(todoEditFormSet({ text: '' }));
